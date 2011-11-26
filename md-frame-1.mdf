@@ -8,14 +8,14 @@
 %% Public License, as described in lppl.txt in the base LaTeX distribution.
 %% Either version 1.0 or, at your option, any later version.
 
-%%$Id: md-frame-1.mdf 226 2011-11-26 10:12:09Z marco $
-%%$Rev: 226 $
+%%$Id: md-frame-1.mdf 234 2011-11-26 23:10:52Z marco $
+%%$Rev: 234 $
 %%$Author: marco $
-%%$Date: 2011-11-26 11:12:09 +0100 (Sa, 26. Nov 2011) $
+%%$Date: 2011-11-27 00:10:52 +0100 (So, 27. Nov 2011) $
 
 \def\mdframedIpackagename{md-frame-1}
 \def\md@frameIdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
-\ProvidesFile{md-frame-1.mdf}[\md@frameIdate@svn$Id: md-frame-1.mdf 226 2011-11-26 10:12:09Z marco $ \mdversion: \mdframedIpackagename]
+\ProvidesFile{md-frame-1.mdf}[\md@frameIdate@svn$Id: md-frame-1.mdf 234 2011-11-26 23:10:52Z marco $ \mdversion: \mdframedIpackagename]
 %%%%    _____t_____
 %%%%   |           |
 %%%%   |           |
@@ -118,7 +118,7 @@
 \def\md@putbox@single{%
   \ifvoid\@tempboxa
   \else%
-   \mdf@makebox[\linewidth]{%
+   \mdf@makebox[\md@horizontalspaceofbox]{%
     \mdf@makeboxalign@left%
     \md@tikz@settings%
 %
@@ -204,7 +204,7 @@
 \def\md@putbox@first{%
   \ifvoid\@tempboxa
   \else%
-   \mdf@makebox[\linewidth]{%
+   \mdf@makebox[\md@horizontalspaceofbox]{%
     \mdf@makeboxalign@left%
     \md@tikz@settings%
     \setlength\mdfboundingboxwidth{\wd\tw@}%
@@ -281,7 +281,7 @@
 \def\md@putbox@middle{%
   \ifvoid\@tempboxa
   \else%
-   \mdf@makebox[\linewidth]{%
+   \mdf@makebox[\md@horizontalspaceofbox]{%
     \mdf@makeboxalign@left%
     \md@tikz@settings%
 %
@@ -342,7 +342,7 @@
 \def\md@putbox@second{%
   \ifvoid\@tempboxa
   \else%
-   \mdf@makebox[\linewidth]{%
+   \mdf@makebox[\md@horizontalspaceofbox]{%
     \mdf@makeboxalign@left%
     \md@tikz@settings%
 %

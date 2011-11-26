@@ -1,4 +1,4 @@
-%%$Id: README 223 2011-11-13 18:10:49Z marco $
+%%$Id: README 233 2011-11-26 22:00:09Z marco $
 
 The standard methods for framing text (\fbox or \fcolorbox)
 require you to handle page breaks by hand, meaning that you

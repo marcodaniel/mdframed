@@ -8,14 +8,14 @@
 %% Public License, as described in lppl.txt in the base LaTeX distribution.
 %% Either version 1.0 or, at your option, any later version.
 
-%%$Id: md-frame-0.mdf 219 2011-11-13 14:17:56Z marco $
-%%$Rev: 219 $
+%%$Id: md-frame-0.mdf 234 2011-11-26 23:10:52Z marco $
+%%$Rev: 234 $
 %%$Author: marco $
-%%$Date: 2011-11-13 15:17:56 +0100 (So, 13. Nov 2011) $
+%%$Date: 2011-11-27 00:10:52 +0100 (So, 27. Nov 2011) $
 
 \def\mdframedOpackagename{md-frame-0}
 \def\md@frameOdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
-\ProvidesFile{md-frame-0.mdf}[\md@frameOdate@svn$Id: md-frame-0.mdf 219 2011-11-13 14:17:56Z marco $ \mdversion: \mdframedOpackagename]
+\ProvidesFile{md-frame-0.mdf}[\md@frameOdate@svn$Id: md-frame-0.mdf 234 2011-11-26 23:10:52Z marco $ \mdversion: \mdframedOpackagename]
 
 %Hilfparameter
 \def\mdf@background@default{\color{\mdf@backgroundcolor}}
@@ -76,7 +76,7 @@
 \def\md@putbox@single{%%%%% Ausgabe der ungesplitteten Gesamtbox
   \ifvoid\@tempboxa
   \else%
-   \mdf@makebox[\linewidth]{%
+   \mdf@makebox[\md@horizontalspaceofbox]{%
       \mdf@makeboxalign@left%
       \setlength{\mdfboundingboxwidth}{\wd\@tempboxa}%
       \setlength{\mdfboundingboxtotalwidth}{\dimexpr\mdfboundingboxwidth+\mdf@innerleftmargin@length+\mdf@innerrightmargin@length\relax}%
@@ -145,7 +145,7 @@
 \def\md@putbox@first{%%%% Ausgabe der Teilbox 1
   \ifvoid\@tempboxa
   \else%
-   \mdf@makebox[\linewidth]{%
+   \mdf@makebox[\md@horizontalspaceofbox]{%
       \mdf@makeboxalign@left%
       \setlength{\mdfboundingboxwidth}{\wd\tw@}%
       \setlength{\mdfboundingboxtotalwidth}{\dimexpr\mdfboundingboxwidth+\mdf@innerleftmargin@length+\mdf@innerrightmargin@length\relax}%
@@ -213,7 +213,7 @@
 \def\md@putbox@second{%
   \ifvoid\@tempboxa%
   \else
-   \mdf@makebox[\linewidth]{%
+   \mdf@makebox[\md@horizontalspaceofbox]{%
       \mdf@makeboxalign@left%
       \setlength{\mdfboundingboxwidth}{\wd\@tempboxa}%
       \setlength{\mdfboundingboxtotalwidth}{\dimexpr\mdfboundingboxwidth+\mdf@innerleftmargin@length+\mdf@innerrightmargin@length\relax}%
@@ -271,7 +271,7 @@
 \def\md@putbox@middle{%
   \ifvoid\@tempboxa%
   \else
-   \mdf@makebox[\linewidth]{%
+   \mdf@makebox[\md@horizontalspaceofbox]{%
       \mdf@makeboxalign@left%
       \setlength{\mdfboundingboxwidth}{\wd\tw@}%
       \setlength{\mdfboundingboxtotalwidth}{\dimexpr\mdfboundingboxwidth+\mdf@innerleftmargin@length+\mdf@innerrightmargin@length\relax}%

@@ -32,17 +32,17 @@
 %%                                                 %%
 %%>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>%%
 
-%%$Id: mdframed.sty 230 2011-11-26 13:04:12Z marco $
-%%$Rev: 230 $
+%%$Id: mdframed.sty 234 2011-11-26 23:10:52Z marco $
+%%$Rev: 234 $
 %%$Author: marco $
-%%$Date: 2011-11-26 14:04:12 +0100 (Sa, 26. Nov 2011) $
+%%$Date: 2011-11-27 00:10:52 +0100 (So, 27. Nov 2011) $
 
 %% Allgemeine Angaben
 \def\mdversion{v1.0a}
 \def\mdframedpackagename{mdframed}
 \def\md@maindate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{mdframed}[\md@maindate@svn$Id: mdframed.sty 230 2011-11-26 13:04:12Z marco $ \mdversion: \mdframedpackagename]
+\ProvidesPackage{mdframed}[\md@maindate@svn$Id: mdframed.sty 234 2011-11-26 23:10:52Z marco $ \mdversion: \mdframedpackagename]
 %%==================================================%%
 %%=============== Benoetigte Pakete ================%%
 %%==================================================%%
@@ -376,6 +376,7 @@
 \let\md@lrbox\lrbox
 \patchcmd\md@lrbox\hbox\vbox{}{}
 \patchcmd\md@lrbox\color@setgroup{%
+\begingroup%
 \color@setgroup\color{\mdf@fontcolor}%
 \hsize=\md@horizontalspaceofbox%
 \columnwidth=\hsize%
@@ -383,7 +384,7 @@
 \linewidth=\hsize%
 \bgroup\md@@frametitle\egroup\noindent%
 }{}{}
-\def\endmd@lrbox{\unskip\color@endgroup}
+\def\endmd@lrbox{\endgroup\unskip\color@endgroup}
 
 %Anpassung trivlist
 \let\md@trivlist\trivlist
@@ -716,7 +717,7 @@
 \def\mdframed@i[#1]{% default-Umgebung
 \begingroup
 %check is needed?
-   \mdfsetup{userdefinedwidth=\linewidth,#1}%%
+   \mdfsetup{userdefinedwidth=\linewidth,#1}%%Ueberlegung- wie es besser geht!!!! WICHTIG
    \md@hidealllines@check%
    \mdf@settings%
    \md@twoside@checklength%
@@ -729,8 +730,8 @@
    \begin{md@trivlist}\item\relax%
    \md@checkntheorem%
    \md@styledefinition%
-   \md@horizontalmargin@equation%
    \md@footnoteinput%
+   \md@horizontalmargin@equation%
    \begin{md@lrbox}{\@tempboxa}%
    }%
 
@@ -739,12 +740,10 @@
       \def\md@reserveda{%
         \md@footnoteoutput%
         \end{md@lrbox}%
-%        \let\hsize\linewidth
         \detected@md@put@frame}%
     \else%
       \def\md@reserveda{%
-        \end{md@lrbox}
-%        \let\hsize\linewidth
+        \end{md@lrbox}%
         \detected@md@put@frame%
         \md@footnoteoutput%
         }%

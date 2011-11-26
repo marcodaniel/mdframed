@@ -8,16 +8,16 @@
 %% Public License, as described in lppl.txt in the base LaTeX distribution.
 %% Either version 1.0 or, at your option, any later version.
 
-%%$Id: md-frame-3.mdf 222 2011-11-13 18:03:53Z marco $
-%%$Rev: 222 $
+%%$Id: md-frame-2.mdf 234 2011-11-26 23:10:52Z marco $
+%%$Rev: 234 $
 %%$Author: marco $
-%%$Date: 2011-11-13 19:03:53 +0100 (So, 13. Nov 2011) $
+%%$Date: 2011-11-27 00:10:52 +0100 (So, 27. Nov 2011) $
 
 %%Allgemeine Einstellungen fuer pstricks
 %%Hier nur einfacher Rahmen mit Einstellungen
 \def\mdframedIIpackagename{md-frame-2}
 \def\md@frameIIdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
-\ProvidesFile{md-frame-2.mdf}[\md@frameIIdate@svn$Id: md-frame-3.mdf 222 2011-11-13 18:03:53Z marco $ \mdversion: \mdframedIIpackagename]
+\ProvidesFile{md-frame-2.mdf}[\md@frameIIdate@svn$Id: md-frame-2.mdf 234 2011-11-26 23:10:52Z marco $ \mdversion: \mdframedIIpackagename]
 %
 \def\md@ptlength@to@pscode#1{\pst@number{#1} \pst@number\psxunit div}
 \let\ptTps\md@ptlength@to@pscode\relax
@@ -63,7 +63,7 @@
 \def\md@putbox@single{%
   \ifvoid\@tempboxa
   \else%
-   \mdf@makebox[\linewidth]{%
+   \mdf@makebox[\md@horizontalspaceofbox]{%
     \mdf@makeboxalign@left%
         \ifbool{mdf@leftline}{\hspace*{\mdf@middlelinewidth@length}}{}%
         \setlength\mdfboundingboxwidth{\wd\@tempboxa}%
@@ -204,7 +204,7 @@
 \def\md@putbox@first{%
   \ifvoid\@tempboxa
   \else%
-   \mdf@makebox[\linewidth]{%
+   \mdf@makebox[\md@horizontalspaceofbox]{%
     \mdf@makeboxalign@left%
         \ifbool{mdf@leftline}{\hspace*{\mdf@middlelinewidth@length}}{}%
         \setlength\mdfboundingboxwidth{\wd\tw@}%
@@ -300,7 +300,7 @@
 \def\md@putbox@middle{%
   \ifvoid\@tempboxa
   \else%
-   \mdf@makebox[\linewidth]{%
+   \mdf@makebox[\md@horizontalspaceofbox]{%
     \mdf@makeboxalign@left%
         \ifbool{mdf@leftline}{\hspace*{\mdf@middlelinewidth@length}}{}%
         \setlength\mdfboundingboxwidth{\wd\tw@}%
@@ -349,7 +349,7 @@
 \def\md@putbox@second{
   \ifvoid\@tempboxa
   \else%
-   \mdf@makebox[\linewidth]{%
+   \mdf@makebox[\md@horizontalspaceofbox]{%
     \mdf@makeboxalign@left%
         \ifbool{mdf@leftline}{\hspace*{\mdf@middlelinewidth@length}}{}%
         \setlength\mdfboundingboxwidth{\wd\@tempboxa}%
