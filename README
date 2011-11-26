@@ -11,18 +11,7 @@ Author's name: Marco Daniel and Elke Schubert (tikz)
 License type: lppl
 
 ----------------------------
-v1.0
-- add option userdefinedwidth 
-- add option align 
-- add option apptotikzsetting 
-- create new command mdfapptodefinestyle (Thanks to Martin Scharrer)
-- changed internal algorithm
-- removed calc instead using e-TeX \dimexpr
-- expand documentation
-- trying to fixe problems with xcolor 
-- fixed bug with framemethod=pstricks 
-- create file mdframed-example-default 
-- create file mdframed-example-tikz 
-- create file mdframed-example-pstricks 
-- create file mdframed-example-texsx  (texsx stands for tex stackexchange)
+Current version on CTAN: v 1.0
+
+Current version on github: v 1.0a
 
