@@ -1,0 +1,113 @@
+%Documenation of the package mdframed
+%%$Id: mdframed-example-pstricks.tex 220 2011-11-13 17:39:13Z marco $
+\setcounter{errorcontextlines}{999}
+\documentclass[parskip=false,english,11pt]{ltxmdf}
+\svnInfo $Id: mdframed-example-pstricks.tex 220 2011-11-13 17:39:13Z marco $
+\usepackage{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[T1,altbullet]{lucidabr}
+\usepackage[scaled=0.82]{beramono}  
+
+\usepackage[]{showexpl}
+\lstset{style=lstmdframed,explpreset={pos=b,rframe={}},}
+
+\newcommand\Loadedframemethod{PSTricks}
+\usepackage[framemethod=\Loadedframemethod]{mdframed}
+
+\title{The \mdname package}
+\subtitle{Examples for \mdoption{framemethod=\Loadedframemethod}}
+\author{\href{mailto:marco.daniel@mada-nada.de}{Marco Daniel}}
+\version{\mdversion}
+\date{\svnToday}
+\introduction{In this document I collect various examples for \mdoption{framemethod=\Loadedframemethod}. 
+Some presented examples are more or less exorbitant.}
+
+
+\mdfsetup{skipabove=\topskip,skipbelow=\topskip}
+\newrobustcmd\ExampleText{%
+        An \textit{inhomogeneous linear} differential equation has the form
+         \begin{align}
+            L[v ] = f,
+         \end{align}
+        where $L$ is a linear differential operator, $v$ is
+        the dependent variable, and $f$ is a given non-zero 
+        function of the independent variables alone.
+}
+
+
+\newcounter{examplecount}
+\setcounter{examplecount}{0}
+\renewcommand\thesubsection{}
+\newcommand\Examplesec[1]{%
+\stepcounter{examplecount}%
+\subsection{Example~\arabic{examplecount}~--~#1\relax}%
+}
+
+\begin{document}
+\maketitle
+\section{Loading}
+In the preamble only the package \mdname width the option \mdoption{framemethod=\Loadedframemethod} is loaded. All other modifications will be done by \mdcommand{mdfdefinestyle} or \mdcommand{mdfsetup}.
+
+{\large\color{red!50!black}
+\NOTE Every \mdcommand{global} inside the examples is necessary to work with the package \mdpack{showexpl}.}
+
+\section{Examples}
+All examples have the following settings:
+
+\begin{mdexample}
+\mdfsetup{skipabove=\topskip,skipbelow=\topskip}
+\newrobustcmd\ExampleText{%
+An \textit{inhomogeneous linear} differential equation
+has the form
+\begin{align}
+L[v ] = f,
+\end{align}
+where $L$ is a linear differential operator, $v$ is
+the dependent variable, and $f$ is a given non-zero 
+function of the independent variables alone.
+}
+\end{mdexample}
+\clearpage
+\Examplesec{very simple}
+\begin{LTXexample}
+\global\mdfdefinestyle{exampledefault}{%
+     linecolor=red,linewidth=3pt,%
+     leftmargin=1cm,rightmargin=1cm
+}
+\begin{mdframed}[style=exampledefault,roundcorner=5]
+\ExampleText
+\end{mdframed}
+\end{LTXexample}
+
+
+\Examplesec{hidden line + frame title}
+\begin{LTXexample}
+\global\mdfapptodefinestyle{exampledefault}{%
+ topline=false,rightline=false,bottomline=false}
+\begin{mdframed}[style=exampledefault,frametitle={Inhomogeneous linear}]
+\ExampleText
+\end{mdframed}
+\end{LTXexample}
+
+\clearpage
+
+\Examplesec{Dash Lines}
+\begin{LTXexample}
+\global\mdfdefinestyle{exampledefault}{%
+   pstrickssetting={linestyle=dashed,},linecolor=red,linewidth=5pt}
+\begin{mdframed}[style=exampledefault,]
+\ExampleText
+\end{mdframed}
+\end{LTXexample}
+
+\Examplesec{Double Lines}
+\begin{LTXexample}
+\global\mdfdefinestyle{exampledefault}{%
+   pstrickssetting={doubleline=true,doublesep=3pt},
+   linecolor=red,linewidth=5pt}
+\begin{mdframed}[style=exampledefault,]
+\ExampleText
+\end{mdframed}
+\end{LTXexample}
+\end{document}

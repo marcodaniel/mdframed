@@ -1,0 +1,216 @@
+%Documenation of the package mdframed
+%%$Id: mdframed-example-tikz.tex 220 2011-11-13 17:39:13Z marco $
+\setcounter{errorcontextlines}{999}
+\documentclass[parskip=false,english,11pt]{ltxmdf}
+\svnInfo $Id: mdframed-example-tikz.tex 220 2011-11-13 17:39:13Z marco $
+\usepackage{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[T1,altbullet]{lucidabr}
+\usepackage[scaled=0.82]{beramono}  
+
+\usepackage[]{showexpl}
+\lstset{style=lstmdframed,explpreset={pos=b,rframe={}},}
+
+\newcommand\Loadedframemethod{TikZ}
+\usepackage[framemethod=\Loadedframemethod]{mdframed}
+
+\title{The \mdname package}
+\subtitle{Examples for \mdoption{framemethod=\Loadedframemethod}}
+\author{\href{mailto:marco.daniel@mada-nada.de}{Marco Daniel}}
+\version{\mdversion}
+\date{\svnToday}
+\introduction{In this document I collect various examples for \mdoption{framemethod=\Loadedframemethod}. 
+Some presented examples are more or less exorbitant.}
+
+
+\mdfsetup{skipabove=\topskip,skipbelow=\topskip}
+\newrobustcmd\ExampleText{%
+        An \textit{inhomogeneous linear} differential equation has the form
+         \begin{align}
+            L[v ] = f,
+         \end{align}
+        where $L$ is a linear differential operator, $v$ is
+        the dependent variable, and $f$ is a given non-zero 
+        function of the independent variables alone.
+}
+
+
+\newcounter{examplecount}
+\setcounter{examplecount}{0}
+\renewcommand\thesubsection{}
+\newcommand\Examplesec[1]{%
+\stepcounter{examplecount}%
+\subsection{Example~\arabic{examplecount}~--~#1\relax}%
+}
+
+\begin{document}
+\maketitle
+\section{Loading}
+In the preamble only the package \mdname width the option \mdoption{framemethod=\Loadedframemethod} is loaded. All other modifications will be done by \mdcommand{mdfdefinestyle} or \mdcommand{mdfsetup}.
+
+{\large\color{red!50!black}
+\NOTE Every \mdcommand{global} inside the examples is necessary to work with the package \mdpack{showexpl}.}
+
+\section{Examples}
+All examples have the following settings:
+
+\begin{mdexample}
+\mdfsetup{skipabove=\topskip,skipbelow=\topskip}
+\newrobustcmd\ExampleText{%
+An \textit{inhomogeneous linear} differential equation
+has the form
+\begin{align}
+L[v ] = f,
+\end{align}
+where $L$ is a linear differential operator, $v$ is
+the dependent variable, and $f$ is a given non-zero 
+function of the independent variables alone.
+}
+\end{mdexample}
+\clearpage
+\ExampleText{round corner}
+\begin{LTXexample}
+\global\mdfdefinestyle{exampledefault}{%
+     outerlinewidth=5pt,innerlinewidth=0pt,
+     outerlinecolor=red,roundcorner=5pt
+}
+\begin{mdframed}[style=exampledefault]
+\ExampleText
+\end{mdframed}
+\end{LTXexample}
+
+\Examplesec{hidden line + frame title}
+\begin{LTXexample}
+\global\mdfapptodefinestyle{exampledefault}{%
+ topline=false,leftline=false,}
+\begin{mdframed}[style=exampledefault,frametitle={Inhomogeneous linear}]
+\ExampleText
+\end{mdframed}
+\end{LTXexample}
+
+\clearpage
+\Examplesec{Gimmick}
+\begin{LTXexample}
+\mdfsetup{splitbottomskip=0.8cm,splittopskip=0cm,
+          innerrightmargin=2cm,innertopmargin=1cm,%
+          innerlinewidth=2pt,outerlinewidth=2pt,
+          middlelinewidth=10pt,backgroundcolor=red,
+          linecolor=blue,middlelinecolor=gray,
+          tikzsetting={draw=yellow,line width=3pt,%
+                    dashed,%
+                    dash pattern= on 10pt off 3pt},
+          rightline=false,bottomline=false}
+\begin{mdframed}
+\ExampleText
+\end{mdframed}
+\end{LTXexample}
+
+
+\Examplesec{complex example with TikZ}
+
+\begin{mdexample}
+\tikzstyle{titregris} =
+          [draw=gray, thick, fill=white, shading = exersicetitle, %
+           text=gray, rectangle, rounded corners,
+           right,minimum height=.7cm]
+
+\pgfdeclarehorizontalshading{exersicebackground}{100bp}
+{color(0bp)=(green!40);
+color(100bp)=(black!5)}
+
+\pgfdeclarehorizontalshading{exersicetitle}{100bp}
+{color(0bp)=(red!40);
+color(100bp)=(black!5)}
+
+\newcounter{exercise}
+\renewcommand\theexercise{Exercise~n\arabic{exercise}}
+\makeatletter
+\def\mdf@@exercisepoints{}
+\define@key{mdf}{exercisepoints}{%
+    \def\mdf@@exercisepoints{#1}
+}
+\renewrobustcmd\mdfcreateextratikz{%
+      \node[titregris,xshift=1cm] at (P-|O) %
+           {~\mdf@frametitlefont{\theexercise}~};
+      \ifdefempty{\mdf@@exercisepoints}%
+      {}%
+      {\node[titregris,left,xshift=-1cm] at (P)%
+        {~\mdf@frametitlefont{\mdf@@exercisepoints points}~};}%
+}
+\makeatother
+
+\mdfdefinestyle{exercisestyle}{%
+  outerlinewidth=1pt,
+  innerlinewidth=0pt,
+  roundcorner=2pt,
+  linecolor=gray,
+  tikzsetting={shading = exersicebackground},
+  innertopmargin=1.2\baselineskip,
+  skipabove={\dimexpr0.5\baselineskip+\topskip\relax},
+  needspace=3\baselineskip,
+  frametitlefont=\sffamily\bfseries,
+  settings={\global\stepcounter{exercise}},
+  }
+
+\begin{mdframed}[style=exercisestyle,]
+\ExampleText
+\end{mdframed}
+
+\begin{mdframed}[style=exercisestyle,exercisepoints=10]
+\ExampleText
+\end{mdframed}
+\end{mdexample}
+
+\tikzstyle{titregris} =
+          [draw=gray, thick, fill=white, shading = exersicetitle, %
+           text=gray, rectangle, rounded corners,
+           right,minimum height=.7cm]
+
+\pgfdeclarehorizontalshading{exersicebackground}{100bp}
+{color(0bp)=(green!40);
+color(100bp)=(black!5)}
+
+\pgfdeclarehorizontalshading{exersicetitle}{100bp}
+{color(0bp)=(red!40);
+color(100bp)=(black!5)}
+
+\newcounter{exercise}
+\renewcommand\theexercise{Exercise~n\arabic{exercise}}
+\makeatletter
+\def\mdf@@exercisepoints{}
+\define@key{mdf}{exercisepoints}{%
+    \def\mdf@@exercisepoints{#1}
+}
+\renewrobustcmd\mdfcreateextratikz{%
+      \node[titregris,xshift=1cm] at (P-|O) {~\textbf{\theexercise}~};
+      \ifdefempty{\mdf@@exercisepoints}%
+      {}%
+      {\node[titregris,left,xshift=-1cm] at (P)%
+        {~\mdf@frametitlefont{\mdf@@exercisepoints points}~};}%
+}
+\makeatother
+
+\mdfdefinestyle{exercisestyle}{%
+  outerlinewidth=1pt,
+  innerlinewidth=0pt,
+  roundcorner=2pt,
+  linecolor=gray,
+  tikzsetting={shading = exersicebackground},
+  innertopmargin=1.2\baselineskip,
+  skipabove={\dimexpr0.5\baselineskip+\topskip\relax},
+  needspace=3\baselineskip,
+  frametitlefont=\sffamily\bfseries,
+  settings={\global\stepcounter{exercise}},
+  }
+
+\begin{mdframed}[style=exercisestyle,]
+\ExampleText
+\end{mdframed}
+
+\begin{mdframed}[style=exercisestyle,exercisepoints=10]
+\ExampleText
+\end{mdframed}
+
+
+\end{document}

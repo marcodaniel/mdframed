@@ -1,0 +1,805 @@
+%Documenation of the package mdframed
+%%$Id: mdframed-doc-en.tex 227 2011-11-26 11:04:37Z marco $
+\setcounter{errorcontextlines}{999}
+\documentclass[parskip=false,english,11pt]{ltxmdf}
+\svnInfo $Id: mdframed-doc-en.tex 227 2011-11-26 11:04:37Z marco $
+\usepackage{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lipsum}
+\usepackage[T1,altbullet]{lucidabr}
+\usepackage[scaled=0.82]{beramono}  
+
+\usepackage[framemethod=TikZ]{mdframed}
+
+\title{The \mdname package\footnote{Extending the package \texttt{framed.sty}}
+\subtitle{auto-split frame environment}
+\author{\href{mailto:marco.daniel@mada-nada.de}{Marco Daniel}%
+       \footnote{With thanks to Heiko Oberdiek, Rolf Niepraschk,
+                 Martin Scharrer and Herbert Voss.\newline Sorry for bad English.}
+          \href{mailto:marco.daniel@mada-nada.de}{Elke Schubert}}}
+\version{\mdversion}
+\date{\svnToday}
+\introduction{The standard methods for framing text (\mdcommand{fbox} or \mdcommand{fcolorbox}) require you to handle page breaks by hand, meaning that you have to split the \mdcommand{fbox} into two. The present package defines the environment \mdname which automatically deals with pagebreaks in framed text.\par
+By defining new environments the user may choose between several individual designs.%
+\par\kern.5\baselineskip\noindent
+Linked files:\quad \begin{tabular}[t]{ll}
+            \url{mdframed-example-default.pdf} &
+            \url{mdframed-example-tikz.pdf} \\
+            \url{mdframed-example-pstricks.pdf}  &
+            \url{mdframed-example-texsx.pdf}
+            \end{tabular}
+}
+
+
+
+
+\begin{document}
+\maketitle
+
+\vspace{2\baselineskip}
+\section{Motivation}
+Many users wish to (further) emphasize lemmata, definitions, proofs, etc. The package \mdname allows you to create environments with breakable frames. I think an example is the best way to demonstrate its properties.
+
+
+%\newtheorem{mdtheorem}{Theorem}[section]
+\newmdtheoremenv[outerlinewidth=2,leftmargin=40,rightmargin=40,%
+    backgroundcolor=yellow,outerlinecolor=blue,innertopmargin=0pt,%
+    splittopskip=\topskip,skipbelow=\baselineskip,%
+    skipabove=\baselineskip,ntheorem,roundcorner=5pt]{theorem}{Theorem}[section]
+
+\begin{theorem}[Pythagorean theorem]
+ In any right triangle, the area of the square whose side is the hypotenuse
+ is equal to the sum of the areas of the squares whose sides are the two legs.
+ 
+\[ a^2+b^2=c^2 \]
+\end{theorem}
+
+The frame was defined with the following settings.
+
+\begin{mdexample}
+\newmdtheoremenv[outerlinewidth=2,leftmargin=40,%
+    rightmargin=40,backgroundcolor=yellow,%
+    outerlinecolor=blue,innertopmargin=0pt,%
+    splittopskip=\topskip,skipbelow=\baselineskip,%
+    skipabove=\baselineskip,ntheorem]{theorem}%
+    {Theorem}[section]
+\begin{theorem}[Pythagorean theorem]
+...
+\end{theorem}
+\end{mdexample}
+
+
+\section{Syntax}\label{sec:syntax}
+The package itself loads the packages \mdpack{kvoptions}, \mdpack{etoolbox} and \mdpack{color}.
+By setting the correct options \mdpack{mdframed} will load \mdpack{xcolor}, \mdpack{tikz} or \mdpack{pstricks}.
+
+Load the package as usual:
+\begin{mdexample}
+ \usepackage[<GLOBAL OPTIONS>]{mdframed}
+\end{mdexample}
+
+The package defines only one environment with the following syntax:
+\begin{mdexample}
+ \begin{mdframed}[<LOCAL OPTIONS>]
+    <CONTENT>
+ \end{mdframed}
+\end{mdexample}
+To create own environments with \mdpack{mdframed} see section \ref{sec:cmds}.
+
+\minisec{Autodetecting floats}
+I added a detection of \mdpack{float} or \mdpack{minipage} environments. If you use \mdname in such an environment \mdname will use the option \mdoption{nobreak} automaticly. 
+
+\minisec{Twoside-mode}
+When you are using \mdname inside \mdpack{twoside} mode you  can set the option \mdoption{innermargin}
+and \mdoption{outermargin} (see section \ref{optlength}).
+
+%%%%%%%%%%%%%%%%%%%%%%%
+\section{Commands}\label{sec:cmds}
+The following commands should countenance your by the handling with \mdpack{mdframed}
+
+\mdDescribeCmd[]{newmdenv} The command has the following syntax:
+\begin{mdexample}
+\newmdenv[<MDFRAMED OPTIONS>]{Name of the environment}
+\end{mdexample}
+In this way you can simply use:
+\begin{mdexample}
+ \newmdenv[linecolor=red,frametitle=Infobox]{infobox}
+ ...
+ \begin{infobox}[backgroundcolor=yellow]
+  foo   foo   foo   foo   foo   foo 
+ \end{infobox}
+\end{mdexample}
+\mdDescribeCmd[]{renewmdenv} By using this command you can redefine environments which are created by \mdcommand{newmdenv}.
+
+\mdDescribeCmd[]{newmdtheoremenv} 
+Since the package is often used to highlight theorem environments, I have created a command\footnote{Thanks to Martin Scharrer and Enrico Gregorio:\newline \href{http://tex.stackexchange.com/questions/26298/own-command-to-create-new-environment}{Own command to create new environment}} to simplify this process. The command has the following syntax:
+
+\begin{mdexample}[deletekeywords={mdframed}]
+\newmdtheoremenv[<mdframed-options>]{<envname>}%
+                [<numberedlike>]{<caption>}[<within>]
+\end{mdexample}
+The last four arguments are equivalent to the command \mdcommand{newtheorem}. Only the first optional argument is able to pass \mdpack{mdframed}-options. A simple example is:
+\begin{mdexample}
+\theoremstyle{<some style>}
+\newmdtheoremenv[linecolor=blue]{lemma}%
+                {Lemma}[section]
+... 
+\begin{lemma}[Some title]
+  foo   foo   foo   foo   foo   foo
+\end{lemma}
+\end{mdexample}
+So far there is no \mdcommand{renewmdtheoremenv}!
+
+
+\mdDescribeMacro{\textbackslash mdfsetup}To set the options 
+you can use the optional argument of \mdcommand{usepackage} or
+you can use the command \mdcommand{mdfsetup} which is not limited to the preamble. Inside a group the settings work only local.
+
+\mdDescribeMacro{\textbackslash mdfdefinestyle} \mdcommand{mdfdefinestyle} allows the user to define different styles and use as an option of \mdpack{mdframed} via \mdoption{style}. The option \mdoption{style} is explained in section \ref{genopt}.
+
+Here a small example:
+\begin{mdexample}[morekeywords={mystyle}]
+\mdfdefinestyle{mystyle}{leftmargin=0pt,%
+                         linecolor=blue}
+....
+\begin{mdframed}[style=mystyle]
+foo
+\end{mdframed}
+\end{mdexample}
+
+\mdDescribeMacro{\textbackslash mdfapptodefinestyle} This commands allows to expand a defined style.\footnote{Thanks to Martin Scharrer and Enrico Gregorio:\newline \href{http://tex.stackexchange.com/questions/34684/argument-of-setkeys}{http://tex.stackexchange.com/questions/34684/argument-of-setkeys}}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%
+\section{Options}
+The package provides various options to manipulate frames. In the following section all options are listed. Some internal macros which can be manipulated are not shown in this documentation.
+The listed option are divided in global and local options. The global options can not be used inside \mdcommand{mdfsetup}.
+
+\subsection{Global Options}\label{globopt}
+The following options are only global options.
+
+\mdDescribeMacro[none]{xcolor}
+By setting this key, the package \mdpack{xcolor} will
+be loaded with the given value(s). Without any value \mbox{\mdname} loads
+the package \mdpack{color} without any options. If the package \mdpack{xcolor} is already loaded the given option will be ignored. I recommend to load \mdpack{xcolor} before \mdname.
+
+\mdDescribeMacro[default]{framemethod} 
+With this key you can change the way frames are drawn. You can decide whether the frame is drawn with
+\begin{enumerate}
+ \item \LaTeX-commands {\small\mdcommand{hrule}, \mdcommand{vrule}, \mdcommand{rule}},
+ \item \mdpack{TikZ} {\small(the package \mdpack{TikZ} will be loaded)} or
+ \item \mdpack{PSTricks} {\small(the package \mdpack{pstricks} will be loaded)}.
+\end{enumerate}
+The option \mdoption{framemethod} requires a string. Allowed combinations are listed in the following table.
+\begin{table}[!ht]
+\centering
+\renewcommand*\arraystretch{1.3}
+\caption{Allowed keys for \mdoption{framemethod}}
+\begin{tabular}{@{}>{\small\bfseries}l>{\small\ttfamily}l@{}}
+\toprule
+\multicolumn{1}{@{}l}{\textbf{Method}} & \multicolumn{1}{l}{Allowed keys} \\\midrule
+\LaTeX-commands   & default, tex, latex, none, 0  \\
+\mdpack{TikZ}     & tikz, pgf, 1                  \\
+\mdpack{PSTricks} & pstricks, ps, postscript, 2   \\\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent{\small\textbf{FYI}\qquad It is independently whether the \texttt{method} is written with no, one or more capital letter.}
+
+\NOTE  The manipulation of the frames depends on the option \mdoption{framemethod}. For further information see below.
+
+\subsection{Global and Local Options}
+The options listed below can be set globally or locally and they are not limited to the preamble.
+
+\subsubsection{Options with lengths}\label{optlength}
+
+In figure \eqref{fig:laengen} you can see the adjustable lengths which will be described below. 
+All lengths accept two kinds of input. The first one is a length (e.g. 2pt) and
+the second one is a number (e.g. 2) which will be multiplied by \mdoption{1 defaultunit}.
+The figure shows three different colored frames. Only \mdoption{framemethod=tikz} is able to draw such triple lines.
+
+I know that the predefined lengths are not well prepared. Maybe I will change it later.
+
+\mdDescribeMacro[pt]{defaultunit} see the sentence above.
+
+\begin{center}
+% \includegraphics{laengen}
+\begin{tikzpicture}[scale=0.9]
+     %Declaration
+     \newlength{\linew}
+     \setlength{\linew}{5pt}
+     \tikzstyle{every node}=[font=\bfseries\large\sffamily]
+     \coordinate (innersep) at (3.2,2.25);
+     \coordinate (outersep) at (3.2,2);
+     %Center
+     \node[fill=green!10,draw=black,framed,rounded corners,minimum width=3cm,minimum height=1.5cm]%
+           (CenterNode) {Contents};
+     
+     %frames
+     \draw[draw=red!70!black,line width=\linew] %
+               ($(CenterNode)+(innersep)$) %
+               rectangle ($(CenterNode)-(innersep)$);
+     \draw[draw=blue!70!black,line width=\linew] %
+               ($(CenterNode)+(innersep)+(\linew,\linew)$)%
+               rectangle ($(CenterNode)-(innersep)+(-\linew,-\linew)$);
+     \draw[draw=yellow!70!black,line width=\linew]
+               ($(CenterNode)+(innersep)+(2\linew,2\linew)$)%
+               rectangle ($(CenterNode)-(innersep)+(-2\linew,-2\linew)$);
+     \draw[draw=black,line width=1] ($(CenterNode)+(innersep)+(outersep)$)%
+               rectangle ($(CenterNode)-(innersep)-(outersep)$);
+     
+     
+     \tikzstyle{every node}=[font=\small\ttfamily]
+     %%innertopmargin
+     \draw[draw=black,triangle 45-triangle 45]let \p1=(innersep) in
+           (CenterNode.north)  -- ($(CenterNode)+(0,\y1)-(0,.5\linew)$) ;
+     \path let \p1=(innersep) in
+           (CenterNode.north)  edge node[align=center,framed,fill=white,draw=white]{innertopmargin} 
+           ($(CenterNode)+(0,\y1)-(0,.5\linew)$) ;
+     %%innerbottommargin
+     \draw[draw=black,triangle 45-triangle 45]let \p1=(innersep) in
+           (CenterNode.south)  -- ($(CenterNode)-(0,\y1)+(0,.5\linew)$) ;
+     \path let \p1=(innersep) in
+           (CenterNode.south)  edge node[align=center,framed,fill=white,draw=white]{innerbottommargin} 
+           ($(CenterNode)-(0,\y1)+(0,.5\linew)$) ;
+     
+     %%innerleftmargin
+     \draw[draw=black,triangle 45-triangle 45]let \p1=(innersep) in
+           (CenterNode.west)  -- ($(CenterNode)-(\x1,0)+(.5\linew,0)$) ;
+     \path let \p1=(innersep) in
+           (CenterNode.west)  edge 
+           node[align=center,rotate=90,framed,fill=white,draw=white]{innerleftmargin}  
+           ($(CenterNode)-(\x1,0)+(.5\linew,0)$) ;
+     %%innerrightmargin
+     \draw[draw=black,triangle 45-triangle 45]let \p1=(innersep) in
+           (CenterNode.east)  -- ($(CenterNode)+(\x1,0)-(.5\linew,0)$) ;
+     \path let \p1=(innersep) in
+           (CenterNode.east)  edge
+           node[align=center,rotate=90,framed,fill=white,draw=white]{innerrightmargin}  
+           ($(CenterNode)+(\x1,0)-(.5\linew,0)$) ;
+     
+     
+     %%leftmargin
+     \draw[draw=black,triangle 45-triangle 45]let \p1=(innersep) , \p2=(outersep) in
+           ($(CenterNode)-(\x1,0)-(2.5\linew,0)$)  -- ($(CenterNode)-(\x1,0)-(\x2,0)$) ;
+     \path let \p1=(innersep) , \p2=(outersep) in
+           ($(CenterNode)-(\x1,0)-(2.5\linew,0)$)  edge 
+           node[align=center,rotate=0,framed,fill=white,draw=white]{leftmargin}  
+           ($(CenterNode)-(\x1,0)-(\x2,0)$) ;
+     %%rightmargin
+     \draw[draw=black,triangle 45-triangle 45]let \p1=(innersep) , \p2=(outersep) in
+           ($(CenterNode)+(\x1,0)+(2.5\linew,0)$)  -- ($(CenterNode)+(\x1,0)+(\x2,0)$) ;
+     \path let \p1=(innersep) , \p2=(outersep) in
+           ($(CenterNode)+(\x1,0)+(2.5\linew,0)$)  edge 
+           node[align=center,rotate=0,framed,fill=white,draw=white]{rightmargin}  
+           ($(CenterNode)+(\x1,0)+(\x2,0)$)  ;
+     
+     %%skipabove
+     \draw[draw=black,triangle 45-triangle 45]let \p1=(innersep) , \p2=(outersep) in
+           ($(CenterNode)+(0,\y1)+(0,2.5\linew)$)  -- ($(CenterNode)+(0,\y1)+(0,\y2)$) ;
+     \path let \p1=(innersep) , \p2=(outersep) in
+           ($(CenterNode)+(0,\y1)+(0,2.5\linew)$)  edge 
+           node[align=center,rotate=0,framed,fill=white,draw=white]{skipabove}  
+           ($(CenterNode)+(0,\y1)+(0,\y2)$) ;
+     %%skipbelow
+     \draw[draw=black,triangle 45-triangle 45]let \p1=(innersep) , \p2=(outersep) in
+           ($(CenterNode)-(0,\y1)-(0,2.5\linew)$)  -- ($(CenterNode)-(0,\y1)-(0,\y2)$) ;
+     \path let \p1=(innersep) , \p2=(outersep) in
+           ($(CenterNode)-(0,\y1)-(0,2.5\linew)$)  edge 
+           node[align=center,rotate=0,framed,fill=white,draw=white]{skipbelow}  
+           ($(CenterNode)-(0,\y1)-(0,\y2)$) ;
+\end{tikzpicture}
+
+ \captionof{figure}{adjustable lengths of \mdname}
+ \label{fig:laengen}
+\end{center}
+
+\mdDescribeMacro[0pt]{skipabove} Sets an additional skip above the frame.
+\mdDescribeMacro[0pt]{skipbelow} Sets an additional skip below the frame.
+\mdDescribeMacro[]{margin} This option is not longer supported. Use \mdoption{leftmargin}
+                           and \mdoption{rightmargin} instead.
+\mdDescribeMacro[0pt]{leftmargin} Sets the length of the left margin of the environment.
+\mdDescribeMacro[0pt]{rightmargin} Sets the length of the right margin of the environment.
+
+\mdDescribeMacro[10pt]{innerleftmargin} Sets the length of the inner left margin of the environment.
+\mdDescribeMacro[10pt]{innerrightmargin} Sets the length of the inner right margin of the environment.
+\mdDescribeMacro[.4\textbackslash baselineskip]{innertopmargin} Sets the length of the inner top margin of the environment.
+\mdDescribeMacro[.4\textbackslash baselineskip]{innerbottommargin} Sets the length of the inner bottom margin of the environment.
+
+\paragraph*{The following lengths are not shown in figure \eqref{fig:laengen}.}
+
+\mbox{}
+\mdDescribeMacro[0pt]{userdefinedwidth} Sets the width of the whole \mdname environment. The width represent the width including the line width and the inner margins. The outer margins will be ignored.
+
+\mdDescribeMacro{outermargin} Sets the length of the outer margin. This option is only available in \texttt{twoside}-mode.
+\mdDescribeMacro{innermargin} Sets the length of the inner margin. This option is only available in \texttt{twoside}-mode.
+
+
+\mdDescribeMacro[0pt]{splittopskip} Sets the length of the skip above the split part of the environment.
+\mdDescribeMacro[0pt]{splitbottomskip} Sets the length of the skip below the split part of the environment.
+\mdDescribeMacro[0.4pt]{linewidth} Sets the width of the line around the environment.
+\mdDescribeMacro[0pt]{roundcorner} Sets the size of the radius of the corners of the frames.
+                                   \limitation[TikZ or PSTricks]
+\mdDescribeMacro[0pt]{innerlinewidth} Sets the width of the inner line around the environment.
+                                     \limitation
+\mdDescribeMacro[0pt]{outerlinewidth} Sets the width of the outer line around the environment.
+                                      \limitation
+\mdDescribeMacro[linewidth]{middlelinewidth} Sets the width of the middle line around the environment.\limitation
+
+
+\subsubsection{Colored Options}
+\mdDescribeMacro[black]{linecolor} Sets the color of the line around the environment.
+\mdDescribeMacro[white]{backgroundcolor} Sets the color of the background of the environment.
+\mdDescribeMacro[black]{fontcolor} Sets the color of the contents of the environment.
+\mdDescribeMacro[linecolor]{innerlinecolor} Sets the color of the inner line around the environment.
+                                        \limitation
+\mdDescribeMacro[\newline linecolor]{middlelinecolor} Sets the color of the middle line around the environment. \limitation
+\mdDescribeMacro[\newline linecolor]{outerlinecolor} Sets the color of the outer line around the environment.\limitation
+
+
+\subsubsection{General options}\label{genopt}
+
+\mdDescribeMacro[false]{ntheorem} Before setting this boolean key, you have to load the package \mdpack{ntheorem}. 
+
+                                 With this option you set the values \mdcommand{theorempreskipamount}
+                                 and\newline \mdcommand{theorempostskipamount} to 0\;pt.
+                                 
+\mdDescribeMacro[false]{nobreak} Sometimes it is useful to prevent a frame from splitting.  The \mdoption{nobreak} option is used for this purpose. If you activate this option you can enable it by setting \mdoption{nobreak=false}.
+
+
+\mdDescribeMacro[0pt]{needspace} Sometimes it is useful to set a minimum height before a frame should be splitted. For such cases you can use \mdoption{needspace}. The option requires a length which sets the minimum height before a frame will be splitted.
+
+\mdDescribeMacro{style} If you define a special style with \mdcommand{mdfdefinstyle} you can use the key \mdoption{style} to load the style. \mdname has no predefined styles.
+
+%%\mdDescribeMacro[none]{settings} With version 0.9 of the package \mdname this option was added. This option allows the user to commit some macros. An example is shown in the appendix.
+
+%\mdDescribeMacro[none]{printheight} This key allows the entries \texttt{none}, \texttt{info} or \texttt{warning}. In relation to the key the vertical space at the beginning of the environment \mdname on the current page will be printed in the \texttt{log} file.
+
+\mdDescribeMacro[left]{align} Sometimes it is useful to align the environment itself. For this you have the option \mdoption{align} which can be set to the following strings: \mdoption{left}, \mdoption{right} and \mdoption{center}. The alignments \mdoption{left} or \mdoption{right} depend on the given lengths \mdoption{leftmargin} and \mdoption{rightmargin}. Later I will present an example to demonstrate my bad English explanation.
+
+\mdDescribeMacro[none]{pstrickssetting} With this key you can pass several options to \mdcommand{psset}. For example 
+                                        if you want all lines dashed you will have to set 
+                                        \mdoption{pstrickssetting=\{linestyle=dashed\}}. It is very important
+                                        to put the options of \mdoption{pstrickssetting} in brackets.
+                                        \limitation[PSTricks]
+\mdDescribeMacro[none]{tikzsetting} With this key you can pass several options to \mdcommand{tikzset}. Some examples are listed in the next section. It is very important
+                                        to put the options of \mdoption{tikzsetting} in brackets.
+                                        \limitation
+                                        
+\mdDescribeMacro[none]{apptotikzsetting} With this key you can add several options to \mdoption{tikzsetting}. This key based on the idea of manipulation of predefined keys of \mdname.
+The package \mdname defines via \mdcommand{tikzset} the following keys to draw frames.
+\begin{itemize}
+ \item \mdcommand{tikzset\{mdfbox/.style\}}
+ \item \mdcommand{tikzset\{mdfcorners./style\}}
+ \item \mdcommand{tikzset\{mdfbackground./style\}}
+ \item \mdcommand{tikzset\{mdfinnerline./style\}}
+ \item \mdcommand{tikzset\{mdfouterline./style\}}
+ \item \mdcommand{tikzset\{mdfmiddleline./style\}}
+\end{itemize}
+\textbf{Before you change one please have a look at the file \texttt{md-frame-1.mdf} to see the settings.}\limitation
+
+\subsection{Hidden Lines}
+
+
+\mdDescribeMacro[true]{topline} Draws a line at the top.
+\mdDescribeMacro[true]{bottomline} Draws a line at the bottom.
+\mdDescribeMacro[true]{leftline} Draws a line on the left.
+\mdDescribeMacro[true]{rightline} Draws a line on the right.
+
+\mdDescribeMacro[false]{hidealllines} With this option you can decide whether all lines should be drawn or not. 
+
+\subsection{Frametitle}
+
+
+\mdDescribeMacro[none]{frametitle} The environment gets a title. To set a title use \mdoption{frametitle=\{The Title of the frame\}} as an option of the environment.
+\mdDescribeMacro[\mbox{} \mdcommand{bfseries}\mdcommand{large}]{frametitleformat} Sets the format of the \mdoption{frametitle}.
+
+\subsection{Footnotes}
+Inside the environment you can use the command \mdcommand{footnote} as usual. \mdname uses the syntax of environment \mdpack{minipage} with the same counter.
+
+Every footnote text will be collected inside a box and will be displayed at the end of the environment \mdname. 
+
+\mdDescribeMacro[\mbox{} \mdcommand{bigskipamount}]{footnotedistance} The length is the distance between the end of the environement \mdname and the displaying of the \mdcommand{footnoterule}.
+
+\mdDescribeMacro[true]{footnoteinside} The position of the footnotes can be changed with the option \mdoption{footnoteinside}. The footnotes will be displayed at the end of the environment but you can decide whether the output is inside \mdname or after.
+
+\vskip\baselineskip
+\noindent\textbf{Note}\qquad  The ouput of the footnotes with the option \mdoption{footnoteinside=false} are not in a splitted frame. I think it isn't useful because the first line of a new page shouldn't be a footnote.
+
+\section{Examples}
+
+I outsource the examples in four files to limit the documentation. The files are
+\begin{description}[style=nextline]
+\item[\texttt{mdframed-example-default}] Demonstration of examples created with \mdoption{framemethod=default}.
+\item[\texttt{mdframed-example-tikz}] Demonstration of examples created with \mdoption{framemethod=TikZ}.
+\item[\texttt{mdframed-example-pstricks}] Demonstration of examples created with \mdoption{framemethod=pstricks}.
+\item[\texttt{mdframed-example-texsx}] Demonstration of examples like interaction with \mdpack{listings}
+\end{description}
+
+The examples are often not equivalent but normally they can be adapted to another method.
+
+\section{Errors, Warnings and Messages}
+
+The package \mdpack{mdframed} provides different errors, warnings and
+messages in the \texttt{log}-file. Some \LaTeX-editors like
+\TeX Maker or \TeX Studio have a special tab for errors and warnings
+but not for messages. So you should look in the \texttt{log-File} itself.
+
+The followings errors and warnings are generated by \mdpack{mdframed}.
+
+\begin{mdexample}
+  The package ...  does not exist but
+   needed by mdframed
+\end{mdexample}        
+To avoid this problem you should install the required
+packages which are listed in section \ref{sec:syntax}.
+
+\begin{mdexample}
+  package option style is depreciated
+  use framemethod instead style
+\end{mdexample}    
+With version 0.9d \mdname changed the meaning of the option \mdoption{style}. The option is used to load a defined style by \mdcommand{mdfdefinestyle}. Instead use \mdoption{framemethod} (see section \ref{globopt}). 
+
+\begin{mdexample}
+ Unknown framemethod .... mdframed
+\end{mdexample}   
+The input string for the option \mdoption{framemethod} is unkown. See section \ref{globopt}.
+
+\begin{mdexample}
+  You have not loaded ntheorem yet
+\end{mdexample}   
+To use the option \mdoption{ntheorem} you have to 
+load the package \mdpack{ntheorem}.
+
+\begin{mdexample}
+ You have only a width of 3cm
+\end{mdexample}   
+The package \mdpack{mdframed} calculates the width of the contents
+based on the given options. If the width of the contents smaller than
+3\,cm you will get this warnings. You should change the 
+settings to get a greater width.
+
+\begin{mdexample}
+ You got a bad break
+ you have to change it manually
+ by changing the text, the space
+ or something else
+\end{mdexample} 
+Sometimes you have enough vertical space for the rules and the space
+between the rules and the contents but not for the contents itself.
+In this situation you will get this warning because the contents
+of this box is empty. You have the possibility to change the
+settings or include a \mdcommand{clearpage} in front of 
+the environment \mdpack{mdframed}.
+So far I have no idea how to avoid such things.
+
+\begin{mdexample}
+ You got a bad break
+ because the split box is empty
+ You have to change the page settings
+ like enlargethispage or something else
+ You got a bad break
+\end{mdexample} 
+See the explanation above.
+
+\begin{mdexample}
+ You got a bad break
+ because the last split box is empty
+ You have to change the settings
+\end{mdexample} 
+The same reason as above but only in the last box.
+
+
+\begin{mdexample}
+ Option ... is already consumed
+ and has no effect on input line ...
+\end{mdexample} 
+If you set a global option inside the document
+body you will get this warning.
+
+\section{Known Problems}
+ In this section I will collect known problems. In case you encounter any further problems, please
+ drop me an email, \href{mailto:marco.daniel@mada-nada.de}{marco.daniel at mada-nada.de}.
+
+   Do you have any ideas / wishes on further extensions to this package? Please let me know!
+
+\begin{enumerate}
+ \item So far the environment isn't compatible with the package \mdpack{gmverb}.
+\end{enumerate}
+
+
+\section{ToDo}
+\begin{enumerate}
+  \item see \glqq Known Problems\grqq.
+ \item So far it isn't possible to combine the environment  \mdcommand{begin\{multicols\}} of the package \mdpack{multicol} with \mdpack{mdframed} with the whole option list.
+  \item Create new styles.
+  \item Improve page breaks.
+  \item Improve footnotes
+  \item Improve documentation and examples 
+  \item Create styles for \mdoption{frametitle}
+\end{enumerate}                
+
+\section{Previous versions}
+If you have trouble with the new version of \mdname you can load \texttt{mdframedpre} instead. In this way you load the version v0.6 (see \nameref{rev}).
+%With the new version 0.7a I changed the internal commands (I use \mdpack{etoolbox}) and the algorithm of the splitting. So I don't know whether I will get new bugs or not. For the last case and the previous version (v0.6) works well you can load \mdpack{mdframedpre} instead of \mdpack{mdframed}.
+
+\section{Acknowledgements}
+
+\vskip\baselineskip
+
+
+
+\textsf{Dick Nickalls;\quad Dietrich Grau;\quad Piazza Luca\quad Jobst Hoffmann}.
+\medskip
+
+\noindent Thanks for proofreading 
+
+\textsf{Alan Munn} and \textsf{Nahid Shajari}                                       
+\clearpage
+\appendix
+\section{More information}
+%\addtocontents{toc}{\protect\setcounter{tocdepth}{-4}}
+In the following section I want to present how to create
+your own frame.
+\subsection{How does \mdpack{mdframed} work?}
+With the environment \mdcommand{begin\{mdframed\}} \ldots \mdcommand{end\{mdframed\}}
+the whole contents will be saved in a \mdcommand{savebox} called \mdcommand{@tempboxa}.
+After the calculation of the width and the height of the \mdcommand{@tempboxa} (done by \mdpack{mdframed.sty}) the box 
+will be set sequently (done by \mdpack{md-frame-X.mdf}). The following figure demonstrates this.
+
+\begin{center}
+\begin{tikzpicture}
+\newcommand{\mybox}[1]{\parbox{3.5cm}{\centering\small #1}}
+\tikzstyle{every node}=[font=\sffamily]
+\tikzset{mymatrixnodes/.style={%
+     matrix of nodes,
+     nodes={framed,draw=black,fill=yellow!10,},
+     column sep=4.2cm,
+     row sep=1.2cm,
+     }}
+\matrix(m)[mymatrixnodes]
+  {%
+   \mybox{read in and save contents in \mdcommand{@tempboxa}} &
+   \mybox{\mdcommand{md@putbox@single}} \\
+   \mybox{split \textbackslash @tempboxa in  \mdcommand{tw@} to the free space of the page} &
+   \mybox{\mdcommand{md@putbox@first}} \\
+   \mybox{contents of \mdcommand{@tempboxa} have enough space on the new page} &
+   \mybox{\mdcommand{md@putbox@second}} \\
+   \mybox{split \mdcommand{@tempboxa} in \mdcommand{tw@} to the free space of the page} &
+   \mybox{\mdcommand{md@putbox@middle}} \\
+};
+
+\tikzstyle{every path}=[black,-triangle 45,thick,shorten >=4pt,shorten <=4pt]
+\draw  (m-1-1) edge node[align=center,anchor=south]{enough space on page} (m-1-2);
+\draw  (m-2-1) edge node[align=center,anchor=south]{type out \mdcommand{tw@}} (m-2-2);
+\draw  (m-3-1) edge node[align=center,anchor=south]{yes} (m-3-2);
+\draw  (m-4-1) edge node[align=center,anchor=south]{type out \mdcommand{tw@}} (m-4-2);
+
+\draw  (m-2-2) edge node[align=center,fill=white]%
+       {calculate the height of the new \mdcommand{@tempboxa}} (m-3-1);
+
+
+\draw  (m-1-1) edge node[align=center,anchor=west]{not enough space on page} (m-2-1);
+\draw  (m-3-1) edge node[align=center,anchor=west]{no} (m-4-1);
+
+\draw  let \p1=($(m-4-2.south)-(0,1)$), \p2=($(m-3-1.west)-(0.8,0)$) in
+      (m-4-2.south) -- ($(m-4-2.south)+(0,-1)$) --
+           node[align=center,anchor=north]%
+           {calculate the height of the new \mdcommand{@tempboxa}} (\x2,\y1)
+       -- ($(m-3-1.west)-(0.8,0)$)-- ($(m-3-1.west)$) ;
+
+
+\end{tikzpicture}
+
+\captionof{figure}{Setting the contents of \mdpack{mdframed}}\label{fig:way}
+\end{center}
+
+The width of the contents is the result of the settings of \mdoption{leftmargin}, \mdoption{rightmargin}, \mdoption{linewidth}, \mdoption{innerleftmargin} and \mdoption{innerrightmargin} (see figure \eqref{fig:laengen}).
+
+
+
+\subsection{The Framecommands}
+The package \mdpack{mdframed} knows four kinds of \glqq Framecommand\grqq. These commands tell \LaTeX\ how to set the contents of \mdpack{mdframed}. 
+\begin{description}
+       \item[\mdcommand{md@putbox@single}] This command sets the contents of a single unsplit frame.
+       \item[\mdcommand{md@putbox@first}]  This command sets the contents of the first frame of a split frame.
+       \item[\mdcommand{md@putbox@middle}] This command sets the contents of the middle frame of a split frame.
+       \item[\mdcommand{md@putbox@second}] This command sets the contents of the last frame of a split frame.
+\end{description}
+
+Using the explained commands we give an example. The command \mdcommand{box} uses the contents of the savebox and types them out. 
+
+First we want to type out the single box without any settings (but with the calculated width).
+\begin{mdexample}
+\makeatletter
+ \def\md@putbox@single{\box\@tempboxa}
+\makeatother
+\end{mdexample}
+I am using the command \mdcommand{leftline} to start the \glqq Framecommands\grqq\ at the left.
+\begin{mdexample}[deletekeywords={leftline},moretexcs={leftline}]
+\makeatletter
+ \def\md@putbox@single{\leftline{\box\@tempboxa}}
+\makeatother
+\end{mdexample}
+
+Now you have to know how the lengths are named. Every length which can be modified by the options has the following syntax:
+\begin{mdexample}
+\mdf@<Name of the Length>@length
+\end{mdexample}
+For example the leftmargin is:
+\begin{mdexample}
+\mdf@leftmargin@length
+\end{mdexample}
+
+To create only a line at the left with the correct \mdoption{leftmargin} you can set \mdcommand{md@putboxsingle} as follows
+
+\begin{mdexample}[deletekeywords={leftline},moretexcs={leftline}]
+\makeatletter
+\def\md@putbox@single{%
+         \leftline{%
+             \hspace*{\mdf@leftmargin@length}%
+             \rule[-\dp\@tempboxa]{\mdf@linewidth}%
+                  {\ht\@tempboxa+\dp\@tempboxa}%
+             \box\@tempboxa
+         }%
+}
+\makeatother
+\end{mdexample}
+
+In this way you can do what you want. If you create your own style you
+can save the file as \mdpack{md-frame-X.mdf}.
+\mdpack{X} must be an integer. 
+In this way you can use the option \mdoption{framemethod} to
+load the file by setting \mdoption{framemethod=X}.
+
+\clearpage
+
+
+
+%\clearpage
+\subsection{Revision history}\label{rev}
+\raggedright
+\minisec{Version 1.0 submitted 13 Nov 2011}
+\begin{itemize*}
+\item add option \mdoption{userdefinedwidth}
+\item add option \mdoption{align}
+\item add option \mdoption{apptotikzsetting}
+\item create new command \mdcommand{mdfapptodefinestyle}
+\item changed internal algorithm
+\item removed calc instead using \eTeX\ \verb+\dimexpr+
+\item expand documentation
+\item trying to fixe problems with \mdpack{xcolor}
+\item fixed bug with \mdoption{framemethod=pstricks}
+\item create file \mdpack{mdframed-example-default}
+\item create file \mdpack{mdframed-example-tikz}
+\item create file \mdpack{mdframed-example-pstricks}
+\item create file \mdpack{mdframed-example-texsx} (texsx stands for tex stackexchange)
+\end{itemize*}
+
+
+\footnotesize
+\minisec{Version 0.9g submitted 08 Oct 2011}
+\begin{itemize*}
+\item fixed documentation
+\item added small footnote compatibility
+\end{itemize*}
+
+\minisec{Version 0.9f submitted 04 Oct 2011}
+\begin{itemize*}
+\item fixes bugs (thanks to Lars Madsen)
+\item added option \mdoption{hidealllines}
+\item fixed documentation
+\end{itemize*}
+
+
+\minisec{Version 0.9e submitted 11 Sep 2011}
+\begin{itemize*}
+\item working with \texttt{twoside} modus
+\end{itemize*}
+
+\minisec{Version 0.9d submitted 10 Sep 2011}
+\begin{itemize*}
+\item \textcolor{red}{changed the meaning of the option \mdoption{style}}!!! (inspired by Lars Madsen)
+\item added option \mdoption{framemethod} (inspired by Lars Madsen)
+\item added options \mdoption{needspace} (inspired by Lars Madsen)
+\item added new command \mdcommand{mdfdefinestyle} (inspired by Lars Madsen)
+\item fixes documentation
+\item renamed \mdpack{md-frame-3.mdf} to \mdpack{md-frame-2.mdf}
+\end{itemize*}
+
+
+
+\minisec{Version 0.9b submitted 7 Sep 2011}
+\begin{itemize*}
+\item fixes bugs in \mdcommand{newmdtheoremenv} (Thanks to Enrico Gregorio)
+\end{itemize*}
+
+\minisec{Version 0.9a submitted 5 Sep 2011}
+\begin{itemize*}
+\item fixes bugs (Thanks to Lars Madson)
+\item expanded documentation (added revision history)
+\end{itemize*}
+
+
+\minisec{Version 0.9 submitted 4 Sep 2011}
+\begin{itemize*}
+\item added option \mdoption{nobreak}
+\item detecting float environments to prevent split calculation
+\item expand documentation (Thanks to Alan Munn)
+\end{itemize*}
+
+\minisec{Version 0.8a}
+\begin{itemize*}
+\item fixes bugs
+\item fixes documentation
+\end{itemize*}
+
+\minisec{Version 0.8 submitted 22 Aug 2011}
+\begin{itemize*}
+\item  added commands: \mdcommand{newmdenv}, \mdcommand{renewmdenv}, \mdcommand{newmdtheoremenv}
+\item fixes bugs
+\item fixes documentation
+\end{itemize*}
+
+\minisec{Version 0.7a submitted 6 August 2011}
+\begin{itemize*}
+\item added option \mdoption{frametitle}
+\item added option \mdoption{frametitlefont}
+\item allow twolumn-mode
+\item changed the calculation
+\item added option \mdoption{tikzsetting}
+\item added options for hidden lines for all styles
+\item fixes bugs
+\end{itemize*}
+
+\minisec{Version 0.6a submitted 22 Dec 2010}
+\begin{itemize*}
+\item fixes bugs
+\item added \mdcommand{mdfsetup}
+\item expanded documentation
+\end{itemize*}
+
+
+
+\minisec{Version 0.6 submitted 18 Dec 2010}
+\begin{itemize*}
+\item added \mdoption{style=3} with \mdpack{pstricks}
+\item added option \mdoption{pstrickssetting}
+\item added option \mdoption{splitbottomskip}
+\item added option \mdoption{splittopskip}
+\item added options for hidden lines 
+\item changed the calculation
+\item fixes bugs
+\end{itemize*}
+
+\minisec{Version 0.4a submitted 14 May 2010}
+\begin{itemize*}
+\item fixes bug in fontcolor
+\end{itemize*}
+
+\minisec{Version 0.4 submitted 13 May 2010}
+\begin{itemize*}
+\item Elke Schubert creates style file for \mdpack{tikz}
+\item fixes some bugs -- calculation of the page dimen (thanks  Dick Nickalls)
+\item using tikz for the frame with different styles
+\end{itemize*}
+
+\minisec{Version 0.3b submitted 1 May 2010}
+\begin{itemize*}
+\item fixes some bugs -- thanks to Dietrich Grau
+\item added new options: \mdoption{ntheorem}
+\end{itemize*}
+
+\minisec{Version 0.3a submitted 23 Apr 2010}
+\begin{itemize*}
+\item added new options: \mdoption{leftmargin} and \mdoption{rightmargin}
+\item fixes some bugs
+\end{itemize*}
+
+\minisec{Version 0.3 submitted16 Apr 2010}
+\begin{itemize*}
+\item first upload to \href{http://dante.ctan.org/upload}{CTAN}
+\end{itemize*}
+\end{document}

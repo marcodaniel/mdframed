@@ -1,0 +1,1084 @@
+%%==================================================%%
+%%========Is based on the idea of framed.sty========%%
+%%==================================================%%
+%%===== Currently the package has a beta-Status ====%%
+%%==================================================%%
+%% WITH THANKS TO (alphabetically):
+%% ROLF NIEPRASCHK
+%% HEIKO OBERDIEK
+%% HERBERT VOSS
+
+%% Copyright (c) 2010 Marco Daniel
+%
+%% This package may be distributed under the terms of the LaTeX Project
+%% Public License, as described in lppl.txt in the base LaTeX distribution.
+%% Either version 1.0 or, at your option, any later version.
+%%
+%%
+%%==================================================%%
+%% Erstellung eines Rahmens, der am Seitenende keine
+%% horizontale Linie einfuegt
+%%>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>%%
+%%      _______________                            %%
+%%      |    page 1   |                            %%  
+%%      |    Text     |                            %%
+%%      |  __Text__   |                            %%
+%%      |  | Text |   |                            %%
+%%     P A G E B R E A K                           %%
+%%      |  | Text |   |                            %%
+%%      |  |_Text_|   |                            %%
+%%      |    Text     |                            %%
+%%      |____page 2___|                            %%
+%%                                                 %%
+%%>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>%%
+
+%%$Id: mdframed.sty 230 2011-11-26 13:04:12Z marco $
+%%$Rev: 230 $
+%%$Author: marco $
+%%$Date: 2011-11-26 14:04:12 +0100 (Sa, 26. Nov 2011) $
+
+%% Allgemeine Angaben
+\def\mdversion{v1.0a}
+\def\mdframedpackagename{mdframed}
+\def\md@maindate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{mdframed}[\md@maindate@svn$Id: mdframed.sty 230 2011-11-26 13:04:12Z marco $ \mdversion: \mdframedpackagename]
+%%==================================================%%
+%%=============== Benoetigte Pakete ================%%
+%%==================================================%%
+\newcommand*\md@PackageWarning[1]{\PackageWarning{\mdframedpackagename}{#1}}
+\newcommand*\md@PackageInfo[1]{\PackageInfo{\mdframedpackagename}{#1}}
+\newcommand*\md@LoadFile@IfExist[1]{%
+ \IfFileExists{#1.sty}{%
+          \RequirePackage{#1}%
+        }{%
+        \md@PackageWarning{The file #1 does not exist^^J
+                           but needed by \mdframedpackagename^^J
+                           see documentation fo further information
+                           }%
+       }
+}
+
+\RequirePackage{kvoptions}
+\RequirePackage{etex}
+\RequirePackage{etoolbox}[2011/01/03]
+\RequirePackage{zref-abspage}
+
+%separate Handhabung color
+\md@LoadFile@IfExist{color}
+
+ 
+
+
+\SetupKeyvalOptions{family=mdf,prefix=mdf@}
+
+%%==================================================%%
+%%============Hilfsmakros fuer Optionen=============%%
+%%==================================================%%
+
+%%%\md@iflength{<EINGABE>}{<IST LAENGE>}{<IST KEINE LAENGE>}
+\newlength{\md@templength}
+\def\md@iflength#1{%
+  \afterassignment\md@iflength@check%
+  \md@templength=#1\mdf@defaultunit\relax\relax
+  \expandafter\endgroup\next
+}
+\def\md@iflength@check#1{%
+  \begingroup
+  \ifx\relax#1\@empty
+    \def\next{\@secondoftwo}
+  \else
+    \def\next{\@firstoftwo}
+    \expandafter\md@iflength@cleanup
+  \fi
+}
+\def\md@iflength@cleanup#1\relax{}
+
+%%\mdf@option@length{<Laengenbezeichnung>}{<Defaultwert>}
+\newrobustcmd*{\mdf@option@length}[2]{%
+ \expandafter\newlength\csname mdf@#1@length\endcsname%
+ \expandafter\setlength\csname mdf@#1@length\endcsname{#2}%
+ }
+%%\mdf@define@key@length{<Bezeichnungder Option der Laenge>}
+\newrobustcmd*{\mdf@define@key@length}[1]{%
+   \define@key{mdf}{#1}{%
+      \def\@tempa{##1}
+      \md@iflength{\@tempa}%
+       {\csxdef{mdfl@#1}{\the\md@templength}}%
+       {\csxdef{mdfl@#1}{\the\md@templength}}%
+       \expandafter\setlength\csname mdf@#1@length\endcsname{\csname mdfl@#1\endcsname}%
+   }%
+}
+%%Schleifenmakro zur Optioneneingabe
+\DeclareListParser*{\mdf@dolist}{,}
+
+%Laengenoptionen
+\def\mdf@do@lengthoption#1{%
+  \mdf@lengthoption@doubledo#1\@nil%
+}
+\def\mdf@lengthoption@doubledo#1==#2\@nil{%
+   \mdf@option@length{#1}{#2}%
+   \mdf@define@key@length{#1}%
+}
+%Stringoptionen
+\def\mdf@do@stringoption#1{%
+   \mdf@stringoption@doubledo#1\@nil%
+}
+\def\mdf@stringoption@doubledo#1==#2\@nil{%
+   \expandafter\gdef\csname mdf@#1\endcsname{#2}%
+   \define@key{mdf}{#1}{%
+      \csdef{mdf@#1}{##1}%
+   }%
+}
+
+
+%Booloptionen
+\def\mdf@do@booloption#1{%
+   \mdf@booloption@doubledo#1\@nil%
+}
+\def\mdf@booloption@doubledo#1==#2\@nil{%
+   \newbool{mdf@#1}\setbool{mdf@#1}{#2}%
+   \define@key{mdf}{#1}[#2]{%
+      \setbool{mdf@#1}{##1}%
+   }%
+}
+
+%Alignoptionen
+\def\mdf@do@alignoption#1{%
+   \mdf@alignoption@tripledo#1\@nil%
+}
+\def\mdf@alignoption@tripledo#1==#2==#3\@nil{%
+   \csdef{mdf@align@#1@left}{\null\hspace*{#2}}%
+   \csdef{mdf@align@#1@right}{\hspace*{#3}\null}%
+}
+
+%%==================================================%%
+%%=====================Optionen=====================%%
+%%==================================================%%
+
+
+%Festlegung welcher Stildatei
+%% 0 := tex-Kommandos -- rule
+%% 1 := tikz
+%% 2 := pstricks
+%% 3 := pstricks <- veraltet
+\newcounter{mdf@globalstyle@cnt}
+\defcounter{mdf@globalstyle@cnt}{0}
+\newcommand*\mdfglobal@style{0}
+
+\define@key{mdf}{style}{%
+        \md@PackageWarning{package option style is depreciated^^J
+                           use framemethod instead\MessageBreak}%
+        \renewcommand*\mdfglobal@style{#1}%
+        \defcounter{mdf@globalstyle@cnt}{#1}%
+         \ifcase\value{mdf@globalstyle@cnt}\relax
+             %0 <- kein Grafikpaket
+          \or\md@LoadFile@IfExist{tikz}%1 <- tikz wird benoetigt
+          \or\md@LoadFile@IfExist{pstricks-add}%2 <- tikz wird benoetigt
+          \or\defcounter{mdf@globalstyle@cnt}{2}\md@LoadFile@IfExist{pstricks-add}%3 <- pstricks wird benoetigt
+          \or\md@LoadFile@IfExist{pstricks-add}%4 <- pstricks wird benoetigt
+          \else\md@PackageWarning{Unknown global style \value{mdf@globalstyle@cnt}}%
+        \fi%
+}
+
+\providecommand*\mdf@framemethod{}
+\def\md@framemethod@i{}%
+\def\md@framemethod@ii{}%
+\def\md@framemethod@iii{}%
+\define@key{mdf}{framemethod}[default]{%
+  \lowercase{\def\md@tempa{#1}}
+  \forcsvlist{\listadd\md@framemethod@i}{default,tex,latex,none,0}
+  \forcsvlist{\listadd\md@framemethod@ii}{pgf,tikz,1}
+  \forcsvlist{\listadd\md@framemethod@iii}{pstricks,ps,2,postscript}
+  \xifinlist{\md@tempa}{\md@framemethod@i}%
+     {\def\mdf@@framemethod{default}\defcounter{mdf@globalstyle@cnt}{0}}%
+     {\xifinlist{\md@tempa}{\md@framemethod@ii}%
+         {\def\mdf@@framemethod{tikz}\defcounter{mdf@globalstyle@cnt}{1}}%
+         {\xifinlist{\md@tempa}{\md@framemethod@iii}%
+             {\def\mdf@@framemethod{pstricks}\defcounter{mdf@globalstyle@cnt}{2}}%
+             {%
+              \md@LoadFile@IfExist{#1}%
+             }%
+         }%
+     }%
+  \ifcase\value{mdf@globalstyle@cnt}\relax%
+         %0 <- kein Grafikpaket
+     \or\md@LoadFile@IfExist{tikz}%1 <- tikz wird benoetigt
+     \or\md@LoadFile@IfExist{pstricks-add}%2 <- pstricks wird benoetigt
+     \or\md@LoadFile@IfExist{pstricks-add}%3 <- pstricks wird benoetigt <- support old style
+  \fi%
+}
+
+%%%%Optionen mit Laengen
+\mdf@dolist{\mdf@do@lengthoption}{%
+   {skipabove==\z@},%
+   {skipbelow==\z@},%
+   {leftmargin==\z@},%
+   {rightmargin==\z@},%
+   {margin==20pt},%
+   {innerleftmargin==10pt},%
+   {innerrightmargin==10pt},%
+   {innertopmargin==0.4\baselineskip},%
+   {innerbottommargin==0.4\baselineskip},%
+   {splittopskip==\z@},%
+   {splitbottomskip==\z@},%
+   {outermargin==-999pt},%
+   {innermargin==-999pt},%
+   {linewidth==0.4pt},%
+   {innerlinewidth==\z@},%
+   {middlelinewidth==\expandafter\mdf@linewidth@length},%
+   {outerlinewidth==\z@},%
+   {roundcorner==\z@},%
+   {footenotedistance==\medskipamount},
+   {userdefinedwidth==\linewidth}
+} 
+%%%%Optionen mit String
+\mdf@dolist{\mdf@do@stringoption}{%
+    {defaultunit==pt},%
+    {settings=={}},%
+    {linecolor==black},%
+    {backgroundcolor==white},%
+    {fontcolor==black},%
+    {innerlinecolor==\mdf@linecolor},%
+    {outerlinecolor==\mdf@linecolor},%
+    {middlelinecolor==\mdf@linecolor},%
+    {psroundlinecolor==\mdf@backgroundcolor},%
+    {frametitle=={}},%
+    {frametitlefont==\bfseries\large},%
+    {printheight==none},%
+}
+%%%%Optionen mit Boolflag
+\mdf@dolist{\mdf@do@booloption}{%
+    {ntheorem==false},%
+    {topline==true},%
+    {leftline==true},%
+    {bottomline==true},%
+    {rightline==true},%
+    {hidealllines==false},%
+    {nobreak==false},%
+    {footnoteinside==true},%
+}
+
+
+%Alignoptionen:
+\mdf@dolist{\mdf@do@alignoption}{%
+    {left==\mdf@leftmargin@length==\z@},%
+    {center==\fill==\fill},%
+    {right==\fill==\mdf@rightmargin@length},%
+    {outer==\fill==\mdf@rightmargin@length},%not supported yet
+    {outer==\mdf@leftmargin@length==\fill},%not supported yet
+}
+
+\newcommand*\mdf@align{}%
+\newcommand*\mdf@makeboxalign@left{\null\hspace*{\mdf@leftmargin@length}}%
+\newcommand*\mdf@makeboxalign@right{}%
+\define@key{mdf}{align}[left]{%
+   \ifcsundef{mdf@align@#1@left}{%
+       \md@PackageWarning{Unknown alignment #1\MessageBreak}%
+       \letcs\mdf@makeboxalign@left{mdf@align@left@left}%
+       \letcs\mdf@makeboxalign@right{mdf@align@left@right}%
+   }{%
+       \def\mdf@makeboxalign@left{\csuse{mdf@align@#1@left}}%
+       \def\mdf@makeboxalign@right{\csuse{mdf@align@#1@right}}%
+   }%
+}
+
+%Unterstuetzung der Optionen fuer tikz
+\def\mdf@tikzset@local{\tikzset{tikzsetting/.style={}}}
+\define@key{mdf}{tikzsetting}{%
+  \def\mdf@tikzset@local{\tikzset{tikzsetting/.style={#1}}}%
+}
+\define@key{mdf}{apptotikzsetting}{%
+  \appto\mdf@tikzset@local{#1}%
+}
+
+%Unterstuetzung der Optionen fuer pstricks
+\def\mdf@psset@local{}
+\define@key{mdf}{pstrickssetting}{%
+  \def\mdf@psset@local{#1}
+}
+
+%Unterstuetzung der xcolor fuer pstricks
+\def\mdf@xcolor{}
+\define@key{mdf}{xcolor}[none]{%
+  \@ifpackageloaded{xcolor}{%
+     \let\mdf@xcolor\@empty %ignoriere die Eingabe der Optionen
+     }{%
+     \def\@tempa{none}%
+      \ifx\mdf@xcolor\@tempa
+         \else
+         \PassOptionsToPackage{\mdf@xcolor}{xcolor}%
+         \RequirePackage{xcolor}%     
+      \fi%
+   }%
+ }
+
+
+%Nutzung des Paketes needspace
+\define@key{mdf}{needspace}[\z@]{%
+     \begingroup%
+        \setlength{\dimen@}{#1}%
+        \vskip\z@\@plus\dimen@%
+        \penalty -100\vskip\z@\@plus -\dimen@%
+        \vskip\dimen@%
+        \penalty 9999%
+        \vskip -\dimen@%
+        \vskip\z@skip % hide the previous |\vskip| from |\addvspace|
+      \endgroup%
+}
+
+\DeclareDefaultOption{%
+   \md@PackageWarning{Unknown Option '\CurrentOption' for mdframed}}
+
+
+\ProcessKeyvalOptions*\relax
+\newcommand*{\mdfsetup}{\setkeys{mdf}}
+
+
+%Erlauben von mdfdefinestyle sowie redefinition von style
+\define@key{mdf}{style}{%
+  \ifcsundef{mdf@definestyle@#1}{%
+        \md@PackageWarning{Unknown definedstyle #1^^J
+                           You have to define a style via \string\mdfdefinedstyle\MessageBreak
+                           }%
+        }%
+        {\expandafter\expandafter\expandafter\mdfsetup%
+         \expandafter\expandafter\expandafter{\csname mdf@definestyle@#1\endcsname}}%
+}%
+
+%%==================================================%%
+%%==========Ausgabe des Platzes auf Seite===========%%
+%%==================================================%%
+\let\md@PackageNoInfo\@gobble
+\newrobustcmd*\md@ifstrequal@expand{%
+\expandafter\ifstrequal\expandafter{\mdf@printheight}%
+}
+\newrobustcmd*\md@print@space{%
+  %case "none"
+  \md@ifstrequal@expand{none}{\def\md@tempa{NoInfo}}{%
+      %case "info"
+      \md@ifstrequal@expand{info}{\def\md@tempa{Info}}{%
+         %case "warning"
+         \md@ifstrequal@expand{warning}{\def\md@tempa{Warning}}{%
+            %case "unknown"
+            \md@PackageWarning{Unknown key for printheight=\mdf@printheight %^^J
+                               use none, info or warning}%
+             \def\md@tempa{none}%
+         }%
+      }%
+  }%
+\def\md@PackageInfoSpace{\csname md@Package\md@tempa\endcsname}
+}
+%%==================================================%%
+%%========Angepasste lrbox sowie trivlist===========%%
+%%==================================================%%
+%Anpassung lrbox
+\let\md@lrbox\lrbox
+\patchcmd\md@lrbox\hbox\vbox{}{}
+\patchcmd\md@lrbox\color@setgroup{%
+\color@setgroup\color{\mdf@fontcolor}%
+\hsize=\md@horizontalspaceofbox%
+\columnwidth=\hsize%
+\textwidth=\hsize%
+\linewidth=\hsize%
+\bgroup\md@@frametitle\egroup\noindent%
+}{}{}
+\def\endmd@lrbox{\unskip\color@endgroup}
+
+%Anpassung trivlist
+\let\md@trivlist\trivlist
+\let\endmd@trivlist\endtrivlist
+\patchcmd\endmd@trivlist\@endparenv\md@endparenv{}{}
+\def\md@endparenv{%
+  \addpenalty\@endparpenalty\addvspace\mdf@skipbelow@length\@endpetrue}
+
+
+%%==================================================%%
+%%==============leftline anpassen===================%%
+%%==================================================%%
+\newrobustcmd*\mdf@makebox[2][\mdf@userdefinedwidth@length]{%
+ \noindent\makebox[#1][l]{#2}%
+}
+
+
+%%==================================================%%
+%%==================framestyle======================%%
+%%==================================================%%
+%inspired by Lars Madsen
+\newrobustcmd*\mdfdefinestyle[2]{%
+  \csdef{mdf@definestyle@#1}{#2}%
+}
+
+\newrobustcmd*\mdfapptodefinestyle[2]{%
+ \ifcsundef{mdf@definestyle@#1}%
+   {\md@PackageWarning{Unknown style #1}}%
+   {\csappto{mdf@definestyle@#1}{,#2}}%
+}
+
+%%==================================================%%
+%%=============Umgebungdefinition===================%%
+%%==================================================%%
+%\newmdenv[<mdframed-options>]{<environmen>}
+\newrobustcmd*\newmdenv[2][]{%
+  \newenvironment{#2}{%
+     \mdfsetup{#1}%
+     \begin{mdframed}%
+    }{%
+     \end{mdframed}%
+  }%
+}
+%\renewmdenv[<mdframed-options>]{<environmen>}
+\newrobustcmd*\renewmdenv[2][]{%
+  \expandafter\let\csname #2\endcsname\relax%
+  \expandafter\let\csname end#2\endcsname\relax%
+  \newmdenv[#1]{#2}%
+  }%
+
+%http://tex.stackexchange.com/questions/26298/own-command-to-create-new-environment
+%\newtheorem{<envname>}[<numberedlike>]{<caption>}[<within>]
+%\newmdtheoremenv[<mdframed-options>]{<envname>}[<numberedlike>]{<caption>}[<within>]
+%\md@tempa[<mdframed-options>]
+%\md@tempb{<envname>}%
+%\md@tempc[<numberedlike>]%
+%\md@tempd{<caption>}%
+%\md@tempe[<within>]%
+\newrobustcmd*\newmdtheoremenv{%
+   \kernel@ifnextchar[%]
+     {\newmdtheoremenv@i}{\newmdtheoremenv@i[]}%
+}
+\def\newmdtheoremenv@i[#1]#2{%
+    \def\md@tempa{#1}%
+    \def\md@tempb{#2}%
+    \kernel@ifnextchar[%]
+     {\newmdtheoremenv@ii}{\newmdtheoremenv@ii[]}%
+}
+
+\def\newmdtheoremenv@ii[#1]#2{%
+    \def\md@tempc{#1}%
+    \ifboolexpr{ test {\ifcsundef{c@\md@tempc}} and test {\ifcsundef{c@md@@\md@tempc}} and not (test {\ifdefempty{\md@tempc}}) }%
+               {\md@PackageWarning{No Counter \md@tempc defined\MessageBreak}%
+                \edef\md@reserved@a{}}%
+               {\ifcsundef{c@\md@tempc}%
+                     {\ifdefempty{\md@tempc}{\edef\md@reserved@a{}}{\edef\md@reserved@a{md@@\md@tempc}}}%
+                     {\edef\md@reserved@a{\md@tempc}}%
+               }
+    \edef\md@tempc{\md@reserved@a}
+    \def\md@tempd{#2}%
+    \kernel@ifnextchar[%]
+     {\newmdtheoremenv@iii}{\newmdtheoremenv@iii[]}%
+}
+
+\def\newmdtheoremenv@iii[#1]{%
+   \def\md@tempe{#1}%
+    \ifboolexpr{ test {\ifcsundef{c@\md@tempe}} and test {\ifcsundef{c@md@@\md@tempe}} and not (test {\ifdefempty{\md@tempe}}) }%
+               {\md@PackageWarning{No Counter \md@tempe defined\MessageBreak}%
+                \edef\md@reserved@a{}}%
+               {\ifcsundef{c@\md@tempe}%
+                     {\ifdefempty{\md@tempe}{\edef\md@reserved@a{}}{\edef\md@reserved@a{md@@\md@tempe}}}%
+                     {\edef\md@reserved@a{\md@tempe}}%
+               }
+   \edef\md@tempe{\md@reserved@a}
+   \ifboolexpr{ not (test {\ifdefempty{\md@tempc}})
+              and 
+             not (test {\ifdefempty{\md@tempe}})
+           }{%
+             \md@PackageWarning{You defined {\string\newtheorem} with ^^J
+                                both optional arguments^^J 
+                                <numeredlike> and <within>. This isn't allowed^^J
+                                \mdframedpackagename will use <numeredlike>\MessageBreak}%
+             \begingroup\edef\md@reserved@a{%
+                  \endgroup\noexpand\newtheorem{md@@\md@tempb}[\md@tempc]{\md@tempd}}%
+            }%
+            {\ifdefempty{\md@tempc}{}{%
+               \begingroup%
+                    \edef\md@reserved@a{\endgroup%
+                         \noexpand\newtheorem{md@@\md@tempb}[\md@tempc]{\md@tempd}}}%
+             \ifdefempty{\md@tempe}{}{%
+               \begingroup%
+                    \edef\md@reserved@a{\endgroup%
+                         \noexpand\newtheorem{md@@\md@tempb}{\md@tempd}[\md@tempe]}}%
+            }
+   \ifboolexpr{test {\ifdefempty{\md@tempc}}
+                and 
+               test {\ifdefempty{\md@tempe}}
+               }{%
+               \begingroup%
+                    \edef\md@reserved@a{\endgroup%
+                         \noexpand\newtheorem{md@@\md@tempb}{\md@tempd}%
+                  }
+               }{}%
+   \md@reserved@a%
+   \protected@csxdef{\md@tempb}{\noexpand\mdfsetup{\md@tempa}%
+               \noexpand\begin{mdframed}[]\noexpand\begin{md@@\md@tempb}%
+    }%
+   \protected@csxdef{end\md@tempb}{%
+              \noexpand\end{md@@\md@tempb}\noexpand\end{mdframed}%
+   }%
+}
+
+%%==================================================%%
+%%=================== Frametitle ===================%%
+%%==================================================%%
+\let\mdraggedtitle\raggedright
+\providecommand*\mdframedtitleenv[1]{%
+  \@afterindentfalse
+   {\parindent \z@
+         \setlength{\parfillskip}{\z@ plus 1fil}%
+         \mdraggedtitle\nobreak\mdf@frametitlefont#1\relax%
+    \par}%
+  \@afterheading}
+%
+\newrobustcmd*\md@@frametitle{%
+  \ifx\mdf@frametitle\@empty\relax%
+  \else
+    \color@begingroup\@nobreaktrue%
+    \mdframedtitleenv{\mdf@frametitle}%
+    \color@endgroup
+  \fi%
+}
+
+\newrobustcmd*\md@checkntheorem{%
+  \ifbool{mdf@ntheorem}%       %%% Pruefen ob ntheorem gesetzt ist
+    {\ifundef{\theorempreskipamount}%
+          {\md@PackageWarning{You have not loaded ntheorem yet}}%
+          {\setlength{\theorempreskipamount}{\z@}%
+           \setlength{\theorempostskipamount}{\z@}%
+    }%
+  }{}%
+}
+
+
+%%==================================================%%
+%%=================== Fussnoten ====================%%
+%%==================================================%%
+\newrobustcmd*\md@footnoterule{%
+    \kern0\p@%
+    \hrule \@width 1in \kern 2.6\p@}
+
+
+\newrobustcmd*\md@footnoteoutput{%
+     \ifvoid\@mpfootins\else
+          \nobreak%
+          \vskip\mdf@footenotedistance@length%
+          \normalcolor%
+          \md@footnoterule
+          \unvbox\@mpfootins
+     \fi%
+}
+
+\newrobustcmd*\md@footnoteinput{%
+   \def\@mpfn{mpfootnote}%
+   \def\thempfn{\thempfootnote}%
+   \c@mpfootnote\z@%
+   \let\@footnotetext\@mpfootnotetext%
+}
+
+\def\thempfootnote{{\itshape\@alph\c@mpfootnote}}
+\def\@makefnmark{\hbox{\@textsuperscript{\normalfont\@thefnmark}}}
+\long\def\@mpfootnotetext#1{%
+  \global\setbox\@mpfootins\vbox{%
+    \unvbox\@mpfootins
+    \reset@font\footnotesize
+    \hsize\columnwidth
+    \@parboxrestore
+    \protected@edef\@currentlabel
+         {\csname p@mpfootnote\endcsname\@thefnmark}%
+    \color@begingroup
+      \@makefntext{%
+        \rule\z@\footnotesep\ignorespaces#1\@finalstrut\strutbox}%
+    \color@endgroup}}
+
+
+%%==================================================%%
+%%======= Laden der gewuenschten Style-Datei =======%%
+%%==================================================%%
+\newrobustcmd*\mdf@load@style{%
+\ifcase\value{mdf@globalstyle@cnt}\relax%
+        \input{md-frame-0.mdf}%
+      \or\input{md-frame-1.mdf}%
+      \or\input{md-frame-2.mdf}
+      \or\input{md-frame-3.mdf}%
+      \else%
+       \IfFileExists{md-frame-\value{mdf@globalstyle@cnt}.mdf}{\input{md-frame-\value{mdf@globalstyle@cnt}.mdf}%
+           }{\input{md-frame-0.mdf}%
+            \md@PackageWarning{The style number \value{mdf@globalstyle@cnt} does not exist^^J
+                               mdframed ues instead style=0 \mdframedpackagename}%
+          }%
+\fi%
+}%
+\mdf@load@style
+%%==================================================%%
+%%========= style-abhaengige Modifikation ==========%%
+%%==================================================%%
+\newrobustcmd*\md@styledefinition{%
+   \ifnumequal{\value{mdf@globalstyle@cnt}}{0}% 
+   {\deflength{\mdf@innerlinewidth@length}{\z@}%
+    \deflength{\mdf@middlelinewidth@length}{\mdf@linewidth@length}%
+    \deflength{\mdf@outerlinewidth@length}{\z@}%
+    \let\mdf@innerlinecolor\mdf@linecolor%
+    \let\mdf@middlelinecolor\mdf@linecolor%
+    \let\mdf@outerlinecolor\mdf@linecolor%
+   }{}%
+   \ifnumequal{\value{mdf@globalstyle@cnt}}{2}% 
+   {\deflength{\mdf@innerlinewidth@length}{\z@}%
+   \deflength{\mdf@middlelinewidth@length}{\mdf@linewidth@length}%
+    \deflength{\mdf@outerlinewidth@length}{\z@}%
+    \let\mdf@innerlinecolor\mdf@linecolor%
+   }{}%
+   \ifnumequal{\value{mdf@globalstyle@cnt}}{3}% 
+   {\deflength{\mdf@innerlinewidth@length}{\z@}%
+   \deflength{\mdf@middlelinewidth@length}{\mdf@linewidth@length}%
+    \deflength{\mdf@outerlinewidth@length}{\z@}%
+    \let\mdf@innerlinecolor\mdf@linecolor%
+   }{}%
+}
+
+%%==================================================%%
+%%Modifikation zur Nutzung innerhalb float/minipage=%%
+%%==================================================%%
+%option nobreak
+\let\md@reserved@a\@empty
+\newrobustcmd*\detected@md@put@frame{%
+  \ifmdf@nobreak%Option nobreak=true?
+        \def\md@reserved@a{\md@put@frame@standalone}%
+     \else
+       \def\md@reserved@a{\md@put@frame}%
+       \ifnum\@floatpenalty<0\relax%Detecting float
+          \if@twocolumn%
+             \ifx\@captype\@undefined
+                 \def\md@reserved@a{\md@put@frame}%
+             \else
+                 \md@PackageInfo{mdframed inside float  ^^J
+                                 mdframed uses option nobreak \mdframedpackagename}%
+                 \def\md@reserved@a{\md@put@frame@standalone}%   
+             \fi
+          \else
+             \md@PackageInfo{mdframed inside float  ^^J
+                             mdframed uses option nobreak \mdframedpackagename}%
+             \def\md@reserved@a{\md@put@frame@standalone}%     
+          \fi%
+       \fi%
+       \if@minipage%
+             \md@PackageInfo{mdframed inside minipage  ^^J
+                             mdframed uses option nobreak \mdframedpackagename}%
+             \def\md@reserved@a{\md@put@frame@standalone}%
+       \fi%
+       \ifinner%
+            \md@PackageInfo{mdframed inside a box ^^J
+                            mdframed uses option nobreak \mdframedpackagename}%
+             \def\md@reserved@a{\md@put@frame@standalone}%
+      \fi%
+  \fi%
+\md@reserved@a%
+}
+
+%%==================================================%%
+%%======keine Linien anzeigen - hidealllines =======%%
+%%==================================================%%
+\newrobustcmd*\md@hidealllines@check{%
+ \ifbool{mdf@hidealllines}{%
+    \setbool{mdf@leftline}{false}%
+    \setbool{mdf@rightline}{false}%
+    \setbool{mdf@topline}{false}%
+    \setbool{mdf@bottomline}{false}%
+  }{}%
+}
+
+
+%%==================================================%%
+%%==Deklaration diverser Eingabe und Hilfsparameter=%%
+%%==================================================%%
+%X-Laengen
+\newlength\mdfboundingboxwidth
+\newlength\mdfboundingboxtotalwidth
+%Y-Laengen
+\newlength\mdfboundingboxheight
+\newlength\mdfboundingboxdepth
+\newlength\mdfboundingboxtotalheight
+
+
+
+\newlength\md@freevspace@length
+\newlength\md@horizontalwidthofbox@length
+\newlength\md@verticalmarginwhole@length
+
+\providecommand*\ptTps{}
+
+%Kommando in tikz mit relax belegt:
+\newrobustcmd\mdfcreateextratikz{}
+
+
+%%==================================================%%
+%%==================Umgebung========================%%
+%%==================================================%%
+\def\mdframed{\@ifnextchar[\mdframed@i\mdframed@ii}%
+\def\mdframed@ii{\mdframed@i[]}%
+\def\mdframed@i[#1]{% default-Umgebung
+\begingroup
+%check is needed?
+   \mdfsetup{userdefinedwidth=\linewidth,#1}%%
+   \md@hidealllines@check%
+   \mdf@settings%
+   \md@twoside@checklength%
+   \let\width\z@%
+   \let\height\z@%
+   \setlength{\topsep}{\mdf@skipabove@length}%
+   \begingroup%
+   \let\partopsep\z@%
+   \expandafter\endgroup%   
+   \begin{md@trivlist}\item\relax%
+   \md@checkntheorem%
+   \md@styledefinition%
+   \md@horizontalmargin@equation%
+   \md@footnoteinput%
+   \begin{md@lrbox}{\@tempboxa}%
+   }%
+
+\def\endmdframed{%
+    \ifmdf@footnoteinside%
+      \def\md@reserveda{%
+        \md@footnoteoutput%
+        \end{md@lrbox}%
+%        \let\hsize\linewidth
+        \detected@md@put@frame}%
+    \else%
+      \def\md@reserveda{%
+        \end{md@lrbox}
+%        \let\hsize\linewidth
+        \detected@md@put@frame%
+        \md@footnoteoutput%
+        }%
+    \fi%
+    \md@reserveda%
+    \end{md@trivlist}%
+    \hrule \@height\z@ \@width\hsize
+\endgroup\@endparenv%
+}
+%%==================================================%%
+%%================== Twoside-Modus =================%%
+%%==================================================%%
+\newtoggle{md:checktwoside}
+\settoggle{md:checktwoside}{false}
+\newrobustcmd*\md@twoside@checklength{%
+ \if@twoside
+   \ifboolexpr{ test {\ifdimequal{\mdf@outermargin@length}{-999pt}}
+               and
+               test {\ifdimequal{\mdf@innermargin@length}{-999pt}}
+              }%
+              {%
+              \md@PackageInfo{You haven't set the outermargin/innermargin^^
+                                 mdframed will use leftmargin/rightmargin}%
+              \settoggle{md:checktwoside}{false}%
+              }%
+              {\settoggle{md:checktwoside}{true}}%
+   \iftoggle{md:checktwoside}{%
+      \ifdimequal{\mdf@outermargin@length}{-999pt}%
+         {\setlength\mdf@rightmargin@length{\z@}}%
+         {\setlength\mdf@rightmargin@length{\mdf@outermargin@length}}%
+     \ifdimequal{\mdf@innermargin@length}{-999pt}%
+         {\setlength\mdf@leftmargin@length{\z@}}%
+         {\setlength\mdf@leftmargin@length{\mdf@innermargin@length}}%
+   }{}%
+ \fi%
+}
+
+\newcounter{md@zref@counter}%keine doppelten laebes
+\zref@newprop*{md@pagevalue}[0]{\number\value{page}}
+\zref@addprop{\ZREF@mainlist}{md@pagevalue}
+
+\newrobustcmd*\md@zref@label{%
+   \stepcounter{md@zref@counter}
+   \zref@label{md@pagelabel-\number\value{md@zref@counter}}%
+}
+
+\newrobustcmd*\if@md@pageodd{%
+     \zref@refused{md@pagelabel-\the\value{md@zref@counter}}%
+     \ifodd\zref@extract{md@pagelabel-\the\value{md@zref@counter}}{md@pagevalue}%
+         \edef\md@reserveda{\md@pageisodd}%
+     \else
+        \edef\md@reserveda{\md@pageiseven}%
+     \fi
+     \md@reserveda%
+}
+
+\newrobustcmd*\md@pageisodd{%
+      \ifdimequal{\mdf@outermargin@length}{-999pt}%
+         {\setlength\mdf@rightmargin@length{\z@}}%
+         {\setlength\mdf@rightmargin@length{\mdf@outermargin@length}}%
+     \ifdimequal{\mdf@innermargin@length}{-999pt}%
+         {\setlength\mdf@leftmargin@length{\z@}}%
+         {\setlength\mdf@leftmargin@length{\mdf@innermargin@length}}%
+}
+\newrobustcmd*\md@pageiseven{%
+      \ifdimequal{\mdf@outermargin@length}{-999pt}%
+         {\setlength\mdf@leftmargin@length{\z@}}%
+         {\setlength\mdf@leftmargin@length{\mdf@outermargin@length}}%
+     \ifdimequal{\mdf@innermargin@length}{-999pt}%
+         {\setlength\mdf@rightmargin@length{\z@}}%
+         {\setlength\mdf@rightmargin@length{\mdf@innermargin@length}}%
+}
+
+\newrobustcmd*\md@@setzref{\md@zref@label\if@md@pageodd}
+
+%%==================================================%%
+%%================= Platz auf Seite ================%%
+%%==================================================%%
+\newrobustcmd*\md@freepagevspace{%
+     \penalty\@M \vskip 2\baselineskip \vskip\height
+     \penalty9999 \vskip -2\baselineskip \vskip-\height
+     \penalty9999
+     \ifdimequal{\pagegoal}{\maxdimen}%
+          {\md@freevspace@length\vsize}%
+          {\md@freevspace@length=\pagegoal\relax%
+           \advance\md@freevspace@length by -\pagetotal\relax%
+          }%
+}
+
+%%==================================================%%
+%================= Breite der Box =================%%
+%%==================================================%%
+\newrobustcmd*\md@advancelength@orizontalmargin@add[1]{%
+  \advance\md@horizontalspaceofbox by -\csname mdf@#1@length\endcsname\relax%
+}
+
+\newlength\md@horizontalspaceofbox
+\newrobustcmd*\md@horizontalmargin@equation{%
+    \setlength{\md@horizontalspaceofbox}{\mdf@userdefinedwidth@length}%
+    \mdf@dolist{\md@advancelength@orizontalmargin@add}{%
+             leftmargin,outerlinewidth,middlelinewidth,%
+             innerlinewidth,innerleftmargin,innerrightmargin,%
+             innerlinewidth,middlelinewidth,outerlinewidth,%
+             rightmargin}%
+    \notbool{mdf@leftline}{%
+                \advance\md@horizontalspaceofbox by \mdf@innerlinewidth@length\relax%
+                \advance\md@horizontalspaceofbox by \mdf@middlelinewidth@length\relax%
+                \advance\md@horizontalspaceofbox by \mdf@outerlinewidth@length\relax%
+           }{}%      
+    \notbool{mdf@rightline}{%
+                \advance\md@horizontalspaceofbox by \mdf@innerlinewidth@length\relax%
+                \advance\md@horizontalspaceofbox by \mdf@middlelinewidth@length\relax%
+                \advance\md@horizontalspaceofbox by \mdf@outerlinewidth@length\relax% 
+           }{}%
+ %   \advance\md@horizontalspaceofbox by - \width\md@arrayparboxrestore%
+    %%% Beruecksichtigung, dass Auszaehlung bzw. list-Umgebung enthalten
+    \ifdimless{\md@horizontalspaceofbox}{3cm}{\md@PackageWarning{You have only a width of 3cm}}{}
+    \hsize=\md@horizontalspaceofbox%
+}
+
+%%==================================================%%
+%%===========Beruecksichtige Linienausgabe==========%%
+%%==================================================%%
+\newrobustcmd*\md@keeplines@single{%
+  \notbool{mdf@topline}{%
+      \advance\md@verticalmarginwhole@length by -\mdf@middlelinewidth@length%
+     }{}%
+  \notbool{mdf@bottomline}{%
+      \advance\md@verticalmarginwhole@length by -\mdf@middlelinewidth@length%
+     }{}%
+}
+
+%%==================================================%%
+%%===========Additionsalgorithmus fuer for==========%%
+%%==================================================%%
+\newrobustcmd*\md@advancelength@verticalmarginwhole[1]{%
+  \advance\md@verticalmarginwhole@length by \csname mdf@#1@length\endcsname\relax%
+}
+
+\newrobustcmd*\md@advancelength@freevspace@sub[1]{%
+  \advance\dimen@ by -\csname mdf@#1@length\endcsname\relax%
+}
+
+\newrobustcmd*\md@advancelength@freevspace@add[1]{%
+  \advance\dimen@ by \csname mdf@#1@length\endcsname\relax%
+}
+%%==================================================%%
+%%====================Reset changes=================%%
+%%==================================================%%
+\protected@edef\md@reset{\boxmaxdepth\the\boxmaxdepth 
+                          \splittopskip\the\splittopskip}%
+
+
+%%==================================================%%
+%%===========Ausgaberoutine -> Berechnung===========%%
+%%==================================================%%
+
+\newrobustcmd*\md@put@frame@standalone{\relax%
+   \ifvoid\@tempboxa\relax
+      \md@PackageWarning{The environment is empty\MessageBreak}%
+      \let\md@reserved@a\relax%
+   \else
+      %Hier berechnung Box-Inhalt+Rahmen oben und unten
+      \setlength{\md@verticalmarginwhole@length}{\dimexpr\ht\@tempboxa+\dp\@tempboxa\relax}%
+      \mdf@dolist{\md@advancelength@verticalmarginwhole}{%
+                  outerlinewidth,middlelinewidth,innerlinewidth,innertopmargin,
+                  innerbottommargin,innerlinewidth,middlelinewidth,outerlinewidth}%
+      \md@keeplines@single%
+      \def\md@reserved@a{\md@putbox@single}%
+   \fi
+   \md@reserved@a%
+}
+
+
+\def\md@put@frame{\relax%
+\ifvoid\@tempboxa\relax
+\md@PackageWarning{The environment is empty\MessageBreak}%
+\let\md@reserved@a\relax%
+\else
+   \md@print@space%
+   \md@freepagevspace%
+   \md@PackageInfoSpace{\the\md@freevspace@length before the beginning of the environment^^J
+                        ending on input line \MessageBreak}%
+   \ifdimless{\md@freevspace@length}{2\baselineskip}
+             {\md@PackageInfo{Not enough space on this page}%die Seite hat nur noch minimal Platz
+              \vfill\eject%
+              \def\md@reserved@a{\md@put@frame}%
+             }{%
+               %Hier berechnung Box-Inhalt+Rahmen oben und unten
+              \setlength{\md@verticalmarginwhole@length}{\dimexpr\ht\@tempboxa+\dp\@tempboxa\relax}%
+              \mdf@dolist{\md@advancelength@verticalmarginwhole}{%
+                     outerlinewidth,middlelinewidth,innerlinewidth,innertopmargin,
+                     innerbottommargin,innerlinewidth,middlelinewidth,outerlinewidth}%
+             \md@keeplines@single%
+             \ifdimless{\md@verticalmarginwhole@length}{\md@freevspace@length}%
+                {%passt auf Seite%
+                  \begingroup
+                   \iftoggle{md:checktwoside}{\md@@setzref}{}%
+                    \md@putbox@single%%passt auf Seite
+                  \endgroup
+                 \let\md@reserved@a\relax}%
+                {\def\md@reserved@a{\md@put@frame@i}}%passt nicht auf Seite
+             }%
+\fi
+\md@reserved@a%
+}
+
+\def\md@put@frame@i{%Box muss gesplittet werden -- Ausgabe der ersten Teilbox
+      %Berechnung der Splittgroesse -- Linien und Abstand oben
+      \md@freepagevspace%
+      \dimen@=\the\md@freevspace@length%
+      \dimen@i=\mdf@innertopmargin@length%
+      \advance\dimen@i by \mdf@linewidth@length%
+      \advance\dimen@i by 2\baselineskip%
+      \ifdim\dimen@<\dimen@i\relax
+           \hrule \@height\z@ \@width\hsize%
+           \vfill\eject%
+           \def\md@reserved@a{\md@put@frame}%
+      \else%
+      \mdf@dolist{\md@advancelength@freevspace@sub}{%
+                outerlinewidth,middlelinewidth,innerlinewidth,%
+                innertopmargin,splitbottomskip}%
+      \ifbool{mdf@topline}{}{\advance\dimen@ by \mdf@middlelinewidth@length}%
+      \ifdimless{\ht\@tempboxa+\dp\@tempboxa}{\dimen@}%
+         {\md@PackageWarning{You got a bad break\MessageBreak
+                             you have to change it manually\MessageBreak
+                             by changing the text, the space\MessageBreak
+                             or something else}%
+          \advance\dimen@ by -1.8\baselineskip\relax%
+         }{}%
+         \advance\dimen@ by -1pt\relax%Box darf nicht zu Groß werden.
+         \splitmaxdepth\z@ \splittopskip\mdf@splittopskip@length%
+         \setbox\tw@\vsplit\@tempboxa to \dimen@
+         \setbox\tw@\vbox{\unvbox\tw@}%needed?
+         \ifdimgreater{\ht\tw@+\dp\tw@}{\dimen@}{%Falsch gesplittet
+            \md@PackageInfo{Box was splittet wrong\MessageBreak}%
+             \dimen@i=\dimen@
+              \advance\dimen@ by -\ht\tw@
+              \advance\dimen@ by -\dp\tw@
+              \advance\dimen@i by 0.5\dimen@
+             \splittopskip\z@%
+             \setbox\@tempboxa\vbox{\unvbox\tw@%
+                                     \hrule \@height\dp\strutbox \@width\z@%benoetigt um Tiefe zu haben
+                                     \unvbox\@tempboxa}
+             \splittopskip\mdf@splittopskip@length%
+             \setbox\tw@\vsplit\@tempboxa to \dimen@i
+             \setbox\tw@\vbox{\unvbox\tw@}%
+             }{}%
+         \setbox\@tempboxa\vbox{\unvbox\@tempboxa}%PRUEFEN!!!!
+         \ifvoid\@tempboxa
+           \md@PackageWarning{You got a bad break\MessageBreak
+                               because the splittet box is empty\MessageBreak
+                               You have to change the page settings\MessageBreak
+                               like enlargethispage or something else}%
+           \setbox\@tempboxa\vbox{\box\tw@\box\@tempboxa}%
+           \def\md@reserved@a{\md@put@frame}%
+         \fi
+         \ifvoid\tw@%%pruefe, ob erste Box leer ist
+          \hrule \@height\z@ \@width\hsize
+          \vfill\eject%  
+             \def\md@reserved@a{\md@put@frame}%
+         \else
+          \ifdimequal{\ht\tw@}{0pt}%
+            {\hrule \@height\z@ \@width\hsize%
+             \vfill\eject%
+             \setbox\@tempboxa\vbox{\unvbox\tw@\unvbox\@tempboxa}
+             \def\md@reserved@a{\md@put@frame}%
+            }%
+            {%
+            \begingroup
+               \iftoggle{md:checktwoside}{\md@@setzref}{}%
+               \md@putbox@first%%%Groesse des Splittens passt
+            \endgroup
+            \hrule \@height\z@ \@width\hsize
+            \vfill\eject%
+            \def\md@reserved@a{\md@put@frame@ii}%
+            }%
+         \fi% 
+      \fi%
+\md@reserved@a%
+}
+
+\def\md@put@frame@ii{%Ausgabe der mittleren Box(en) wenn vorhanden
+  \setlength{\md@freevspace@length}{\vsize}%
+  \setlength{\dimen@}{\dimexpr\ht\@tempboxa+\dp\@tempboxa\relax}%
+  \mdf@dolist{\md@advancelength@freevspace@add}{%
+                outerlinewidth,middlelinewidth,innerlinewidth,%
+                innerbottommargin}%%%Addition der Linien unten
+   \ifbool{mdf@bottomline}{}{\advance\dimen@ by -\mdf@middlelinewidth@length\relax}%
+   \ifdimgreater{\dimen@}{\md@freevspace@length}%
+    {%
+        \advance\md@freevspace@length by -\mdf@splitbottomskip@length
+        \splitmaxdepth\z@ \splittopskip\mdf@splittopskip@length%
+        \setbox\tw@\vsplit\@tempboxa to \md@freevspace@length%
+        \setbox\tw@\vbox{\unvbox\tw@}%PRUEFEN!!!
+        \setbox\@tempboxa\vbox{\unvbox\@tempboxa}%PRUEFEN!!!!
+        \ifvoid\@tempboxa\relax%
+           \md@PackageWarning{You got a bad break\MessageBreak
+                               because the split box is empty\MessageBreak
+                               You have to change the settings}%
+         \fi%
+        \begingroup
+           \iftoggle{md:checktwoside}{\md@@setzref}{}%
+           \md@putbox@middle%
+        \endgroup
+        \hrule \@height\z@ \@width\hsize
+        \vfill\eject
+        \def\md@reserved@a{\md@put@frame@ii}%
+     }%Hier die Ausgabe der mittleren Box
+     {\ifvoid\@tempboxa
+           \md@PackageWarning{You got a bad break\MessageBreak
+                               because the last split box is empty\MessageBreak
+                               You have to change the settings}%
+      \fi%
+      \begingroup
+          \iftoggle{md:checktwoside}{\md@@setzref}{}%
+          \md@putbox@second%
+      \endgroup
+      \let\md@reserved@a\relax%
+     }%Hier kommt die Ausgabe der letzten Box
+  \md@reserved@a%
+}
+
+%%==================================================%%
+%%= Sicherstellen, dass Optionen nur global setzbar=%%
+%%==================================================%%
+\DisableKeyvalOption[%  
+  action=warning,  
+  package=mdframed,    
+]{mdf}{framemethod}%
+
+\DisableKeyvalOption[%  
+  action=warning,  
+  package=mdframed,    
+]{mdf}{xcolor}%
+\endinput
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
