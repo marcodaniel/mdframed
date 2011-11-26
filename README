@@ -1,0 +1,28 @@
+%%$Id: README 223 2011-11-13 18:10:49Z marco $
+
+The standard methods for framing text (\fbox or \fcolorbox)
+require you to handle page breaks by hand, meaning that you
+have to split the \fbox into two. The present package
+defines the environment \mdfamed which automatically deals
+with pagebreaks in framed text.
+
+
+Author's name: Marco Daniel and Elke Schubert (tikz)
+License type: lppl
+
+----------------------------
+v1.0
+- add option userdefinedwidth 
+- add option align 
+- add option apptotikzsetting 
+- create new command mdfapptodefinestyle (Thanks to Martin Scharrer)
+- changed internal algorithm
+- removed calc instead using e-TeX \dimexpr
+- expand documentation
+- trying to fixe problems with xcolor 
+- fixed bug with framemethod=pstricks 
+- create file mdframed-example-default 
+- create file mdframed-example-tikz 
+- create file mdframed-example-pstricks 
+- create file mdframed-example-texsx  (texsx stands for tex stackexchange)
+
