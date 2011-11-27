@@ -32,17 +32,17 @@
 %%                                                 %%
 %%>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>%%
 
-%%$Id: mdframed.sty 236 2011-11-27 10:01:59Z marco $
-%%$Rev: 236 $
+%%$Id: mdframed.sty 237 2011-11-27 12:52:31Z marco $
+%%$Rev: 237 $
 %%$Author: marco $
-%%$Date: 2011-11-27 11:01:59 +0100 (So, 27. Nov 2011) $
+%%$Date: 2011-11-27 13:52:31 +0100 (So, 27. Nov 2011) $
 
 %% Allgemeine Angaben
 \def\mdversion{v1.0a}
 \def\mdframedpackagename{mdframed}
 \def\md@maindate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{mdframed}[\md@maindate@svn$Id: mdframed.sty 236 2011-11-27 10:01:59Z marco $ \mdversion: \mdframedpackagename]
+\ProvidesPackage{mdframed}[\md@maindate@svn$Id: mdframed.sty 237 2011-11-27 12:52:31Z marco $ \mdversion: \mdframedpackagename]
 %%==================================================%%
 %%=============== Benoetigte Pakete ================%%
 %%==================================================%%
@@ -397,8 +397,15 @@
 %%==================================================%%
 %%==============leftline anpassen===================%%
 %%==================================================%%
-\newrobustcmd*\mdf@makebox[2][\mdf@userdefinedwidth@length]{%
- \noindent\makebox[#1][l]{#2}%
+\newrobustcmd*\mdf@makebox@out[2][\linewidth]{%
+ \noindent\hb@xt@\z@{%
+    \noindent\makebox[\dimexpr #1\relax][l]{#2}%
+ \hss}%
+}%
+
+
+\newrobustcmd*\mdf@makebox@in[2][\mdf@userdefinedwidth@length]{%
+ \noindent\makebox[\dimexpr #1\relax][l]{#2}%
 }
 
 

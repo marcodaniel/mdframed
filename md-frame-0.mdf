@@ -8,14 +8,14 @@
 %% Public License, as described in lppl.txt in the base LaTeX distribution.
 %% Either version 1.0 or, at your option, any later version.
 
-%%$Id: md-frame-0.mdf 234 2011-11-26 23:10:52Z marco $
-%%$Rev: 234 $
+%%$Id: md-frame-0.mdf 237 2011-11-27 12:52:31Z marco $
+%%$Rev: 237 $
 %%$Author: marco $
-%%$Date: 2011-11-27 00:10:52 +0100 (So, 27. Nov 2011) $
+%%$Date: 2011-11-27 13:52:31 +0100 (So, 27. Nov 2011) $
 
 \def\mdframedOpackagename{md-frame-0}
 \def\md@frameOdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
-\ProvidesFile{md-frame-0.mdf}[\md@frameOdate@svn$Id: md-frame-0.mdf 234 2011-11-26 23:10:52Z marco $ \mdversion: \mdframedOpackagename]
+\ProvidesFile{md-frame-0.mdf}[\md@frameOdate@svn$Id: md-frame-0.mdf 237 2011-11-27 12:52:31Z marco $ \mdversion: \mdframedOpackagename]
 
 %Hilfparameter
 \def\mdf@background@default{\color{\mdf@backgroundcolor}}
@@ -35,7 +35,7 @@
 \def\md@frame@topandbottomline@single{%
            \rlap{\mdf@linecolor@default%
                \ifbool{mdf@topline}{%
-                   \rule[\dimexpr\mdfboundingboxheight-\mdfboundingboxdepth+\mdf@innerbottommargin@length+\mdf@innertopmargin@length\relax]
+                   \rule[\dimexpr\mdfboundingboxheight-\mdfboundingboxdepth+\mdf@innerbottommargin@length+\mdf@innertopmargin@length\relax]%
                         {\mdfboundingboxtotalwidth}%
                         {\mdf@middlelinewidth@length}}%
                   {}%
@@ -55,7 +55,7 @@
                          \ifbool{mdf@bottomline}{-\mdf@middlelinewidth@length}{}\relax]%
                         {\mdf@middlelinewidth@length}%
                         {\dimexpr\mdfboundingboxtotalheight%
-                         +\ifbool{mdf@bottomline}{\mdf@middlelinewidth@length}{0pt}
+                         +\ifbool{mdf@bottomline}{\mdf@middlelinewidth@length}{0pt}%
                          +\ifbool{mdf@topline}{\mdf@middlelinewidth@length}{0pt}\relax}%
                   }% 
 }%
@@ -76,7 +76,7 @@
 \def\md@putbox@single{%%%%% Ausgabe der ungesplitteten Gesamtbox
   \ifvoid\@tempboxa
   \else%
-   \mdf@makebox[\md@horizontalspaceofbox]{%
+   \mdf@makebox@out{
       \mdf@makeboxalign@left%
       \setlength{\mdfboundingboxwidth}{\wd\@tempboxa}%
       \setlength{\mdfboundingboxtotalwidth}{\dimexpr\mdfboundingboxwidth+\mdf@innerleftmargin@length+\mdf@innerrightmargin@length\relax}%
@@ -87,13 +87,13 @@
       \setlength{\@tempdima}{\dimexpr\mdfboundingboxtotalwidth%
                              +\ifbool{mdf@leftline}{\mdf@middlelinewidth@length}{\z@}%
                              +\ifbool{mdf@rightline}{\mdf@middlelinewidth@length}{\z@}\relax}%
-      \mdf@makebox[\@tempdima]{%
+      \mdf@makebox@in[\@tempdima]{%
         \null%
         \ifbool{mdf@leftline}{%
            \hspace*{\mdf@middlelinewidth@length}%
            \md@frame@leftline@single%
             }{}%
-        \md@frame@topandbottomline@single
+        \md@frame@topandbottomline@single%
         \md@frame@background@single%
         \hspace*{\mdf@innerleftmargin@length}%
         \ifbool{mdf@rightline}{%
@@ -127,7 +127,7 @@
 %
 \def\md@frame@topline@first{%
       \rlap{\mdf@linecolor@default%
-             \rule[\dimexpr\mdfboundingboxheight-\mdfboundingboxdepth+\mdf@splitbottomskip@length+\mdf@innertopmargin@length\relax]
+             \rule[\dimexpr\mdfboundingboxheight-\mdfboundingboxdepth+\mdf@splitbottomskip@length+\mdf@innertopmargin@length\relax]%
                   {\mdfboundingboxtotalwidth}%
                   {\mdf@middlelinewidth@length}%
       }%
@@ -145,7 +145,7 @@
 \def\md@putbox@first{%%%% Ausgabe der Teilbox 1
   \ifvoid\@tempboxa
   \else%
-   \mdf@makebox[\md@horizontalspaceofbox]{%
+   \mdf@makebox@out[\linewidth]{%
       \mdf@makeboxalign@left%
       \setlength{\mdfboundingboxwidth}{\wd\tw@}%
       \setlength{\mdfboundingboxtotalwidth}{\dimexpr\mdfboundingboxwidth+\mdf@innerleftmargin@length+\mdf@innerrightmargin@length\relax}%
@@ -155,7 +155,7 @@
       \setlength{\@tempdima}{\dimexpr\mdfboundingboxtotalwidth%
                              +\ifbool{mdf@leftline}{\mdf@middlelinewidth@length}{\z@}%
                              +\ifbool{mdf@rightline}{\mdf@middlelinewidth@length}{\z@}\relax}%
-      \mdf@makebox[\@tempdima]{%
+      \mdf@makebox@in[\@tempdima]{%
         \null%
         \ifbool{mdf@leftline}{%
            \hspace*{\mdf@middlelinewidth@length}%
@@ -169,7 +169,7 @@
         {\box\tw@}%
     }%
     \mdf@makeboxalign@right%
-    }%
+  }%
  \fi%
 }
 %%==================================================%%
@@ -194,7 +194,7 @@
 %
 \def\md@frame@bottomline@second{%
       \rlap{\mdf@linecolor@default%
-             \rule[\dimexpr-\mdfboundingboxdepth-\mdf@middlelinewidth@length\relax]
+             \rule[\dimexpr-\mdfboundingboxdepth-\mdf@middlelinewidth@length\relax]%
                   {\mdfboundingboxtotalwidth}%
                   {\mdf@middlelinewidth@length}%
       }%
@@ -213,7 +213,7 @@
 \def\md@putbox@second{%
   \ifvoid\@tempboxa%
   \else
-   \mdf@makebox[\md@horizontalspaceofbox]{%
+   \mdf@makebox@out{%
       \mdf@makeboxalign@left%
       \setlength{\mdfboundingboxwidth}{\wd\@tempboxa}%
       \setlength{\mdfboundingboxtotalwidth}{\dimexpr\mdfboundingboxwidth+\mdf@innerleftmargin@length+\mdf@innerrightmargin@length\relax}%
@@ -223,7 +223,7 @@
       \setlength{\@tempdima}{\dimexpr\mdfboundingboxtotalwidth%
                              +\ifbool{mdf@leftline}{\mdf@middlelinewidth@length}{\z@}%
                              +\ifbool{mdf@rightline}{\mdf@middlelinewidth@length}{\z@}\relax}%
-      \mdf@makebox[\@tempdima]{%
+      \mdf@makebox@in[\@tempdima]{%
       \null%
         \ifbool{mdf@leftline}{%
            \hspace*{\mdf@middlelinewidth@length}%
@@ -237,7 +237,7 @@
         {\box\@tempboxa}%
     }%
     \mdf@makeboxalign@right%
-    }%
+  }%
   \fi%
 }%
 %%==================================================%%
@@ -271,7 +271,7 @@
 \def\md@putbox@middle{%
   \ifvoid\@tempboxa%
   \else
-   \mdf@makebox[\md@horizontalspaceofbox]{%
+   \mdf@makebox@out{%
       \mdf@makeboxalign@left%
       \setlength{\mdfboundingboxwidth}{\wd\tw@}%
       \setlength{\mdfboundingboxtotalwidth}{\dimexpr\mdfboundingboxwidth+\mdf@innerleftmargin@length+\mdf@innerrightmargin@length\relax}%
@@ -281,7 +281,7 @@
       \setlength{\@tempdima}{\dimexpr\mdfboundingboxtotalwidth%
                              +\ifbool{mdf@leftline}{\mdf@middlelinewidth@length}{\z@}%
                              +\ifbool{mdf@rightline}{\mdf@middlelinewidth@length}{\z@}\relax}%
-      \mdf@makebox[\@tempdima]{%
+      \mdf@makebox@in[\@tempdima]{%
         \null%
         \ifbool{mdf@leftline}{%
            \hspace*{\mdf@middlelinewidth@length}%
@@ -289,10 +289,12 @@
         \md@frame@background@middle%
         \hspace*{\mdf@innerleftmargin@length}%
         \ifbool{mdf@rightline}{%
-            \md@frame@rightline@middle}{}
+            \md@frame@rightline@middle}{}%
            {\box\tw@}%
     }%
     \mdf@makeboxalign@right%
-    }%
+  }
   \fi%
 }
+
+\endinput

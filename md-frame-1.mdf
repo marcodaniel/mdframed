@@ -8,14 +8,14 @@
 %% Public License, as described in lppl.txt in the base LaTeX distribution.
 %% Either version 1.0 or, at your option, any later version.
 
-%%$Id: md-frame-1.mdf 234 2011-11-26 23:10:52Z marco $
-%%$Rev: 234 $
+%%$Id: md-frame-1.mdf 237 2011-11-27 12:52:31Z marco $
+%%$Rev: 237 $
 %%$Author: marco $
-%%$Date: 2011-11-27 00:10:52 +0100 (So, 27. Nov 2011) $
+%%$Date: 2011-11-27 13:52:31 +0100 (So, 27. Nov 2011) $
 
 \def\mdframedIpackagename{md-frame-1}
 \def\md@frameIdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
-\ProvidesFile{md-frame-1.mdf}[\md@frameIdate@svn$Id: md-frame-1.mdf 234 2011-11-26 23:10:52Z marco $ \mdversion: \mdframedIpackagename]
+\ProvidesFile{md-frame-1.mdf}[\md@frameIdate@svn$Id: md-frame-1.mdf 237 2011-11-27 12:52:31Z marco $ \mdversion: \mdframedIpackagename]
 %%%%    _____t_____
 %%%%   |           |
 %%%%   |           |
@@ -118,7 +118,7 @@
 \def\md@putbox@single{%
   \ifvoid\@tempboxa
   \else%
-   \mdf@makebox[\md@horizontalspaceofbox]{%
+   \mdf@makebox@out{%
     \mdf@makeboxalign@left%
     \md@tikz@settings%
 %
@@ -145,7 +145,7 @@
       \advance\mdfboundingboxheight by \mdf@innerlinewidth@length\relax%
       \advance\mdfboundingboxheight by \mdf@middlelinewidth@length\relax%
       \advance\mdfboundingboxheight by \mdf@outerlinewidth@length\relax}{}%
-    \mdf@makebox[\mdfboundingboxwidth]{%
+    \mdf@makebox@in[\mdfboundingboxwidth]{%
     \null%
     \begin{tikzpicture}[remember picture]%
      \begin{scope}
@@ -204,7 +204,7 @@
 \def\md@putbox@first{%
   \ifvoid\@tempboxa
   \else%
-   \mdf@makebox[\md@horizontalspaceofbox]{%
+        \mdf@makebox@out{%
     \mdf@makeboxalign@left%
     \md@tikz@settings%
     \setlength\mdfboundingboxwidth{\wd\tw@}%
@@ -229,7 +229,7 @@
 %
     %\ifdimequal{\pagegoal}{\maxdimen}{\enlargethispage{\baselineskip}}{}% ???
     \ifdimgreater{\pagegoal-\maxdimen}{0pt}{}{\enlargethispage{\baselineskip}}%
-    \mdf@makebox[\mdfboundingboxwidth]{%
+    \mdf@makebox@in[\mdfboundingboxwidth]{%
     \null%
     \begin{tikzpicture}[remember picture]
      \begin{scope}
@@ -281,7 +281,7 @@
 \def\md@putbox@middle{%
   \ifvoid\@tempboxa
   \else%
-   \mdf@makebox[\md@horizontalspaceofbox]{%
+        \mdf@makebox@out{%
     \mdf@makeboxalign@left%
     \md@tikz@settings%
 %
@@ -300,7 +300,7 @@
     \setlength\mdfboundingboxheight{\dimexpr\ht\tw@+\dp\tw@\relax}%
     \advance\mdfboundingboxheight by \mdf@splitbottomskip@length\relax%
 %
-    \mdf@makebox[\mdfboundingboxwidth]{%
+    \mdf@makebox@in[\mdfboundingboxwidth]{%
     \null%
     \begin{tikzpicture}[remember picture]
      \begin{scope}
@@ -342,7 +342,7 @@
 \def\md@putbox@second{%
   \ifvoid\@tempboxa
   \else%
-   \mdf@makebox[\md@horizontalspaceofbox]{%
+        \mdf@makebox@out{%
     \mdf@makeboxalign@left%
     \md@tikz@settings%
 %
@@ -365,7 +365,7 @@
       \advance\mdfboundingboxheight by \mdf@middlelinewidth@length\relax%
       \advance\mdfboundingboxheight by \mdf@outerlinewidth@length\relax}{}%
 %
-    \mdf@makebox[\mdfboundingboxwidth]{%
+    \mdf@makebox@in[\mdfboundingboxwidth]{%
     \null%
     \begin{tikzpicture}[remember picture]
      \begin{scope}

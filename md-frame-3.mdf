@@ -8,16 +8,16 @@
 %% Public License, as described in lppl.txt in the base LaTeX distribution.
 %% Either version 1.0 or, at your option, any later version.
 
-%%$Id: md-frame-3.mdf 236 2011-11-27 10:01:59Z marco $
-%%$Rev: 236 $
+%%$Id: md-frame-3.mdf 237 2011-11-27 12:52:31Z marco $
+%%$Rev: 237 $
 %%$Author: marco $
-%%$Date: 2011-11-27 11:01:59 +0100 (So, 27. Nov 2011) $
+%%$Date: 2011-11-27 13:52:31 +0100 (So, 27. Nov 2011) $
 
 %%Allgemeine Einstellungen fuer pstricks
 %%Hier nur einfacher Rahmen mit Einstellungen
 \def\mdframedIIpackagename{md-frame-2}
 \def\md@frameIIdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
-\ProvidesFile{md-frame-2.mdf}[\md@frameIIdate@svn$Id: md-frame-3.mdf 236 2011-11-27 10:01:59Z marco $ \mdversion: \mdframedIIpackagename]
+\ProvidesFile{md-frame-2.mdf}[\md@frameIIdate@svn$Id: md-frame-3.mdf 237 2011-11-27 12:52:31Z marco $ \mdversion: \mdframedIIpackagename]
 %
 \def\md@ptlength@to@pscode#1{\pst@number{#1} \pst@number\psxunit div}
 \let\ptTps\md@ptlength@to@pscode\relax
@@ -72,7 +72,7 @@
 \def\md@putbox@single{%
   \ifvoid\@tempboxa
   \else%
-   \mdf@makebox[\md@horizontalspaceofbox]{%
+   \mdf@makebox@out{%
     \mdf@makeboxalign@left%
         \ifbool{mdf@leftline}{\hspace*{\mdf@middlelinewidth@length}}{}%
         \setlength\mdfboundingboxwidth{\wd\@tempboxa}%
@@ -86,7 +86,7 @@
        \psset{linearc=\mdf@roundcorner@length,cornersize=absolut,}%
        \expandafter\psset\expandafter{\mdf@psset@local}%
        \psset{unit=1truecm}%
-    \mdf@makebox[\mdfboundingboxwidth]{%
+    \mdf@makebox@in[\mdfboundingboxwidth]{%
     \null%
        \begin{pspicture}(0,0)(\mdfboundingboxwidth,\mdfboundingboxheight)
            \md@test@ltrb{%
@@ -211,7 +211,7 @@
 \def\md@putbox@first{%
   \ifvoid\@tempboxa
   \else%
-   \mdf@makebox[\md@horizontalspaceofbox]{%
+   \mdf@makebox@out{%
     \mdf@makeboxalign@left%
         \ifbool{mdf@leftline}{\hspace*{\mdf@middlelinewidth@length}}{}%
         \setlength\mdfboundingboxwidth{\wd\tw@}%
@@ -223,7 +223,7 @@
          \advance\mdfboundingboxwidth by \mdf@innerrightmargin@length\relax%
          \psset{linearc=\mdf@roundcorner@length,cornersize=absolute}%
          \expandafter\psset\expandafter{\mdf@psset@local}%
-    \mdf@makebox[\mdfboundingboxwidth]{%
+    \mdf@makebox@in[\mdfboundingboxwidth]{%
     \null%
          \psset{unit=1truecm}%
          \ifdimgreater{\mdfboundingboxheight}{\vsize}
@@ -306,7 +306,7 @@
 \def\md@putbox@middle{%
   \ifvoid\@tempboxa
   \else%
-   \mdf@makebox[\md@horizontalspaceofbox]{%
+   \mdf@makebox@out{%
     \mdf@makeboxalign@left%
         \ifbool{mdf@leftline}{\hspace*{\mdf@middlelinewidth@length}}{}%
         \setlength\mdfboundingboxwidth{\wd\tw@}%
@@ -317,7 +317,7 @@
          \expandafter\psset\expandafter{\mdf@psset@local}%
          \psset{linearc=\mdf@roundcorner@length,cornersize=absolute}%
          \psset{unit=1truecm}%
-    \mdf@makebox[\mdfboundingboxwidth]{%
+    \mdf@makebox@in[\mdfboundingboxwidth]{%
     \null%
          \ifdimgreater{\mdfboundingboxheight}{\vsize}
            {\begin{pspicture}(0,0)(\mdfboundingboxwidth,\vsize)}
@@ -353,7 +353,7 @@
 \def\md@putbox@second{
   \ifvoid\@tempboxa
   \else%
-   \mdf@makebox[\md@horizontalspaceofbox]{%
+   \mdf@makebox@out{%
     \mdf@makeboxalign@left%
         \ifbool{mdf@leftline}{\hspace*{\mdf@middlelinewidth@length}}{}%
         \setlength\mdfboundingboxwidth{\wd\@tempboxa}%
@@ -365,7 +365,7 @@
         \expandafter\psset\expandafter{\mdf@psset@local}
         \psset{linearc=\mdf@roundcorner@length,cornersize=absolute}%
         \psset{unit=1truecm}%
-    \mdf@makebox[\mdfboundingboxwidth]{%
+    \mdf@makebox@in[\mdfboundingboxwidth]{%
     \null%
         \begin{pspicture}(0,0)(\mdfboundingboxwidth,\mdfboundingboxheight)
            %Hintergrund

@@ -1,14 +1,14 @@
 %Documenation of the package mdframed
-%%$Id: mdframed-example-default.tex 221 2011-11-13 18:03:29Z marco $
+%%$Id: mdframed-example-default.tex 237 2011-11-27 12:52:31Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt]{ltxmdf}
-\svnInfo $Id: mdframed-example-default.tex 221 2011-11-13 18:03:29Z marco $
+\svnInfo $Id: mdframed-example-default.tex 237 2011-11-27 12:52:31Z marco $
 \usepackage{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[T1,altbullet]{lucidabr}
 \usepackage[scaled=0.82]{beramono}  
-
+\usepackage{showframe}
 \usepackage[]{showexpl}
 \lstset{style=lstmdframed,explpreset={pos=b,rframe={}},}
 
@@ -84,25 +84,29 @@ function of the independent variables alone.
 \Examplesec{hidden line + frame title}
 \begin{LTXexample}
 \global\mdfapptodefinestyle{exampledefault}{%
- topline=false,rightline=false,bottomline=false}
+ topline=false,rightline=true,bottomline=false}
 \begin{mdframed}[style=exampledefault,frametitle={Inhomogeneous linear}]
 \ExampleText
 \end{mdframed}
 \end{LTXexample}
 \clearpage
+
 \Examplesec{colored frame title}
 \begin{LTXexample}
 \renewcommand\mdframedtitleenv[1]{%
                  \colorbox{green}{%
-                 \parbox{\linewidth}{\centering\bfseries #1}}%
+                 \parbox{\dimexpr\linewidth-6pt\relax}%6pt=linewidth 
+                 {\centering\bfseries #1}}%
                  \par\kern.5\baselineskip\noindent%
         }
 \global\mdfapptodefinestyle{exampledefault}{%
-   rightline=true}
+   rightline=true,innerleftmargin=0,innerrightmargin=0}
 \begin{mdframed}[style=exampledefault,frametitle={Inhomogeneous linear}]
 \ExampleText
 \end{mdframed}
 \end{LTXexample}
+
+
 
 \Examplesec{framed picture which is centered}
 \begin{LTXexample}
@@ -196,6 +200,8 @@ function of the independent variables alone.
    \begin{mdframed}[innertopmargin=0pt,linecolor=blue!20,%
                     linewidth=2pt,topline=false,]%
    }{\end{mdframed}}
+
+
 \begin{theo}[Inhomogeneous Linear]
 \ExampleText
 \end{theo}
@@ -216,7 +222,7 @@ The example below is inspired by the following post on StackExchange \href{http:
   \llap{\color{white}%
    \rule[\dimexpr-\mdfboundingboxdepth%
          \ifbool{mdf@bottomline}{-\mdf@middlelinewidth@length}{}%
-        +\interruptlength\relax]%
+         +\interruptlength\relax]%
        {\mdf@middlelinewidth@length}%
        {\dimexpr\mdfboundingboxtotalheight%
         +\ifbool{mdf@bottomline}{\mdf@middlelinewidth@length}{0pt}
@@ -243,7 +249,7 @@ The example below is inspired by the following post on StackExchange \href{http:
 \overlaplines
 
 
-\begin{mdframed}[linecolor=blue,linewidth=2pt]
+\begin{mdframed}[linecolor=blue,linewidth=8pt]
 \ExampleText
 \end{mdframed}
 \end{LTXexample}

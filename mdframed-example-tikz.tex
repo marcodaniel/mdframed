@@ -1,8 +1,8 @@
 %Documenation of the package mdframed
-%%$Id: mdframed-example-tikz.tex 220 2011-11-13 17:39:13Z marco $
+%%$Id: mdframed-example-tikz.tex 237 2011-11-27 12:52:31Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt]{ltxmdf}
-\svnInfo $Id: mdframed-example-tikz.tex 220 2011-11-13 17:39:13Z marco $
+\svnInfo $Id: mdframed-example-tikz.tex 237 2011-11-27 12:52:31Z marco $
 \usepackage{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -88,8 +88,16 @@ function of the independent variables alone.
 \ExampleText
 \end{mdframed}
 \end{LTXexample}
-
 \clearpage
+\Examplesec{framed picture which is centered}
+\begin{LTXexample}
+\begin{mdframed}[userdefinedwidth=6cm,align=center,
+                 linecolor=blue,middlelinewidth=4pt,roundcorner=5pt]
+\includegraphics[width=\linewidth]{donald-duck}
+\end{mdframed}
+\end{LTXexample}
+
+%\clearpage
 \Examplesec{Gimmick}
 \begin{LTXexample}
 \mdfsetup{splitbottomskip=0.8cm,splittopskip=0cm,
