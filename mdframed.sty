@@ -32,17 +32,17 @@
 %%                                                 %%
 %%>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>%%
 
-%%$Id: mdframed.sty 234 2011-11-26 23:10:52Z marco $
-%%$Rev: 234 $
+%%$Id: mdframed.sty 236 2011-11-27 10:01:59Z marco $
+%%$Rev: 236 $
 %%$Author: marco $
-%%$Date: 2011-11-27 00:10:52 +0100 (So, 27. Nov 2011) $
+%%$Date: 2011-11-27 11:01:59 +0100 (So, 27. Nov 2011) $
 
 %% Allgemeine Angaben
 \def\mdversion{v1.0a}
 \def\mdframedpackagename{mdframed}
 \def\md@maindate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{mdframed}[\md@maindate@svn$Id: mdframed.sty 234 2011-11-26 23:10:52Z marco $ \mdversion: \mdframedpackagename]
+\ProvidesPackage{mdframed}[\md@maindate@svn$Id: mdframed.sty 236 2011-11-27 10:01:59Z marco $ \mdversion: \mdframedpackagename]
 %%==================================================%%
 %%=============== Benoetigte Pakete ================%%
 %%==================================================%%
@@ -447,74 +447,34 @@
    \kernel@ifnextchar[%]
      {\newmdtheoremenv@i}{\newmdtheoremenv@i[]}%
 }
+
 \def\newmdtheoremenv@i[#1]#2{%
-    \def\md@tempa{#1}%
-    \def\md@tempb{#2}%
-    \kernel@ifnextchar[%]
-     {\newmdtheoremenv@ii}{\newmdtheoremenv@ii[]}%
+   \kernel@ifnextchar[%]
+     {\newmdtheoremenv@ii[#1]#2}{\newmdtheoremenv@ii[#1]#2[]}%
 }
 
-\def\newmdtheoremenv@ii[#1]#2{%
-    \def\md@tempc{#1}%
-    \ifboolexpr{ test {\ifcsundef{c@\md@tempc}} and test {\ifcsundef{c@md@@\md@tempc}} and not (test {\ifdefempty{\md@tempc}}) }%
-               {\md@PackageWarning{No Counter \md@tempc defined\MessageBreak}%
-                \edef\md@reserved@a{}}%
-               {\ifcsundef{c@\md@tempc}%
-                     {\ifdefempty{\md@tempc}{\edef\md@reserved@a{}}{\edef\md@reserved@a{md@@\md@tempc}}}%
-                     {\edef\md@reserved@a{\md@tempc}}%
-               }
-    \edef\md@tempc{\md@reserved@a}
-    \def\md@tempd{#2}%
+\def\newmdtheoremenv@ii[#1]#2[#3]#4{%
     \kernel@ifnextchar[%]
-     {\newmdtheoremenv@iii}{\newmdtheoremenv@iii[]}%
+     {\newmdtheoremenv@iii[#1]#2[#3]#4}{\newmdtheoremenv@iii[#1]#2[#3]#4[]}%
 }
 
-\def\newmdtheoremenv@iii[#1]{%
-   \def\md@tempe{#1}%
-    \ifboolexpr{ test {\ifcsundef{c@\md@tempe}} and test {\ifcsundef{c@md@@\md@tempe}} and not (test {\ifdefempty{\md@tempe}}) }%
-               {\md@PackageWarning{No Counter \md@tempe defined\MessageBreak}%
-                \edef\md@reserved@a{}}%
-               {\ifcsundef{c@\md@tempe}%
-                     {\ifdefempty{\md@tempe}{\edef\md@reserved@a{}}{\edef\md@reserved@a{md@@\md@tempe}}}%
-                     {\edef\md@reserved@a{\md@tempe}}%
-               }
-   \edef\md@tempe{\md@reserved@a}
-   \ifboolexpr{ not (test {\ifdefempty{\md@tempc}})
-              and 
-             not (test {\ifdefempty{\md@tempe}})
-           }{%
-             \md@PackageWarning{You defined {\string\newtheorem} with ^^J
-                                both optional arguments^^J 
-                                <numeredlike> and <within>. This isn't allowed^^J
-                                \mdframedpackagename will use <numeredlike>\MessageBreak}%
-             \begingroup\edef\md@reserved@a{%
-                  \endgroup\noexpand\newtheorem{md@@\md@tempb}[\md@tempc]{\md@tempd}}%
-            }%
-            {\ifdefempty{\md@tempc}{}{%
-               \begingroup%
-                    \edef\md@reserved@a{\endgroup%
-                         \noexpand\newtheorem{md@@\md@tempb}[\md@tempc]{\md@tempd}}}%
-             \ifdefempty{\md@tempe}{}{%
-               \begingroup%
-                    \edef\md@reserved@a{\endgroup%
-                         \noexpand\newtheorem{md@@\md@tempb}{\md@tempd}[\md@tempe]}}%
-            }
-   \ifboolexpr{test {\ifdefempty{\md@tempc}}
-                and 
-               test {\ifdefempty{\md@tempe}}
-               }{%
-               \begingroup%
-                    \edef\md@reserved@a{\endgroup%
-                         \noexpand\newtheorem{md@@\md@tempb}{\md@tempd}%
-                  }
-               }{}%
-   \md@reserved@a%
-   \protected@csxdef{\md@tempb}{\noexpand\mdfsetup{\md@tempa}%
-               \noexpand\begin{mdframed}[]\noexpand\begin{md@@\md@tempb}%
-    }%
-   \protected@csxdef{end\md@tempb}{%
-              \noexpand\end{md@@\md@tempb}\noexpand\end{mdframed}%
+\def\newmdtheoremenv@iii[#1]#2[#3]#4[#5]{%
+   \ifboolexpr{ test {\ifblank {#3}} and test {\ifblank {#5}} }%
+   {%
+     \newtheorem{#2}{#4}%
+   }{%
+      \ifboolexpr{ not (test {\ifblank {#3}}) and not (test {\ifblank {#5}}) }%
+         {\md@PackageWarning{You can't such a comibination for newmdtheoremenv^^J
+                             Instead mdframed uses newtheorem{#2}{#4}}%
+          \newtheorem{#2}{#4}%
+         }%
+         {%
+          \notblank{#3}{\newtheorem{#2}[#3]{#4}}{}%
+          \notblank{#5}{\newtheorem{#2}{#4}[#5]}{}%
+         }%
    }%
+   \BeforeBeginEnvironment{#2}{\begin{mdframed}[#1]}%
+   \AfterEndEnvironment{#2}{\end{mdframed}}%
 }
 
 %%==================================================%%

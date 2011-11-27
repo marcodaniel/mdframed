@@ -8,16 +8,16 @@
 %% Public License, as described in lppl.txt in the base LaTeX distribution.
 %% Either version 1.0 or, at your option, any later version.
 
-%%$Id: md-frame-2.mdf 234 2011-11-26 23:10:52Z marco $
-%%$Rev: 234 $
+%%$Id: md-frame-2.mdf 236 2011-11-27 10:01:59Z marco $
+%%$Rev: 236 $
 %%$Author: marco $
-%%$Date: 2011-11-27 00:10:52 +0100 (So, 27. Nov 2011) $
+%%$Date: 2011-11-27 11:01:59 +0100 (So, 27. Nov 2011) $
 
 %%Allgemeine Einstellungen fuer pstricks
 %%Hier nur einfacher Rahmen mit Einstellungen
 \def\mdframedIIpackagename{md-frame-2}
 \def\md@frameIIdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
-\ProvidesFile{md-frame-2.mdf}[\md@frameIIdate@svn$Id: md-frame-2.mdf 234 2011-11-26 23:10:52Z marco $ \mdversion: \mdframedIIpackagename]
+\ProvidesFile{md-frame-2.mdf}[\md@frameIIdate@svn$Id: md-frame-2.mdf 236 2011-11-27 10:01:59Z marco $ \mdversion: \mdframedIIpackagename]
 %
 \def\md@ptlength@to@pscode#1{\pst@number{#1} \pst@number\psxunit div}
 \let\ptTps\md@ptlength@to@pscode\relax
@@ -57,6 +57,15 @@
                       or test {\md@test@trb} or test {\md@test@lrb}  or test {\md@test@lb}
                       or test {\md@test@rb} or test {\md@test@tr} or test {\md@test@lt} ) }}
 
+
+%style festlegen:
+\newpsstyle{mdfbackgroundstyle}{linecolor=\mdf@backgroundcolor,fillstyle=solid,%
+                               fillcolor=\mdf@backgroundcolor,linestyle=solid,%
+                               linewidth=\mdf@middlelinewidth@length,dimen=outer,%
+}%
+%
+\newpsstyle{mdflinestyle}{linewidth=\mdf@middlelinewidth@length,linecolor=\mdf@linecolor,fillstyle=none,dimen=middle,}%
+%
 %%==================================================%%
 %%================single-box========================%%
 %%==================================================%%
@@ -81,13 +90,13 @@
     \null%
        \begin{pspicture}(0,0)(\mdfboundingboxwidth,\mdfboundingboxheight)
            \md@test@ltrb{%
-              \psframe[linewidth=\mdf@middlelinewidth@length,linecolor=\mdf@linecolor,fillstyle=none,dimen=middle]%
+              \psframe[style=mdflinestyle]%
                   (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul \ptTps{\mdf@middlelinewidth@length} 0.5 mul)%
                   (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul add %X
                      \ptTps{\mdfboundingboxheight} \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul add)
             }{}
            \md@test@ltr{%
-              \psline[linewidth=\mdf@middlelinewidth@length,linecolor=\mdf@linecolor,fillstyle=none,dimen=middle]%
+              \psline[style=mdflinestyle]%
                   (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul 0)%
                   (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul 
                      \ptTps{\mdfboundingboxheight} \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul add)%
@@ -97,7 +106,7 @@
                      0)
             }{}
            \md@test@ltb{%
-              \psline[linewidth=\mdf@middlelinewidth@length,linecolor=\mdf@linecolor,fillstyle=none,dimen=middle]%
+              \psline[style=mdflinestyle]%
                  (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul)% 
                  (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul \ptTps{\mdf@middlelinewidth@length} 0.5 mul)%
                   (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul 
@@ -106,7 +115,7 @@
                      \ptTps{\mdfboundingboxheight} \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul add)%
             }{}
            \md@test@trb{%
-              \psline[linewidth=\mdf@middlelinewidth@length,linecolor=\mdf@linecolor,fillstyle=none,dimen=middle]%
+              \psline[style=mdflinestyle]%
                   (! 0
                      \ptTps{\mdfboundingboxheight} \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul add)%
                   (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul add %X
@@ -116,7 +125,7 @@
                   (! 0  \ptTps{\mdf@middlelinewidth@length} 0.5 mul)
             }{}
            \md@test@lrb{%
-              \psline[linewidth=\mdf@middlelinewidth@length,linecolor=\mdf@linecolor,fillstyle=none,dimen=middle]%
+              \psline[style=mdflinestyle]%
                   (! \ptTps{\mdf@middlelinewidth@length} 0.5 mul neg \ptTps{\mdfboundingboxheight})%
                   (! \ptTps{\mdf@middlelinewidth@length} 0.5 mul neg \ptTps{\mdf@middlelinewidth@length} 0.5 mul )%
                   (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul add %X
@@ -125,13 +134,13 @@
                      \ptTps{\mdfboundingboxheight})
             }{}
            \md@test@lb{%
-              \psline[linewidth=\mdf@middlelinewidth@length,linecolor=\mdf@linecolor,fillstyle=none,dimen=middle]%
+              \psline[style=mdflinestyle]%
                   (! \ptTps{\mdf@middlelinewidth@length} 0.5 mul neg \ptTps{\mdfboundingboxheight})%
                   (! \ptTps{\mdf@middlelinewidth@length} 0.5 mul neg \ptTps{\mdf@middlelinewidth@length} 0.5 mul )%
                   (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul )
                  }{}
            \md@test@rb{%
-              \psline[linewidth=\mdf@middlelinewidth@length,linecolor=\mdf@linecolor,fillstyle=none,dimen=middle]%
+              \psline[style=mdflinestyle]%
                   (! 0 \ptTps{\mdf@middlelinewidth@length} 0.5 mul )%
                   (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul add %X
                      \ptTps{\mdf@middlelinewidth@length} 0.5 mul )
@@ -139,7 +148,7 @@
                      \ptTps{\mdfboundingboxheight})
             }{}
            \md@test@tr{%
-              \psline[linewidth=\mdf@middlelinewidth@length,linecolor=\mdf@linecolor,fillstyle=none,dimen=middle]%
+              \psline[style=mdflinestyle]%
                   (! 0
                      \ptTps{\mdfboundingboxheight} \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul add)%
                   (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul add %X
@@ -148,7 +157,7 @@
                      0)
             }{}
            \md@test@lt{%
-              \psline[linewidth=\mdf@middlelinewidth@length,linecolor=\mdf@linecolor,fillstyle=none,dimen=middle]%
+              \psline[style=mdflinestyle]%
                   (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul 0)%
                   (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul 
                      \ptTps{\mdfboundingboxheight} \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul add)%
@@ -157,32 +166,30 @@
             }{}
            \md@test@single{%
               \ifbool{mdf@bottomline}{%
-              \psline[linewidth=\mdf@middlelinewidth@length,linecolor=\mdf@linecolor,fillstyle=none,dimen=middle]%
+              \psline[style=mdflinestyle]%
                   (! 0 \ptTps{\mdf@middlelinewidth@length} 0.5 mul )%
                   (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul )
                 }{}%
               \ifbool{mdf@topline}{%
-              \psline[linewidth=\mdf@middlelinewidth@length,linecolor=\mdf@linecolor,fillstyle=none,dimen=middle]%
+              \psline[style=mdflinestyle]%
                   (! 0 \ptTps{\mdfboundingboxheight} \ptTps{\mdf@middlelinewidth@length} 0.5 mul neg add)%
                   (! \ptTps{\mdfboundingboxwidth} 
                      \ptTps{\mdfboundingboxheight} \ptTps{\mdf@middlelinewidth@length} 0.5 mul neg add)
                 }{}%
               \ifbool{mdf@leftline}{%
-              \psline[linewidth=\mdf@middlelinewidth@length,linecolor=\mdf@linecolor,fillstyle=none,dimen=middle]%
+              \psline[style=mdflinestyle]%
                   (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul 0)%
                   (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul \ptTps{\mdfboundingboxheight} )%
                 }{}%
               \ifbool{mdf@rightline}{%
-              \psline[linewidth=\mdf@middlelinewidth@length,linecolor=\mdf@linecolor,fillstyle=none,dimen=middle]%
+              \psline[style=mdflinestyle]%
                   (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul add 0)%
                   (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul add 
                      \ptTps{\mdfboundingboxheight} )%
                 }{}%
               }{}%
            %Hintergrund
-           \psframe[linecolor=\mdf@backgroundcolor,fillstyle=solid,%
-                    fillcolor=\mdf@backgroundcolor,linestyle=solid,
-                    linewidth=\mdf@middlelinewidth@length,dimen=outer]%
+           \psframe[style=mdfbackgroundstyle]%
                     (!0 \ifbool{mdf@bottomline}{\ptTps{\mdf@middlelinewidth@length}}{0})
                     (! \ptTps{\mdfboundingboxwidth} %
                        \ptTps{\mdfboundingboxheight} \ifbool{mdf@topline}{\ptTps{\mdf@middlelinewidth@length} sub}{})
@@ -223,9 +230,8 @@
                 {\begin{pspicture}(0,0)(\mdfboundingboxwidth,\vsize)}
                 {\begin{pspicture}(0,0)(\mdfboundingboxwidth,\mdfboundingboxheight)}
            %Hintergrund
-            \psline[linecolor=\mdf@backgroundcolor,fillstyle=solid,linestyle=solid,
-                    linearc={\dimexpr\mdf@roundcorner@length-\mdf@middlelinewidth@length\relax},
-                    fillcolor=\mdf@backgroundcolor,linewidth=\mdf@middlelinewidth@length]%
+           \psline[style=mdfbackgroundstyle,%
+                    linearc={\dimexpr\mdf@roundcorner@length-\mdf@middlelinewidth@length\relax},]
                   (! \ptTps{\mdf@middlelinewidth@length} 0.5 mul 0)%
                   (! \ptTps{\mdf@middlelinewidth@length}  0.5 mul 
                      \ptTps{\mdfboundingboxheight} \ifbool{mdf@topline}% 
@@ -238,7 +244,7 @@
                   (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul neg add %X
                      0) 
           \ifboolexpr{ test {\md@test@ltrb} or test {\md@test@ltr}}{%
-              \psline[linewidth=\mdf@middlelinewidth@length,linecolor=\mdf@linecolor,fillstyle=none,dimen=middle]%
+              \psline[style=mdflinestyle]%
                   (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul 0)%
                   (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul 
                      \ptTps{\mdfboundingboxheight} \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul add)%
@@ -248,7 +254,7 @@
                      0)
                   }{}
           \ifboolexpr{ test {\md@test@tr} or test {\md@test@trb}}{%
-              \psline[linewidth=\mdf@middlelinewidth@length,linecolor=\mdf@linecolor,fillstyle=none,dimen=middle]%
+              \psline[style=mdflinestyle]%
                   (! 0
                      \ptTps{\mdfboundingboxheight} \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul add)%
                   (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul add %X
@@ -257,7 +263,7 @@
                      0)
                 }{}
           \ifboolexpr{ test {\md@test@ltb} or test {\md@test@lt}}{%
-              \psline[linewidth=\mdf@middlelinewidth@length,linecolor=\mdf@linecolor,fillstyle=none,dimen=middle]%
+              \psline[style=mdflinestyle]%
                   (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul 0)%
                   (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul 
                      \ptTps{\mdfboundingboxheight} \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul add)%
@@ -266,18 +272,18 @@
                }{}
           \ifboolexpr{ test {\md@test@single} or test {\md@test@rb} or test {\md@test@lrb} or test {\md@test@lb}}{%
               \ifbool{mdf@topline}{%
-                \psline[linewidth=\mdf@middlelinewidth@length,linecolor=\mdf@linecolor,fillstyle=none,dimen=middle]%
+                \psline[style=mdflinestyle]%
                   (! 0 \ptTps{\mdfboundingboxheight} \ptTps{\mdf@middlelinewidth@length} 0.5 mul neg add)%
                   (! \ptTps{\mdfboundingboxwidth} 
                      \ptTps{\mdfboundingboxheight}  \ptTps{\mdf@middlelinewidth@length} 0.5 mul neg add)
                 }{}%
               \ifbool{mdf@leftline}{%
-                \psline[linewidth=\mdf@middlelinewidth@length,linecolor=\mdf@linecolor,fillstyle=none,dimen=middle]%
+                \psline[style=mdflinestyle]%
                   (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul 0)%
                   (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul \ptTps{\mdfboundingboxheight} )%
                 }{}%
               \ifbool{mdf@rightline}{%
-                \psline[linewidth=\mdf@middlelinewidth@length,linecolor=\mdf@linecolor,fillstyle=none,dimen=middle]%
+                \psline[style=mdflinestyle]%
                   (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul add 0)%
                   (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul add 
                      \ptTps{\mdfboundingboxheight} )%
@@ -317,20 +323,18 @@
            {\begin{pspicture}(0,0)(\mdfboundingboxwidth,\vsize)}
            {\begin{pspicture}(0,0)(\mdfboundingboxwidth,\mdfboundingboxheight)}
            \ifbool{mdf@leftline}{%
-              \psline[linewidth=\mdf@middlelinewidth@length,linecolor=\mdf@linecolor,fillstyle=none,dimen=middle]%
+              \psline[style=mdflinestyle]%
                   (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul 0)%
                   (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul \ptTps{\mdfboundingboxheight} )%
                 }{}%
            \ifbool{mdf@rightline}{%
-              \psline[linewidth=\mdf@middlelinewidth@length,linecolor=\mdf@linecolor,fillstyle=none,dimen=middle]%
+              \psline[style=mdflinestyle]%
                   (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul add 0)%
                   (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul add 
                      \ptTps{\mdfboundingboxheight} )%
                 }{}%
            %Hintergrund
-           \psframe[linecolor=\mdf@backgroundcolor,fillstyle=solid,%
-                    fillcolor=\mdf@backgroundcolor,linestyle=solid,
-                    linewidth=\mdf@middlelinewidth@length,dimen=outer,%
+           \psframe[style=mdfbackgroundstyle,%
                     linearc=\z@]%
                     (!0 0)
                     (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdfboundingboxheight})
@@ -365,9 +369,8 @@
     \null%
         \begin{pspicture}(0,0)(\mdfboundingboxwidth,\mdfboundingboxheight)
            %Hintergrund
-            \psline[linecolor=\mdf@backgroundcolor,fillstyle=solid,linestyle=solid,
-                    linearc={\dimexpr\mdf@roundcorner@length-\mdf@middlelinewidth@length\relax},
-                    fillcolor=\mdf@backgroundcolor,linewidth=\mdf@middlelinewidth@length]%%
+            \psline[style=mdfbackgroundstyle,%
+                    linearc={\dimexpr\mdf@roundcorner@length-\mdf@middlelinewidth@length\relax},]%%
                     (! \ptTps{\mdf@middlelinewidth@length} 0.5 mul \ptTps{\mdfboundingboxheight} )%
                     (! \ptTps{\mdf@middlelinewidth@length} 0.5 mul 
                        \ifbool{mdf@bottomline}% 
@@ -381,7 +384,7 @@
                        \ptTps{\mdfboundingboxheight} )
            %%%%%%%%%%%%
             \ifboolexpr{ test {\md@test@ltrb} or test {\md@test@lrb}}{%
-              \psline[linewidth=\mdf@middlelinewidth@length,linecolor=\mdf@linecolor,fillstyle=none,dimen=middle]%
+              \psline[style=mdflinestyle]%
                   (! \ptTps{\mdf@middlelinewidth@length} 0.5 mul neg \ptTps{\mdfboundingboxheight})%
                   (! \ptTps{\mdf@middlelinewidth@length} 0.5 mul neg \ptTps{\mdf@middlelinewidth@length} 0.5 mul )%
                   (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul add %X
@@ -390,13 +393,13 @@
                      \ptTps{\mdfboundingboxheight})
             }{}
             \ifboolexpr{ test {\md@test@ltb} or test {\md@test@lb}}{%
-              \psline[linewidth=\mdf@middlelinewidth@length,linecolor=\mdf@linecolor,fillstyle=none,dimen=middle]%
+              \psline[style=mdflinestyle]%
                   (! \ptTps{\mdf@middlelinewidth@length} 0.5 mul neg \ptTps{\mdfboundingboxheight})%
                   (! \ptTps{\mdf@middlelinewidth@length} 0.5 mul neg \ptTps{\mdf@middlelinewidth@length} 0.5 mul )%
                   (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul )
                  }{}
             \ifboolexpr{ test {\md@test@trb} or test {\md@test@rb}}{%
-              \psline[linewidth=\mdf@middlelinewidth@length,linecolor=\mdf@linecolor,fillstyle=none,dimen=middle]%
+              \psline[style=mdflinestyle]%
                   (! 0 \ptTps{\mdf@middlelinewidth@length} 0.5 mul )%
                   (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul add %X
                      \ptTps{\mdf@middlelinewidth@length} 0.5 mul )
@@ -405,17 +408,17 @@
             }{}
             \ifboolexpr{ test {\md@test@single} or test {\md@test@ltr} or test {\md@test@tr} or test {\md@test@lt}}{%
               \ifbool{mdf@bottomline}{%
-              \psline[linewidth=\mdf@middlelinewidth@length,linecolor=\mdf@linecolor,fillstyle=none,dimen=middle]%
+              \psline[style=mdflinestyle]%
                   (! 0 \ptTps{\mdf@middlelinewidth@length} 0.5 mul )%
                   (! \ptTps{\mdfboundingboxwidth}  \ptTps{\mdf@middlelinewidth@length} 0.5 mul )
                 }{}%
               \ifbool{mdf@leftline}{%
-              \psline[linewidth=\mdf@middlelinewidth@length,linecolor=\mdf@linecolor,fillstyle=none,dimen=middle]%
+              \psline[style=mdflinestyle]%
                   (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul 0)%
                   (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul \ptTps{\mdfboundingboxheight} )%
                 }{}%
               \ifbool{mdf@rightline}{%
-              \psline[linewidth=\mdf@middlelinewidth@length,linecolor=\mdf@linecolor,fillstyle=none,dimen=middle]%
+              \psline[style=mdflinestyle]%
                   (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul add 0)%
                   (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul add 
                      \ptTps{\mdfboundingboxheight} )%

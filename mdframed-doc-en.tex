@@ -1,8 +1,8 @@
 %Documenation of the package mdframed
-%%$Id: mdframed-doc-en.tex 232 2011-11-26 21:08:16Z marco $
+%%$Id: mdframed-doc-en.tex 236 2011-11-27 10:01:59Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt]{ltxmdf}
-\svnInfo $Id: mdframed-doc-en.tex 232 2011-11-26 21:08:16Z marco $
+\svnInfo $Id: mdframed-doc-en.tex 236 2011-11-27 10:01:59Z marco $
 \usepackage{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -533,7 +533,7 @@ If you have trouble with the new version of \mdname you can load \texttt{mdframe
 
 
 
-\textsf{Dick Nickalls;\quad Dietrich Grau;\quad Piazza Luca\quad Jobst Hoffmann}.
+\textsf{Dick Nickalls;\quad Dietrich Grau;\quad Piazza Luca;\quad Jobst Hoffmann}.
 \medskip
 
 \noindent Thanks for proofreading 
@@ -663,6 +663,15 @@ load the file by setting \mdoption{framemethod=X}.
 %\clearpage
 \subsection{Revision history}\label{rev}
 \raggedright
+\minisec{Version 1.0a submitted }
+\begin{itemize*}
+\item fixes documentation
+\item fixes bug in \mdcommand{newmdtheoremenv}
+\item fixes bug with overfull boxes
+\item defined \mdcommand{newpsstyle}\mdoption{mdfbackgroundstyle} and \mdoption{mdflinestyle} \limitation[PSTricks]
+\end{itemize*}
+
+
 \minisec{Version 1.0 submitted 13 Nov 2011}
 \begin{itemize*}
 \item add option \mdoption{userdefinedwidth}
