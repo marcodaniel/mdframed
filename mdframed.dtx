@@ -143,7 +143,7 @@ Have fun!
 %</driver>
 % \fi
 %
-% \CheckSum{3517}
+% 
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -1116,58 +1116,31 @@ Have fun!
 %
 % \subsection{The Explanation of mdframed.sty}
 %
-%
 % %$Id: mdframed.dtx 250 2011-12-04 14:07:55Z marco $
 % %$Rev: 250 $
 % %$Author: marco $
 % %$Date: 2011-12-04 15:07:55 +0100 (So, 04. Dez 2011) $
-%
-%
-% \begin{macro}{mdversion}
-%% Allgemeine Angaben
+% \begin{macro}{mdversion,mdframedpackagename,md@maindate@svn}
+% Set package information
 %    \begin{macrocode}
 \def\mdversion{v1.0a}
-%    \end{macrocode}
-% \end{macro}
-%
-%
-% \begin{macro}{mdframedpackagename}
-%    \begin{macrocode}
 \def\mdframedpackagename{mdframed}
-%    \end{macrocode}
-% \end{macro}
-%
-%
-% \begin{macro}{md@maindate@svn}
-%    \begin{macrocode}
 \def\md@maindate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 %    \end{macrocode}
 % \end{macro}
 %
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{mdframed}[\md@maindate@svn$Id: mdframed.dtx 250 2011-12-04 14:07:55Z marco $ \mdversion: \mdframedpackagename]
+\ProvidesPackage{mdframed}%
+     [\md@maindate@svn$Id: mdframed.dtx 250 2011-12-04 14:07:55Z marco $ \mdversion: \mdframedpackagename]
 %    \end{macrocode}
 %
-% \begin{macro}{md@PackageWarning}
-%%==================================================%%
-%%=============== Benoetigte Pakete ================%%
-%%==================================================%%
+% \begin{macro}{md@PackageWarning,md@PackageInfo,md@LoadFile@IfExist}
+%  Set short form of |\PackageWarning|, |\PackageInfo| and |IfFileExists| in combination
+%  with |\RequirePackage|.
 %    \begin{macrocode}
 \newcommand*\md@PackageWarning[1]{\PackageWarning{\mdframedpackagename}{#1}}
-%    \end{macrocode}
-% \end{macro}
-%
-%
-% \begin{macro}{md@PackageInfo}
-%    \begin{macrocode}
 \newcommand*\md@PackageInfo[1]{\PackageInfo{\mdframedpackagename}{#1}}
-%    \end{macrocode}
-% \end{macro}
-%
-%
-% \begin{macro}{md@LoadFile@IfExist}
-%    \begin{macrocode}
 \newcommand*\md@LoadFile@IfExist[1]{%
  \IfFileExists{#1.sty}{%
           \RequirePackage{#1}%
@@ -1181,40 +1154,30 @@ Have fun!
 %    \end{macrocode}
 % \end{macro}
 %
+% Loading required packages
 %    \begin{macrocode}
 \RequirePackage{kvoptions}
 \RequirePackage{etex}
 \RequirePackage{etoolbox}[2011/01/03]
 \RequirePackage{zref-abspage}
+\RequirePackage{color}
 %    \end{macrocode}
-%separate Handhabung color
+%
+% Set the family and the prefix of all options. (see documentation of |kvoptions|
 %    \begin{macrocode}
-\md@LoadFile@IfExist{color}
- 
 \SetupKeyvalOptions{family=mdf,prefix=mdf@}
 %    \end{macrocode}
-%%==================================================%%
-%%============Hilfsmakros fuer Optionen=============%%
-%%==================================================%%
-%
-%|\md@iflength{<EINGABE>}{<IST LAENGE>}{<IST KEINE LAENGE>}|
+
+% \begin{macro}{md@iflength,md@iflength@check,md@iflength@check}
+% Command which checks the input of length options. If the length option is only 
+% a number the |defaultunit| will be used. Syntax: |\md@iflength{<Input>}{<length>}{<no length>}|
 %    \begin{macrocode}
 \newlength{\md@templength}
-%    \end{macrocode}
-%
-% \begin{macro}{md@iflength}
-%    \begin{macrocode}
 \def\md@iflength#1{%
   \afterassignment\md@iflength@check%
   \md@templength=#1\mdf@defaultunit\relax\relax
   \expandafter\endgroup\next
 }
-%    \end{macrocode}
-% \end{macro}
-%
-%
-% \begin{macro}{md@iflength@check}
-%    \begin{macrocode}
 \def\md@iflength@check#1{%
   \begingroup
   \ifx\relax#1\@empty
@@ -1224,24 +1187,20 @@ Have fun!
     \expandafter\md@iflength@cleanup
   \fi
 }
-%    \end{macrocode}
-% \end{macro}
-%
-%
-% \begin{macro}{md@iflength@cleanup}
-%    \begin{macrocode}
 \def\md@iflength@cleanup#1\relax{}
 %    \end{macrocode}
 % \end{macro}
 %
-%|\mdf@option@length{<Laengenbezeichnung>}{<Defaultwert>}|
+% \begin{macro}{mdf@option@length,mdf@define@key@length}
+% Command to define a new length width a default value. 
+%| \mdf@option@length{<Laengenbezeichnung>}{<Defaultwert>}|
 %    \begin{macrocode}
 \newrobustcmd*{\mdf@option@length}[2]{%
  \expandafter\newlength\csname mdf@#1@length\endcsname%
  \expandafter\setlength\csname mdf@#1@length\endcsname{#2}%
  }
 %    \end{macrocode}
-%|\mdf@define@key@length{<Bezeichnungder Option der Laenge>}|
+%  Command to create a new length option.|\mdf@define@key@length{<Bezeichnungder Option der Laenge>}|
 %    \begin{macrocode}
 \newrobustcmd*{\mdf@define@key@length}[1]{%
    \define@key{mdf}{#1}{%
@@ -1253,23 +1212,22 @@ Have fun!
    }%
 }
 %    \end{macrocode}
-%%Schleifenmakro zur Optioneneingabe
+% \end{macro}
+%
+% \begin{macro}{mdf@dolist}
+%  Loop used by \Pack{mdframed}.
 %    \begin{macrocode}
 \DeclareListParser*{\mdf@dolist}{,}
 %    \end{macrocode}
+% \end{macro}
 %
-% \begin{macro}{mdf@do@lengthoption}
-%Laengenoptionen
+% \begin{macro}{mdf@do@lengthoption,mdf@lengthoption@doubledo}
+% The loop of |\mdf@dolist| expected one argument. So I have to define to commands
+% to allow a loop with two arguments. The separation for the input is |==|.
 %    \begin{macrocode}
 \def\mdf@do@lengthoption#1{%
   \mdf@lengthoption@doubledo#1\@nil%
 }
-%    \end{macrocode}
-% \end{macro}
-%
-%
-% \begin{macro}{mdf@lengthoption@doubledo}
-%    \begin{macrocode}
 \def\mdf@lengthoption@doubledo#1==#2\@nil{%
    \mdf@option@length{#1}{#2}%
    \mdf@define@key@length{#1}%
@@ -1278,18 +1236,12 @@ Have fun!
 % \end{macro}
 %
 %
-% \begin{macro}{mdf@do@stringoption}
-%Stringoptionen
+% \begin{macro}{mdf@do@stringoption,mdf@stringoption@doubledo}
+% Same as |\mdf@do@lengthoption| and |\mdf@lengthoption@doubledo|.
 %    \begin{macrocode}
 \def\mdf@do@stringoption#1{%
    \mdf@stringoption@doubledo#1\@nil%
 }
-%    \end{macrocode}
-% \end{macro}
-%
-%
-% \begin{macro}{mdf@stringoption@doubledo}
-%    \begin{macrocode}
 \def\mdf@stringoption@doubledo#1==#2\@nil{%
    \expandafter\gdef\csname mdf@#1\endcsname{#2}%
    \define@key{mdf}{#1}{%
@@ -1300,18 +1252,12 @@ Have fun!
 % \end{macro}
 %
 %
-% \begin{macro}{mdf@do@booloption}
-%Booloptionen
+% \begin{macro}{mdf@do@booloption,mdf@booloption@doubledo}
+% Same as |\mdf@do@lengthoption| and |\mdf@lengthoption@doubledo|.
 %    \begin{macrocode}
 \def\mdf@do@booloption#1{%
    \mdf@booloption@doubledo#1\@nil%
 }
-%    \end{macrocode}
-% \end{macro}
-%
-%
-% \begin{macro}{mdf@booloption@doubledo}
-%    \begin{macrocode}
 \def\mdf@booloption@doubledo#1==#2\@nil{%
    \newbool{mdf@#1}\setbool{mdf@#1}{#2}%
    \define@key{mdf}{#1}[#2]{%
@@ -1322,18 +1268,13 @@ Have fun!
 % \end{macro}
 %
 %
-% \begin{macro}{mdf@do@alignoption}
-%Alignoptionen
+% \begin{macro}{mdf@do@alignoption,mdf@alignoption@tripledo}
+% Same as |\mdf@do@lengthoption| and |\mdf@lengthoption@doubledo|. Here
+% three arguments are required.
 %    \begin{macrocode}
 \def\mdf@do@alignoption#1{%
    \mdf@alignoption@tripledo#1\@nil%
 }
-%    \end{macrocode}
-% \end{macro}
-%
-%
-% \begin{macro}{mdf@alignoption@tripledo}
-%    \begin{macrocode}
 \def\mdf@alignoption@tripledo#1==#2==#3\@nil{%
    \csdef{mdf@align@#1@left}{\null\hspace*{#2}}%
    \csdef{mdf@align@#1@right}{\hspace*{#3}\null}%
@@ -1341,26 +1282,13 @@ Have fun!
 %    \end{macrocode}
 % \end{macro}
 %
-%%==================================================%%
-%%=====================Optionen=====================%%
-%%==================================================%%
-%
-%Festlegung welcher Stildatei
-%% 0 := tex-Kommandos -- rule
-%% 1 := tikz
-%% 2 := pstricks
-%% 3 := pstricks <- veraltet
+% Start declaration of options
 %    \begin{macrocode}
 \newcounter{mdf@globalstyle@cnt}
 \defcounter{mdf@globalstyle@cnt}{0}
-%    \end{macrocode}
-%
-% \begin{macro}{mdfglobal@style}
-%    \begin{macrocode}
 \newcommand*\mdfglobal@style{0}
 %    \end{macrocode}
-% \end{macro}
-%
+%   Only provide to be backward compatible
 %    \begin{macrocode}
 \define@key{mdf}{style}{%
         \md@PackageWarning{package option style is depreciated^^J
@@ -1381,26 +1309,8 @@ Have fun!
 % \begin{macro}{mdf@framemethod}
 %    \begin{macrocode}
 \providecommand*\mdf@framemethod{}
-%    \end{macrocode}
-% \end{macro}
-%
-%
-% \begin{macro}{md@framemethod@i}
-%    \begin{macrocode}
 \def\md@framemethod@i{}%
-%    \end{macrocode}
-% \end{macro}
-%
-%
-% \begin{macro}{md@framemethod@ii}
-%    \begin{macrocode}
 \def\md@framemethod@ii{}%
-%    \end{macrocode}
-% \end{macro}
-%
-%
-% \begin{macro}{md@framemethod@iii}
-%    \begin{macrocode}
 \def\md@framemethod@iii{}%
 %    \end{macrocode}
 % \end{macro}
@@ -1430,7 +1340,10 @@ Have fun!
   \fi%
 }
 %    \end{macrocode}
-%%%%Optionen mit Laengen
+%
+%
+% \begin{macro}{mdf@do@lengthoption}
+% Here the declaration of the length option. The input method is explained above.
 %    \begin{macrocode}
 \mdf@dolist{\mdf@do@lengthoption}{%
    {skipabove==\z@},%
@@ -1455,7 +1368,10 @@ Have fun!
    {userdefinedwidth==\linewidth}
 } 
 %    \end{macrocode}
-%%%%Optionen mit String
+% \end{macro}
+%
+% \begin{macro}{mdf@do@lengthoption}
+% Here the declaration of the string option. The input method is explained above.
 %    \begin{macrocode}
 \mdf@dolist{\mdf@do@stringoption}{%
     {defaultunit==pt},%
@@ -1472,7 +1388,10 @@ Have fun!
     {printheight==none},%
 }
 %    \end{macrocode}
-%%%%Optionen mit Boolflag
+% \end{macro}
+%
+% \begin{macro}{mdf@do@booloption}
+% Here the declaration of the string option. The input method is explained above.
 %    \begin{macrocode}
 \mdf@dolist{\mdf@do@booloption}{%
     {ntheorem==false},%
@@ -1485,7 +1404,10 @@ Have fun!
     {footnoteinside==true},%
 }
 %    \end{macrocode}
-%Alignoptionen:
+% \end{macro}
+%
+% \begin{macro}{mdf@do@alignoption}
+% Here the declaration of the align option. The input method is explained above.
 %    \begin{macrocode}
 \mdf@dolist{\mdf@do@alignoption}{%
     {left==\mdf@leftmargin@length==\z@},%
@@ -1495,28 +1417,14 @@ Have fun!
     {outer==\mdf@leftmargin@length==\fill},%not supported yet
 }
 %    \end{macrocode}
+% \end{macro}
 %
-% \begin{macro}{mdf@align}
+% \begin{macro}{mdf@align,mdf@makeboxalign@left,mdf@makeboxalign@right,mdf@makeboxalign@right}
+% Set the alignment.
 %    \begin{macrocode}
 \newcommand*\mdf@align{}%
-%    \end{macrocode}
-% \end{macro}
-%
-%
-% \begin{macro}{mdf@makeboxalign@left}
-%    \begin{macrocode}
 \newcommand*\mdf@makeboxalign@left{\null\hspace*{\mdf@leftmargin@length}}%
-%    \end{macrocode}
-% \end{macro}
-%
-%
-% \begin{macro}{mdf@makeboxalign@right}
-%    \begin{macrocode}
 \newcommand*\mdf@makeboxalign@right{}%
-%    \end{macrocode}
-% \end{macro}
-%
-%    \begin{macrocode}
 \define@key{mdf}{align}[left]{%
    \ifcsundef{mdf@align@#1@left}{%
        \md@PackageWarning{Unknown alignment #1\MessageBreak}%
@@ -1528,44 +1436,29 @@ Have fun!
    }%
 }
 %    \end{macrocode}
-%
-% \begin{macro}{mdf@tikzset@local}
-%Unterstuetzung der Optionen fuer tikz
-%    \begin{macrocode}
-\def\mdf@tikzset@local{\tikzset{tikzsetting/.style={}}}
-%    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{mdf@tikzset@local,mdf@psset@local}
+% Option to pass options to tikz or pstricks
 %    \begin{macrocode}
+\def\mdf@tikzset@local{\tikzset{tikzsetting/.style={}}}
 \define@key{mdf}{tikzsetting}{%
   \def\mdf@tikzset@local{\tikzset{tikzsetting/.style={#1}}}%
 }
 \define@key{mdf}{apptotikzsetting}{%
   \appto\mdf@tikzset@local{#1}%
 }
-%    \end{macrocode}
-%
-% \begin{macro}{mdf@psset@local}
-%Unterstuetzung der Optionen fuer pstricks
-%    \begin{macrocode}
 \def\mdf@psset@local{}
-%    \end{macrocode}
-% \end{macro}
-%
-%    \begin{macrocode}
 \define@key{mdf}{pstrickssetting}{%
   \def\mdf@psset@local{#1}
 }
 %    \end{macrocode}
-%
-% \begin{macro}{mdf@xcolor}
-%Unterstuetzung der xcolor fuer pstricks
-%    \begin{macrocode}
-\def\mdf@xcolor{}
-%    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{mdf@xcolor}
+% \textcolor{red}{\bfseries Problem width xcolor. This part must be reworked!}
 %    \begin{macrocode}
+\def\mdf@xcolor{}
 \define@key{mdf}{xcolor}[none]{%
   \@ifpackageloaded{xcolor}{%
      \let\mdf@xcolor\@empty %ignoriere die Eingabe der Optionen
@@ -1579,7 +1472,10 @@ Have fun!
    }%
  }
 %    \end{macrocode}
-%Nutzung des Paketes needspace
+% \end{macro}
+%
+% \begin{macro}{mdf@needspace}
+% Defining the option needspace
 %    \begin{macrocode}
 \define@key{mdf}{needspace}[\z@]{%
      \begingroup%
@@ -1592,18 +1488,24 @@ Have fun!
         \vskip\z@skip % hide the previous |\vskip| from |\addvspace|
       \endgroup%
 }
+%    \end{macrocode}
+% \end{macro}
+%
+%    \begin{macrocode}
 \DeclareDefaultOption{%
    \md@PackageWarning{Unknown Option '\CurrentOption' for mdframed}}
 \ProcessKeyvalOptions*\relax
 %    \end{macrocode}
 %
 % \begin{macro}{mdfsetup}
+% Short form of |\setkeys{mdf}|
 %    \begin{macrocode}
 \newcommand*{\mdfsetup}{\setkeys{mdf}}
 %    \end{macrocode}
 % \end{macro}
 %
-%Erlauben von mdfdefinestyle sowie redefinition von style
+% \begin{macro}{mdf@style}
+% Redefinition of the option |style| to use the key in combination with |mdfdefinedstyle|.
 %    \begin{macrocode}
 \define@key{mdf}{style}{%
   \ifcsundef{mdf@definestyle@#1}{%
@@ -1615,9 +1517,11 @@ Have fun!
          \expandafter\expandafter\expandafter{\csname mdf@definestyle@#1\endcsname}}%
 }%
 %    \end{macrocode}
-%%==================================================%%
-%%==========Ausgabe des Platzes auf Seite===========%%
-%%==================================================%%
+% \end{macro}
+%
+%
+% \begin{macro}{md@print@space}
+%  Option to type out the free vertical space of the current page.
 %    \begin{macrocode}
 \let\md@PackageNoInfo\@gobble
 \newrobustcmd*\md@ifstrequal@expand{%
@@ -1637,21 +1541,14 @@ Have fun!
          }%
       }%
   }%
-%    \end{macrocode}
-%
-% \begin{macro}{md@PackageInfoSpace}
-%    \begin{macrocode}
-\def\md@PackageInfoSpace{\csname md@Package\md@tempa\endcsname}
+\def\md@PackageInfoSpace{\csname md@Package\md@tempa\endcsname}%
+}
 %    \end{macrocode}
 % \end{macro}
 %
-%    \begin{macrocode}
-}
-%    \end{macrocode}
-%%==================================================%%
-%%========Angepasste lrbox sowie trivlist===========%%
-%%==================================================%%
-%Anpassung lrbox
+%
+% \begin{macro}{md@lrbox,endmd@lrbox}
+% Modification of the default |\lrbox| and |\endlrbox|
 %    \begin{macrocode}
 \let\md@lrbox\lrbox
 \patchcmd\md@lrbox\hbox\vbox{}{}
@@ -1664,29 +1561,22 @@ Have fun!
 \linewidth=\hsize%
 \bgroup\md@@frametitle\egroup\noindent%
 }{}{}
-%    \end{macrocode}
-%
-% \begin{macro}{endmd@lrbox}
-%    \begin{macrocode}
 \def\endmd@lrbox{\endgroup\unskip\color@endgroup}
 %    \end{macrocode}
 % \end{macro}
 %
-%Anpassung trivlist
+% \begin{macro}{md@trivlist,endmd@trivlist}
+% Modification of the default |\trivlist| and |\endtrivlist|.
 %    \begin{macrocode}
 \let\md@trivlist\trivlist
 \let\endmd@trivlist\endtrivlist
 \patchcmd\endmd@trivlist\@endparenv\md@endparenv{}{}
-%    \end{macrocode}
-%
-% \begin{macro}{md@endparenv}
-%    \begin{macrocode}
 \def\md@endparenv{%
   \addpenalty\@endparpenalty\addvspace\mdf@skipbelow@length\@endpetrue}
 %    \end{macrocode}
-%%==================================================%%
-%%==============leftline anpassen===================%%
-%%==================================================%%
+% \end{macro}
+%
+% \begin{macro}{mdf@makebox@out,mdf@makebox@in}
 %    \begin{macrocode}
 \newrobustcmd*\mdf@makebox@out[2][\linewidth]{%
  \noindent\hb@xt@\z@{%
@@ -1699,10 +1589,8 @@ Have fun!
 %    \end{macrocode}
 % \end{macro}
 %
-%%==================================================%%
-%%==================framestyle======================%%
-%%==================================================%%
-%inspired by Lars Madsen
+% \begin{macro}{mdfdefinestyle,mdfapptodefinestyle}
+% See explanation of this commands above.
 %    \begin{macrocode}
 \newrobustcmd*\mdfdefinestyle[2]{%
   \csdef{mdf@definestyle@#1}{#2}%
@@ -1713,10 +1601,10 @@ Have fun!
    {\csappto{mdf@definestyle@#1}{,#2}}%
 }
 %    \end{macrocode}
-%%==================================================%%
-%%=============Umgebungdefinition===================%%
-%%==================================================%%
-%\newmdenv[<mdframed-options>]{<environmen>}
+% \end{macro}
+%
+% \begin{macro}{newmdenv,renewmdenv,newmdtheoremenv}
+% Defining of the new environment defintions.
 %    \begin{macrocode}
 \newrobustcmd*\newmdenv[2][]{%
   \newenvironment{#2}{%
@@ -1726,52 +1614,23 @@ Have fun!
      \end{mdframed}%
   }%
 }
-%    \end{macrocode}
-%\renewmdenv[<mdframed-options>]{<environmen>}
-%    \begin{macrocode}
 \newrobustcmd*\renewmdenv[2][]{%
   \expandafter\let\csname #2\endcsname\relax%
   \expandafter\let\csname end#2\endcsname\relax%
   \newmdenv[#1]{#2}%
   }%
-%    \end{macrocode}
-%\url{http://tex.stackexchange.com/questions/26298/own-command-to-create-new-environment}
-%|\newtheorem{<envname>}[<numberedlike>]{<caption>}[<within>]|
-%|\newmdtheoremenv[<mdframed-options>]{<envname>}[<numberedlike>]{<caption>}[<within>]|
-%|\md@tempa[<mdframed-options>]|
-%|\md@tempb{<envname>}|
-%|\md@tempc[<numberedlike>]|
-%|\md@tempd{<caption>}|
-%|\md@tempe[<within>]|
-%    \begin{macrocode}
 \newrobustcmd*\newmdtheoremenv{%
    \kernel@ifnextchar[%]
      {\newmdtheoremenv@i}{\newmdtheoremenv@i[]}%
 }
-%    \end{macrocode}
-%
-% \begin{macro}{newmdtheoremenv@i}
-%    \begin{macrocode}
 \def\newmdtheoremenv@i[#1]#2{%
    \kernel@ifnextchar[%]
      {\newmdtheoremenv@ii[#1]#2}{\newmdtheoremenv@ii[#1]#2[]}%
 }
-%    \end{macrocode}
-% \end{macro}
-%
-%
-% \begin{macro}{newmdtheoremenv@ii}
-%    \begin{macrocode}
 \def\newmdtheoremenv@ii[#1]#2[#3]#4{%
     \kernel@ifnextchar[%]
      {\newmdtheoremenv@iii[#1]#2[#3]#4}{\newmdtheoremenv@iii[#1]#2[#3]#4[]}%
 }
-%    \end{macrocode}
-% \end{macro}
-%
-%
-% \begin{macro}{newmdtheoremenv@iii}
-%    \begin{macrocode}
 \def\newmdtheoremenv@iii[#1]#2[#3]#4[#5]{%
    \ifboolexpr{ test {\ifblank {#3}} and test {\ifblank {#5}} }%
    {%
@@ -1793,15 +1652,11 @@ Have fun!
 %    \end{macrocode}
 % \end{macro}
 %
-%%==================================================%%
-%%=================== Frametitle ===================%%
-%%==================================================%%
+%
+% \begin{macro}{mdframedtitleenv,md@@frametitle}
+% Default definition of the frame tile used by |mdframed|.
 %    \begin{macrocode}
 \let\mdraggedtitle\raggedright
-%    \end{macrocode}
-%
-% \begin{macro}{mdframedtitleenv}
-%    \begin{macrocode}
 \providecommand*\mdframedtitleenv[1]{%
   \@afterindentfalse
    {\parindent \z@
@@ -1809,9 +1664,7 @@ Have fun!
          \mdraggedtitle\nobreak\mdf@frametitlefont#1\relax%
     \par}%
   \@afterheading}
-%    \end{macrocode}
-%
-%    \begin{macrocode}
+
 \newrobustcmd*\md@@frametitle{%
   \ifx\mdf@frametitle\@empty\relax%
   \else
@@ -1823,6 +1676,9 @@ Have fun!
 %    \end{macrocode}
 % \end{macro}
 %
+% \begin{macro}{md@checkntheorem}
+% Command which checks only |ntheorem|. Later I will support also
+% |thmtools|.
 %    \begin{macrocode}
 \newrobustcmd*\md@checkntheorem{%
   \ifbool{mdf@ntheorem}%       %%% Pruefen ob ntheorem gesetzt ist
@@ -1834,9 +1690,10 @@ Have fun!
   }{}%
 }
 %    \end{macrocode}
-%%==================================================%%
-%%=================== Fussnoten ====================%%
-%%==================================================%%
+% \end{macro}
+%
+% \begin{macro}{md@footnoterule,md@footnoteoutput,md@footnoteinput}
+% Support for footnotes.
 %    \begin{macrocode}
 \newrobustcmd*\md@footnoterule{%
     \kern0\p@%
@@ -1857,39 +1714,10 @@ Have fun!
    \let\@footnotetext\@mpfootnotetext%
 }
 %    \end{macrocode}
-%
-% \begin{macro}{thempfootnote}
-%    \begin{macrocode}
-\def\thempfootnote{{\itshape\@alph\c@mpfootnote}}
-%    \end{macrocode}
 % \end{macro}
 %
-%
-% \begin{macro}{@makefnmark}
-%    \begin{macrocode}
-\def\@makefnmark{\hbox{\@textsuperscript{\normalfont\@thefnmark}}}
-%    \end{macrocode}
-% \end{macro}
-%
-%
-% \begin{macro}{@mpfootnotetext}
-%    \begin{macrocode}
-\long\def\@mpfootnotetext#1{%
-  \global\setbox\@mpfootins\vbox{%
-    \unvbox\@mpfootins
-    \reset@font\footnotesize
-    \hsize\columnwidth
-    \@parboxrestore
-    \protected@edef\@currentlabel
-         {\csname p@mpfootnote\endcsname\@thefnmark}%
-    \color@begingroup
-      \@makefntext{%
-        \rule\z@\footnotesep\ignorespaces#1\@finalstrut\strutbox}%
-    \color@endgroup}}
-%    \end{macrocode}
-%%==================================================%%
-%%======= Laden der gewuenschten Style-Datei =======%%
-%%==================================================%%
+% \begin{macro}{mdf@load@style,md@styledefinition}
+% Load the method to draw the frame and set style definition.
 %    \begin{macrocode}
 \newrobustcmd*\mdf@load@style{%
 \ifcase\value{mdf@globalstyle@cnt}\relax%
@@ -1906,11 +1734,7 @@ Have fun!
 \fi%
 }%
 \mdf@load@style
-%    \end{macrocode}
-%%==================================================%%
-%%========= style-abhaengige Modifikation ==========%%
-%%==================================================%%
-%    \begin{macrocode}
+
 \newrobustcmd*\md@styledefinition{%
    \ifnumequal{\value{mdf@globalstyle@cnt}}{0}% 
    {\deflength{\mdf@innerlinewidth@length}{\z@}%
@@ -1936,10 +1760,8 @@ Have fun!
 %    \end{macrocode}
 % \end{macro}
 %
-%%==================================================%%
-%%Modifikation zur Nutzung innerhalb float/minipage=%%
-%%==================================================%%
-%option nobreak
+% \begin{macro}{detected@md@put@frame}
+% Detect whether inside a non breakable environment.
 %    \begin{macrocode}
 \let\md@reserved@a\@empty
 \newrobustcmd*\detected@md@put@frame{%
@@ -1976,9 +1798,9 @@ Have fun!
 \md@reserved@a%
 }
 %    \end{macrocode}
-%%==================================================%%
-%%======keine Linien anzeigen - hidealllines =======%%
-%%==================================================%%
+% \end{macro}
+%
+% \begin{macro}{md@hidealllines@check}
 %    \begin{macrocode}
 \newrobustcmd*\md@hidealllines@check{%
  \ifbool{mdf@hidealllines}{%
@@ -1989,15 +1811,15 @@ Have fun!
   }{}%
 }
 %    \end{macrocode}
-%%==================================================%%
-%%==Deklaration diverser Eingabe und Hilfsparameter=%%
-%%==================================================%%
-%X-Laengen
+% \end{macro}
+%
+%
+%X-length
 %    \begin{macrocode}
 \newlength\mdfboundingboxwidth
 \newlength\mdfboundingboxtotalwidth
 %    \end{macrocode}
-%Y-Laengen
+%Y-length
 %    \begin{macrocode}
 \newlength\mdfboundingboxheight
 \newlength\mdfboundingboxdepth
@@ -2007,41 +1829,24 @@ Have fun!
 \newlength\md@verticalmarginwhole@length
 %    \end{macrocode}
 %
-% \begin{macro}{ptTps}
 %    \begin{macrocode}
 \providecommand*\ptTps{}
 %    \end{macrocode}
-% \end{macro}
 %
-%Kommando in tikz mit relax belegt:
+% \begin{macro}{mdfcreateextratikz}
+% Command to expand the tikz code. (see md-frame-1.mdf)
 %    \begin{macrocode}
 \newrobustcmd\mdfcreateextratikz{}
 %    \end{macrocode}
+% \end{macro}
 %
-% \begin{macro}{mdframed}
-%%==================================================%%
-%%==================Umgebung========================%%
-%%==================================================%%
+% \begin{macro}{mdframed,mdframed@ii,mdframed@i}
+% That the user environement.
 %    \begin{macrocode}
 \def\mdframed{\@ifnextchar[\mdframed@i\mdframed@ii}%
-%    \end{macrocode}
-% \end{macro}
-%
-%
-% \begin{macro}{mdframed@ii}
-%    \begin{macrocode}
 \def\mdframed@ii{\mdframed@i[]}%
-%    \end{macrocode}
-% \end{macro}
-%
-%
-% \begin{macro}{mdframed@i}
-%    \begin{macrocode}
 \def\mdframed@i[#1]{% default-Umgebung
 \begingroup
-%    \end{macrocode}
-%check is needed?
-%    \begin{macrocode}
    \mdfsetup{userdefinedwidth=\linewidth,#1}%%Ueberlegung- wie es besser geht!!!! WICHTIG
    \md@hidealllines@check%
    \mdf@settings%
@@ -2086,9 +1891,8 @@ Have fun!
 %    \end{macrocode}
 % \end{macro}
 %
-%%==================================================%%
-%%================== Twoside-Modus =================%%
-%%==================================================%%
+% \begin{macro}{md@twoside@checklength,md@zref@label,if@md@pageodd,md@pageisodd,md@pageiseven,md@@setzref}
+% The whole bunch is used to work width twoside mode and uses the correct margins.
 %    \begin{macrocode}
 \newtoggle{md:checktwoside}
 \settoggle{md:checktwoside}{false}
@@ -2148,9 +1952,10 @@ Have fun!
 }
 \newrobustcmd*\md@@setzref{\md@zref@label\if@md@pageodd}
 %    \end{macrocode}
-%%==================================================%%
-%%================= Platz auf Seite ================%%
-%%==================================================%%
+% \end{macro}
+%
+%
+% \begin{macro}{md@freepagevspace}
 %    \begin{macrocode}
 \newrobustcmd*\md@freepagevspace{%
      \penalty\@M \vskip 2\baselineskip \vskip\height
@@ -2163,9 +1968,10 @@ Have fun!
           }%
 }
 %    \end{macrocode}
-%%==================================================%%
-%================= Breite der Box =================%%
-%%==================================================%%
+% \end{macro}
+%
+% \begin{macro}{md@advancelength@orizontalmargin@add,md@horizontalspaceofbox,md@horizontalmargin@equation}
+% Width of the box
 %    \begin{macrocode}
 \newrobustcmd*\md@advancelength@orizontalmargin@add[1]{%
   \advance\md@horizontalspaceofbox by -\csname mdf@#1@length\endcsname\relax%
@@ -2196,9 +2002,10 @@ Have fun!
     \hsize=\md@horizontalspaceofbox%
 }
 %    \end{macrocode}
-%%==================================================%%
-%%===========Beruecksichtige Linienausgabe==========%%
-%%==================================================%%
+% \end{macro}
+%
+% \begin{macro}{md@keeplines@single}
+% horizontal space in relation of the lines.
 %    \begin{macrocode}
 \newrobustcmd*\md@keeplines@single{%
   \notbool{mdf@topline}{%
@@ -2209,9 +2016,11 @@ Have fun!
      }{}%
 }
 %    \end{macrocode}
-%%==================================================%%
-%%===========Additionsalgorithmus fuer for==========%%
-%%==================================================%%
+% \end{macro}
+%
+%
+% \begin{macro}{md@advancelength@verticalmarginwhole,md@advancelength@freevspace@sub,md@advancelength@freevspace@add}
+% Loop macros to calculate the height. Used by |\mdf@dolist|.
 %    \begin{macrocode}
 \newrobustcmd*\md@advancelength@verticalmarginwhole[1]{%
   \advance\md@verticalmarginwhole@length by \csname mdf@#1@length\endcsname\relax%
@@ -2223,13 +2032,17 @@ Have fun!
   \advance\dimen@ by \csname mdf@#1@length\endcsname\relax%
 }
 %    \end{macrocode}
-%%==================================================%%
-%%====================Reset changes=================%%
-%%==================================================%%
+% \end{macro}
+%
+%
+% \begin{macro}{md@reset}
+% Reset changes
 %    \begin{macrocode}
 \protected@edef\md@reset{\boxmaxdepth\the\boxmaxdepth 
                           \splittopskip\the\splittopskip}%
 %    \end{macrocode}
+% \end{macro}
+%
 %%==================================================%%
 %%===========Ausgaberoutine -> Berechnung===========%%
 %%==================================================%%
