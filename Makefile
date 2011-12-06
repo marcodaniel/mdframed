@@ -1,8 +1,7 @@
 # Makefile for mdframed project folder
-# $Id: Makefile 257 2011-12-04 18:38:52Z marco $
+# $Id: Makefile 262 2011-12-06 20:50:52Z marco $
 SHELL     := /bin/bash
 PACKAGE   = mdframed
-DOC       = mdframed
 EXAMPLEA  = mdframed-examples
 EXAMPLED  = mdframed-example-default
 EXAMPLET  = mdframed-example-tikz
@@ -26,12 +25,12 @@ OK_STRING   = $(OK_COLOR)[OK]$(NO_COLOR)
 ERROR_STRING= $(ERROR_COLOR)[ERRORS]$(NO_COLOR)
 WARN_STRING = $(WARN_COLOR)[WARNINGS]$(NO_COLOR)
 
-doc: $(DOC).dtx
-	$(PDFLATEX) $(DOC).dtx
-	$(MAKEIDX) -s gglo.ist -o $(DOC).gls $(DOC).glo
-	$(MAKEIDX) -s gind.ist $(DOC).idx
-	$(PDFLATEX) $(DOC).dtx
-	$(PDFLATEX) $(DOC).dtx
+docsty: $(PACKAGE).dtx
+	$(PDFLATEX) $(PACKAGE).dtx
+	$(MAKEIDX) -s gglo.ist -o $(PACKAGE).gls $(PACKAGE).glo
+	$(MAKEIDX) -s gind.ist $(PACKAGE).idx
+	$(PDFLATEX) $(PACKAGE).dtx
+	$(PDFLATEX) $(PACKAGE).dtx
 
 examples: $(EXAMPLEA).dtx
 #EXAMPLEA
@@ -78,10 +77,10 @@ clean:
 	    $$file.log $$file.out $$file.synctex.gz $$file.thm $$file.tmp $$file.toc ; \
 	done
 	@echo -e "Useless files of mdframed package will be removed" ;
-	@rm -rf $(DOC).aux $(DOC).glo $(DOC).gls $(DOC).hd $(DOC).ins $(DOC).idx \
-	    $(DOC).ilg $(DOC).ind $(DOC).log $(DOC).out $(DOC).thm $(DOC).toc ; 
+	@rm -rf $(PACKAGE).aux $(PACKAGE).glo $(PACKAGE).gls $(PACKAGE).hd $(PACKAGE).ins $(PACKAGE).idx \
+	    $(PACKAGE).ilg $(PACKAGE).ind $(PACKAGE).log $(PACKAGE).out $(PACKAGE).thm $(PACKAGE).toc ; 
 	@echo -e "$(OK_COLOR)Löschvorgang abgeschlossen$(NO_COLOR)"	
 
-all:	doc examples clean
+all:	docsty examples clean
 
 
