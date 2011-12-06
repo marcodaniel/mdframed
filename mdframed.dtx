@@ -92,9 +92,13 @@ Have fun!
 \endpostamble
 \usedir{tex/latex/mdframed}
 \generate{\file{mdframed.sty}{\from{mdframed.dtx}{package}}}
+\nopreamble\nopostamble
 \generate{\file{md-frame-0.mdf}{\from{mdframed.dtx}{mdframedefault}}}
+\nopreamble\nopostamble
 \generate{\file{md-frame-1.mdf}{\from{mdframed.dtx}{mdframetikz}}}
+\nopreamble\nopostamble
 \generate{\file{md-frame-2.mdf}{\from{mdframed.dtx}{mdframepstricks}}}
+\nopreamble\nopostamble
 \generate{\file{md-frame-3.mdf}{\from{mdframed.dtx}{mdframepstricks}}}
 \Msg{*********************************************************}
 \Msg{*}
@@ -129,10 +133,10 @@ Have fun!
 \fi
 %</internal>
 %<*driver>
-%%$Id: mdframed.dtx 250 2011-12-04 14:07:55Z marco $
+%%$Id: mdframed.dtx 261 2011-12-06 20:45:11Z marco $
 \documentclass[parskip=false,11pt,]{ltxmdf}
 \usepackage[framemethod=TikZ]{mdframed}
-\ltxmdfsetifoot$Id: mdframed.dtx 250 2011-12-04 14:07:55Z marco $
+\ltxmdfsetifoot$Id: mdframed.dtx 261 2011-12-06 20:45:11Z marco $
 
 \EnableCrossrefs
 \CodelineIndex
@@ -143,7 +147,7 @@ Have fun!
 %</driver>
 % \fi
 %
-% 
+% CheckSum{3478}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -163,7 +167,7 @@ Have fun!
 %
 % \GetFileInfo{mdframed.sty}
 %
-%
+% changes{\mdversion}{2011/11/26}{Created dtx and fixes bugs}
 %
 % \title{The \Pack{mdframed} package\footnote{Extending the package \texttt{framed.sty}}
 % \subtitle{auto-split frame environment}
@@ -191,7 +195,8 @@ Have fun!
 % 
 % \maketitle
 % 
-% 
+% \vspace*{2\baselineskip} 
+%
 % \section{Motivation}
 % Many users wish to (further) emphasize lemmata, definitions, proofs, etc. The package \Pack{mdframed} allows you to create environments with breakable frames. I think an example is the best way to demonstrate its properties.
 % 
@@ -1116,10 +1121,10 @@ Have fun!
 %
 % \subsection{The Explanation of mdframed.sty}
 %
-% %$Id: mdframed.dtx 250 2011-12-04 14:07:55Z marco $
-% %$Rev: 250 $
+% %$Id: mdframed.dtx 261 2011-12-06 20:45:11Z marco $
+% %$Rev: 261 $
 % %$Author: marco $
-% %$Date: 2011-12-04 15:07:55 +0100 (So, 04. Dez 2011) $
+% %$Date: 2011-12-06 21:45:11 +0100 (Di, 06. Dez 2011) $
 % \begin{macro}{mdversion,mdframedpackagename,md@maindate@svn}
 % Set package information
 %    \begin{macrocode}
@@ -1132,7 +1137,8 @@ Have fun!
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{mdframed}%
-     [\md@maindate@svn$Id: mdframed.dtx 250 2011-12-04 14:07:55Z marco $ \mdversion: \mdframedpackagename]
+     [\md@maindate@svn$Id: mdframed.dtx 261 2011-12-06 20:45:11Z marco $%
+      \mdversion: \mdframedpackagename]
 %    \end{macrocode}
 %
 % \begin{macro}{md@PackageWarning,md@PackageInfo,md@LoadFile@IfExist}
@@ -1297,10 +1303,11 @@ Have fun!
         \defcounter{mdf@globalstyle@cnt}{#1}%
          \ifcase\value{mdf@globalstyle@cnt}\relax
              %0 <- kein Grafikpaket
-          \or\md@LoadFile@IfExist{tikz}%1 <- tikz wird benoetigt
-          \or\md@LoadFile@IfExist{pstricks-add}%2 <- tikz wird benoetigt
-          \or\defcounter{mdf@globalstyle@cnt}{2}\md@LoadFile@IfExist{pstricks-add}%3 <- pstricks wird benoetigt
-          \or\md@LoadFile@IfExist{pstricks-add}%4 <- pstricks wird benoetigt
+          \or\md@LoadFile@IfExist{tikz}%
+          \or\md@LoadFile@IfExist{pstricks-add}%
+          \or\defcounter{mdf@globalstyle@cnt}{2}%
+              \md@LoadFile@IfExist{pstricks-add}%
+          \or\md@LoadFile@IfExist{pstricks-add}%
           \else\md@PackageWarning{Unknown global style \value{mdf@globalstyle@cnt}}%
         \fi%
 }
@@ -1334,9 +1341,9 @@ Have fun!
      }%
   \ifcase\value{mdf@globalstyle@cnt}\relax%
          %0 <- kein Grafikpaket
-     \or\md@LoadFile@IfExist{tikz}%1 <- tikz wird benoetigt
-     \or\md@LoadFile@IfExist{pstricks-add}%2 <- pstricks wird benoetigt
-     \or\md@LoadFile@IfExist{pstricks-add}%3 <- pstricks wird benoetigt <- support old style
+     \or\md@LoadFile@IfExist{tikz}%
+     \or\md@LoadFile@IfExist{pstricks-add}%
+     \or\md@LoadFile@IfExist{pstricks-add}%
   \fi%
 }
 %    \end{macrocode}
@@ -1509,12 +1516,13 @@ Have fun!
 %    \begin{macrocode}
 \define@key{mdf}{style}{%
   \ifcsundef{mdf@definestyle@#1}{%
-        \md@PackageWarning{Unknown definedstyle #1^^J
-                           You have to define a style via \string\mdfdefinedstyle\MessageBreak
-                           }%
-        }%
-        {\expandafter\expandafter\expandafter\mdfsetup%
-         \expandafter\expandafter\expandafter{\csname mdf@definestyle@#1\endcsname}}%
+    \md@PackageWarning{Unknown definedstyle #1^^J
+                       You have to define a style ^^J
+                       via \string\mdfdefinedstyle\MessageBreak
+                      }%
+   }%
+   {\expandafter\expandafter\expandafter\mdfsetup%
+    \expandafter\expandafter\expandafter{\csname mdf@definestyle@#1\endcsname}}%
 }%
 %    \end{macrocode}
 % \end{macro}
@@ -1535,7 +1543,7 @@ Have fun!
          %case "warning"
          \md@ifstrequal@expand{warning}{\def\md@tempa{Warning}}{%
             %case "unknown"
-            \md@PackageWarning{Unknown key for printheight=\mdf@printheight %^^J
+            \md@PackageWarning{Unknown key for printheight=\mdf@printheight^^J
                                use none, info or warning}%
              \def\md@tempa{none}%
          }%
@@ -1721,16 +1729,18 @@ Have fun!
 %    \begin{macrocode}
 \newrobustcmd*\mdf@load@style{%
 \ifcase\value{mdf@globalstyle@cnt}\relax%
-        \input{md-frame-0.mdf}%
-      \or\input{md-frame-1.mdf}%
-      \or\input{md-frame-2.mdf}
-      \or\input{md-frame-3.mdf}%
-      \else%
-       \IfFileExists{md-frame-\value{mdf@globalstyle@cnt}.mdf}{\input{md-frame-\value{mdf@globalstyle@cnt}.mdf}%
-           }{\input{md-frame-0.mdf}%
-            \md@PackageWarning{The style number \value{mdf@globalstyle@cnt} does not exist^^J
-                               mdframed ues instead style=0 \mdframedpackagename}%
-          }%
+    \input{md-frame-0.mdf}%
+ \or\input{md-frame-1.mdf}%
+ \or\input{md-frame-2.mdf}%
+ \or\input{md-frame-3.mdf}%
+ \else%
+    \IfFileExists{md-frame-\value{mdf@globalstyle@cnt}.mdf}%
+    {\input{md-frame-\value{mdf@globalstyle@cnt}.mdf}}%
+    {%
+     \input{md-frame-0.mdf}%
+     \md@PackageWarning{The style number \value{mdf@globalstyle@cnt} does not exist^^J
+                        mdframed ues instead style=0 \mdframedpackagename}%
+    }%
 \fi%
 }%
 \mdf@load@style
@@ -1766,34 +1776,34 @@ Have fun!
 \let\md@reserved@a\@empty
 \newrobustcmd*\detected@md@put@frame{%
   \ifmdf@nobreak%Option nobreak=true?
-        \def\md@reserved@a{\md@put@frame@standalone}%
-     \else
-       \def\md@reserved@a{\md@put@frame}%
-       \ifnum\@floatpenalty<0\relax%Detecting float
-          \if@twocolumn%
-             \ifx\@captype\@undefined
-                 \def\md@reserved@a{\md@put@frame}%
-             \else
-                 \md@PackageInfo{mdframed inside float  ^^J
-                                 mdframed uses option nobreak \mdframedpackagename}%
-                 \def\md@reserved@a{\md@put@frame@standalone}%   
-             \fi
-          \else
-             \md@PackageInfo{mdframed inside float  ^^J
-                             mdframed uses option nobreak \mdframedpackagename}%
-             \def\md@reserved@a{\md@put@frame@standalone}%     
-          \fi%
-       \fi%
-       \if@minipage%
-             \md@PackageInfo{mdframed inside minipage  ^^J
-                             mdframed uses option nobreak \mdframedpackagename}%
-             \def\md@reserved@a{\md@put@frame@standalone}%
-       \fi%
-       \ifinner%
-            \md@PackageInfo{mdframed inside a box ^^J
-                            mdframed uses option nobreak \mdframedpackagename}%
-             \def\md@reserved@a{\md@put@frame@standalone}%
-      \fi%
+     \def\md@reserved@a{\md@put@frame@standalone}%
+  \else
+     \def\md@reserved@a{\md@put@frame}%
+     \ifnum\@floatpenalty<0\relax%Detecting float
+        \if@twocolumn%
+           \ifx\@captype\@undefined
+               \def\md@reserved@a{\md@put@frame}%
+           \else
+               \md@PackageInfo{mdframed inside float  ^^J
+                               mdframed uses option nobreak \mdframedpackagename}%
+               \def\md@reserved@a{\md@put@frame@standalone}%   
+           \fi
+        \else
+           \md@PackageInfo{mdframed inside float  ^^J
+                           mdframed uses option nobreak \mdframedpackagename}%
+           \def\md@reserved@a{\md@put@frame@standalone}%     
+        \fi%
+     \fi%
+     \if@minipage%
+           \md@PackageInfo{mdframed inside minipage  ^^J
+                           mdframed uses option nobreak \mdframedpackagename}%
+           \def\md@reserved@a{\md@put@frame@standalone}%
+     \fi%
+     \ifinner%
+          \md@PackageInfo{mdframed inside a box ^^J
+                          mdframed uses option nobreak \mdframedpackagename}%
+          \def\md@reserved@a{\md@put@frame@standalone}%
+     \fi%
   \fi%
 \md@reserved@a%
 }
@@ -1847,7 +1857,8 @@ Have fun!
 \def\mdframed@ii{\mdframed@i[]}%
 \def\mdframed@i[#1]{% default-Umgebung
 \begingroup
-   \mdfsetup{userdefinedwidth=\linewidth,#1}%%Ueberlegung- wie es besser geht!!!! WICHTIG
+%%Ueberlegung- wie es besser geht!!!! WICHTIG
+   \mdfsetup{userdefinedwidth=\linewidth,#1}
    \md@hidealllines@check%
    \mdf@settings%
    \md@twoside@checklength%
@@ -1998,7 +2009,8 @@ Have fun!
 %   |\advance\md@horizontalspaceofbox by - \width\md@arrayparboxrestore%|
 %    \begin{macrocode}
     %%% Beruecksichtigung, dass Auszaehlung bzw. list-Umgebung enthalten
-    \ifdimless{\md@horizontalspaceofbox}{3cm}{\md@PackageWarning{You have only a width of 3cm}}{}
+    \ifdimless{\md@horizontalspaceofbox}{3cm}%
+              {\md@PackageWarning{You have only a width of 3cm}}{}
     \hsize=\md@horizontalspaceofbox%
 }
 %    \end{macrocode}
@@ -2043,10 +2055,8 @@ Have fun!
 %    \end{macrocode}
 % \end{macro}
 %
-%%==================================================%%
-%%===========Ausgaberoutine -> Berechnung===========%%
-%%==================================================%%
-%
+% \begin{macro}{md@put@frame@standalone}
+% Output of |mdframed| inside a non breakable environement.
 %    \begin{macrocode}
 \newrobustcmd*\md@put@frame@standalone{\relax%
    \ifvoid\@tempboxa\relax
@@ -2054,7 +2064,8 @@ Have fun!
       \let\md@reserved@a\relax%
    \else
       %Hier berechnung Box-Inhalt+Rahmen oben und unten
-      \setlength{\md@verticalmarginwhole@length}{\dimexpr\ht\@tempboxa+\dp\@tempboxa\relax}%
+      \setlength{\md@verticalmarginwhole@length}%
+                 {\dimexpr\ht\@tempboxa+\dp\@tempboxa\relax}%
       \mdf@dolist{\md@advancelength@verticalmarginwhole}{%
                   outerlinewidth,middlelinewidth,innerlinewidth,innertopmargin,
                   innerbottommargin,innerlinewidth,middlelinewidth,outerlinewidth}%
@@ -2064,25 +2075,29 @@ Have fun!
    \md@reserved@a%
 }
 %    \end{macrocode}
+% \end{macro}
 %
 % \begin{macro}{md@put@frame}
+% Output of |mdframed| inside a breakable environement.
+% The comparison are onyl check whether the contents must be split or not.
 %    \begin{macrocode}
 \def\md@put@frame{\relax%
 \ifvoid\@tempboxa\relax
 \md@PackageWarning{The environment is empty\MessageBreak}%
 \let\md@reserved@a\relax%
 \else
-   \md@print@space%
-   \md@freepagevspace%
-   \md@PackageInfoSpace{\the\md@freevspace@length before the beginning of the environment^^J
-                        ending on input line \MessageBreak}%
+  \md@print@space%
+  \md@freepagevspace%
+  \md@PackageInfoSpace{\the\md@freevspace@length before the beginning of ^^J
+                       the environment ending on input line \MessageBreak}%
    \ifdimless{\md@freevspace@length}{2\baselineskip}
-             {\md@PackageInfo{Not enough space on this page}%die Seite hat nur noch minimal Platz
+             {\md@PackageInfo{Not enough space on this page}
               \vfill\eject%
               \def\md@reserved@a{\md@put@frame}%
              }{%
                %Hier berechnung Box-Inhalt+Rahmen oben und unten
-              \setlength{\md@verticalmarginwhole@length}{\dimexpr\ht\@tempboxa+\dp\@tempboxa\relax}%
+              \setlength{\md@verticalmarginwhole@length}%
+                          {\dimexpr\ht\@tempboxa+\dp\@tempboxa\relax}%
               \mdf@dolist{\md@advancelength@verticalmarginwhole}{%
                      outerlinewidth,middlelinewidth,innerlinewidth,innertopmargin,
                      innerbottommargin,innerlinewidth,middlelinewidth,outerlinewidth}%
@@ -2091,7 +2106,7 @@ Have fun!
                 {%passt auf Seite%
                   \begingroup
                    \iftoggle{md:checktwoside}{\md@@setzref}{}%
-                    \md@putbox@single%%passt auf Seite
+                    \md@putbox@single
                   \endgroup
                  \let\md@reserved@a\relax}%
                 {\def\md@reserved@a{\md@put@frame@i}}%passt nicht auf Seite
@@ -2104,6 +2119,7 @@ Have fun!
 %
 %
 % \begin{macro}{md@put@frame@i}
+% Output of the first splitted box.
 %    \begin{macrocode}
 \def\md@put@frame@i{%Box muss gesplittet werden -- Ausgabe der ersten Teilbox
       %Berechnung der Splittgroesse -- Linien und Abstand oben
@@ -2140,7 +2156,8 @@ Have fun!
               \advance\dimen@i by 0.5\dimen@
              \splittopskip\z@%
              \setbox\@tempboxa\vbox{\unvbox\tw@%
-                                     \hrule \@height\dp\strutbox \@width\z@%benoetigt um Tiefe zu haben
+                                     %benoetigt um Tiefe zu haben
+                                     \hrule \@height\dp\strutbox \@width\z@
                                      \unvbox\@tempboxa}
              \splittopskip\mdf@splittopskip@length%
              \setbox\tw@\vsplit\@tempboxa to \dimen@i
@@ -2184,6 +2201,7 @@ Have fun!
 %
 %
 % \begin{macro}{md@put@frame@ii}
+% Output of the middle and last box.
 %    \begin{macrocode}
 \def\md@put@frame@ii{%Ausgabe der mittleren Box(en) wenn vorhanden
   \setlength{\md@freevspace@length}{\vsize}%
@@ -2228,18 +2246,10 @@ Have fun!
 %    \end{macrocode}
 % \end{macro}
 %
-%%==================================================%%
-%%= Sicherstellen, dass Optionen nur global setzbar=%%
-%%==================================================%%
+%
 %    \begin{macrocode}
-\DisableKeyvalOption[%  
-  action=warning,  
-  package=mdframed,    
-]{mdf}{framemethod}%
-\DisableKeyvalOption[%  
-  action=warning,  
-  package=mdframed,    
-]{mdf}{xcolor}%
+\DisableKeyvalOption[action=warning,package=mdframed]{mdf}{framemethod}%
+\DisableKeyvalOption[action=warning,package=mdframed]{mdf}{xcolor}%
 
  \endinput
 %    \end{macrocode}
@@ -2257,95 +2267,113 @@ Have fun!
 %\fi
 % \subsection{The Explanation of md-frame-0.mdf}
 %    \begin{macrocode}
-%%==================================================%%
-%%= Ausgabe der Box nach Vorgabe der Ausgaberoutine=%%
-%%==================================================%%
-%% Styledatei fuer das Paket mdframed erstellt durch
-%% Marco Daniel und Elke Schubert
+%% Style file for mdframed for package option `framemethod=default`
 %% 
 %% This package may be distributed under the terms of the LaTeX Project
 %% Public License, as described in lppl.txt in the base LaTeX distribution.
 %% Either version 1.0 or, at your option, any later version.
 
-%%$Id: mdframed.dtx 250 2011-12-04 14:07:55Z marco $
-%%$Rev: 250 $
-%%$Author: marco $
-%%$Date: 2011-12-04 15:07:55 +0100 (So, 04. Dez 2011) $
-
+%%$Id: mdframed.dtx 261 2011-12-06 20:45:11Z marco $
+%
+%    \end{macrocode}
+%
+% \begin{macro}{mdframedOpackagename,md@frameOdate@svn}
+% local settings
+%    \begin{macrocode}
 \def\mdframedOpackagename{md-frame-0}
 \def\md@frameOdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
-\ProvidesFile{md-frame-0.mdf}[\md@frameOdate@svn$Id: mdframed.dtx 250 2011-12-04 14:07:55Z marco $ \mdversion: \mdframedOpackagename]
+\ProvidesFile{md-frame-0.mdf}%
+    [\md@frameOdate@svn$Id: mdframed.dtx 261 2011-12-06 20:45:11Z marco $%
+     \mdversion: \mdframedOpackagename]
+%    \end{macrocode}
+% \end{macro}
 
-%Hilfparameter
+
+% \begin{macro}{mdframedOpackagename,md@frameOdate@svn}
+% short command
+%    \begin{macrocode}
 \def\mdf@background@default{\color{\mdf@backgroundcolor}}
 \def\mdf@linecolor@default{\color{\mdf@middlelinecolor}}
-
-%%==================================================%%
-%%================single-box========================%%
-%%==================================================%%
+%    \end{macrocode}
+% \end{macro}
+%
+%
+% \begin{macro}{md@putbox@single,md@frame@background@single,md@frame@topandbottomline@single,md@frame@leftline@single,md@frame@rightline@single,md@frame@rightline@single}
+% The frame of of a non splitted contents of mdframed
+%    \begin{macrocode}
 \def\md@frame@background@single{%
-        \rlap{\mdf@background@default%
-              \rule[-\mdfboundingboxdepth]%
-                   {\mdfboundingboxtotalwidth}%
-                   {\mdfboundingboxtotalheight}%
-              }%
+  \rlap{\mdf@background@default%
+     \rule[-\mdfboundingboxdepth]%
+          {\mdfboundingboxtotalwidth}%
+          {\mdfboundingboxtotalheight}%
+  }%
 }%
 %
 \def\md@frame@topandbottomline@single{%
-           \rlap{\mdf@linecolor@default%
-               \ifbool{mdf@topline}{%
-                   \rule[\dimexpr\mdfboundingboxheight-\mdfboundingboxdepth+\mdf@innerbottommargin@length+\mdf@innertopmargin@length\relax]%
-                        {\mdfboundingboxtotalwidth}%
-                        {\mdf@middlelinewidth@length}}%
-                  {}%
-                }%
-           \rlap{\mdf@linecolor@default%
-               \ifbool{mdf@bottomline}{%
-                   \rule[\dimexpr-\mdfboundingboxdepth-\mdf@middlelinewidth@length\relax]%
-                        {\mdfboundingboxtotalwidth}%
-                        {\mdf@middlelinewidth@length}}%
-                  {}%
-                }% 
+  \rlap{\mdf@linecolor@default%
+     \ifbool{mdf@topline}{%
+          \rule[\dimexpr\mdfboundingboxheight-\mdfboundingboxdepth%
+                       +\mdf@innerbottommargin@length+\mdf@innertopmargin@length\relax]%
+               {\mdfboundingboxtotalwidth}%
+               {\mdf@middlelinewidth@length}}%
+         {}%
+  }%
+  \rlap{\mdf@linecolor@default%
+     \ifbool{mdf@bottomline}{%
+         \rule[\dimexpr-\mdfboundingboxdepth-\mdf@middlelinewidth@length\relax]%
+              {\mdfboundingboxtotalwidth}%
+              {\mdf@middlelinewidth@length}}%
+         {}%
+  }% 
 }
 %
 \def\md@frame@leftline@single{%
-           \llap{\mdf@linecolor@default%
-                   \rule[\dimexpr-\mdfboundingboxdepth%
-                         \ifbool{mdf@bottomline}{-\mdf@middlelinewidth@length}{}\relax]%
-                        {\mdf@middlelinewidth@length}%
-                        {\dimexpr\mdfboundingboxtotalheight%
-                         +\ifbool{mdf@bottomline}{\mdf@middlelinewidth@length}{0pt}%
-                         +\ifbool{mdf@topline}{\mdf@middlelinewidth@length}{0pt}\relax}%
-                  }% 
+  \llap{\mdf@linecolor@default%
+     \rule[\dimexpr-\mdfboundingboxdepth%
+           \ifbool{mdf@bottomline}{-\mdf@middlelinewidth@length}{}\relax]%
+          {\mdf@middlelinewidth@length}%
+          {\dimexpr\mdfboundingboxtotalheight%
+           +\ifbool{mdf@bottomline}{\mdf@middlelinewidth@length}{0pt}%
+           +\ifbool{mdf@topline}{\mdf@middlelinewidth@length}{0pt}\relax}%
+  }% 
 }%
 %
 \def\md@frame@rightline@single{%
-         \rlap{\mdf@linecolor@default%
-               \hspace*{\mdfboundingboxwidth}%
-               \hspace*{\mdf@innerrightmargin@length}%
-               \rule[\dimexpr-\mdfboundingboxdepth%
-                        \ifbool{mdf@bottomline}{-\mdf@middlelinewidth@length}{}\relax]%
-                    {\mdf@middlelinewidth@length}%
-                    {\dimexpr\mdfboundingboxtotalheight%
-                         +\ifbool{mdf@bottomline}{\mdf@middlelinewidth@length}{0pt}%
-                         +\ifbool{mdf@topline}{\mdf@middlelinewidth@length}{0pt}\relax}%
-              }%
+  \rlap{\mdf@linecolor@default%
+     \hspace*{\mdfboundingboxwidth}%
+     \hspace*{\mdf@innerrightmargin@length}%
+     \rule[\dimexpr-\mdfboundingboxdepth%
+           \ifbool{mdf@bottomline}{-\mdf@middlelinewidth@length}{}\relax]%
+          {\mdf@middlelinewidth@length}%
+          {\dimexpr\mdfboundingboxtotalheight%
+           +\ifbool{mdf@bottomline}{\mdf@middlelinewidth@length}{0pt}%
+           +\ifbool{mdf@topline}{\mdf@middlelinewidth@length}{0pt}\relax}%
+  }%
 }%
 %
 \def\md@putbox@single{%%%%% Ausgabe der ungesplitteten Gesamtbox
   \ifvoid\@tempboxa
   \else%
-   \mdf@makebox@out{
+    \mdf@makebox@out{%
       \mdf@makeboxalign@left%
-      \setlength{\mdfboundingboxwidth}{\wd\@tempboxa}%
-      \setlength{\mdfboundingboxtotalwidth}{\dimexpr\mdfboundingboxwidth+\mdf@innerleftmargin@length+\mdf@innerrightmargin@length\relax}%
-      \setlength{\mdfboundingboxheight}{\dimexpr\ht\@tempboxa+\dp\@tempboxa\relax}%
-      \setlength{\mdfboundingboxdepth}{\dimexpr\dp\@tempboxa+\mdf@innerbottommargin@length\relax}%
-      \setlength{\mdfboundingboxtotalheight}{\dimexpr\mdfboundingboxheight+\mdf@innertopmargin@length+\mdf@innerbottommargin@length\relax}%
+      \setlength{\mdfboundingboxwidth}%
+                   {\wd\@tempboxa}%
+      \setlength{\mdfboundingboxtotalwidth}%
+                   {\dimexpr\mdfboundingboxwidth+\mdf@innerleftmargin@length%
+                    +\mdf@innerrightmargin@length\relax}%
+      \setlength{\mdfboundingboxheight}%
+                   {\dimexpr\ht\@tempboxa+\dp\@tempboxa\relax}%
+      \setlength{\mdfboundingboxdepth}%
+                   {\dimexpr\dp\@tempboxa+\mdf@innerbottommargin@length\relax}%
+      \setlength{\mdfboundingboxtotalheight}%
+                   {\dimexpr\mdfboundingboxheight+\mdf@innertopmargin@length%
+                    +\mdf@innerbottommargin@length\relax}%
       \noindent%
       \setlength{\@tempdima}{\dimexpr\mdfboundingboxtotalwidth%
-                             +\ifbool{mdf@leftline}{\mdf@middlelinewidth@length}{\z@}%
-                             +\ifbool{mdf@rightline}{\mdf@middlelinewidth@length}{\z@}\relax}%
+                             +\ifbool{mdf@leftline}%
+                                     {\mdf@middlelinewidth@length}{\z@}%
+                             +\ifbool{mdf@rightline}%
+                                     {\mdf@middlelinewidth@length}{\z@}\relax}%
       \mdf@makebox@in[\@tempdima]{%
         \null%
         \ifbool{mdf@leftline}{%
@@ -2364,56 +2392,69 @@ Have fun!
   }%
   \fi%
 }
-%%==================================================%%
-%%================first-box=========================%%
-%%==================================================%%
+%    \end{macrocode}
+% \end{macro}
 %
+%
+% \begin{macro}{md@putbox@first,md@frame@background@first,md@frame@leftline@first,md@frame@topline@first,md@frame@rightline@first}
+% The first frame of of a splitted contents of mdframed
+%    \begin{macrocode}
 \def\md@frame@background@first{%
-       \rlap{\mdf@background@default%
-              \rule[-\mdfboundingboxdepth]%
-                   {\mdfboundingboxtotalwidth}%
-                   {\mdfboundingboxtotalheight}%
-              }%
+  \rlap{\mdf@background@default%
+     \rule[-\mdfboundingboxdepth]%
+          {\mdfboundingboxtotalwidth}%
+          {\mdfboundingboxtotalheight}%
+  }%
 }%
 %
 \def\md@frame@leftline@first{%
-       \llap{\mdf@linecolor@default%
-             \rule[-\mdfboundingboxdepth]%
-                  {\mdf@middlelinewidth@length}%
-                  {\dimexpr\mdfboundingboxtotalheight+\ifbool{mdf@topline}{\mdf@middlelinewidth@length}{0pt}\relax}%
-       }%
+  \llap{\mdf@linecolor@default%
+     \rule[-\mdfboundingboxdepth]%
+          {\mdf@middlelinewidth@length}%
+          {\dimexpr\mdfboundingboxtotalheight%
+            +\ifbool{mdf@topline}{\mdf@middlelinewidth@length}{0pt}\relax}%
+  }%
 }%
 %
 \def\md@frame@topline@first{%
-      \rlap{\mdf@linecolor@default%
-             \rule[\dimexpr\mdfboundingboxheight-\mdfboundingboxdepth+\mdf@splitbottomskip@length+\mdf@innertopmargin@length\relax]%
-                  {\mdfboundingboxtotalwidth}%
-                  {\mdf@middlelinewidth@length}%
-      }%
+  \rlap{\mdf@linecolor@default%
+     \rule[\dimexpr\mdfboundingboxheight-\mdfboundingboxdepth+%
+            \mdf@splitbottomskip@length+\mdf@innertopmargin@length\relax]%
+          {\mdfboundingboxtotalwidth}%
+          {\mdf@middlelinewidth@length}%
+  }%
 }
 %
 \def\md@frame@rightline@first{%
-       \rlap{\mdf@linecolor@default\hspace*{\mdfboundingboxwidth}%
-            \hspace*{\mdf@innerrightmargin@length}%
-             \rule[-\mdfboundingboxdepth]%
-                  {\mdf@middlelinewidth@length}%
-                  {\dimexpr\mdfboundingboxtotalheight+\ifbool{mdf@topline}{\mdf@middlelinewidth@length}{0pt}\relax}%
-       }%
+  \rlap{\mdf@linecolor@default\hspace*{\mdfboundingboxwidth}%
+     \hspace*{\mdf@innerrightmargin@length}%
+     \rule[-\mdfboundingboxdepth]%
+          {\mdf@middlelinewidth@length}%
+          {\dimexpr\mdfboundingboxtotalheight%
+            +\ifbool{mdf@topline}{\mdf@middlelinewidth@length}{0pt}\relax}%
+  }%
 }%
 %
 \def\md@putbox@first{%%%% Ausgabe der Teilbox 1
   \ifvoid\@tempboxa
   \else%
-   \mdf@makebox@out[\linewidth]{%
+    \mdf@makebox@out[\linewidth]{%
       \mdf@makeboxalign@left%
       \setlength{\mdfboundingboxwidth}{\wd\tw@}%
-      \setlength{\mdfboundingboxtotalwidth}{\dimexpr\mdfboundingboxwidth+\mdf@innerleftmargin@length+\mdf@innerrightmargin@length\relax}%
+      \setlength{\mdfboundingboxtotalwidth}%
+                   {\dimexpr\mdfboundingboxwidth+\mdf@innerleftmargin@length%
+                            +\mdf@innerrightmargin@length\relax}%
       \setlength{\mdfboundingboxheight}{\dimexpr\ht\tw@+\dp\tw@\relax}%
-      \setlength{\mdfboundingboxdepth}{\dimexpr\dp\tw@+\mdf@splitbottomskip@length\relax}%
-      \setlength{\mdfboundingboxtotalheight}{\dimexpr\mdfboundingboxheight+\mdf@innertopmargin@length+\mdf@splitbottomskip@length\relax}%
-      \setlength{\@tempdima}{\dimexpr\mdfboundingboxtotalwidth%
-                             +\ifbool{mdf@leftline}{\mdf@middlelinewidth@length}{\z@}%
-                             +\ifbool{mdf@rightline}{\mdf@middlelinewidth@length}{\z@}\relax}%
+      \setlength{\mdfboundingboxdepth}%
+                   {\dimexpr\dp\tw@+\mdf@splitbottomskip@length\relax}%
+      \setlength{\mdfboundingboxtotalheight}%
+                   {\dimexpr\mdfboundingboxheight+\mdf@innertopmargin@length%
+                           +\mdf@splitbottomskip@length\relax}%
+      \setlength{\@tempdima}%
+                   {\dimexpr\mdfboundingboxtotalwidth%
+                           +\ifbool{mdf@leftline}{\mdf@middlelinewidth@length}{\z@}%
+                           +\ifbool{mdf@rightline}{\mdf@middlelinewidth@length}{\z@}%
+                    \relax}%
       \mdf@makebox@in[\@tempdima]{%
         \null%
         \ifbool{mdf@leftline}{%
@@ -2431,42 +2472,48 @@ Have fun!
   }%
  \fi%
 }
-%%==================================================%%
-%%=================last-box=========================%%
-%%==================================================%%
+%    \end{macrocode}
+% \end{macro}
+%
+%
+% \begin{macro}{md@putbox@second,md@frame@background@second,md@frame@leftline@second,md@frame@bottomline@second,md@frame@rightline@second}
+% The last frame of of a splitted contents of mdframed
+%    \begin{macrocode}
 \def\md@frame@background@second{%
-        \rlap{\mdf@background@default%
-               \rule[-\mdfboundingboxdepth]%
-                    {\mdfboundingboxtotalwidth}%
-                   {\mdfboundingboxtotalheight}%
-               }%
+  \rlap{\mdf@background@default%
+     \rule[-\mdfboundingboxdepth]%
+          {\mdfboundingboxtotalwidth}%
+          {\mdfboundingboxtotalheight}%
+  }%
 }%
 %
 \def\md@frame@leftline@second{%
-       \llap{\mdf@linecolor@default%
-             \rule[\dimexpr-\mdfboundingboxdepth%
-                   -\ifbool{mdf@bottomline}{\mdf@middlelinewidth@length}{0pt}\relax]%
-                  {\mdf@middlelinewidth@length}%
-                  {\dimexpr\mdfboundingboxtotalheight+\ifbool{mdf@bottomline}{\mdf@middlelinewidth@length}{0pt}\relax}%
-       }%     
+  \llap{\mdf@linecolor@default%
+     \rule[\dimexpr-\mdfboundingboxdepth%
+            -\ifbool{mdf@bottomline}{\mdf@middlelinewidth@length}{0pt}\relax]%
+          {\mdf@middlelinewidth@length}%
+          {\dimexpr\mdfboundingboxtotalheight%
+              +\ifbool{mdf@bottomline}{\mdf@middlelinewidth@length}{0pt}\relax}%
+  }%     
 }%
 %
 \def\md@frame@bottomline@second{%
-      \rlap{\mdf@linecolor@default%
-             \rule[\dimexpr-\mdfboundingboxdepth-\mdf@middlelinewidth@length\relax]%
-                  {\mdfboundingboxtotalwidth}%
-                  {\mdf@middlelinewidth@length}%
-      }%
+  \rlap{\mdf@linecolor@default%
+     \rule[\dimexpr-\mdfboundingboxdepth-\mdf@middlelinewidth@length\relax]%
+          {\mdfboundingboxtotalwidth}%
+          {\mdf@middlelinewidth@length}%
+  }%
 }%
 %
 \def\md@frame@rightline@second{%
-       \rlap{\mdf@linecolor@default\hspace*{\mdfboundingboxwidth}%
-            \hspace*{\mdf@innerrightmargin@length}%
-             \rule[\dimexpr-\mdfboundingboxdepth%
-                   -\ifbool{mdf@bottomline}{\mdf@middlelinewidth@length}{0pt}\relax]%
-                  {\mdf@middlelinewidth@length}%
-                  {\dimexpr\mdfboundingboxtotalheight+\ifbool{mdf@bottomline}{\mdf@middlelinewidth@length}{0pt}\relax}%
-       }%
+  \rlap{\mdf@linecolor@default\hspace*{\mdfboundingboxwidth}%
+     \hspace*{\mdf@innerrightmargin@length}%
+     \rule[\dimexpr-\mdfboundingboxdepth%
+            -\ifbool{mdf@bottomline}{\mdf@middlelinewidth@length}{0pt}\relax]%
+          {\mdf@middlelinewidth@length}%
+          {\dimexpr\mdfboundingboxtotalheight%
+              +\ifbool{mdf@bottomline}{\mdf@middlelinewidth@length}{0pt}\relax}%
+  }%
 }% 
 %
 \def\md@putbox@second{%
@@ -2475,13 +2522,18 @@ Have fun!
    \mdf@makebox@out{%
       \mdf@makeboxalign@left%
       \setlength{\mdfboundingboxwidth}{\wd\@tempboxa}%
-      \setlength{\mdfboundingboxtotalwidth}{\dimexpr\mdfboundingboxwidth+\mdf@innerleftmargin@length+\mdf@innerrightmargin@length\relax}%
+      \setlength{\mdfboundingboxtotalwidth}%
+                   {\dimexpr\mdfboundingboxwidth+\mdf@innerleftmargin@length%
+                        +\mdf@innerrightmargin@length\relax}%
       \setlength{\mdfboundingboxheight}{\dimexpr\ht\@tempboxa+\dp\@tempboxa\relax}%
-      \setlength{\mdfboundingboxdepth}{\dimexpr\dp\@tempboxa+\mdf@innerbottommargin@length\relax}%
-      \setlength{\mdfboundingboxtotalheight}{\dimexpr\mdfboundingboxheight+\mdf@innerbottommargin@length\relax}%
+      \setlength{\mdfboundingboxdepth}%
+                   {\dimexpr\dp\@tempboxa+\mdf@innerbottommargin@length\relax}%
+      \setlength{\mdfboundingboxtotalheight}%
+                   {\dimexpr\mdfboundingboxheight+\mdf@innerbottommargin@length\relax}%
       \setlength{\@tempdima}{\dimexpr\mdfboundingboxtotalwidth%
                              +\ifbool{mdf@leftline}{\mdf@middlelinewidth@length}{\z@}%
-                             +\ifbool{mdf@rightline}{\mdf@middlelinewidth@length}{\z@}\relax}%
+                             +\ifbool{mdf@rightline}{\mdf@middlelinewidth@length}{\z@}%
+                            \relax}%
       \mdf@makebox@in[\@tempdima]{%
       \null%
         \ifbool{mdf@leftline}{%
@@ -2499,32 +2551,36 @@ Have fun!
   }%
   \fi%
 }%
-%%==================================================%%
-%%================middle-box========================%%
-%%==================================================%%
+%    \end{macrocode}
+% \end{macro}
+%
+%
+% \begin{macro}{md@putbox@middle,md@frame@background@middle,md@frame@leftline@middle,md@frame@rightline@middle}
+% The last frame of of a splitted contents of mdframed
+%    \begin{macrocode}
 \def\md@frame@background@middle{%
-        \rlap{\mdf@background@default%
-              \rule[-\mdfboundingboxdepth]%
-                    {\mdfboundingboxtotalwidth}%
-                    {\mdfboundingboxtotalheight}%
-              }%
+  \rlap{\mdf@background@default%
+     \rule[-\mdfboundingboxdepth]%
+          {\mdfboundingboxtotalwidth}%
+          {\mdfboundingboxtotalheight}%
+  }%
 }%
 % 
 \def\md@frame@leftline@middle{%
-       \llap{\mdf@linecolor@default%
-             \rule[-\mdfboundingboxdepth]%
-                  {\mdf@middlelinewidth@length}%
-                  {\mdfboundingboxtotalheight}%
-       }%     
+  \llap{\mdf@linecolor@default%
+     \rule[-\mdfboundingboxdepth]%
+          {\mdf@middlelinewidth@length}%
+          {\mdfboundingboxtotalheight}%
+  }%     
 }%
 %
 \def\md@frame@rightline@middle{%
-       \rlap{\mdf@linecolor@default\hspace*{\mdfboundingboxwidth}%
-            \hspace*{\mdf@innerrightmargin@length}%
-             \rule[-\mdfboundingboxdepth]%
-                  {\mdf@middlelinewidth@length}%
-                  {\mdfboundingboxtotalheight}%
-       }%
+  \rlap{\mdf@linecolor@default\hspace*{\mdfboundingboxwidth}%
+     \hspace*{\mdf@innerrightmargin@length}%
+     \rule[-\mdfboundingboxdepth]%
+          {\mdf@middlelinewidth@length}%
+          {\mdfboundingboxtotalheight}%
+  }%
 }% 
 %
 \def\md@putbox@middle{%
@@ -2533,13 +2589,18 @@ Have fun!
    \mdf@makebox@out{%
       \mdf@makeboxalign@left%
       \setlength{\mdfboundingboxwidth}{\wd\tw@}%
-      \setlength{\mdfboundingboxtotalwidth}{\dimexpr\mdfboundingboxwidth+\mdf@innerleftmargin@length+\mdf@innerrightmargin@length\relax}%
+      \setlength{\mdfboundingboxtotalwidth}%
+                   {\dimexpr\mdfboundingboxwidth+\mdf@innerleftmargin@length%
+                           +\mdf@innerrightmargin@length\relax}%
       \setlength{\mdfboundingboxheight}{\dimexpr\ht\tw@+\dp\tw@\relax}%
-      \setlength{\mdfboundingboxdepth}{\dimexpr\dp\tw@+\mdf@splitbottomskip@length\relax}%
-      \setlength{\mdfboundingboxtotalheight}{\dimexpr\mdfboundingboxheight+\mdf@splitbottomskip@length\relax}%
+      \setlength{\mdfboundingboxdepth}%
+                   {\dimexpr\dp\tw@+\mdf@splitbottomskip@length\relax}%
+      \setlength{\mdfboundingboxtotalheight}%
+                   {\dimexpr\mdfboundingboxheight+\mdf@splitbottomskip@length\relax}%
       \setlength{\@tempdima}{\dimexpr\mdfboundingboxtotalwidth%
                              +\ifbool{mdf@leftline}{\mdf@middlelinewidth@length}{\z@}%
-                             +\ifbool{mdf@rightline}{\mdf@middlelinewidth@length}{\z@}\relax}%
+                             +\ifbool{mdf@rightline}{\mdf@middlelinewidth@length}{\z@}%
+                    \relax}%
       \mdf@makebox@in[\@tempdima]{%
         \null%
         \ifbool{mdf@leftline}{%
@@ -2555,7 +2616,10 @@ Have fun!
   }
   \fi%
 }
-
+%    \end{macrocode}
+% \end{macro}
+%
+%    \begin{macrocode}
  \endinput
 %    \end{macrocode}
 %
@@ -2571,24 +2635,32 @@ Have fun!
 %\fi
 % \subsection{The Explanation of md-frame-1.mdf}
 %    \begin{macrocode}
-%%==================================================%%
-%%= Ausgabe der Box nach Vorgabe der Ausgaberoutine=%%
-%%==================================================%%
-%% Styledatei fuer das Paket mdframed erstellt durch
-%% Marco Daniel und Elke Schubert
+%% Style file for mdframed for package option `framemethod=default`
 %% 
 %% This package may be distributed under the terms of the LaTeX Project
 %% Public License, as described in lppl.txt in the base LaTeX distribution.
 %% Either version 1.0 or, at your option, any later version.
 
-%%$Id: mdframed.dtx 250 2011-12-04 14:07:55Z marco $
-%%$Rev: 250 $
-%%$Author: marco $
-%%$Date: 2011-12-04 15:07:55 +0100 (So, 04. Dez 2011) $
-
+%%$Id: mdframed.dtx 261 2011-12-06 20:45:11Z marco $
+%
+%    \end{macrocode}
+%
+% \begin{macro}{mdframedIpackagename,md@frameIdate@svn}
+% local settings
+%    \begin{macrocode}
 \def\mdframedIpackagename{md-frame-1}
 \def\md@frameIdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
-\ProvidesFile{md-frame-1.mdf}[\md@frameIdate@svn$Id: mdframed.dtx 250 2011-12-04 14:07:55Z marco $ \mdversion: \mdframedIpackagename]
+\ProvidesFile{md-frame-1.mdf}%
+          [\md@frameIdate@svn$Id: mdframed.dtx 261 2011-12-06 20:45:11Z marco $ %
+           \mdversion: \mdframedIpackagename]
+%
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{md@test@ltrb,md@test@ltr,md@test@ltb,md@test@trb,md@test@lrb,md@test@lb,md@test@rb,^^A
+%                md@test@tr,md@test@lt,md@test@lr,md@test@tb,md@test@l,md@test@r,md@test@t,md@test@b,md@test@noline}
+% Short forms of checking the option which lines should be drawn.
+%    \begin{macrocode}
 %%%%    _____t_____
 %%%%   |           |
 %%%%   |           |
@@ -2599,90 +2671,129 @@ Have fun!
 %%%%   |___________|
 %%%%         b
 %%Zusammenhaenge abfragen:
-\newrobustcmd*\md@test@ltrb{\ifboolexpr{ (bool {mdf@topline}) and (bool {mdf@bottomline})
-                                      and (bool {mdf@leftline}) and (bool {mdf@rightline})}}
+\newrobustcmd*\md@test@ltrb{%
+    \ifboolexpr{ (bool {mdf@topline}) and (bool {mdf@bottomline})
+                  and (bool {mdf@leftline}) and (bool {mdf@rightline})}}
 %3-set
-\newrobustcmd*\md@test@ltr{\ifboolexpr{ (bool {mdf@topline}) and not (bool {mdf@bottomline})
-                                      and (bool {mdf@leftline}) and (bool {mdf@rightline})}}
-\newrobustcmd*\md@test@ltb{\ifboolexpr{ (bool {mdf@topline}) and (bool {mdf@bottomline})
-                                      and (bool {mdf@leftline}) and not (bool {mdf@rightline})}}
-\newrobustcmd*\md@test@trb{\ifboolexpr{ (bool {mdf@topline}) and (bool {mdf@bottomline})
-                                      and not (bool {mdf@leftline}) and (bool {mdf@rightline})}}
-\newrobustcmd*\md@test@lrb{\ifboolexpr{ not (bool {mdf@topline}) and (bool {mdf@bottomline})
-                                      and (bool {mdf@leftline}) and (bool {mdf@rightline})}}
+\newrobustcmd*\md@test@ltr{%
+    \ifboolexpr{ (bool {mdf@topline}) and not (bool {mdf@bottomline})
+                  and (bool {mdf@leftline}) and (bool {mdf@rightline})}}
+\newrobustcmd*\md@test@ltb{%
+    \ifboolexpr{ (bool {mdf@topline}) and (bool {mdf@bottomline})
+                  and (bool {mdf@leftline}) and not (bool {mdf@rightline})}}
+\newrobustcmd*\md@test@trb{%
+    \ifboolexpr{ (bool {mdf@topline}) and (bool {mdf@bottomline})
+                  and not (bool {mdf@leftline}) and (bool {mdf@rightline})}}
+\newrobustcmd*\md@test@lrb{%
+    \ifboolexpr{ not (bool {mdf@topline}) and (bool {mdf@bottomline})
+                  and (bool {mdf@leftline}) and (bool {mdf@rightline})}}
 %2-set
-\newrobustcmd*\md@test@lb{\ifboolexpr{ not (bool {mdf@topline}) and (bool {mdf@bottomline})
-                                      and (bool {mdf@leftline}) and not (bool {mdf@rightline})}}
-\newrobustcmd*\md@test@rb{\ifboolexpr{ not (bool {mdf@topline}) and (bool {mdf@bottomline})
-                                      and not (bool {mdf@leftline}) and (bool {mdf@rightline})}}
-\newrobustcmd*\md@test@tr{\ifboolexpr{ (bool {mdf@topline}) and not (bool {mdf@bottomline})
-                                      and not (bool {mdf@leftline}) and (bool {mdf@rightline})}}
-\newrobustcmd*\md@test@lt{\ifboolexpr{ (bool {mdf@topline}) and not (bool {mdf@bottomline})
-                                      and (bool {mdf@leftline}) and not (bool {mdf@rightline})}}
-\newrobustcmd*\md@test@lr{\ifboolexpr{not (bool {mdf@topline}) and not (bool {mdf@bottomline})
-                                      and (bool {mdf@leftline}) and (bool {mdf@rightline})}}
-\newrobustcmd*\md@test@tb{\ifboolexpr{ (bool {mdf@topline}) and (bool {mdf@bottomline})
-                                      and not (bool {mdf@leftline}) and not (bool {mdf@rightline})}}
+\newrobustcmd*\md@test@lb{%
+    \ifboolexpr{ not (bool {mdf@topline}) and (bool {mdf@bottomline})
+                  and (bool {mdf@leftline}) and not (bool {mdf@rightline})}}
+\newrobustcmd*\md@test@rb{%
+    \ifboolexpr{ not (bool {mdf@topline}) and (bool {mdf@bottomline})
+                  and not (bool {mdf@leftline}) and (bool {mdf@rightline})}}
+\newrobustcmd*\md@test@tr{%
+    \ifboolexpr{ (bool {mdf@topline}) and not (bool {mdf@bottomline})
+                  and not (bool {mdf@leftline}) and (bool {mdf@rightline})}}
+\newrobustcmd*\md@test@lt{%
+    \ifboolexpr{ (bool {mdf@topline}) and not (bool {mdf@bottomline})
+                  and (bool {mdf@leftline}) and not (bool {mdf@rightline})}}
+\newrobustcmd*\md@test@lr{%
+    \ifboolexpr{not (bool {mdf@topline}) and not (bool {mdf@bottomline})
+                  and (bool {mdf@leftline}) and (bool {mdf@rightline})}}
+\newrobustcmd*\md@test@tb{%
+    \ifboolexpr{ (bool {mdf@topline}) and (bool {mdf@bottomline})
+                  and not (bool {mdf@leftline}) and not (bool {mdf@rightline})}}
 %Einzellinien
-\newrobustcmd*\md@test@l{\ifboolexpr{ not (bool {mdf@topline}) and not (bool {mdf@bottomline})
-                                      and (bool {mdf@leftline}) and not (bool {mdf@rightline})}}
-\newrobustcmd*\md@test@r{\ifboolexpr{ not (bool {mdf@topline}) and not (bool {mdf@bottomline})
-                                      and not (bool {mdf@leftline}) and (bool {mdf@rightline})}}
-\newrobustcmd*\md@test@t{\ifboolexpr{ (bool {mdf@topline}) and not (bool {mdf@bottomline})
-                                      and not (bool {mdf@leftline}) and not (bool {mdf@rightline})}}
-\newrobustcmd*\md@test@b{\ifboolexpr{ not (bool {mdf@topline}) and (bool {mdf@bottomline})
-                                      and not (bool {mdf@leftline}) and not (bool {mdf@rightline})}}
+\newrobustcmd*\md@test@l{%
+    \ifboolexpr{ not (bool {mdf@topline}) and not (bool {mdf@bottomline})
+                  and (bool {mdf@leftline}) and not (bool {mdf@rightline})}}
+\newrobustcmd*\md@test@r{%
+    \ifboolexpr{ not (bool {mdf@topline}) and not (bool {mdf@bottomline})
+                  and not (bool {mdf@leftline}) and (bool {mdf@rightline})}}
+\newrobustcmd*\md@test@t{%
+    \ifboolexpr{ (bool {mdf@topline}) and not (bool {mdf@bottomline})
+                  and not (bool {mdf@leftline}) and not (bool {mdf@rightline})}}
+\newrobustcmd*\md@test@b{%
+    \ifboolexpr{ not (bool {mdf@topline}) and (bool {mdf@bottomline})
+                  and not (bool {mdf@leftline}) and not (bool {mdf@rightline})}}
 %keine Linien
-\newrobustcmd*\md@test@noline{\ifboolexpr{ not (bool {mdf@topline}) and not (bool {mdf@bottomline})
-                                      and not (bool {mdf@leftline}) and not (bool {mdf@rightline})}}
+\newrobustcmd*\md@test@noline{%
+    \ifboolexpr{ not (bool {mdf@topline}) and not (bool {mdf@bottomline})
+                  and not (bool {mdf@leftline}) and not (bool {mdf@rightline})}}
 %
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{md@tikz@settings}
+% Define settings for tikz
+%    \begin{macrocode}
 %Allgemeine Einstellungen fuer tikz
 \def\md@tikz@settings{%
 %
-  \tikzset{mdfbox/.style={anchor=south west,inner sep=0pt,outer sep=0pt,\mdf@fontcolor,}}% anchor der Ausgabebox ist unten links
+  \tikzset{mdfbox/.style={anchor=south west,%
+                          inner sep=0pt,%
+                          outer sep=0pt,%
+                          \mdf@fontcolor,}}% anchor der Ausgabebox ist unten links
   \tikzset{mdfcorners/.style={rounded corners=\mdf@roundcorner@length}}% 
-  \tikzset{mdfbackground/.style={fill=\mdf@backgroundcolor,draw=\mdf@backgroundcolor}}% 
+  \tikzset{mdfbackground/.style={fill=\mdf@backgroundcolor,%
+                                 draw=\mdf@backgroundcolor}}% 
 %
   \tikzset{mdfouterline/.style={}}%
-  \ifdimgreater{\mdf@outerlinewidth@length}{\z@}%nur wenn outerlinewidth>0 wird aussere Linie gezeichnet
+% nur wenn outerlinewidth>0 wird aussere Linie gezeichnet
+  \ifdimgreater{\mdf@outerlinewidth@length}{\z@}
     {\tikzset{mdfouterline/.append style={%
       draw=\mdf@outerlinecolor,%
       line width=2\mdf@outerlinewidth@length+\mdf@middlelinewidth@length}}}{}%
 %
   \tikzset{mdfinnerline/.style={}}%
-  \ifdimgreater{\mdf@innerlinewidth@length}{\z@}% nur wenn innerlinewidth>0 wird innere Linie gezeichnet
+% nur wenn innerlinewidth>0 wird innere Linie gezeichnet
+  \ifdimgreater{\mdf@innerlinewidth@length}{\z@}
     {\tikzset{mdfinnerline/.append style={%
       draw=\mdf@innerlinecolor,%
       line width=2\mdf@innerlinewidth@length+\mdf@middlelinewidth@length}}}{}%
 %
   \mdf@tikzset@local
   \tikzset{mdfmiddleline/.style={}}%
-  \ifdimgreater{\mdf@middlelinewidth@length}{\z@}% nur wenn middlelinewidth>0 wird mittlere Linie gezeichnet
+% nur wenn middlelinewidth>0 wird mittlere Linie gezeichnet
+  \ifdimgreater{\mdf@middlelinewidth@length}{\z@}
     {\tikzset{mdfmiddleline/.append style={%
-      preaction={draw=\mdf@middlelinecolor,line width=\mdf@middlelinewidth@length},%
+      preaction={draw=\mdf@middlelinecolor,%
+                 line width=\mdf@middlelinewidth@length},%
       line width=\mdf@middlelinewidth@length,%
       tikzsetting}}%
     }{}%
 }%
+%    \end{macrocode}
+% \end{macro}
 %
-
-
+% \begin{macro}{md@tikzbox@tfl,md@tikzbox@otl}
 % Befehle fuer Ausgabe von Rahmen und Hintergrund
+%    \begin{macrocode}
 \newrobustcmd*\md@tikzbox@tfl[1]{%three or four borders
-                                \clip(0,0)rectangle(\mdfboundingboxwidth,\mdfboundingboxheight);%
-                                \begin{scope}[mdfcorners]%
-                                  \clip[preaction=mdfouterline][postaction=mdfbackground][postaction=mdfinnerline]#1;%
-                                \end{scope}%
-                                \path[mdfmiddleline,mdfcorners]#1;}%
+    \clip(0,0)rectangle(\mdfboundingboxwidth,\mdfboundingboxheight);%
+    \begin{scope}[mdfcorners]%
+       \clip[preaction=mdfouterline]%
+            [postaction=mdfbackground]%
+            [postaction=mdfinnerline]#1;%
+    \end{scope}%
+    \path[mdfmiddleline,mdfcorners]#1;}%
 \newrobustcmd*\md@tikzbox@otl[2]{%one or two borders
-                                \clip(0,0)rectangle(\mdfboundingboxwidth,\mdfboundingboxheight);%
-                                \begin{scope}
-                                  \path[mdfouterline,mdfcorners]#1;%
-                                  \clip[postaction=mdfbackground]#2;%
-                                  \path[mdfinnerline,mdfcorners]#1;%
-                                \end{scope}
-                                \path[mdfmiddleline,mdfcorners]#1;}%
+    \clip(0,0)rectangle(\mdfboundingboxwidth,\mdfboundingboxheight);%
+    \begin{scope}
+       \path[mdfouterline,mdfcorners]#1;%
+       \clip[postaction=mdfbackground]#2;%
+       \path[mdfinnerline,mdfcorners]#1;%
+    \end{scope}
+    \path[mdfmiddleline,mdfcorners]#1;}%
+%    \end{macrocode}
+% \end{macro}
 %
+% \begin{macro}{md@putbox@single}
+%  Output of the non breakable contents.
+%    \begin{macrocode}
 % Info zu den verwendeten Punkten:
 % O ist die untere linke Ecke der Mitte der middleline
 % P ist die obere rechte Ecke der Mitte der middleline
@@ -2728,16 +2839,32 @@ Have fun!
       \pgfmathsetlengthmacro\md@Oy{+0pt}%
       \pgfmathsetlengthmacro\md@Px{+\mdfboundingboxwidth}%
       \pgfmathsetlengthmacro\md@Py{+\mdfboundingboxheight}%
-      \ifbool{mdf@leftline}{%
-        \pgfmathsetlengthmacro\md@Ax{\md@Ax+\mdf@outerlinewidth@length+\mdf@middlelinewidth@length+\mdf@innerlinewidth@length}%
-        \pgfmathsetlengthmacro\md@Ox{\md@Ox+\mdf@outerlinewidth@length+0.5\mdf@middlelinewidth@length}}{}%
-      \ifbool{mdf@rightline}{%
-         \pgfmathsetlengthmacro\md@Px{\md@Px-\mdf@outerlinewidth@length-0.5\mdf@middlelinewidth@length}}{}%
-      \ifbool{mdf@bottomline}{%
-         \pgfmathsetlengthmacro\md@Ay{\md@Ay+\mdf@outerlinewidth@length+\mdf@middlelinewidth@length+\mdf@innerlinewidth@length}%
-         \pgfmathsetlengthmacro\md@Oy{\md@Oy+\mdf@outerlinewidth@length+0.5\mdf@middlelinewidth@length}}{}%
-      \ifbool{mdf@topline}{%
-         \pgfmathsetlengthmacro\md@Py{\md@Py-\mdf@outerlinewidth@length-0.5\mdf@middlelinewidth@length}}{}%
+      \ifbool{mdf@leftline}%
+        {%
+         \pgfmathsetlengthmacro\md@Ax%
+              {\md@Ax+\mdf@outerlinewidth@length+%
+               \mdf@middlelinewidth@length+\mdf@innerlinewidth@length}%
+         \pgfmathsetlengthmacro\md@Ox%
+              {\md@Ox+\mdf@outerlinewidth@length+0.5\mdf@middlelinewidth@length}%
+        }{}%
+      \ifbool{mdf@rightline}%
+        {%
+         \pgfmathsetlengthmacro\md@Px%
+              {\md@Px-\mdf@outerlinewidth@length-0.5\mdf@middlelinewidth@length}%
+        }{}%
+      \ifbool{mdf@bottomline}%
+        {%
+         \pgfmathsetlengthmacro\md@Ay%
+              {\md@Ay+\mdf@outerlinewidth@length+\mdf@middlelinewidth@length%
+                +\mdf@innerlinewidth@length}%
+         \pgfmathsetlengthmacro\md@Oy%
+              {\md@Oy+\mdf@outerlinewidth@length+0.5\mdf@middlelinewidth@length}%
+        }{}%
+      \ifbool{mdf@topline}%
+        {%
+         \pgfmathsetlengthmacro\md@Py%
+              {\md@Py-\mdf@outerlinewidth@length-0.5\mdf@middlelinewidth@length}%
+        }{}%
 %
       \coordinate(O)at(\md@Ox,\md@Oy);%
       \coordinate(P)at(\md@Px,\md@Py);%
@@ -2749,17 +2876,37 @@ Have fun!
       \md@test@ltr{\md@tikzbox@tfl{(O)--(O|-P)--(P)--(P|-O)}}{}%
       \md@test@lrb{\md@tikzbox@tfl{(P-|O)--(O)--(O-|P)--(P)}}{}%
 %
-      \md@test@lb{\md@tikzbox@otl{(P|-O)--(O)--(O|-P)}{(P)--(P|-O)[mdfcorners]--(O)--(O|-P)}}{}%
-      \md@test@rb{\md@tikzbox@otl{(P)--(P|-O)--(O)}{(O|-P)--(P)[mdfcorners]--(P|-O)--(O)}}{}% 
-      \md@test@tr{\md@tikzbox@otl{(O-|P)--(P)--(P-|O)}{(O)--(O|-P)[mdfcorners]--(P)--(P|-O)}}{}%
-      \md@test@lt{\md@tikzbox@otl{(O)--(O|-P)--(P)}{(P|-O)--(O)[mdfcorners]--(O|-P)--(P)}}{}%
-      \md@test@lr{\md@tikzbox@otl{(O)--(O|-P)(P)--(P|-O)}{(O)rectangle(P)}}{}%
-      \md@test@tb{\md@tikzbox@otl{(O)--(O-|P)(O|-P)--(P)}{(O)rectangle(P)}}{}%
+      \md@test@lb{\md@tikzbox@otl{(P|-O)--(O)--(O|-P)}%
+                                 {(P)--(P|-O)[mdfcorners]--(O)--(O|-P)}%
+                 }{}%
+      \md@test@rb{\md@tikzbox@otl{(P)--(P|-O)--(O)}%
+                                 {(O|-P)--(P)[mdfcorners]--(P|-O)--(O)}%
+                 }{}% 
+      \md@test@tr{\md@tikzbox@otl{(O-|P)--(P)--(P-|O)}%
+                                 {(O)--(O|-P)[mdfcorners]--(P)--(P|-O)}%
+                 }{}%
+      \md@test@lt{\md@tikzbox@otl{(O)--(O|-P)--(P)}%
+                                 {(P|-O)--(O)[mdfcorners]--(O|-P)--(P)}%
+                 }{}%
+      \md@test@lr{\md@tikzbox@otl{(O)--(O|-P)(P)--(P|-O)}%
+                                 {(O)rectangle(P)}%
+                 }{}%
+      \md@test@tb{\md@tikzbox@otl{(O)--(O-|P)(O|-P)--(P)}%
+                                 {(O)rectangle(P)}%
+                 }{}%
 %
-      \md@test@l{\md@tikzbox@otl{(O)--(O|-P)}{(O)rectangle(P)}}{}%
-      \md@test@r{\md@tikzbox@otl{(O-|P)--(P)}{(O)rectangle(P)}}{}%
-      \md@test@t{\md@tikzbox@otl{(O|-P)--(P)}{(O)rectangle(P)}}{}%
-      \md@test@b{\md@tikzbox@otl{(O)--(O-|P)}{(O)rectangle(P)}}{}%
+      \md@test@l{\md@tikzbox@otl{(O)--(O|-P)}%
+                                 {(O)rectangle(P)}%
+                 }{}%
+      \md@test@r{\md@tikzbox@otl{(O-|P)--(P)}%
+                                 {(O)rectangle(P)}%
+                 }{}%
+      \md@test@t{\md@tikzbox@otl{(O|-P)--(P)}%
+                                 {(O)rectangle(P)}%
+                 }{}%
+      \md@test@b{\md@tikzbox@otl{(O)--(O-|P)}%
+                                 {(O)rectangle(P)}%
+                 }{}%
 %
       \md@test@noline{\path[mdfbackground,mdfcorners](O)rectangle(P);}{}%
 %
@@ -2773,7 +2920,12 @@ Have fun!
   }%
  \fi
 }%
-
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{md@putbox@first}
+%  Output of the first breakable contents.
+%    \begin{macrocode}
 \def\md@putbox@first{%
   \ifvoid\@tempboxa
   \else%
@@ -2813,27 +2965,47 @@ Have fun!
       \pgfmathsetlengthmacro\md@Oy{+0pt}%
       \pgfmathsetlengthmacro\md@Px{+\mdfboundingboxwidth}%
       \pgfmathsetlengthmacro\md@Py{+\mdfboundingboxheight}%
-      \ifbool{mdf@leftline}{%
-        \pgfmathsetlengthmacro\md@Ax{\md@Ax+\mdf@outerlinewidth@length+\mdf@middlelinewidth@length+\mdf@innerlinewidth@length}%
-        \pgfmathsetlengthmacro\md@Ox{\md@Ox+\mdf@outerlinewidth@length+0.5\mdf@middlelinewidth@length}}{}%
+      \ifbool{mdf@leftline}
+        {%
+         \pgfmathsetlengthmacro\md@Ax%
+              {\md@Ax+\mdf@outerlinewidth@length+%
+               \mdf@middlelinewidth@length+\mdf@innerlinewidth@length}%
+         \pgfmathsetlengthmacro\md@Ox%
+              {\md@Ox+\mdf@outerlinewidth@length+0.5\mdf@middlelinewidth@length}%
+        }{}%
       \ifbool{mdf@rightline}{%
-         \pgfmathsetlengthmacro\md@Px{\md@Px-\mdf@outerlinewidth@length-0.5\mdf@middlelinewidth@length}}{}%
+          \pgfmathsetlengthmacro\md@Px%
+              {\md@Px-\mdf@outerlinewidth@length-0.5\mdf@middlelinewidth@length}%
+        }{}%
       \ifbool{mdf@topline}{%
-         \pgfmathsetlengthmacro\md@Py{\md@Py-\mdf@outerlinewidth@length-0.5\mdf@middlelinewidth@length}}{}%
+          \pgfmathsetlengthmacro\md@Py%
+              {\md@Py-\mdf@outerlinewidth@length-0.5\mdf@middlelinewidth@length}%
+        }{}%
 %
       \coordinate(O)at(\md@Ox,\md@Oy);%
       \coordinate(P)at(\md@Px,\md@Py);%
 %
-      \ifboolexpr{test {\md@test@ltrb} or test {\md@test@ltr}}{\md@tikzbox@tfl{(O)--(O|-P)--(P)--(P|-O)}}{}%
+      \ifboolexpr{test {\md@test@ltrb} or test {\md@test@ltr}}%
+        {\md@tikzbox@tfl{(O)--(O|-P)--(P)--(P|-O)}}%
+        {}%
       \ifboolexpr{test {\md@test@ltb} or test {\md@test@lt}}%
-               {\md@tikzbox@otl{(O)--(O|-P)--(P)}{(P|-O)--(O)[mdfcorners]--(O|-P)--(P)}}{}%
+        {\md@tikzbox@otl{(O)--(O|-P)--(P)}{(P|-O)--(O)[mdfcorners]--(O|-P)--(P)}}%
+        {}%
       \ifboolexpr{test {\md@test@trb} or test {\md@test@tr}}%
-               {\md@tikzbox@otl{(O-|P)--(P)--(P-|O)}{(O)--(O|-P)[mdfcorners]--(P)--(P|-O)}}{}%
+        {\md@tikzbox@otl{(O-|P)--(P)--(P-|O)}{(O)--(O|-P)[mdfcorners]--(P)--(P|-O)}}%
+        {}%
       \ifboolexpr{test {\md@test@lrb} or test {\md@test@lr}}%
-               {\md@tikzbox@otl{(O)--(O|-P)(P)--(P|-O)}{(O)rectangle(P)}}{}%
-      \ifboolexpr{test {\md@test@tb} or test {\md@test@t}}{\md@tikzbox@otl{(O|-P)--(P)}{(O)rectangle(P)}}{}%
-      \ifboolexpr{test {\md@test@lb} or test {\md@test@l}}{\md@tikzbox@otl{(O)--(O|-P)}{(O)rectangle(P)}}{}%
-      \ifboolexpr{test {\md@test@rb} or test {\md@test@r}}{\md@tikzbox@otl{(O-|P)--(P)}{(O)rectangle(P)}}{}%
+        {\md@tikzbox@otl{(O)--(O|-P)(P)--(P|-O)}{(O)rectangle(P)}}%
+        {}%
+      \ifboolexpr{test {\md@test@tb} or test {\md@test@t}}%
+        {\md@tikzbox@otl{(O|-P)--(P)}{(O)rectangle(P)}}%
+        {}%
+      \ifboolexpr{test {\md@test@lb} or test {\md@test@l}}%
+        {\md@tikzbox@otl{(O)--(O|-P)}{(O)rectangle(P)}}%
+        {}%
+      \ifboolexpr{test {\md@test@rb} or test {\md@test@r}}%
+        {\md@tikzbox@otl{(O-|P)--(P)}{(O)rectangle(P)}}%
+        {}%
       \md@test@b{\path[mdfbackground](O)rectangle(P)}{}%
 %
       \md@test@noline{\path[mdfbackground,mdfcorners](O)--(O|-P)--(P)--(P|-O);}{}%
@@ -2848,9 +3020,12 @@ Have fun!
   }%
  \fi
 }%
-
-
-
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{md@putbox@middle}
+%  Output of the middle breakable contents.
+%    \begin{macrocode}
 \def\md@putbox@middle{%
   \ifvoid\@tempboxa
   \else%
@@ -2883,11 +3058,19 @@ Have fun!
       \pgfmathsetlengthmacro\md@Oy{+0pt}%
       \pgfmathsetlengthmacro\md@Px{+\mdfboundingboxwidth}%
       \pgfmathsetlengthmacro\md@Py{+\mdfboundingboxheight}%
-      \ifbool{mdf@leftline}{%
-        \pgfmathsetlengthmacro\md@Ax{\md@Ax+\mdf@outerlinewidth@length+\mdf@middlelinewidth@length+\mdf@innerlinewidth@length}%
-        \pgfmathsetlengthmacro\md@Ox{\md@Ox+\mdf@outerlinewidth@length+0.5\mdf@middlelinewidth@length}}{}%
-      \ifbool{mdf@rightline}{%
-         \pgfmathsetlengthmacro\md@Px{\md@Px-\mdf@outerlinewidth@length-0.5\mdf@middlelinewidth@length}}{}%
+      \ifbool{mdf@leftline}%
+        {%
+         \pgfmathsetlengthmacro\md@Ax%
+              {\md@Ax+\mdf@outerlinewidth@length+%
+               \mdf@middlelinewidth@length+\mdf@innerlinewidth@length}%
+         \pgfmathsetlengthmacro\md@Ox%
+              {\md@Ox+\mdf@outerlinewidth@length+0.5\mdf@middlelinewidth@length}%
+         }{}%
+      \ifbool{mdf@rightline}%
+         {%
+          \pgfmathsetlengthmacro\md@Px%
+              {\md@Px-\mdf@outerlinewidth@length-0.5\mdf@middlelinewidth@length}%
+         }{}%
 %
       \coordinate(O)at(\md@Ox,\md@Oy);%
       \coordinate(P)at(\md@Px,\md@Py);%
@@ -2910,8 +3093,12 @@ Have fun!
   }%
  \fi
 }%
-
-
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{md@putbox@second}
+%  Output of the last breakable contents.
+%    \begin{macrocode}
 \def\md@putbox@second{%
   \ifvoid\@tempboxa
   \else%
@@ -2948,28 +3135,52 @@ Have fun!
       \pgfmathsetlengthmacro\md@Oy{+0pt}%
       \pgfmathsetlengthmacro\md@Px{+\mdfboundingboxwidth}%
       \pgfmathsetlengthmacro\md@Py{+\mdfboundingboxheight}%
-      \ifbool{mdf@leftline}{%
-        \pgfmathsetlengthmacro\md@Ax{\md@Ax+\mdf@outerlinewidth@length+\mdf@middlelinewidth@length+\mdf@innerlinewidth@length}%
-        \pgfmathsetlengthmacro\md@Ox{\md@Ox+\mdf@outerlinewidth@length+0.5\mdf@middlelinewidth@length}}{}%
-      \ifbool{mdf@rightline}{%
-         \pgfmathsetlengthmacro\md@Px{\md@Px-\mdf@outerlinewidth@length-0.5\mdf@middlelinewidth@length}}{}%
-      \ifbool{mdf@bottomline}{%
-         \pgfmathsetlengthmacro\md@Ay{\md@Ay+\mdf@outerlinewidth@length+\mdf@middlelinewidth@length+\mdf@innerlinewidth@length}%
-         \pgfmathsetlengthmacro\md@Oy{\md@Oy+\mdf@outerlinewidth@length+0.5\mdf@middlelinewidth@length}}{}%
+      \ifbool{mdf@leftline}%
+        {%
+         \pgfmathsetlengthmacro\md@Ax%
+              {\md@Ax+\mdf@outerlinewidth@length+% 
+               \mdf@middlelinewidth@length+\mdf@innerlinewidth@length}%
+          \pgfmathsetlengthmacro\md@Ox%
+              {\md@Ox+\mdf@outerlinewidth@length+0.5\mdf@middlelinewidth@length}%
+         }{}%
+      \ifbool{mdf@rightline}%
+         {%
+          \pgfmathsetlengthmacro\md@Px%
+              {\md@Px-\mdf@outerlinewidth@length-0.5\mdf@middlelinewidth@length}%
+         }{}%
+      \ifbool{mdf@bottomline}%
+         {%
+          \pgfmathsetlengthmacro\md@Ay%
+              {\md@Ay+\mdf@outerlinewidth@length+%
+               \mdf@middlelinewidth@length+\mdf@innerlinewidth@length}%
+          \pgfmathsetlengthmacro\md@Oy%
+              {\md@Oy+\mdf@outerlinewidth@length+0.5\mdf@middlelinewidth@length}%
+         }{}%
 %
       \coordinate(O)at(\md@Ox,\md@Oy);%
       \coordinate(P)at(\md@Px,\md@Py);%
 %
-      \ifboolexpr{test {\md@test@ltrb} or test {\md@test@lrb}}{\md@tikzbox@tfl{(P-|O)--(O)--(O-|P)--(P)}}{}%
+      \ifboolexpr{test {\md@test@ltrb} or test {\md@test@lrb}}%
+        {\md@tikzbox@tfl{(P-|O)--(O)--(O-|P)--(P)}}%
+        {}%
       \ifboolexpr{test {\md@test@ltb} or test {\md@test@lb}}%
-               {\md@tikzbox@otl{(P-|O)--(O)--(O-|P)}{(P)--(P|-O)[mdfcorners]--(O)--(O|-P)}}{}%
+        {\md@tikzbox@otl{(P-|O)--(O)--(O-|P)}{(P)--(P|-O)[mdfcorners]--(O)--(O|-P)}}%
+        {}%
       \ifboolexpr{test {\md@test@trb} or test {\md@test@rb}}%
-               {\md@tikzbox@otl{(P)--(P|-O)--(O)}{(O|-P)--(P)[mdfcorners]--(P|-O)--(O)}}{}%
+        {\md@tikzbox@otl{(P)--(P|-O)--(O)}{(O|-P)--(P)[mdfcorners]--(P|-O)--(O)}}%
+        {}%
       \ifboolexpr{test {\md@test@ltr} or test {\md@test@lr}}%
-               {\md@tikzbox@otl{(O)--(O|-P)(P)--(P|-O)}{(O)rectangle(P)}}{}%
-      \ifboolexpr{test {\md@test@tb} or test {\md@test@b}}{\md@tikzbox@otl{(O)--(O-|P)}{(O)rectangle(P)}}{}%
-      \ifboolexpr{test {\md@test@lt} or test {\md@test@l}}{\md@tikzbox@otl{(O)--(O|-P)}{(O)rectangle(P)}}{}%
-      \ifboolexpr{test {\md@test@tr} or test {\md@test@r}}{\md@tikzbox@otl{(O-|P)--(P)}{(O)rectangle(P)}}{}%
+        {\md@tikzbox@otl{(O)--(O|-P)(P)--(P|-O)}{(O)rectangle(P)}}%
+        {}%
+      \ifboolexpr{test {\md@test@tb} or test {\md@test@b}}%
+        {\md@tikzbox@otl{(O)--(O-|P)}{(O)rectangle(P)}}%
+        {}%
+      \ifboolexpr{test {\md@test@lt} or test {\md@test@l}}%
+        {\md@tikzbox@otl{(O)--(O|-P)}{(O)rectangle(P)}}%
+        {}%
+      \ifboolexpr{test {\md@test@tr} or test {\md@test@r}}%
+        {\md@tikzbox@otl{(O-|P)--(P)}{(O)rectangle(P)}}%
+        {}%
       \md@test@t{\path[mdfbackground](O)rectangle(P)}{}%
 %
       \md@test@noline{\path[mdfbackground,mdfcorners](O|-P)--(O)--(O-|P)--(P)}{}%
@@ -2983,6 +3194,10 @@ Have fun!
   }%
  \fi
 }%
+%    \end{macrocode}
+% \end{macro}
+%
+%    \begin{macrocode}
  \endinput
 %    \end{macrocode}
 % \iffalse
@@ -2997,427 +3212,560 @@ Have fun!
 %\fi
 % \subsection{The Explanation of md-frame-2.mdf / md-frame-3.mdf}
 %    \begin{macrocode}
-%%==================================================%%
-%%= Ausgabe der Box nach Vorgabe der Ausgaberoutine=%%
-%%==================================================%%
-%% Styledatei fuer das Paket mdframed erstellt durch
-%% Marco Daniel 
-
+%% Style file for mdframed for package option `framemethod=default`
+%% 
 %% This package may be distributed under the terms of the LaTeX Project
 %% Public License, as described in lppl.txt in the base LaTeX distribution.
 %% Either version 1.0 or, at your option, any later version.
 
-%%$Id: mdframed.dtx 250 2011-12-04 14:07:55Z marco $
-%%$Rev: 250 $
-%%$Author: marco $
-%%$Date: 2011-12-04 15:07:55 +0100 (So, 04. Dez 2011) $
-
-%%Allgemeine Einstellungen fuer pstricks
-%%Hier nur einfacher Rahmen mit Einstellungen
+%%$Id: mdframed.dtx 261 2011-12-06 20:45:11Z marco $
+%
+%    \end{macrocode}
+%
+% \begin{macro}{mdframedIIpackagename,md@frameIIdate@svn}
+% local settings
+%    \begin{macrocode}
 \def\mdframedIIpackagename{md-frame-2}
 \def\md@frameIIdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
-\ProvidesFile{md-frame-2.mdf}[\md@frameIIdate@svn$Id: mdframed.dtx 250 2011-12-04 14:07:55Z marco $ \mdversion: \mdframedIIpackagename]
+\ProvidesFile{md-frame-2.mdf}%
+         [\md@frameIIdate@svn$Id: mdframed.dtx 261 2011-12-06 20:45:11Z marco $ %
+          \mdversion: \mdframedIIpackagename]
+%    \end{macrocode}
+% \end{macro}
 %
-\def\md@ptlength@to@pscode#1{\pst@number{#1} \pst@number\psxunit div}
+% \begin{macro}{md@ptlength@to@pscode,ptTps}
+% Command to calculate a latex length to postscript
+%    \begin{macrocode}
+\def\md@ptlength@to@pscode#1{\pst@number{#1} \pst@number\psxunit div }
 \let\ptTps\md@ptlength@to@pscode\relax
-%zusammenhaenge abfragen:
-\newrobustcmd*\md@test@ltrb{\ifboolexpr{ (bool {mdf@topline}) and (bool {mdf@bottomline})
-                                      and (bool {mdf@leftline}) and (bool {mdf@rightline})}}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{md@test@ltrb,md@test@ltr,md@test@ltb,md@test@trb,md@test@lrb,md@test@lb,md@test@rb,^^A
+%                md@test@tr,md@test@lt,md@test@lr,md@test@tb,md@test@l,md@test@r,md@test@t,md@test@b,md@test@single}
+% Short forms of checking the option which lines should be drawn.
+%    \begin{macrocode}
+%%%%    _____t_____
+%%%%   |           |
+%%%%   |           |
+%%%%   |           |
+%%%%  l|           |r
+%%%%   |           |
+%%%%   |           |
+%%%%   |___________|
+%%%%         b
+%%Zusammenhaenge abfragen:
+\newrobustcmd*\md@test@ltrb{%
+    \ifboolexpr{ (bool {mdf@topline}) and (bool {mdf@bottomline})
+                  and (bool {mdf@leftline}) and (bool {mdf@rightline})}}
 %3-set
-\newrobustcmd*\md@test@ltr{\ifboolexpr{ (bool {mdf@topline}) and not (bool {mdf@bottomline})
-                                      and (bool {mdf@leftline}) and (bool {mdf@rightline})}}
-\newrobustcmd*\md@test@ltb{\ifboolexpr{ (bool {mdf@topline}) and (bool {mdf@bottomline})
-                                      and (bool {mdf@leftline}) and not (bool {mdf@rightline})}}
-\newrobustcmd*\md@test@trb{\ifboolexpr{ (bool {mdf@topline}) and (bool {mdf@bottomline})
-                                      and not (bool {mdf@leftline}) and (bool {mdf@rightline})}}
-\newrobustcmd*\md@test@lrb{\ifboolexpr{ not (bool {mdf@topline}) and (bool {mdf@bottomline})
-                                      and (bool {mdf@leftline}) and (bool {mdf@rightline})}}
+\newrobustcmd*\md@test@ltr{%
+    \ifboolexpr{ (bool {mdf@topline}) and not (bool {mdf@bottomline})
+                  and (bool {mdf@leftline}) and (bool {mdf@rightline})}}
+\newrobustcmd*\md@test@ltb{%
+    \ifboolexpr{ (bool {mdf@topline}) and (bool {mdf@bottomline})
+                  and (bool {mdf@leftline}) and not (bool {mdf@rightline})}}
+\newrobustcmd*\md@test@trb{%
+    \ifboolexpr{ (bool {mdf@topline}) and (bool {mdf@bottomline})
+                  and not (bool {mdf@leftline}) and (bool {mdf@rightline})}}
+\newrobustcmd*\md@test@lrb{%
+    \ifboolexpr{ not (bool {mdf@topline}) and (bool {mdf@bottomline})
+                  and (bool {mdf@leftline}) and (bool {mdf@rightline})}}
 %2-set
-\newrobustcmd*\md@test@lb{\ifboolexpr{ not (bool {mdf@topline}) and (bool {mdf@bottomline})
-                                      and (bool {mdf@leftline}) and not (bool {mdf@rightline})}}
-\newrobustcmd*\md@test@rb{\ifboolexpr{ not (bool {mdf@topline}) and (bool {mdf@bottomline})
-                                      and not (bool {mdf@leftline}) and (bool {mdf@rightline})}}
-\newrobustcmd*\md@test@tr{\ifboolexpr{ (bool {mdf@topline}) and not (bool {mdf@bottomline})
-                                      and not (bool {mdf@leftline}) and (bool {mdf@rightline})}}
-\newrobustcmd*\md@test@lt{\ifboolexpr{ (bool {mdf@topline}) and not (bool {mdf@bottomline})
-                                      and (bool {mdf@leftline}) and not (bool {mdf@rightline})}}
+\newrobustcmd*\md@test@lb{%
+    \ifboolexpr{ not (bool {mdf@topline}) and (bool {mdf@bottomline})
+                  and (bool {mdf@leftline}) and not (bool {mdf@rightline})}}
+\newrobustcmd*\md@test@rb{%
+    \ifboolexpr{ not (bool {mdf@topline}) and (bool {mdf@bottomline})
+                  and not (bool {mdf@leftline}) and (bool {mdf@rightline})}}
+\newrobustcmd*\md@test@tr{%
+    \ifboolexpr{ (bool {mdf@topline}) and not (bool {mdf@bottomline})
+                  and not (bool {mdf@leftline}) and (bool {mdf@rightline})}}
+\newrobustcmd*\md@test@lt{%
+    \ifboolexpr{ (bool {mdf@topline}) and not (bool {mdf@bottomline})
+                  and (bool {mdf@leftline}) and not (bool {mdf@rightline})}}
 %Einzellinien
 \newrobustcmd*\md@test@single{%
-         \ifboolexpr{ not (test {\md@test@ltrb} or test {\md@test@ltr} or test {\md@test@ltb} 
-                      or test {\md@test@trb} or test {\md@test@lrb}  or test {\md@test@lb}
-                      or test {\md@test@rb} or test {\md@test@tr} or test {\md@test@lt} ) }}
+    \ifboolexpr{ not (test {\md@test@ltrb} or test {\md@test@ltr} or 
+                  test {\md@test@ltb} or test {\md@test@trb} or 
+                  test {\md@test@lrb}  or test {\md@test@lb} or 
+                  test {\md@test@rb} or test {\md@test@tr} or
+                  test {\md@test@lt} ) }}
 
-
-%style festlegen:
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{mdfbackgroundstyle,mdflinestyle}
+% background and line settings for pstricks
+%    \begin{macrocode}
 \newpsstyle{mdfbackgroundstyle}{linecolor=\mdf@backgroundcolor,fillstyle=solid,%
-                               fillcolor=\mdf@backgroundcolor,linestyle=solid,%
-                               linewidth=\mdf@middlelinewidth@length,dimen=outer,%
+                                fillcolor=\mdf@backgroundcolor,linestyle=solid,%
+                                linewidth=\mdf@middlelinewidth@length,dimen=outer,%
 }%
 %
-\newpsstyle{mdflinestyle}{linewidth=\mdf@middlelinewidth@length,linecolor=\mdf@linecolor,fillstyle=none,dimen=middle,}%
+\newpsstyle{mdflinestyle}{linewidth=\mdf@middlelinewidth@length,%
+                          linecolor=\mdf@linecolor,%
+                          fillstyle=none,dimen=middle,}%
+%    \end{macrocode}
+% \end{macro}
 %
-%%==================================================%%
-%%================single-box========================%%
-%%==================================================%%
+% \begin{macro}{md@putbox@single}
+% Single output
+%    \begin{macrocode}
 \def\md@putbox@single{%
   \ifvoid\@tempboxa
   \else%
    \mdf@makebox@out{%
-    \mdf@makeboxalign@left%
-        \ifbool{mdf@leftline}{\hspace*{\mdf@middlelinewidth@length}}{}%
-        \setlength\mdfboundingboxwidth{\wd\@tempboxa}%
-        \setlength\mdfboundingboxheight{\dimexpr\ht\@tempboxa+\dp\@tempboxa\relax}%
-        \advance\mdfboundingboxheight by \mdf@innertopmargin@length\relax%
-        \advance\mdfboundingboxheight by \mdf@innerbottommargin@length\relax%
-        \ifbool{mdf@topline}{\advance\mdfboundingboxheight by \mdf@middlelinewidth@length\relax}{}%
-        \ifbool{mdf@bottomline}{\advance\mdfboundingboxheight by \mdf@middlelinewidth@length\relax}{}%
-        \advance\mdfboundingboxwidth by \mdf@innerleftmargin@length\relax%
-        \advance\mdfboundingboxwidth by \mdf@innerrightmargin@length\relax%
-       \psset{linearc=\mdf@roundcorner@length,cornersize=absolut,}%
-       \expandafter\psset\expandafter{\mdf@psset@local}%
-       \psset{unit=1truecm}%
-    \mdf@makebox@in[\mdfboundingboxwidth]{%
-    \null%
+     \mdf@makeboxalign@left%
+     \ifbool{mdf@leftline}{\hspace*{\mdf@middlelinewidth@length}}{}%
+     \setlength\mdfboundingboxwidth{\wd\@tempboxa}%
+     \setlength\mdfboundingboxheight{\dimexpr\ht\@tempboxa+\dp\@tempboxa\relax}%
+     \advance\mdfboundingboxheight by \mdf@innertopmargin@length\relax%
+     \advance\mdfboundingboxheight by \mdf@innerbottommargin@length\relax%
+     \ifbool{mdf@topline}%
+        {\advance\mdfboundingboxheight by \mdf@middlelinewidth@length\relax}{}%
+     \ifbool{mdf@bottomline}%
+        {\advance\mdfboundingboxheight by \mdf@middlelinewidth@length\relax}{}%
+     \advance\mdfboundingboxwidth by \mdf@innerleftmargin@length\relax%
+     \advance\mdfboundingboxwidth by \mdf@innerrightmargin@length\relax%
+     \psset{linearc=\mdf@roundcorner@length,cornersize=absolut,}%
+     \expandafter\psset\expandafter{\mdf@psset@local}%
+     \psset{unit=1truecm}%
+     \mdf@makebox@in[\mdfboundingboxwidth]{%
+       \null%
        \begin{pspicture}(0,0)(\mdfboundingboxwidth,\mdfboundingboxheight)
-           \md@test@ltrb{%
-              \psframe[style=mdflinestyle]%
-                  (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul \ptTps{\mdf@middlelinewidth@length} 0.5 mul)%
-                  (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul add %X
-                     \ptTps{\mdfboundingboxheight} \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul add)
+          \md@test@ltrb{%
+            \psframe[style=mdflinestyle]%
+              (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul %
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul)%
+              (! \ptTps{\mdfboundingboxwidth} %
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul add %X
+                 \ptTps{\mdfboundingboxheight}%
+                 \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul add)
+          }{}
+          \md@test@ltr{%
+            \psline[style=mdflinestyle]%
+              (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul 0)%
+              (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul 
+                 \ptTps{\mdfboundingboxheight} 
+                 \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul add)%
+              (! \ptTps{\mdfboundingboxwidth} 
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul add %X
+                 \ptTps{\mdfboundingboxheight} 
+                 \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul add)%
+              (! \ptTps{\mdfboundingboxwidth} 
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul add %X
+                 0)
+          }{}
+          \md@test@ltb{%
+            \psline[style=mdflinestyle]%
+              (! \ptTps{\mdfboundingboxwidth} 
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul)% 
+              (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul 
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul)%
+              (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul 
+                 \ptTps{\mdfboundingboxheight} 
+                 \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul add)%
+              (! \ptTps{\mdfboundingboxwidth}  %X
+                 \ptTps{\mdfboundingboxheight} 
+                 \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul add)%
+          }{}
+          \md@test@trb{%
+            \psline[style=mdflinestyle]%
+              (! 0
+                 \ptTps{\mdfboundingboxheight} 
+                 \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul add)%
+              (! \ptTps{\mdfboundingboxwidth} 
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul add %X
+                 \ptTps{\mdfboundingboxheight} 
+                 \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul add)%
+              (! \ptTps{\mdfboundingboxwidth} 
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul add %X
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul)
+              (! 0  \ptTps{\mdf@middlelinewidth@length} 0.5 mul)
+          }{}
+          \md@test@lrb{%
+            \psline[style=mdflinestyle]%
+              (! \ptTps{\mdf@middlelinewidth@length} 0.5 mul neg
+                 \ptTps{\mdfboundingboxheight})%
+              (! \ptTps{\mdf@middlelinewidth@length} 0.5 mul neg 
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul )%
+              (! \ptTps{\mdfboundingboxwidth} 
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul add %X
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul )
+              (! \ptTps{\mdfboundingboxwidth} 
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul add %X
+                 \ptTps{\mdfboundingboxheight})
+          }{}
+          \md@test@lb{%
+            \psline[style=mdflinestyle]%
+              (! \ptTps{\mdf@middlelinewidth@length} 0.5 mul neg
+                 \ptTps{\mdfboundingboxheight})%
+              (! \ptTps{\mdf@middlelinewidth@length} 0.5 mul neg
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul )%
+              (! \ptTps{\mdfboundingboxwidth} 
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul )
+          }{}
+          \md@test@rb{%
+            \psline[style=mdflinestyle]%
+              (! 0 \ptTps{\mdf@middlelinewidth@length} 0.5 mul )%
+              (! \ptTps{\mdfboundingboxwidth} 
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul add %X
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul )
+              (! \ptTps{\mdfboundingboxwidth} 
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul add %X
+                 \ptTps{\mdfboundingboxheight})
+          }{}
+          \md@test@tr{%
+            \psline[style=mdflinestyle]%
+              (! 0
+                 \ptTps{\mdfboundingboxheight} 
+                 \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul add)%
+              (! \ptTps{\mdfboundingboxwidth} 
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul add %X
+                 \ptTps{\mdfboundingboxheight} 
+                 \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul add)%
+              (! \ptTps{\mdfboundingboxwidth} 
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul add %X
+                 0)
             }{}
-           \md@test@ltr{%
-              \psline[style=mdflinestyle]%
-                  (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul 0)%
-                  (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul 
-                     \ptTps{\mdfboundingboxheight} \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul add)%
-                  (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul add %X
-                     \ptTps{\mdfboundingboxheight} \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul add)%
-                  (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul add %X
-                     0)
-            }{}
-           \md@test@ltb{%
-              \psline[style=mdflinestyle]%
-                 (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul)% 
-                 (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul \ptTps{\mdf@middlelinewidth@length} 0.5 mul)%
-                  (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul 
-                     \ptTps{\mdfboundingboxheight} \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul add)%
-                  (! \ptTps{\mdfboundingboxwidth}  %X
-                     \ptTps{\mdfboundingboxheight} \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul add)%
-            }{}
-           \md@test@trb{%
-              \psline[style=mdflinestyle]%
-                  (! 0
-                     \ptTps{\mdfboundingboxheight} \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul add)%
-                  (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul add %X
-                     \ptTps{\mdfboundingboxheight} \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul add)%
-                  (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul add %X
-                     \ptTps{\mdf@middlelinewidth@length} 0.5 mul)
-                  (! 0  \ptTps{\mdf@middlelinewidth@length} 0.5 mul)
-            }{}
-           \md@test@lrb{%
-              \psline[style=mdflinestyle]%
-                  (! \ptTps{\mdf@middlelinewidth@length} 0.5 mul neg \ptTps{\mdfboundingboxheight})%
-                  (! \ptTps{\mdf@middlelinewidth@length} 0.5 mul neg \ptTps{\mdf@middlelinewidth@length} 0.5 mul )%
-                  (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul add %X
-                     \ptTps{\mdf@middlelinewidth@length} 0.5 mul )
-                  (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul add %X
-                     \ptTps{\mdfboundingboxheight})
-            }{}
-           \md@test@lb{%
-              \psline[style=mdflinestyle]%
-                  (! \ptTps{\mdf@middlelinewidth@length} 0.5 mul neg \ptTps{\mdfboundingboxheight})%
-                  (! \ptTps{\mdf@middlelinewidth@length} 0.5 mul neg \ptTps{\mdf@middlelinewidth@length} 0.5 mul )%
-                  (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul )
-                 }{}
-           \md@test@rb{%
-              \psline[style=mdflinestyle]%
-                  (! 0 \ptTps{\mdf@middlelinewidth@length} 0.5 mul )%
-                  (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul add %X
-                     \ptTps{\mdf@middlelinewidth@length} 0.5 mul )
-                  (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul add %X
-                     \ptTps{\mdfboundingboxheight})
-            }{}
-           \md@test@tr{%
-              \psline[style=mdflinestyle]%
-                  (! 0
-                     \ptTps{\mdfboundingboxheight} \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul add)%
-                  (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul add %X
-                     \ptTps{\mdfboundingboxheight} \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul add)%
-                  (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul add %X
-                     0)
-            }{}
-           \md@test@lt{%
-              \psline[style=mdflinestyle]%
-                  (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul 0)%
-                  (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul 
-                     \ptTps{\mdfboundingboxheight} \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul add)%
-                  (! \ptTps{\mdfboundingboxwidth}  %X
-                     \ptTps{\mdfboundingboxheight} \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul add)%
-            }{}
-           \md@test@single{%
-              \ifbool{mdf@bottomline}{%
-              \psline[style=mdflinestyle]%
-                  (! 0 \ptTps{\mdf@middlelinewidth@length} 0.5 mul )%
-                  (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul )
+          \md@test@lt{%
+            \psline[style=mdflinestyle]%
+              (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul 0)%
+              (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul 
+                 \ptTps{\mdfboundingboxheight} 
+                 \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul add)%
+              (! \ptTps{\mdfboundingboxwidth}  %X
+                 \ptTps{\mdfboundingboxheight} 
+                 \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul add)%
+          }{}
+          \md@test@single{%
+            \ifbool{mdf@bottomline}{%
+             \psline[style=mdflinestyle]%
+              (! 0 \ptTps{\mdf@middlelinewidth@length} 0.5 mul )%
+              (! \ptTps{\mdfboundingboxwidth} 
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul )
+            }{}%
+            \ifbool{mdf@topline}{%
+             \psline[style=mdflinestyle]%
+              (! 0 \ptTps{\mdfboundingboxheight} 
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul neg add)%
+              (! \ptTps{\mdfboundingboxwidth} 
+                 \ptTps{\mdfboundingboxheight} 
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul neg add)
                 }{}%
-              \ifbool{mdf@topline}{%
-              \psline[style=mdflinestyle]%
-                  (! 0 \ptTps{\mdfboundingboxheight} \ptTps{\mdf@middlelinewidth@length} 0.5 mul neg add)%
-                  (! \ptTps{\mdfboundingboxwidth} 
-                     \ptTps{\mdfboundingboxheight} \ptTps{\mdf@middlelinewidth@length} 0.5 mul neg add)
-                }{}%
-              \ifbool{mdf@leftline}{%
-              \psline[style=mdflinestyle]%
-                  (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul 0)%
-                  (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul \ptTps{\mdfboundingboxheight} )%
-                }{}%
-              \ifbool{mdf@rightline}{%
-              \psline[style=mdflinestyle]%
-                  (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul add 0)%
-                  (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul add 
-                     \ptTps{\mdfboundingboxheight} )%
-                }{}%
-              }{}%
-           %Hintergrund
-           \psframe[style=mdfbackgroundstyle]%
-                    (!0 \ifbool{mdf@bottomline}{\ptTps{\mdf@middlelinewidth@length}}{0})
-                    (! \ptTps{\mdfboundingboxwidth} %
-                       \ptTps{\mdfboundingboxheight} \ifbool{mdf@topline}{\ptTps{\mdf@middlelinewidth@length} sub}{})
-           %Ausgabe
-           \rput[b](!\ptTps{\mdfboundingboxwidth} 0.5 mul % X-Koordinate
-                     \ptTps{\mdf@innerbottommargin@length} 
-                     \ifbool{mdf@bottomline}{\ptTps{\mdf@middlelinewidth@length} add}{}
-                  ){\box\@tempboxa}
+            \ifbool{mdf@leftline}{%
+             \psline[style=mdflinestyle]%
+              (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul 0)%
+              (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul
+                 \ptTps{\mdfboundingboxheight} )%
+            }{}%
+            \ifbool{mdf@rightline}{%
+             \psline[style=mdflinestyle]%
+              (! \ptTps{\mdfboundingboxwidth} 
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul add 0)%
+              (! \ptTps{\mdfboundingboxwidth} 
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul add 
+                 \ptTps{\mdfboundingboxheight} )%
+            }{}%
+          }{}%
+          %Hintergrund
+          \psframe[style=mdfbackgroundstyle]%
+              (!0 \ifbool{mdf@bottomline}{\ptTps{\mdf@middlelinewidth@length}}{0})
+              (! \ptTps{\mdfboundingboxwidth} %
+                 \ptTps{\mdfboundingboxheight} 
+                 \ifbool{mdf@topline}{\ptTps{\mdf@middlelinewidth@length} sub}{})
+          %Ausgabe
+          \rput[b]%
+              (!\ptTps{\mdfboundingboxwidth} 0.5 mul % X-Koordinate
+                 \ptTps{\mdf@innerbottommargin@length} 
+                 \ifbool{mdf@bottomline}{\ptTps{\mdf@middlelinewidth@length} add}{}
+              ){\box\@tempboxa}
         \end{pspicture}%
     }%
    \mdf@makeboxalign@right%
   }%
  \fi
 }%
-%%==================================================%%
-%%================first-box=========================%%
-%%==================================================%%
-
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{md@putbox@first}
+% First output
+%    \begin{macrocode}
 \def\md@putbox@first{%
   \ifvoid\@tempboxa
   \else%
    \mdf@makebox@out{%
-    \mdf@makeboxalign@left%
-        \ifbool{mdf@leftline}{\hspace*{\mdf@middlelinewidth@length}}{}%
-        \setlength\mdfboundingboxwidth{\wd\tw@}%
-        \setlength\mdfboundingboxheight{\dimexpr\ht\tw@+\dp\tw@\relax}%
-        \advance\mdfboundingboxheight by \mdf@innertopmargin@length\relax
-        \advance\mdfboundingboxheight by \mdf@splitbottomskip@length\relax%
-         \ifbool{mdf@topline}{\advance\mdfboundingboxheight by \mdf@middlelinewidth@length\relax}{}%
-         \advance\mdfboundingboxwidth by \mdf@innerleftmargin@length\relax%
-         \advance\mdfboundingboxwidth by \mdf@innerrightmargin@length\relax%
-         \psset{linearc=\mdf@roundcorner@length,cornersize=absolute}%
-         \expandafter\psset\expandafter{\mdf@psset@local}%
-    \mdf@makebox@in[\mdfboundingboxwidth]{%
-    \null%
-         \psset{unit=1truecm}%
-         \ifdimgreater{\mdfboundingboxheight}{\vsize}
-                {\begin{pspicture}(0,0)(\mdfboundingboxwidth,\vsize)}
-                {\begin{pspicture}(0,0)(\mdfboundingboxwidth,\mdfboundingboxheight)}
-           %Hintergrund
-           \psline[style=mdfbackgroundstyle,%
-                    linearc={\dimexpr\mdf@roundcorner@length-\mdf@middlelinewidth@length\relax},]
-                  (! \ptTps{\mdf@middlelinewidth@length} 0.5 mul 0)%
-                  (! \ptTps{\mdf@middlelinewidth@length}  0.5 mul 
-                     \ptTps{\mdfboundingboxheight} \ifbool{mdf@topline}% 
-                         {\ptTps{\mdf@middlelinewidth@length} neg 1.5 mul add}%
-                         {\ptTps{\mdf@middlelinewidth@length} neg 0.5 mul add} )%
-                  (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul neg add %X
-                     \ptTps{\mdfboundingboxheight} \ifbool{mdf@topline}% 
-                         {\ptTps{\mdf@middlelinewidth@length} neg 1.5 mul add}%
-                         {\ptTps{\mdf@middlelinewidth@length} neg 0.5 mul add} )%
-                  (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul neg add %X
-                     0) 
+     \mdf@makeboxalign@left%
+     \ifbool{mdf@leftline}{\hspace*{\mdf@middlelinewidth@length}}{}%
+     \setlength\mdfboundingboxwidth{\wd\tw@}%
+     \setlength\mdfboundingboxheight{\dimexpr\ht\tw@+\dp\tw@\relax}%
+     \advance\mdfboundingboxheight by \mdf@innertopmargin@length\relax
+     \advance\mdfboundingboxheight by \mdf@splitbottomskip@length\relax%
+     \ifbool{mdf@topline}%
+        {\advance\mdfboundingboxheight by \mdf@middlelinewidth@length\relax}{}%
+     \advance\mdfboundingboxwidth by \mdf@innerleftmargin@length\relax%
+     \advance\mdfboundingboxwidth by \mdf@innerrightmargin@length\relax%
+     \psset{linearc=\mdf@roundcorner@length,cornersize=absolute}%
+     \expandafter\psset\expandafter{\mdf@psset@local}%
+     \mdf@makebox@in[\mdfboundingboxwidth]{%
+       \null%
+       \psset{unit=1truecm}%
+       \ifdimgreater{\mdfboundingboxheight}{\vsize}
+         {\begin{pspicture}(0,0)(\mdfboundingboxwidth,\vsize)}
+         {\begin{pspicture}(0,0)(\mdfboundingboxwidth,\mdfboundingboxheight)}
+          %Hintergrund
+          \psline[style=mdfbackgroundstyle,%
+                  linearc={\dimexpr\mdf@roundcorner@length%
+                                  -\mdf@middlelinewidth@length\relax},]
+              (! \ptTps{\mdf@middlelinewidth@length} 0.5 mul 0)%
+              (! \ptTps{\mdf@middlelinewidth@length}  0.5 mul 
+                 \ptTps{\mdfboundingboxheight} 
+                 \ifbool{mdf@topline}%
+                        {\ptTps{\mdf@middlelinewidth@length} neg 1.5 mul add}%
+                        {\ptTps{\mdf@middlelinewidth@length} neg 0.5 mul add} )%
+              (! \ptTps{\mdfboundingboxwidth} 
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul neg add %X
+                 \ptTps{\mdfboundingboxheight}
+                 \ifbool{mdf@topline}% 
+                        {\ptTps{\mdf@middlelinewidth@length} neg 1.5 mul add}%
+                        {\ptTps{\mdf@middlelinewidth@length} neg 0.5 mul add} )%
+              (! \ptTps{\mdfboundingboxwidth} 
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul neg add %X
+                 0) 
           \ifboolexpr{ test {\md@test@ltrb} or test {\md@test@ltr}}{%
-              \psline[style=mdflinestyle]%
-                  (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul 0)%
-                  (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul 
-                     \ptTps{\mdfboundingboxheight} \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul add)%
-                  (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul add %X
-                     \ptTps{\mdfboundingboxheight} \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul add)%
-                  (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul add %X
-                     0)
-                  }{}
+            \psline[style=mdflinestyle]%
+              (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul 0)%
+              (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul 
+                 \ptTps{\mdfboundingboxheight} 
+                 \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul add)%
+              (! \ptTps{\mdfboundingboxwidth} 
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul add %X
+                 \ptTps{\mdfboundingboxheight} 
+                 \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul add)%
+              (! \ptTps{\mdfboundingboxwidth} 
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul add %X
+                 0)
+          }{}
           \ifboolexpr{ test {\md@test@tr} or test {\md@test@trb}}{%
-              \psline[style=mdflinestyle]%
-                  (! 0
-                     \ptTps{\mdfboundingboxheight} \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul add)%
-                  (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul add %X
-                     \ptTps{\mdfboundingboxheight} \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul add)%
-                  (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul add %X
-                     0)
-                }{}
+            \psline[style=mdflinestyle]%
+              (! 0
+                 \ptTps{\mdfboundingboxheight} 
+                 \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul add)%
+              (! \ptTps{\mdfboundingboxwidth} 
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul add %X
+                 \ptTps{\mdfboundingboxheight} 
+                 \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul add)%
+              (! \ptTps{\mdfboundingboxwidth} 
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul add %X
+                 0)
+          }{}
           \ifboolexpr{ test {\md@test@ltb} or test {\md@test@lt}}{%
-              \psline[style=mdflinestyle]%
-                  (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul 0)%
-                  (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul 
-                     \ptTps{\mdfboundingboxheight} \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul add)%
-                  (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@roundcorner@length} neg add  %X
-                     \ptTps{\mdfboundingboxheight} \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul add)%
+            \psline[style=mdflinestyle]%
+              (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul 0)%
+              (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul 
+                 \ptTps{\mdfboundingboxheight} 
+                 \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul add)%
+              (! \ptTps{\mdfboundingboxwidth} 
+                 \ptTps{\mdf@roundcorner@length} neg add  %X
+                 \ptTps{\mdfboundingboxheight} 
+                 \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul add)%
                }{}
-          \ifboolexpr{ test {\md@test@single} or test {\md@test@rb} or test {\md@test@lrb} or test {\md@test@lb}}{%
-              \ifbool{mdf@topline}{%
-                \psline[style=mdflinestyle]%
-                  (! 0 \ptTps{\mdfboundingboxheight} \ptTps{\mdf@middlelinewidth@length} 0.5 mul neg add)%
-                  (! \ptTps{\mdfboundingboxwidth} 
-                     \ptTps{\mdfboundingboxheight}  \ptTps{\mdf@middlelinewidth@length} 0.5 mul neg add)
-                }{}%
-              \ifbool{mdf@leftline}{%
-                \psline[style=mdflinestyle]%
-                  (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul 0)%
-                  (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul \ptTps{\mdfboundingboxheight} )%
-                }{}%
-              \ifbool{mdf@rightline}{%
-                \psline[style=mdflinestyle]%
-                  (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul add 0)%
-                  (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul add 
-                     \ptTps{\mdfboundingboxheight} )%
-                }{}%
-              }{}%
-           %Ausgabe
-           \rput[b](!\ptTps{\mdfboundingboxwidth} 0.5 mul % X-Koordinate
-                     \ptTps{\mdf@splitbottomskip@length}){\box\tw@}
-           \end{pspicture}%
+          \ifboolexpr{ test {\md@test@single} or test {\md@test@rb} or
+                       test {\md@test@lrb} or test {\md@test@lb}}{%
+           \ifbool{mdf@topline}{%
+            \psline[style=mdflinestyle]%
+              (! 0 \ptTps{\mdfboundingboxheight} 
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul neg add)%
+              (! \ptTps{\mdfboundingboxwidth} 
+                 \ptTps{\mdfboundingboxheight}  
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul neg add)
+           }{}%
+           \ifbool{mdf@leftline}{%
+            \psline[style=mdflinestyle]%
+              (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul 0)%
+              (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul 
+                 \ptTps{\mdfboundingboxheight} )%
+           }{}%
+           \ifbool{mdf@rightline}{%
+             \psline[style=mdflinestyle]%
+              (! \ptTps{\mdfboundingboxwidth} 
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul add 0)%
+              (! \ptTps{\mdfboundingboxwidth} 
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul add 
+                 \ptTps{\mdfboundingboxheight} )%
+           }{}%
+          }{}%
+          %Ausgabe
+          \rput[b](!
+                 \ptTps{\mdfboundingboxwidth} 0.5 mul % X-Koordinate
+                 \ptTps{\mdf@splitbottomskip@length}){\box\tw@}
+         \end{pspicture}%
     }%
    \mdf@makeboxalign@right%
   }%
  \fi
 }%
-
-%%==================================================%%
-%%================middle-box========================%%
-%%==================================================%%
-
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{md@putbox@middle}
+% Middle output
+%    \begin{macrocode}
 \def\md@putbox@middle{%
   \ifvoid\@tempboxa
   \else%
    \mdf@makebox@out{%
     \mdf@makeboxalign@left%
-        \ifbool{mdf@leftline}{\hspace*{\mdf@middlelinewidth@length}}{}%
-        \setlength\mdfboundingboxwidth{\wd\tw@}%
-        \setlength\mdfboundingboxheight{\dimexpr\ht\tw@+\dp\tw@\relax}%
-        \advance\mdfboundingboxheight by \mdf@splitbottomskip@length\relax%
-        \advance\mdfboundingboxwidth by \mdf@innerleftmargin@length\relax%
-        \advance\mdfboundingboxwidth by \mdf@innerrightmargin@length\relax%
-         \expandafter\psset\expandafter{\mdf@psset@local}%
-         \psset{linearc=\mdf@roundcorner@length,cornersize=absolute}%
-         \psset{unit=1truecm}%
-    \mdf@makebox@in[\mdfboundingboxwidth]{%
-    \null%
-         \ifdimgreater{\mdfboundingboxheight}{\vsize}
-           {\begin{pspicture}(0,0)(\mdfboundingboxwidth,\vsize)}
-           {\begin{pspicture}(0,0)(\mdfboundingboxwidth,\mdfboundingboxheight)}
-           \ifbool{mdf@leftline}{%
-              \psline[style=mdflinestyle]%
-                  (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul 0)%
-                  (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul \ptTps{\mdfboundingboxheight} )%
-                }{}%
-           \ifbool{mdf@rightline}{%
-              \psline[style=mdflinestyle]%
-                  (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul add 0)%
-                  (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul add 
-                     \ptTps{\mdfboundingboxheight} )%
-                }{}%
-           %Hintergrund
-           \psframe[style=mdfbackgroundstyle,%
+     \ifbool{mdf@leftline}{\hspace*{\mdf@middlelinewidth@length}}{}%
+     \setlength\mdfboundingboxwidth{\wd\tw@}%
+     \setlength\mdfboundingboxheight{\dimexpr\ht\tw@+\dp\tw@\relax}%
+     \advance\mdfboundingboxheight by \mdf@splitbottomskip@length\relax%
+     \advance\mdfboundingboxwidth by \mdf@innerleftmargin@length\relax%
+     \advance\mdfboundingboxwidth by \mdf@innerrightmargin@length\relax%
+     \expandafter\psset\expandafter{\mdf@psset@local}%
+     \psset{linearc=\mdf@roundcorner@length,cornersize=absolute}%
+     \mdf@makebox@in[\mdfboundingboxwidth]{%
+       \null%
+       \psset{unit=1truecm}%
+       \ifdimgreater{\mdfboundingboxheight}{\vsize}
+         {\begin{pspicture}(0,0)(\mdfboundingboxwidth,\vsize)}
+         {\begin{pspicture}(0,0)(\mdfboundingboxwidth,\mdfboundingboxheight)}
+          \ifbool{mdf@leftline}{%
+            \psline[style=mdflinestyle]%
+              (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul 0)%
+              (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul 
+                 \ptTps{\mdfboundingboxheight} )%
+          }{}%
+          \ifbool{mdf@rightline}{%
+             \psline[style=mdflinestyle]%
+              (! \ptTps{\mdfboundingboxwidth} 
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul add 0)%
+              (! \ptTps{\mdfboundingboxwidth} 
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul add 
+                 \ptTps{\mdfboundingboxheight} )%
+          }{}%
+          %Hintergrund
+          \psframe[style=mdfbackgroundstyle,%
                     linearc=\z@]%
-                    (!0 0)
-                    (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdfboundingboxheight})
+              (!0 0)
+              (! \ptTps{\mdfboundingboxwidth} 
+                 \ptTps{\mdfboundingboxheight})
            %Ausgabe
-           \rput[b](!\ptTps{\mdfboundingboxwidth} 0.5 mul % X-Koordinate
-                     \ptTps{\mdf@splitbottomskip@length} ){\box\tw@}
+          \rput[b](!
+                 \ptTps{\mdfboundingboxwidth} 0.5 mul % X-Koordinate
+                 \ptTps{\mdf@splitbottomskip@length} ){\box\tw@}
        \end{pspicture}%
     }%
    \mdf@makeboxalign@right%
   }%
  \fi
 }%
-%%==================================================%%
-%%=================last-box=========================%%
-%%==================================================%%
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{md@putbox@second}
+% Last output
+%    \begin{macrocode}
 \def\md@putbox@second{
   \ifvoid\@tempboxa
   \else%
    \mdf@makebox@out{%
-    \mdf@makeboxalign@left%
-        \ifbool{mdf@leftline}{\hspace*{\mdf@middlelinewidth@length}}{}%
-        \setlength\mdfboundingboxwidth{\wd\@tempboxa}%
-        \setlength\mdfboundingboxheight{\dimexpr\ht\@tempboxa+\dp\@tempboxa\relax}%
-        \advance\mdfboundingboxheight by \mdf@innerbottommargin@length\relax%
-        \ifbool{mdf@bottomline}{\advance\mdfboundingboxheight by \mdf@middlelinewidth@length\relax}{}%
-        \advance\mdfboundingboxwidth by \mdf@innerleftmargin@length\relax%
-        \advance\mdfboundingboxwidth by \mdf@innerrightmargin@length\relax%
-        \expandafter\psset\expandafter{\mdf@psset@local}
-        \psset{linearc=\mdf@roundcorner@length,cornersize=absolute}%
-        \psset{unit=1truecm}%
-    \mdf@makebox@in[\mdfboundingboxwidth]{%
-    \null%
-        \begin{pspicture}(0,0)(\mdfboundingboxwidth,\mdfboundingboxheight)
-           %Hintergrund
-            \psline[style=mdfbackgroundstyle,%
-                    linearc={\dimexpr\mdf@roundcorner@length-\mdf@middlelinewidth@length\relax},]%%
-                    (! \ptTps{\mdf@middlelinewidth@length} 0.5 mul \ptTps{\mdfboundingboxheight} )%
-                    (! \ptTps{\mdf@middlelinewidth@length} 0.5 mul 
-                       \ifbool{mdf@bottomline}% 
-                         {\ptTps{\mdf@middlelinewidth@length} neg 1.5 mul neg}%
-                         {\ptTps{\mdf@middlelinewidth@length} neg 0.5 mul neg} )%
-                    (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul neg add 
-                       \ifbool{mdf@bottomline}% 
-                         {\ptTps{\mdf@middlelinewidth@length} neg 1.5 mul neg}%
-                         {\ptTps{\mdf@middlelinewidth@length} neg 0.5 mul neg} )%
-                    (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul neg add
-                       \ptTps{\mdfboundingboxheight} )
+     \mdf@makeboxalign@left%
+     \ifbool{mdf@leftline}{\hspace*{\mdf@middlelinewidth@length}}{}%
+     \setlength\mdfboundingboxwidth{\wd\@tempboxa}%
+     \setlength\mdfboundingboxheight{\dimexpr\ht\@tempboxa+\dp\@tempboxa\relax}%
+     \advance\mdfboundingboxheight by \mdf@innerbottommargin@length\relax%
+     \ifbool{mdf@bottomline}%
+            {\advance\mdfboundingboxheight by \mdf@middlelinewidth@length\relax}{}%
+     \advance\mdfboundingboxwidth by \mdf@innerleftmargin@length\relax%
+     \advance\mdfboundingboxwidth by \mdf@innerrightmargin@length\relax%
+     \expandafter\psset\expandafter{\mdf@psset@local}
+     \psset{linearc=\mdf@roundcorner@length,cornersize=absolute}%
+     \psset{unit=1truecm}%
+     \mdf@makebox@in[\mdfboundingboxwidth]{%
+       \null%
+       \begin{pspicture}(0,0)(\mdfboundingboxwidth,\mdfboundingboxheight)
+          %Hintergrund
+          \psline[style=mdfbackgroundstyle,%
+                  linearc={\dimexpr\mdf@roundcorner@length%
+                                  -\mdf@middlelinewidth@length\relax},]%%
+              (! \ptTps{\mdf@middlelinewidth@length} 0.5 mul 
+                 \ptTps{\mdfboundingboxheight} )%
+              (! \ptTps{\mdf@middlelinewidth@length} 0.5 mul 
+                 \ifbool{mdf@bottomline}% 
+                        {\ptTps{\mdf@middlelinewidth@length} neg 1.5 mul neg}%
+                        {\ptTps{\mdf@middlelinewidth@length} neg 0.5 mul neg} )%
+              (! \ptTps{\mdfboundingboxwidth} 
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul neg add 
+                 \ifbool{mdf@bottomline}% 
+                        {\ptTps{\mdf@middlelinewidth@length} neg 1.5 mul neg}%
+                        {\ptTps{\mdf@middlelinewidth@length} neg 0.5 mul neg} )%
+              (! \ptTps{\mdfboundingboxwidth} 
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul neg add
+                 \ptTps{\mdfboundingboxheight} )
            %%%%%%%%%%%%
-            \ifboolexpr{ test {\md@test@ltrb} or test {\md@test@lrb}}{%
-              \psline[style=mdflinestyle]%
-                  (! \ptTps{\mdf@middlelinewidth@length} 0.5 mul neg \ptTps{\mdfboundingboxheight})%
-                  (! \ptTps{\mdf@middlelinewidth@length} 0.5 mul neg \ptTps{\mdf@middlelinewidth@length} 0.5 mul )%
-                  (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul add %X
-                     \ptTps{\mdf@middlelinewidth@length} 0.5 mul )
-                  (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul add %X
-                     \ptTps{\mdfboundingboxheight})
-            }{}
-            \ifboolexpr{ test {\md@test@ltb} or test {\md@test@lb}}{%
-              \psline[style=mdflinestyle]%
-                  (! \ptTps{\mdf@middlelinewidth@length} 0.5 mul neg \ptTps{\mdfboundingboxheight})%
-                  (! \ptTps{\mdf@middlelinewidth@length} 0.5 mul neg \ptTps{\mdf@middlelinewidth@length} 0.5 mul )%
-                  (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul )
-                 }{}
-            \ifboolexpr{ test {\md@test@trb} or test {\md@test@rb}}{%
-              \psline[style=mdflinestyle]%
-                  (! 0 \ptTps{\mdf@middlelinewidth@length} 0.5 mul )%
-                  (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul add %X
-                     \ptTps{\mdf@middlelinewidth@length} 0.5 mul )
-                  (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul add %X
-                     \ptTps{\mdfboundingboxheight})
-            }{}
-            \ifboolexpr{ test {\md@test@single} or test {\md@test@ltr} or test {\md@test@tr} or test {\md@test@lt}}{%
-              \ifbool{mdf@bottomline}{%
-              \psline[style=mdflinestyle]%
-                  (! 0 \ptTps{\mdf@middlelinewidth@length} 0.5 mul )%
-                  (! \ptTps{\mdfboundingboxwidth}  \ptTps{\mdf@middlelinewidth@length} 0.5 mul )
-                }{}%
-              \ifbool{mdf@leftline}{%
-              \psline[style=mdflinestyle]%
-                  (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul 0)%
-                  (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul \ptTps{\mdfboundingboxheight} )%
-                }{}%
-              \ifbool{mdf@rightline}{%
-              \psline[style=mdflinestyle]%
-                  (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul add 0)%
-                  (! \ptTps{\mdfboundingboxwidth} \ptTps{\mdf@middlelinewidth@length} 0.5 mul add 
-                     \ptTps{\mdfboundingboxheight} )%
-                }{}%
-                }{}%
-           %Ausgabe
-           \rput[b](!\ptTps{\mdfboundingboxwidth} 0.5 mul % X-Koordinate
-                  \ptTps{\mdf@innerbottommargin@length}
-                  \ifbool{mdf@bottomline}{\ptTps{\mdf@middlelinewidth@length} add}{}
+          \ifboolexpr{ test {\md@test@ltrb} or test {\md@test@lrb}}{%
+            \psline[style=mdflinestyle]%
+              (! \ptTps{\mdf@middlelinewidth@length} 0.5 mul neg
+                 \ptTps{\mdfboundingboxheight})%
+              (! \ptTps{\mdf@middlelinewidth@length} 0.5 mul neg 
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul )%
+              (! \ptTps{\mdfboundingboxwidth} 
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul add %X
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul )
+              (! \ptTps{\mdfboundingboxwidth} 
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul add %X
+                 \ptTps{\mdfboundingboxheight})
+          }{}
+          \ifboolexpr{ test {\md@test@ltb} or test {\md@test@lb}}{%
+            \psline[style=mdflinestyle]%
+              (! \ptTps{\mdf@middlelinewidth@length} 0.5 mul neg 
+                 \ptTps{\mdfboundingboxheight})%
+              (! \ptTps{\mdf@middlelinewidth@length} 0.5 mul neg 
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul )%
+              (! \ptTps{\mdfboundingboxwidth} 
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul )
+          }{}
+          \ifboolexpr{ test {\md@test@trb} or test {\md@test@rb}}{%
+            \psline[style=mdflinestyle]%
+              (! 0 \ptTps{\mdf@middlelinewidth@length} 0.5 mul )%
+              (! \ptTps{\mdfboundingboxwidth} 
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul add %X
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul )
+              (! \ptTps{\mdfboundingboxwidth} 
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul add %X
+                 \ptTps{\mdfboundingboxheight})
+          }{}
+          \ifboolexpr{ test {\md@test@single} or test {\md@test@ltr} or
+                       test {\md@test@tr} or test {\md@test@lt}}{%
+           \ifbool{mdf@bottomline}{%
+            \psline[style=mdflinestyle]%
+              (! 0 \ptTps{\mdf@middlelinewidth@length} 0.5 mul )%
+              (! \ptTps{\mdfboundingboxwidth}  
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul )
+           }{}%
+           \ifbool{mdf@leftline}{%
+            \psline[style=mdflinestyle]%
+              (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul 0)%
+              (! \ptTps{\mdf@middlelinewidth@length} neg 0.5 mul 
+                 \ptTps{\mdfboundingboxheight} )%
+           }{}%
+           \ifbool{mdf@rightline}{%
+            \psline[style=mdflinestyle]%
+              (! \ptTps{\mdfboundingboxwidth} 
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul add 0)%
+              (! \ptTps{\mdfboundingboxwidth} 
+                 \ptTps{\mdf@middlelinewidth@length} 0.5 mul add 
+                 \ptTps{\mdfboundingboxheight} )%
+           }{}%
+          }{}%
+          %Ausgabe
+          \rput[b](!
+                 \ptTps{\mdfboundingboxwidth} 0.5 mul % X-Koordinate
+                 \ptTps{\mdf@innerbottommargin@length}
+                 \ifbool{mdf@bottomline}{\ptTps{\mdf@middlelinewidth@length} add}{}
                 ){\box\@tempboxa}
        \end{pspicture}%
     }%
@@ -3425,7 +3773,10 @@ Have fun!
   }%
  \fi
 }%
-
+%    \end{macrocode}
+% \end{macro}
+%
+%    \begin{macrocode}
  \endinput
 %eof
 %    \end{macrocode}
