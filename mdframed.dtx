@@ -133,10 +133,10 @@ Have fun!
 \fi
 %</internal>
 %<*driver>
-%%$Id: mdframed.dtx 266 2011-12-08 18:15:10Z marco $
+%%$Id: mdframed.dtx 267 2011-12-08 18:34:45Z marco $
 \documentclass[parskip=false,11pt,]{ltxmdf}
 \usepackage[framemethod=TikZ]{mdframed}
-\ltxmdfsetifoot$Id: mdframed.dtx 266 2011-12-08 18:15:10Z marco $
+\ltxmdfsetifoot$Id: mdframed.dtx 267 2011-12-08 18:34:45Z marco $
 
 \EnableCrossrefs
 \CodelineIndex
@@ -1121,10 +1121,10 @@ Have fun!
 %
 % \subsection{The Explanation of mdframed.sty}
 %
-% %$Id: mdframed.dtx 266 2011-12-08 18:15:10Z marco $
-% %$Rev: 266 $
+% %$Id: mdframed.dtx 267 2011-12-08 18:34:45Z marco $
+% %$Rev: 267 $
 % %$Author: marco $
-% %$Date: 2011-12-08 19:15:10 +0100 (Do, 08. Dez 2011) $
+% %$Date: 2011-12-08 19:34:45 +0100 (Do, 08. Dez 2011) $
 % \begin{macro}{mdversion,mdframedpackagename,md@maindate@svn}
 % Set package information
 %    \begin{macrocode}
@@ -1137,7 +1137,7 @@ Have fun!
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{mdframed}%
-     [\md@maindate@svn$Id: mdframed.dtx 266 2011-12-08 18:15:10Z marco $%
+     [\md@maindate@svn$Id: mdframed.dtx 267 2011-12-08 18:34:45Z marco $%
       \mdversion: \mdframedpackagename]
 %    \end{macrocode}
 %
@@ -1558,18 +1558,39 @@ Have fun!
 % \begin{macro}{md@lrbox,endmd@lrbox}
 % Modification of the default |\lrbox| and |\endlrbox|
 %    \begin{macrocode}
-\let\md@lrbox\lrbox
-\patchcmd\md@lrbox\hbox\vbox{}{}
-\patchcmd\md@lrbox\color@setgroup{%
-\begingroup%
-\color@setgroup\color{\mdf@fontcolor}%
-\hsize=\md@horizontalspaceofbox%
-\columnwidth=\hsize%
-\textwidth=\hsize%
-\linewidth=\hsize%
-\@parboxrestore%
-\bgroup\md@@frametitle\egroup\noindent%
-}{}{}
+%\let\md@lrbox\lrbox
+%\patchcmd\md@lrbox\hbox\vbox{}{}
+%\patchcmd\md@lrbox\color@setgroup{%
+%\begingroup%
+%\color@setgroup\color{\mdf@fontcolor}%
+%\hsize=\md@horizontalspaceofbox%
+%\columnwidth=\hsize%
+%\textwidth=\hsize%
+%\linewidth=\hsize%
+%\@parboxrestore%
+%\bgroup\md@@frametitle\egroup\noindent%
+%}{}{}
+\def\md@lrbox#1{%
+  \edef\reserved@a{%
+    \endgroup
+    \setbox#1\vbox{%
+      \begingroup\aftergroup}%
+        \def\noexpand\@currenvir{\@currenvir}%
+        \def\noexpand\@currenvline{\on@line}}%
+  \reserved@a
+    \@endpefalse
+    \@parboxrestore
+    \begingroup%
+    \color@setgroup
+    \color{\mdf@fontcolor}%
+    \hsize=\md@horizontalspaceofbox%
+    \columnwidth=\hsize%
+    \textwidth=\hsize%
+    \linewidth=\hsize%
+    \@parboxrestore
+    \bgroup\md@@frametitle\egroup\noindent%
+    \ignorespaces}
+
 \def\endmd@lrbox{\endgroup\unskip\color@endgroup}
 %    \end{macrocode}
 % \end{macro}
@@ -2274,7 +2295,7 @@ Have fun!
 %% Public License, as described in lppl.txt in the base LaTeX distribution.
 %% Either version 1.0 or, at your option, any later version.
 
-%%$Id: mdframed.dtx 266 2011-12-08 18:15:10Z marco $
+%%$Id: mdframed.dtx 267 2011-12-08 18:34:45Z marco $
 %
 %    \end{macrocode}
 %
@@ -2284,7 +2305,7 @@ Have fun!
 \def\mdframedOpackagename{md-frame-0}
 \def\md@frameOdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-0.mdf}%
-    [\md@frameOdate@svn$Id: mdframed.dtx 266 2011-12-08 18:15:10Z marco $%
+    [\md@frameOdate@svn$Id: mdframed.dtx 267 2011-12-08 18:34:45Z marco $%
      \mdversion: \mdframedOpackagename]
 %    \end{macrocode}
 % \end{macro}
@@ -2642,7 +2663,7 @@ Have fun!
 %% Public License, as described in lppl.txt in the base LaTeX distribution.
 %% Either version 1.0 or, at your option, any later version.
 
-%%$Id: mdframed.dtx 266 2011-12-08 18:15:10Z marco $
+%%$Id: mdframed.dtx 267 2011-12-08 18:34:45Z marco $
 %
 %    \end{macrocode}
 %
@@ -2652,7 +2673,7 @@ Have fun!
 \def\mdframedIpackagename{md-frame-1}
 \def\md@frameIdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-1.mdf}%
-          [\md@frameIdate@svn$Id: mdframed.dtx 266 2011-12-08 18:15:10Z marco $ %
+          [\md@frameIdate@svn$Id: mdframed.dtx 267 2011-12-08 18:34:45Z marco $ %
            \mdversion: \mdframedIpackagename]
 %
 %    \end{macrocode}
@@ -3219,7 +3240,7 @@ Have fun!
 %% Public License, as described in lppl.txt in the base LaTeX distribution.
 %% Either version 1.0 or, at your option, any later version.
 
-%%$Id: mdframed.dtx 266 2011-12-08 18:15:10Z marco $
+%%$Id: mdframed.dtx 267 2011-12-08 18:34:45Z marco $
 %
 %    \end{macrocode}
 %
@@ -3229,7 +3250,7 @@ Have fun!
 \def\mdframedIIpackagename{md-frame-2}
 \def\md@frameIIdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-2.mdf}%
-         [\md@frameIIdate@svn$Id: mdframed.dtx 266 2011-12-08 18:15:10Z marco $ %
+         [\md@frameIIdate@svn$Id: mdframed.dtx 267 2011-12-08 18:34:45Z marco $ %
           \mdversion: \mdframedIIpackagename]
 %    \end{macrocode}
 % \end{macro}
