@@ -133,10 +133,10 @@ Have fun!
 \fi
 %</internal>
 %<*driver>
-%%$Id: mdframed.dtx 261 2011-12-06 20:45:11Z marco $
+%%$Id: mdframed.dtx 266 2011-12-08 18:15:10Z marco $
 \documentclass[parskip=false,11pt,]{ltxmdf}
 \usepackage[framemethod=TikZ]{mdframed}
-\ltxmdfsetifoot$Id: mdframed.dtx 261 2011-12-06 20:45:11Z marco $
+\ltxmdfsetifoot$Id: mdframed.dtx 266 2011-12-08 18:15:10Z marco $
 
 \EnableCrossrefs
 \CodelineIndex
@@ -167,7 +167,7 @@ Have fun!
 %
 % \GetFileInfo{mdframed.sty}
 %
-% changes{\mdversion}{2011/11/26}{Created dtx and fixes bugs}
+% \changes{v1.0a}{2011/11/26}{Created dtx and fixes bugs}
 %
 % \title{The \Pack{mdframed} package\footnote{Extending the package \texttt{framed.sty}}
 % \subtitle{auto-split frame environment}
@@ -1121,10 +1121,10 @@ Have fun!
 %
 % \subsection{The Explanation of mdframed.sty}
 %
-% %$Id: mdframed.dtx 261 2011-12-06 20:45:11Z marco $
-% %$Rev: 261 $
+% %$Id: mdframed.dtx 266 2011-12-08 18:15:10Z marco $
+% %$Rev: 266 $
 % %$Author: marco $
-% %$Date: 2011-12-06 21:45:11 +0100 (Di, 06. Dez 2011) $
+% %$Date: 2011-12-08 19:15:10 +0100 (Do, 08. Dez 2011) $
 % \begin{macro}{mdversion,mdframedpackagename,md@maindate@svn}
 % Set package information
 %    \begin{macrocode}
@@ -1137,7 +1137,7 @@ Have fun!
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{mdframed}%
-     [\md@maindate@svn$Id: mdframed.dtx 261 2011-12-06 20:45:11Z marco $%
+     [\md@maindate@svn$Id: mdframed.dtx 266 2011-12-08 18:15:10Z marco $%
       \mdversion: \mdframedpackagename]
 %    \end{macrocode}
 %
@@ -1554,7 +1554,7 @@ Have fun!
 %    \end{macrocode}
 % \end{macro}
 %
-%
+% \changes{v1.0b}{2011/12/26}{added command  \protect\Cmd{@parboxrestore} to \protect\Cmd{md@lrbox}}
 % \begin{macro}{md@lrbox,endmd@lrbox}
 % Modification of the default |\lrbox| and |\endlrbox|
 %    \begin{macrocode}
@@ -1567,6 +1567,7 @@ Have fun!
 \columnwidth=\hsize%
 \textwidth=\hsize%
 \linewidth=\hsize%
+\@parboxrestore%
 \bgroup\md@@frametitle\egroup\noindent%
 }{}{}
 \def\endmd@lrbox{\endgroup\unskip\color@endgroup}
@@ -2273,7 +2274,7 @@ Have fun!
 %% Public License, as described in lppl.txt in the base LaTeX distribution.
 %% Either version 1.0 or, at your option, any later version.
 
-%%$Id: mdframed.dtx 261 2011-12-06 20:45:11Z marco $
+%%$Id: mdframed.dtx 266 2011-12-08 18:15:10Z marco $
 %
 %    \end{macrocode}
 %
@@ -2283,7 +2284,7 @@ Have fun!
 \def\mdframedOpackagename{md-frame-0}
 \def\md@frameOdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-0.mdf}%
-    [\md@frameOdate@svn$Id: mdframed.dtx 261 2011-12-06 20:45:11Z marco $%
+    [\md@frameOdate@svn$Id: mdframed.dtx 266 2011-12-08 18:15:10Z marco $%
      \mdversion: \mdframedOpackagename]
 %    \end{macrocode}
 % \end{macro}
@@ -2641,7 +2642,7 @@ Have fun!
 %% Public License, as described in lppl.txt in the base LaTeX distribution.
 %% Either version 1.0 or, at your option, any later version.
 
-%%$Id: mdframed.dtx 261 2011-12-06 20:45:11Z marco $
+%%$Id: mdframed.dtx 266 2011-12-08 18:15:10Z marco $
 %
 %    \end{macrocode}
 %
@@ -2651,7 +2652,7 @@ Have fun!
 \def\mdframedIpackagename{md-frame-1}
 \def\md@frameIdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-1.mdf}%
-          [\md@frameIdate@svn$Id: mdframed.dtx 261 2011-12-06 20:45:11Z marco $ %
+          [\md@frameIdate@svn$Id: mdframed.dtx 266 2011-12-08 18:15:10Z marco $ %
            \mdversion: \mdframedIpackagename]
 %
 %    \end{macrocode}
@@ -3218,7 +3219,7 @@ Have fun!
 %% Public License, as described in lppl.txt in the base LaTeX distribution.
 %% Either version 1.0 or, at your option, any later version.
 
-%%$Id: mdframed.dtx 261 2011-12-06 20:45:11Z marco $
+%%$Id: mdframed.dtx 266 2011-12-08 18:15:10Z marco $
 %
 %    \end{macrocode}
 %
@@ -3228,7 +3229,7 @@ Have fun!
 \def\mdframedIIpackagename{md-frame-2}
 \def\md@frameIIdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-2.mdf}%
-         [\md@frameIIdate@svn$Id: mdframed.dtx 261 2011-12-06 20:45:11Z marco $ %
+         [\md@frameIIdate@svn$Id: mdframed.dtx 266 2011-12-08 18:15:10Z marco $ %
           \mdversion: \mdframedIIpackagename]
 %    \end{macrocode}
 % \end{macro}
