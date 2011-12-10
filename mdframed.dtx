@@ -5,14 +5,70 @@
 %</internal>
 %<*readme>
 ================================================================
-
+================================================================
 Working with the command \fbox or \fcolorbox, one has to
 handle page breaks by hand. The present package defines the
 environment mdframed which automatically deals with page breaks.
 
-Author's name: Marco Daniel and Elke Schubert (!new)
+Author's name: Marco Daniel and Elke Schubert (supports tikz implementation)
 License type: lppl
 
+================================================================
+The current development is available at github:
+https://github.com/marcodaniel/mdframed
+
+================================================================
+The package provides two dtx files, one Makefile and 
+one documentclass. By running the script `make all` you will
+produce the following files:
+- README.txt
+- mdframed.sty
+- mdframed.pdf
+- md-frame-0.mdf
+- md-frame-1.mdf
+- md-frame-2.mdf
+- md-frame-3.mdf
+- mdframed-examples.pdf
+- mdframed-example-default.tex
+- mdframed-example-default.pdf
+- mdframed-example-tikz.tex
+- mdframed-example-tikz.pdf
+- mdframed-example-pstricks.tex
+- mdframed-example-pstricks.pdf
+- mdframed-example-texsx.tex  
+- mdframed-example-texsx.pdf
+- ltxmdf.cls 
+- donald-duck.jpg 
+
+I recommend the following installation in your texmf-tree:
+
+/doc/latex/mdframed/
+- README.txt
+- mdframed.pdf
+- mdframed-example-default.tex
+- mdframed-example-default.pdf
+- mdframed-example-tikz.tex
+- mdframed-example-tikz.pdf
+- mdframed-example-pstricks.tex
+- mdframed-example-pstricks.pdf
+- mdframed-example-texsx.tex  
+- mdframed-example-texsx.pdf
+
+
+/source/latex/mdframed/
+- Makefile
+- mdframed.dtx
+- mdframed-examples.dtx
+- donald-duck.jpg
+
+/tex/latex/mdframed
+- mdframed.sty
+- md-frame-0.mdf
+- md-frame-1.mdf
+- md-frame-2.mdf
+- md-frame-3.mdf
+- ltxmdf.cls
+================================================================
 ================================================================
 %</readme>
 %<*internal>
@@ -133,10 +189,11 @@ Have fun!
 \fi
 %</internal>
 %<*driver>
-%%$Id: mdframed.dtx 267 2011-12-08 18:34:45Z marco $
+%%$Id: mdframed.dtx 273 2011-12-10 09:21:09Z marco $
+\setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,11pt,]{ltxmdf}
 \usepackage[framemethod=TikZ]{mdframed}
-\ltxmdfsetifoot$Id: mdframed.dtx 267 2011-12-08 18:34:45Z marco $
+\ltxmdfsetifoot$Id: mdframed.dtx 273 2011-12-10 09:21:09Z marco $
 
 \EnableCrossrefs
 \CodelineIndex
@@ -147,7 +204,7 @@ Have fun!
 %</driver>
 % \fi
 %
-% CheckSum{3478}
+% \CheckSum{3517}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -176,7 +233,6 @@ Have fun!
 %                  Martin Scharrer and Herbert Voss.\newline Sorry for bad English.}
 %           \href{mailto:marco.daniel@mada-nada.de}{Elke Schubert}}}
 % \version{\mdversion}
-% \date{\today}
 % \introduction{The standard methods for framing text (\Cmd{fbox} or \Cmd{fcolorbox}) require you to handle page breaks by hand, meaning that you have to split the \Cmd{fbox} into two. The present package defines the environment \Pack{mdframed} which automatically deals with pagebreaks in framed text.\par
 % By defining new environments the user may choose between several individual designs.%
 % \par\kern.5\baselineskip\noindent
@@ -946,20 +1002,19 @@ Have fun!
 % 
 % \clearpage
 % 
-% 
-% 
-% %\clearpage
 % \subsection{Revision history}\label{rev}
 % \raggedright
-% \minisec{Version 1.0a submitted }
+% \minisec{Version 1.0b submitted 9 Dec 2011}
 % \begin{itemize*}
-% \item fixes documentation
+% \item fixes documentation (Thanks to Dietrich Grau)
 % \item fixes bug in \Cmd{newmdtheoremenv}
-% \item fixes bug with overfull boxes
+% \item fixes bug with overfull boxes (Thanks to Dietrich Grau)
 % \item defined \Cmd{newpsstyle}\Opt{mdfbackgroundstyle} and \Opt{mdflinestyle} \limitation[PSTricks]
+% \item created dtx-file (Thanks to Kevin Godby)
+% \item added \Cmd{@parboxrestore} to \Cmd{md@lrbox}
 % \end{itemize*}
 % 
-% 
+% \footnotesize 
 % \minisec{Version 1.0 submitted 13 Nov 2011}
 % \begin{itemize*}
 % \item add option \Opt{userdefinedwidth}
@@ -978,7 +1033,6 @@ Have fun!
 % \end{itemize*}
 % 
 % 
-% \footnotesize
 % \minisec{Version 0.9g submitted 08 Oct 2011}
 % \begin{itemize*}
 % \item fixed documentation
@@ -1121,14 +1175,14 @@ Have fun!
 %
 % \subsection{The Explanation of mdframed.sty}
 %
-% %$Id: mdframed.dtx 267 2011-12-08 18:34:45Z marco $
-% %$Rev: 267 $
+% %$Id: mdframed.dtx 273 2011-12-10 09:21:09Z marco $
+% %$Rev: 273 $
 % %$Author: marco $
-% %$Date: 2011-12-08 19:34:45 +0100 (Do, 08. Dez 2011) $
+% %$Date: 2011-12-10 10:21:09 +0100 (Sa, 10. Dez 2011) $
 % \begin{macro}{mdversion,mdframedpackagename,md@maindate@svn}
 % Set package information
 %    \begin{macrocode}
-\def\mdversion{v1.0a}
+\def\mdversion{v1.0c}
 \def\mdframedpackagename{mdframed}
 \def\md@maindate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 %    \end{macrocode}
@@ -1137,7 +1191,7 @@ Have fun!
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{mdframed}%
-     [\md@maindate@svn$Id: mdframed.dtx 267 2011-12-08 18:34:45Z marco $%
+     [\md@maindate@svn$Id: mdframed.dtx 273 2011-12-10 09:21:09Z marco $%
       \mdversion: \mdframedpackagename]
 %    \end{macrocode}
 %
@@ -2139,7 +2193,7 @@ Have fun!
 %    \end{macrocode}
 % \end{macro}
 %
-%
+%  \changes{v1.0b}{2011/12/09}{removed \protect\Cmd{setbox\textbackslash tw@ \textbackslash vbox{\textbackslash unvbox \textbackslash tw@}}}
 % \begin{macro}{md@put@frame@i}
 % Output of the first splitted box.
 %    \begin{macrocode}
@@ -2169,7 +2223,7 @@ Have fun!
          \advance\dimen@ by -1pt\relax%Box darf nicht zu Groß werden.
          \splitmaxdepth\z@ \splittopskip\mdf@splittopskip@length%
          \setbox\tw@\vsplit\@tempboxa to \dimen@
-         \setbox\tw@\vbox{\unvbox\tw@}%needed?
+%         \setbox\tw@\vbox{\unvbox\tw@}%needed?
          \ifdimgreater{\ht\tw@+\dp\tw@}{\dimen@}{%Falsch gesplittet
             \md@PackageInfo{Box was splittet wrong\MessageBreak}%
              \dimen@i=\dimen@
@@ -2183,7 +2237,7 @@ Have fun!
                                      \unvbox\@tempboxa}
              \splittopskip\mdf@splittopskip@length%
              \setbox\tw@\vsplit\@tempboxa to \dimen@i
-             \setbox\tw@\vbox{\unvbox\tw@}%
+%             \setbox\tw@\vbox{\unvbox\tw@}%
              }{}%
          \setbox\@tempboxa\vbox{\unvbox\@tempboxa}%PRUEFEN!!!!
          \ifvoid\@tempboxa
@@ -2237,7 +2291,7 @@ Have fun!
         \advance\md@freevspace@length by -\mdf@splitbottomskip@length
         \splitmaxdepth\z@ \splittopskip\mdf@splittopskip@length%
         \setbox\tw@\vsplit\@tempboxa to \md@freevspace@length%
-        \setbox\tw@\vbox{\unvbox\tw@}%PRUEFEN!!!
+ %       \setbox\tw@\vbox{\unvbox\tw@}%PRUEFEN!!!
         \setbox\@tempboxa\vbox{\unvbox\@tempboxa}%PRUEFEN!!!!
         \ifvoid\@tempboxa\relax%
            \md@PackageWarning{You got a bad break\MessageBreak
@@ -2295,7 +2349,7 @@ Have fun!
 %% Public License, as described in lppl.txt in the base LaTeX distribution.
 %% Either version 1.0 or, at your option, any later version.
 
-%%$Id: mdframed.dtx 267 2011-12-08 18:34:45Z marco $
+%%$Id: mdframed.dtx 273 2011-12-10 09:21:09Z marco $
 %
 %    \end{macrocode}
 %
@@ -2305,7 +2359,7 @@ Have fun!
 \def\mdframedOpackagename{md-frame-0}
 \def\md@frameOdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-0.mdf}%
-    [\md@frameOdate@svn$Id: mdframed.dtx 267 2011-12-08 18:34:45Z marco $%
+    [\md@frameOdate@svn$Id: mdframed.dtx 273 2011-12-10 09:21:09Z marco $%
      \mdversion: \mdframedOpackagename]
 %    \end{macrocode}
 % \end{macro}
@@ -2663,7 +2717,7 @@ Have fun!
 %% Public License, as described in lppl.txt in the base LaTeX distribution.
 %% Either version 1.0 or, at your option, any later version.
 
-%%$Id: mdframed.dtx 267 2011-12-08 18:34:45Z marco $
+%%$Id: mdframed.dtx 273 2011-12-10 09:21:09Z marco $
 %
 %    \end{macrocode}
 %
@@ -2673,7 +2727,7 @@ Have fun!
 \def\mdframedIpackagename{md-frame-1}
 \def\md@frameIdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-1.mdf}%
-          [\md@frameIdate@svn$Id: mdframed.dtx 267 2011-12-08 18:34:45Z marco $ %
+          [\md@frameIdate@svn$Id: mdframed.dtx 273 2011-12-10 09:21:09Z marco $ %
            \mdversion: \mdframedIpackagename]
 %
 %    \end{macrocode}
@@ -3240,7 +3294,7 @@ Have fun!
 %% Public License, as described in lppl.txt in the base LaTeX distribution.
 %% Either version 1.0 or, at your option, any later version.
 
-%%$Id: mdframed.dtx 267 2011-12-08 18:34:45Z marco $
+%%$Id: mdframed.dtx 273 2011-12-10 09:21:09Z marco $
 %
 %    \end{macrocode}
 %
@@ -3250,7 +3304,7 @@ Have fun!
 \def\mdframedIIpackagename{md-frame-2}
 \def\md@frameIIdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-2.mdf}%
-         [\md@frameIIdate@svn$Id: mdframed.dtx 267 2011-12-08 18:34:45Z marco $ %
+         [\md@frameIIdate@svn$Id: mdframed.dtx 273 2011-12-10 09:21:09Z marco $ %
           \mdversion: \mdframedIIpackagename]
 %    \end{macrocode}
 % \end{macro}
