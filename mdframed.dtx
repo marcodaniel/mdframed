@@ -189,11 +189,11 @@ Have fun!
 \fi
 %</internal>
 %<*driver>
-%%$Id: mdframed.dtx 282 2011-12-17 19:01:21Z marco $
+%%$Id: mdframed.dtx 287 2011-12-19 20:12:09Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,11pt,]{ltxmdf}
 \usepackage[framemethod=TikZ]{mdframed}
-\ltxmdfsetifoot$Id: mdframed.dtx 282 2011-12-17 19:01:21Z marco $
+\ltxmdfsetifoot$Id: mdframed.dtx 287 2011-12-19 20:12:09Z marco $
 
 \EnableCrossrefs
 \CodelineIndex
@@ -1196,10 +1196,10 @@ Have fun!
 %
 % \subsection{The Explanation of mdframed.sty}
 %
-% %$Id: mdframed.dtx 282 2011-12-17 19:01:21Z marco $
-% %$Rev: 282 $
+% %$Id: mdframed.dtx 287 2011-12-19 20:12:09Z marco $
+% %$Rev: 287 $
 % %$Author: marco $
-% %$Date: 2011-12-17 20:01:21 +0100 (Sa, 17. Dez 2011) $
+% %$Date: 2011-12-19 21:12:09 +0100 (Mo, 19. Dez 2011) $
 % \begin{macro}{mdversion,mdframedpackagename,mdf@maindate@svn}
 % Set package information
 %    \begin{macrocode}
@@ -1212,7 +1212,7 @@ Have fun!
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{mdframed}%
-     [\mdf@maindate@svn$Id: mdframed.dtx 282 2011-12-17 19:01:21Z marco $%
+     [\mdf@maindate@svn$Id: mdframed.dtx 287 2011-12-19 20:12:09Z marco $%
       \mdversion: \mdframedpackagename]
 %    \end{macrocode}
 %
@@ -1849,13 +1849,7 @@ Have fun!
    }%
 }
 %Styledefinition noch ändern.
-\newrobustcmd*\mdf@put@frametitlerule{%
-     \noindent\rlap{\color{\mdf@frametitlerulecolor}%
-         \hspace*{-\mdf@innerleftmargin@length}%
-         \rule{\dimexpr\mdf@innerleftmargin@length+\hsize+\mdf@innerrightmargin@length}%
-              {\mdf@frametitlerulewidth@length}%
-         }%
-}
+%\providecommand*\mdf@put@frametitlerule{}
 
 \newrobustcmd*\mdf@@frametitle{%
   \ifdefempty{\mdf@frametitle}{}%
@@ -2043,11 +2037,11 @@ Have fun!
    \mdf@checkntheorem%
    \mdf@styledefinition%
    \mdf@footnoteinput%
-   \mdf@horizontalmargin@equation%
    \begingroup%
    \let\partopsep\z@%
    \expandafter\endgroup%   
    \mdf@trivlist\item\relax%
+   \mdf@horizontalmargin@equation%
    \mdf@lrbox{\mdf@splitbox@one}%
   }%
 %    \end{macrocode}
@@ -2434,7 +2428,7 @@ Have fun!
 %% Public License, as described in lppl.txt in the base LaTeX distribution.
 %% Either version 1.0 or, at your option, any later version.
 
-%%$Id: mdframed.dtx 282 2011-12-17 19:01:21Z marco $
+%%$Id: mdframed.dtx 287 2011-12-19 20:12:09Z marco $
 %
 %    \end{macrocode}
 %
@@ -2444,12 +2438,12 @@ Have fun!
 \def\mdframedOpackagename{md-frame-0}
 \def\mdf@frameOdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-0.mdf}%
-    [\mdf@frameOdate@svn$Id: mdframed.dtx 282 2011-12-17 19:01:21Z marco $%
+    [\mdf@frameOdate@svn$Id: mdframed.dtx 287 2011-12-19 20:12:09Z marco $%
      \mdversion: \mdframedOpackagename]
 %    \end{macrocode}
 % \end{macro}
-
-
+%
+%
 % \begin{macro}{mdframedOpackagename,mdf@frameOdate@svn}
 % short command
 %    \begin{macrocode}
@@ -2458,6 +2452,22 @@ Have fun!
 \def\mdf@titlebackground@default{\color{\mdf@frametitlebackgroundcolor}}
 %    \end{macrocode}
 % \end{macro}
+%
+%
+% \begin{macro}{mdf@put@frametitlerule}
+% Draw the title line -- This command is for every output.
+%    \begin{macrocode}
+\newrobustcmd*\mdf@put@frametitlerule{%
+     \noindent\rlap{\color{\mdf@frametitlerulecolor}%
+         \hspace*{-\mdf@innerleftmargin@length}%
+         \rule{\dimexpr\mdf@innerleftmargin@length+\hsize+\mdf@innerrightmargin@length}%
+              {\mdf@frametitlerulewidth@length}%
+         }%
+}%
+%    \end{macrocode}
+% \end{macro}
+%
+%
 %
 %
 % \begin{macro}{mdf@putbox@single,mdf@frame@background@single,mdf@frame@topandbottomline@single,mdf@frame@leftline@single,mdf@frame@rightline@single,mdf@frame@rightline@single}
@@ -2866,7 +2876,7 @@ Have fun!
 %% Public License, as described in lppl.txt in the base LaTeX distribution.
 %% Either version 1.0 or, at your option, any later version.
 
-%%$Id: mdframed.dtx 282 2011-12-17 19:01:21Z marco $
+%%$Id: mdframed.dtx 287 2011-12-19 20:12:09Z marco $
 %
 %    \end{macrocode}
 % \changes{v1.1beta}{2011/12/16}{added lost semicolons}
@@ -2876,7 +2886,7 @@ Have fun!
 \def\mdframedIpackagename{md-frame-1}
 \def\mdf@frameIdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-1.mdf}%
-          [\mdf@frameIdate@svn$Id: mdframed.dtx 282 2011-12-17 19:01:21Z marco $ %
+          [\mdf@frameIdate@svn$Id: mdframed.dtx 287 2011-12-19 20:12:09Z marco $ %
            \mdversion: \mdframedIpackagename]
 %
 %    \end{macrocode}
@@ -2965,6 +2975,11 @@ Have fun!
   \tikzset{mdfcorners/.style={rounded corners=\mdf@roundcorner@length}}% 
   \tikzset{mdfbackground/.style={fill=\mdf@backgroundcolor,%
                                  draw=\mdf@backgroundcolor}}% 
+  \tikzset{mdfframetitlebackground/.style={fill=\mdf@frametitlebackgroundcolor,%
+                                 draw=\mdf@frametitlebackgroundcolor,
+                                 rounded corners={max(\mdf@roundcorner@length%
+                                                 -\mdf@innerlinewidth@length%
+                                                 -.5\mdf@middlelinewidth@length,0)}}}%
 %
   \tikzset{mdfouterline/.style={}}%
 % nur wenn outerlinewidth>0 wird aussere Linie gezeichnet
@@ -3004,7 +3019,11 @@ Have fun!
             [postaction=mdfbackground]%
             [postaction=mdfinnerline]#1;%
     \end{scope}%
-    \path[mdfmiddleline,mdfcorners]#1;}%
+    \path[mdfmiddleline,mdfcorners]#1;
+  }%
+
+
+
 \newrobustcmd*\mdf@tikzbox@otl[2]{%one or two borders
     \clip(0,0)rectangle(\mdfboundingboxwidth,\mdfboundingboxheight);%
     \begin{scope}
@@ -3013,6 +3032,27 @@ Have fun!
        \path[mdfinnerline,mdfcorners]#1;%
     \end{scope}%
     \path[mdfmiddleline,mdfcorners]#1;}%
+%    \end{macrocode}
+% \end{macro}
+%
+%
+%
+% \begin{macro}{mdf@put@frametitlerule}
+% frametitlerule with tikz
+%    \begin{macrocode}
+\tikzset{mdfframetitlerule/.style={%
+   draw=\mdf@frametitlerulecolor,
+   fill=\mdf@frametitlerulecolor,
+  }%
+}
+\newrobustcmd*\mdf@put@frametitlerule{%
+  \noindent%
+  \rlap{\hspace*{-\mdf@innerleftmargin@length}%
+  \pgfmathsetlength{\dimen@}{\hsize+\mdf@innerleftmargin@length+\mdf@innerrightmargin@length}%
+  \tikz\draw[mdfframetitlerule] (0,0)%
+             rectangle (\dimen@,\mdf@frametitlerulewidth@length);
+  }%
+}%
 %    \end{macrocode}
 % \end{macro}
 %
@@ -3134,6 +3174,22 @@ Have fun!
                  }{}%
 %
       \mdf@test@noline{\path[mdfbackground,mdfcorners](O)rectangle(P);}{}%
+%
+      \begin{scope}%background frame title
+        \pgfmathsetlengthmacro\mdf@Ox%
+            {\mdf@Ox+\mdf@innerlinewidth@length+0.5\mdf@middlelinewidth@length}
+        \pgfmathsetlengthmacro\mdf@Px%
+            {\mdf@Px-\mdf@innerlinewidth@length-0.5\mdf@middlelinewidth@length}
+        \pgfmathsetlengthmacro\mdf@Py%
+            {\mdf@Py-\mdf@innerlinewidth@length-0.5\mdf@middlelinewidth@length}
+        \pgfmathsetlengthmacro\mdf@Fy
+            {\mdf@Py-\mdfframetitleboxtotalheight}
+%       \draw[mdfframetitlebackground,mdfcorners]
+                  (\mdf@Ox,\mdf@Fy) rectangle (\mdf@Px,\mdf@Py);  
+        \path[mdfframetitlebackground]
+            (\mdf@Ox,\mdf@Fy) -- (\mdf@Ox,\mdf@Py)%
+            --(\mdf@Px,\mdf@Py) --(\mdf@Px,\mdf@Fy);
+      \end{scope}
 %
       \node[mdfbox]at(\mdf@Ax,\mdf@Ay){\box\mdf@splitbox@one};% Ausgabebox einfuegen
      \end{scope}
@@ -3443,7 +3499,7 @@ Have fun!
 %% Public License, as described in lppl.txt in the base LaTeX distribution.
 %% Either version 1.0 or, at your option, any later version.
 
-%%$Id: mdframed.dtx 282 2011-12-17 19:01:21Z marco $
+%%$Id: mdframed.dtx 287 2011-12-19 20:12:09Z marco $
 %
 %    \end{macrocode}
 %
@@ -3453,7 +3509,7 @@ Have fun!
 \def\mdframedIIpackagename{md-frame-2}
 \def\mdf@frameIIdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-2.mdf}%
-         [\mdf@frameIIdate@svn$Id: mdframed.dtx 282 2011-12-17 19:01:21Z marco $ %
+         [\mdf@frameIIdate@svn$Id: mdframed.dtx 287 2011-12-19 20:12:09Z marco $ %
           \mdversion: \mdframedIIpackagename]
 %    \end{macrocode}
 % \end{macro}
