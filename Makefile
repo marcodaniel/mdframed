@@ -1,5 +1,5 @@
 # Makefile for mdframed project folder
-# $Id: Makefile 271 2011-12-09 12:25:08Z marco $
+# $Id: Makefile 299 2012-01-02 19:43:01Z marco $
 SHELL     := /bin/bash
 PACKAGE   = mdframed
 EXAMPLED  = mdframed-example-default
