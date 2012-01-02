@@ -1,0 +1,923 @@
+% \iffalse meta-comment
+% !TEX program = pdfLaTeX
+%<*internal>
+\iffalse
+%</internal>
+%<*readme>
+================================================================
+
+Working with the command \fbox or \fcolorbox, one has to
+handle page breaks by hand. The present package defines the
+environment mdframed which automatically deals with page breaks.
+
+
+Author's name: Marco Daniel and Elke Schubert (!new)
+License type: lppl
+
+================================================================
+%</readme>
+%<*internal>
+\fi
+\def\nameofplainTeX{plain}
+\ifx\fmtname\nameofplainTeX\else
+  \expandafter\begingroup
+\fi
+%</internal>
+%<*install>
+\input docstrip.tex
+\keepsilent
+\askforoverwritefalse
+\preamble
+----------------------------------------------------------------
+Working with the command fbox or fcolorbox, one has to
+handle page breaks by hand. The present package defines the
+environment mdframed which automatically deals with page breaks.
+
+Author's name: Marco Daniel and Elke Schubert (!new)
+License type: lppl
+\endpreamble
+\postamble
+
+================================================================
+Copyright (C) 2011 by Marco Daniel
+
+This work may be distributed and/or modified under the
+conditions of the LaTeX Project Public License (LPPL), either
+version 1.3c of this license or (at your option) any later
+version.  The latest version of this license is in the file:
+
+http://www.latex-project.org/lppl.txt
+
+This work is "maintained" (as per LPPL maintenance status) by
+Marco Daniel.
+
+Have fun!
+
+================================================================
+\endpostamble
+\usedir{doc/latex/mdframed}
+\generate{\file{mdframed-example-default.tex}{\from{mdframed-examples.dtx}{mdframed-example-default}}}
+\generate{\file{mdframed-example-tikz.tex}{\from{mdframed-examples.dtx}{mdframed-example-tikz}}}
+\generate{\file{mdframed-example-pstricks.tex}{\from{mdframed-examples.dtx}{mdframed-example-pstricks}}}
+\generate{\file{mdframed-example-texsx.tex}{\from{mdframed-examples.dtx}{mdframed-example-texsx}}}
+\Msg{*********************************************************}
+\Msg{*}
+\Msg{* To finish the installation you have to move the}
+\Msg{* following file into a directory searched by TeX:}
+\Msg{*}
+\Msg{* \space\space documentation.sty}
+\Msg{*}
+\Msg{* To produce the documentation run the file documentation.dtx}
+\Msg{* once through LaTeX. Then, run}
+\Msg{*}
+\Msg{* \space\space makeindex -s gglo.ist -o mdframed.gls mdframed.glo}
+\Msg{* \space\space makeindex -s gind.ist mdframed.idx}
+\Msg{*}
+\Msg{* through makeIndex to produce the glossary. Finally, run LaTeX once again.}
+\Msg{* That's all!}
+\Msg{*}
+\Msg{* Happy TeXing!}
+\Msg{*********************************************************}
+%</install>
+%<install>\endbatchfile
+%<*internal>
+\ifx\fmtname\nameofplainTeX
+  \expandafter\endbatchfile
+\else
+  \expandafter\endgroup
+\fi
+%</internal>
+%<*driver>
+%%$Id$
+\documentclass[parskip=false,11pt,]{ltxmdf}
+\usepackage{mdframed}
+\ltxmdfsetifoot $Id$
+\CodelineIndex
+\RecordChanges
+\begin{document}
+  \DocInput{\jobname.dtx}
+\end{document}
+%</driver>
+% \fi
+%
+% \CheckSum{717}
+%
+% \CharacterTable
+%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%   Digits        \0\1\2\3\4\5\6\7\8\9
+%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%   Dollar        \$     Percent       \%     Ampersand     \&
+%   Acute accent  \'     Left paren    \(     Right paren   \)
+%   Asterisk      \*     Plus          \+     Comma         \,
+%   Minus         \-     Point         \.     Solidus       \/
+%   Colon         \:     Semicolon     \;     Less than     \<
+%   Equals        \=     Greater than  \>     Question mark \?
+%   Commercial at \@     Left bracket  \[     Backslash     \\
+%   Right bracket \]     Circumflex    \^     Underscore    \_
+%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%   Right brace   \}     Tilde         \~}
+%
+% \GetFileInfo{mdframed-examples}
+%
+%
+%
+% \title{Examples of the \Pack{mdframed} package}
+% \subtitle{auto-split frame environment}
+% \author{\href{mailto:marco.daniel@mada-nada.de}{Marco Daniel}%
+%        \footnote{With thanks to Heiko Oberdiek, Rolf Niepraschk,
+%                  Martin Scharrer and Herbert Voss.\newline Sorry for bad English.}
+%           \href{mailto:marco.daniel@mada-nada.de}{Elke Schubert}}
+% \version{\mdversion}
+% \introduction{The standard methods for framing text (\Cmd{fbox} or \Cmd{fcolorbox}) require you to handle page breaks by hand, meaning that you have to split the \Cmd{fbox} into two. The present package defines the environment \Pack{mdframed} which automatically deals with pagebreaks in framed text.\par
+% By defining new environments the user may choose between several individual designs.%
+% \par\kern.5\baselineskip\noindent
+% The dtx-file creates only the files \begin{tabular}[t]{ll}
+%             \texttt{mdframed-example-default.tex} &
+%             \texttt{mdframed-example-tikz.tex} \\
+%             \texttt{mdframed-example-pstricks.tex}  &
+%             \texttt{mdframed-example-texsx.tex}
+%             \end{tabular}
+% \par\kern.5\baselineskip\noindent
+% FYI:\quad\parbox[t]{.8\linewidth}{I create a repository for \Pack{mdframed} on \href{https://github.com/marcodaniel/mdframed}{github} where you can \href{https://github.com/marcodaniel/mdframed}{download} the current development status.}
+% }
+% 
+% 
+% 
+% 
+% \maketitle
+% 
+% 
+% \section{Motivation}
+% To complie the files use |Makefile| with |make EXAMPLES|.
+%\StopEventually{^^A
+%  \PrintChanges^^A
+%}
+%\iffalse
+%    \begin{macrocode}
+%<*mdframed-example-default>
+%    \end{macrocode}
+%\fi
+%
+% \section{The file mdframed-example-default}
+
+%    \begin{macrocode}
+%Documenation of the package mdframed
+%%$Id$
+\setcounter{errorcontextlines}{999}
+\documentclass[parskip=false,english,11pt]{ltxmdf}
+\ltxmdfsetifoot  $Id$
+
+\usepackage{showexpl}
+\lstset{style=lstltxmdf,explpreset={pos=b,rframe={}},}
+
+\newcommand\Loadedframemethod{default}
+\usepackage[framemethod=\Loadedframemethod]{mdframed}
+
+\title{The \Pack{mdframed} package}
+\subtitle{Examples for \Opt{framemethod=\Loadedframemethod}}
+\author{\href{mailto:marco.daniel@mada-nada.de}{Marco Daniel}}
+\version{\mdversion}
+\introduction{In this document I collect various examples for \Opt{framemethod=\Loadedframemethod}.
+Some presented examples are more or less exorbitant.}
+
+\mdfsetup{skipabove=\topskip,skipbelow=\topskip}
+\newrobustcmd\ExampleText{%
+        An \textit{inhomogeneous linear} differential equation has the form
+         \begin{align}
+            L[v ] = f,
+         \end{align}
+        where $L$ is a linear differential operator, $v$ is
+        the dependent variable, and $f$ is a given non-zero
+        function of the independent variables alone.
+}
+
+\newcounter{examplecount}
+\setcounter{examplecount}{0}
+\renewcommand\thesubsection{}
+\newcommand\Examplesec[1]{%
+\stepcounter{examplecount}%
+\subsection{Example~\arabic{examplecount}~--~#1\relax}%
+}
+
+\begin{document}
+\maketitle
+\section{Loading}
+In the preamble only the package \Pack{mdframed} width the option \Opt{framemethod=\Loadedframemethod} is loaded. All other modifications will be done by \Cmd{mdfdefinestyle} or \Cmd{mdfsetup}.
+
+{\large\color{red!50!black}
+\NOTE Every \Cmd{global} inside the examples is necessary to work with the package \Pack{showexpl}.}
+
+\section{Examples}
+All examples have the following settings:
+
+\begin{tltxmdfexample}
+\mdfsetup{skipabove=\topskip,skipbelow=\topskip}
+\newrobustcmd\ExampleText{%
+An \textit{inhomogeneous linear} differential equation
+has the form
+\begin{align}
+L[v ] = f,
+\end{align}
+where $L$ is a linear differential operator, $v$ is
+the dependent variable, and $f$ is a given non-zero
+function of the independent variables alone.
+}
+\end{tltxmdfexample}
+\clearpage
+\Examplesec{very simple}
+\begin{LTXexample}
+\global\mdfdefinestyle{exampledefault}{%
+     linecolor=red,linewidth=3pt,%
+     leftmargin=1cm,rightmargin=1cm
+}
+\begin{mdframed}[style=exampledefault]
+\ExampleText
+\end{mdframed}
+\end{LTXexample}
+
+\Examplesec{hidden line + frame title}
+\begin{LTXexample}
+\global\mdfapptodefinestyle{exampledefault}{%
+ topline=false,rightline=true,bottomline=false}
+\begin{mdframed}[style=exampledefault,frametitle={Inhomogeneous linear}]
+\ExampleText
+\end{mdframed}
+\end{LTXexample}
+\clearpage
+
+\Examplesec{colored frame title}
+\begin{LTXexample}
+\renewcommand\mdframedtitleenv[1]{%
+                 \colorbox{green}{%
+                 \parbox{\dimexpr\linewidth-6pt\relax}%6pt=linewidth
+                 {\centering\bfseries #1}}%
+                 \par\kern.5\baselineskip\noindent%
+        }
+\global\mdfapptodefinestyle{exampledefault}{%
+   rightline=true,innerleftmargin=0,innerrightmargin=0}
+\begin{mdframed}[style=exampledefault,frametitle={Inhomogeneous linear}]
+\ExampleText
+\end{mdframed}
+\end{LTXexample}
+
+\Examplesec{framed picture which is centered}
+\begin{LTXexample}
+\begin{mdframed}[userdefinedwidth=6cm,align=center,
+                 linecolor=blue,linewidth=4pt]
+\includegraphics[width=\linewidth]{donald-duck}
+\end{mdframed}
+\end{LTXexample}
+
+\Examplesec{theorem with separate header and the help of TikZ (complex)}
+\begin{tltxmdfexample}
+\makeatletter
+\newcounter{theo}[section]
+\newcommand*\newmdframedtitleenv[1]{%
+ \@afterindentfalse
+  {\parindent \z@
+    \setlength{\parfillskip}{\z@ plus 1fil}%
+    \mdraggedtitle\nobreak%
+    \makebox[\linewidth][l]{%
+     \hspace*{-1\mdf@innerleftmargin@length}%
+     \rlap{\color{white}%
+       \hspace*{-1\mdf@middlelinewidth@length}%
+       \rule[\mdf@middlelinewidth@length]%
+            {\dimexpr\linewidth+1\mdf@innerleftmargin@length%
+             +\mdf@innerrightmargin@length
+             +2\mdf@middlelinewidth@length\relax}%
+            {\dimexpr\ht\strutbox+.3333em\relax}%
+     }%
+     \rlap{\color{blue!20}%
+       \rule{\dimexpr\linewidth+\mdf@innerleftmargin@length%
+             +\mdf@innerrightmargin@length\relax}%
+            {\mdf@middlelinewidth@length}}%
+     \hspace*{-1\mdf@middlelinewidth@length}%
+     \tikz[remember picture,baseline]%
+       \node[,draw = none, text = black,fill = blue!20,]%
+       {\mdf@frametitlefont\strut Theorem~\thetheo#1};\relax%
+   }%
+  \par\kern.5\baselineskip}%
+ \@afterheading}
+\newenvironment{theo}[1][]{%
+  \let\mdframedtitleenv\newmdframedtitleenv%
+   \stepcounter{theo}%
+   \ifstrempty{#1}%
+     {\mdfsetup{frametitle={\strut}}}%
+     {\mdfsetup{frametitle={:~#1}}}%
+   \begin{mdframed}[innertopmargin=0pt,linecolor=blue!20,%
+                    linewidth=2pt,topline=false,]%
+   }{\end{mdframed}}
+\begin{theo}[Inhomogeneous Linear]
+\ExampleText
+\end{theo}
+
+\begin{theo}
+\ExampleText
+\end{theo}
+\end{tltxmdfexample}
+\makeatletter
+\newcounter{theo}[section]
+\newcommand*\newmdframedtitleenv[1]{%
+ \@afterindentfalse
+  {\parindent \z@
+    \setlength{\parfillskip}{\z@ plus 1fil}%
+    \mdraggedtitle\nobreak%
+    \makebox[\linewidth][l]{%
+     \hspace*{-1\mdf@innerleftmargin@length}%
+     \rlap{\color{white}%
+       \hspace*{-1\mdf@middlelinewidth@length}%
+       \rule[\mdf@middlelinewidth@length]%
+            {\dimexpr\linewidth+1\mdf@innerleftmargin@length%
+             +\mdf@innerrightmargin@length
+             +2\mdf@middlelinewidth@length\relax}%
+            {\dimexpr\ht\strutbox+.3333em\relax}%
+     }%
+     \rlap{\color{blue!20}%
+       \rule{\dimexpr\linewidth+\mdf@innerleftmargin@length%
+             +\mdf@innerrightmargin@length\relax}%
+            {\mdf@middlelinewidth@length}}%
+     \hspace*{-1\mdf@middlelinewidth@length}%
+     \tikz[remember picture,baseline]%
+       \node[,draw = none, text = black,fill = blue!20,]%
+       {\mdf@frametitlefont\strut Theorem~\thetheo#1};\relax%
+   }%
+  \par\kern.5\baselineskip}%
+ \@afterheading}
+\newenvironment{theo}[1][]{%
+  \let\mdframedtitleenv\newmdframedtitleenv%
+   \stepcounter{theo}%
+   \ifstrempty{#1}%
+     {\mdfsetup{frametitle={\strut}}}%
+     {\mdfsetup{frametitle={:~#1}}}%
+   \begin{mdframed}[innertopmargin=0pt,linecolor=blue!20,%
+                    linewidth=2pt,topline=false,]%
+   }{\end{mdframed}}
+
+\begin{theo}[Inhomogeneous Linear]
+\ExampleText
+\end{theo}
+
+\begin{theo}
+\ExampleText
+\end{theo}
+
+\clearpage
+\Examplesec{hide only a part of a line}
+The example below is inspired by the following post on StackExchange \href{http://tex.stackexchange.com/questions/24101/theorem-decorations-that-stay-with-theorem-environment}{Theorem decorations that stay with theorem environment}
+\begin{LTXexample}
+\makeatletter
+\newlength{\interruptlength}
+\setlength{\interruptlength}{2.5ex}
+\newrobustcmd\overlaplines{%
+ \appto\md@frame@leftline@single{%
+  \llap{\color{white}%
+   \rule[\dimexpr-\mdfboundingboxdepth%
+         \ifbool{mdf@bottomline}{-\mdf@middlelinewidth@length}{}%
+         +\interruptlength\relax]%
+       {\mdf@middlelinewidth@length}%
+       {\dimexpr\mdfboundingboxtotalheight%
+        +\ifbool{mdf@bottomline}{\mdf@middlelinewidth@length}{0pt}
+        +\ifbool{mdf@topline}{\mdf@middlelinewidth@length}{0pt}%
+       -2\interruptlength\relax}%
+  }%
+ }%
+ \appto\md@frame@rightline@single{%
+  \rlap{\color{white}%
+    \hspace*{\mdfboundingboxwidth}%
+    \hspace*{\mdf@innerrightmargin@length}%
+    \rule[\dimexpr-\mdfboundingboxdepth%
+          \ifbool{mdf@bottomline}{-\mdf@middlelinewidth@length}{}
+          +\interruptlength\relax]%
+         {\mdf@middlelinewidth@length}%
+         {\dimexpr\mdfboundingboxtotalheight%
+          +\ifbool{mdf@bottomline}{\mdf@middlelinewidth@length}{0pt}%
+          +\ifbool{mdf@topline}{\mdf@middlelinewidth@length}{0pt}
+          -2\interruptlength\relax}%
+  }%
+ }
+}
+\makeatother
+\overlaplines
+
+\begin{mdframed}[linecolor=blue,linewidth=8pt]
+\ExampleText
+\end{mdframed}
+\end{LTXexample}
+\end{document}
+ \endinput
+%    \end{macrocode}
+%
+%\iffalse
+%    \begin{macrocode}
+%</mdframed-example-default>
+%    \end{macrocode}
+%\fi
+%
+%\iffalse
+%    \begin{macrocode}
+%<*mdframed-example-tikz>
+%    \end{macrocode}
+%\fi
+%
+% \section{The file mdframed-example-tikz}
+
+%    \begin{macrocode}
+%Documenation of the package mdframed
+%%$Id$
+\setcounter{errorcontextlines}{999}
+\documentclass[parskip=false,english,11pt]{ltxmdf}
+\ltxmdfsetifoot  $Id$
+
+\usepackage{showexpl}
+\lstset{style=lstltxmdf,explpreset={pos=b,rframe={}},}
+
+\newcommand\Loadedframemethod{TikZ}
+\usepackage[framemethod=\Loadedframemethod]{mdframed}
+
+\title{The \Pack{mdframed} package}
+\subtitle{Examples for \Opt{framemethod=\Loadedframemethod}}
+\author{\href{mailto:marco.daniel@mada-nada.de}{Marco Daniel}}
+\version{\mdversion}
+\introduction{In this document I collect various examples for \Opt{framemethod=\Loadedframemethod}.
+Some presented examples are more or less exorbitant.}
+
+\mdfsetup{skipabove=\topskip,skipbelow=\topskip}
+\newrobustcmd\ExampleText{%
+        An \textit{inhomogeneous linear} differential equation has the form
+         \begin{align}
+            L[v ] = f,
+         \end{align}
+        where $L$ is a linear differential operator, $v$ is
+        the dependent variable, and $f$ is a given non-zero
+        function of the independent variables alone.
+}
+
+\newcounter{examplecount}
+\setcounter{examplecount}{0}
+\renewcommand\thesubsection{}
+\newcommand\Examplesec[1]{%
+\stepcounter{examplecount}%
+\subsection{Example~\arabic{examplecount}~--~#1\relax}%
+}
+
+\begin{document}
+\maketitle
+\section{Loading}
+In the preamble only the package \Pack{mdframed} width the option \Opt{framemethod=\Loadedframemethod} is loaded. All other modifications will be done by \Cmd{mdfdefinestyle} or \Cmd{mdfsetup}.
+
+{\large\color{red!50!black}
+\NOTE Every \Cmd{global} inside the examples is necessary to work with the package \Pack{showexpl}.}
+
+\section{Examples}
+All examples have the following settings:
+
+\begin{tltxmdfexample}
+\mdfsetup{skipabove=\topskip,skipbelow=\topskip}
+\newrobustcmd\ExampleText{%
+An \textit{inhomogeneous linear} differential equation
+has the form
+\begin{align}
+L[v ] = f,
+\end{align}
+where $L$ is a linear differential operator, $v$ is
+the dependent variable, and $f$ is a given non-zero
+function of the independent variables alone.
+}
+\end{tltxmdfexample}
+\clearpage
+\ExampleText{round corner}
+\begin{LTXexample}
+\global\mdfdefinestyle{exampledefault}{%
+     outerlinewidth=5pt,innerlinewidth=0pt,
+     outerlinecolor=red,roundcorner=5pt
+}
+\begin{mdframed}[style=exampledefault]
+\ExampleText
+\end{mdframed}
+\end{LTXexample}
+
+\Examplesec{hidden line + frame title}
+\begin{LTXexample}
+\global\mdfapptodefinestyle{exampledefault}{%
+ topline=false,leftline=false,}
+\begin{mdframed}[style=exampledefault,frametitle={Inhomogeneous linear}]
+\ExampleText
+\end{mdframed}
+\end{LTXexample}
+\clearpage
+\Examplesec{framed picture which is centered}
+\begin{LTXexample}
+\begin{mdframed}[userdefinedwidth=6cm,align=center,
+                 linecolor=blue,middlelinewidth=4pt,roundcorner=5pt]
+\includegraphics[width=\linewidth]{donald-duck}
+\end{mdframed}
+\end{LTXexample}
+
+\Examplesec{Gimmick}
+\begin{LTXexample}
+\mdfsetup{splitbottomskip=0.8cm,splittopskip=0cm,
+          innerrightmargin=2cm,innertopmargin=1cm,%
+          innerlinewidth=2pt,outerlinewidth=2pt,
+          middlelinewidth=10pt,backgroundcolor=red,
+          linecolor=blue,middlelinecolor=gray,
+          tikzsetting={draw=yellow,line width=3pt,%
+                    dashed,%
+                    dash pattern= on 10pt off 3pt},
+          rightline=false,bottomline=false}
+\begin{mdframed}
+\ExampleText
+\end{mdframed}
+\end{LTXexample}
+
+\Examplesec{complex example with TikZ}
+
+\begin{tltxmdfexample}
+\tikzstyle{titregris} =
+          [draw=gray, thick, fill=white, shading = exersicetitle, %
+           text=gray, rectangle, rounded corners,
+           right,minimum height=.7cm]
+
+\pgfdeclarehorizontalshading{exersicebackground}{100bp}
+{color(0bp)=(green!40);
+color(100bp)=(black!5)}
+
+\pgfdeclarehorizontalshading{exersicetitle}{100bp}
+{color(0bp)=(red!40);
+color(100bp)=(black!5)}
+
+\newcounter{exercise}
+\renewcommand\theexercise{Exercise~n\arabic{exercise}}
+\makeatletter
+\def\mdf@@exercisepoints{}
+\define@key{mdf}{exercisepoints}{%
+    \def\mdf@@exercisepoints{#1}
+}
+\renewrobustcmd\mdfcreateextratikz{%
+      \node[titregris,xshift=1cm] at (P-|O) %
+           {~\mdf@frametitlefont{\theexercise}~};
+      \ifdefempty{\mdf@@exercisepoints}%
+      {}%
+      {\node[titregris,left,xshift=-1cm] at (P)%
+        {~\mdf@frametitlefont{\mdf@@exercisepoints points}~};}%
+}
+\makeatother
+
+\mdfdefinestyle{exercisestyle}{%
+  outerlinewidth=1pt,
+  innerlinewidth=0pt,
+  roundcorner=2pt,
+  linecolor=gray,
+  tikzsetting={shading = exersicebackground},
+  innertopmargin=1.2\baselineskip,
+  skipabove={\dimexpr0.5\baselineskip+\topskip\relax},
+  needspace=3\baselineskip,
+  frametitlefont=\sffamily\bfseries,
+  settings={\global\stepcounter{exercise}},
+  }
+
+\begin{mdframed}[style=exercisestyle,]
+\ExampleText
+\end{mdframed}
+
+\begin{mdframed}[style=exercisestyle,exercisepoints=10]
+\ExampleText
+\end{mdframed}
+\end{tltxmdfexample}
+
+\tikzstyle{titregris} =
+          [draw=gray, thick, fill=white, shading = exersicetitle, %
+           text=gray, rectangle, rounded corners,
+           right,minimum height=.7cm]
+
+\pgfdeclarehorizontalshading{exersicebackground}{100bp}
+{color(0bp)=(green!40);
+color(100bp)=(black!5)}
+
+\pgfdeclarehorizontalshading{exersicetitle}{100bp}
+{color(0bp)=(red!40);
+color(100bp)=(black!5)}
+
+\newcounter{exercise}
+\renewcommand\theexercise{Exercise~n\arabic{exercise}}
+\makeatletter
+\def\mdf@@exercisepoints{}
+\define@key{mdf}{exercisepoints}{%
+    \def\mdf@@exercisepoints{#1}
+}
+\renewrobustcmd\mdfcreateextratikz{%
+      \node[titregris,xshift=1cm] at (P-|O) {~\textbf{\theexercise}~};
+      \ifdefempty{\mdf@@exercisepoints}%
+      {}%
+      {\node[titregris,left,xshift=-1cm] at (P)%
+        {~\mdf@frametitlefont{\mdf@@exercisepoints points}~};}%
+}
+\makeatother
+
+\mdfdefinestyle{exercisestyle}{%
+  outerlinewidth=1pt,
+  innerlinewidth=0pt,
+  roundcorner=2pt,
+  linecolor=gray,
+  tikzsetting={shading = exersicebackground},
+  innertopmargin=1.2\baselineskip,
+  skipabove={\dimexpr0.5\baselineskip+\topskip\relax},
+  needspace=3\baselineskip,
+  frametitlefont=\sffamily\bfseries,
+  settings={\global\stepcounter{exercise}},
+  }
+
+\begin{mdframed}[style=exercisestyle,]
+\ExampleText
+\end{mdframed}
+
+\begin{mdframed}[style=exercisestyle,exercisepoints=10]
+\ExampleText
+\end{mdframed}
+
+\end{document}
+ \endinput
+%    \end{macrocode}
+%
+%\iffalse
+%    \begin{macrocode}
+%</mdframed-example-tikz>
+%    \end{macrocode}
+%\fi
+%
+%\iffalse
+%    \begin{macrocode}
+%<*mdframed-example-pstricks>
+%    \end{macrocode}
+%\fi
+%
+% \section{The file mdframed-example-pstricks}
+
+%    \begin{macrocode}
+%Documenation of the package mdframed
+%%$Id$
+\setcounter{errorcontextlines}{999}
+\documentclass[parskip=false,english,11pt]{ltxmdf}
+\ltxmdfsetifoot$Id$
+
+
+
+\lstDeleteShortInline{|}
+\newcommand\Loadedframemethod{PSTricks}
+\usepackage[framemethod=\Loadedframemethod]{mdframed}
+
+\usepackage{showexpl}
+\lstset{style=lstltxmdf,explpreset={pos=b,rframe={}},}
+
+
+
+\title{The \Pack{mdframed} package}
+\subtitle{Examples for \Opt{framemethod=\Loadedframemethod}}
+\author{\href{mailto:marco.daniel@mada-nada.de}{Marco Daniel}}
+\version{\mdversion}
+\introduction{In this document I collect various examples for \Opt{framemethod=\Loadedframemethod}.
+Some presented examples are more or less exorbitant.}
+
+\mdfsetup{skipabove=\topskip,skipbelow=\topskip}
+\newrobustcmd\ExampleText{%
+        An \textit{inhomogeneous linear} differential equation has the form
+         \begin{align}
+            L[v ] = f,
+         \end{align}
+        where $L$ is a linear differential operator, $v$ is
+        the dependent variable, and $f$ is a given non-zero
+        function of the independent variables alone.
+}
+
+\newcounter{examplecount}
+\setcounter{examplecount}{0}
+\renewcommand\thesubsection{}
+\newcommand\Examplesec[1]{%
+\stepcounter{examplecount}%
+\subsection{Example~\arabic{examplecount}~--~#1\relax}%
+}
+
+\begin{document}
+\maketitle
+\section{Loading}
+In the preamble only the package \Pack{mdframed} width the option \Opt{framemethod=\Loadedframemethod} is loaded. All other modifications will be done by \Cmd{mdfdefinestyle} or \Cmd{mdfsetup}.
+
+{\large\color{red!50!black}
+\NOTE Every \Cmd{global} inside the examples is necessary to work with the package \Pack{showexpl}.}
+X
+\section{Examples}
+All examples have the following settings:
+
+\begin{tltxmdfexample}
+\mdfsetup{skipabove=\topskip,skipbelow=\topskip}
+\newrobustcmd\ExampleText{%
+An \textit{inhomogeneous linear} differential equation
+has the form
+\begin{align}
+L[v ] = f,
+\end{align}
+where $L$ is a linear differential operator, $v$ is
+the dependent variable, and $f$ is a given non-zero
+function of the independent variables alone.
+}
+\end{tltxmdfexample}
+\clearpage
+
+\Examplesec{very simple}
+\begin{LTXexample}
+\global\mdfdefinestyle{exampledefault}{%
+     linecolor=red,linewidth=3pt,%
+     leftmargin=1cm,rightmargin=1cm
+}
+\begin{mdframed}[style=exampledefault,roundcorner=5]
+\ExampleText
+\end{mdframed}
+\end{LTXexample}
+
+\Examplesec{hidden line + frame title}
+\begin{LTXexample}
+\global\mdfapptodefinestyle{exampledefault}{%
+ topline=false,rightline=false,bottomline=false}
+\begin{mdframed}[style=exampledefault,frametitle={Inhomogeneous linear}]
+\ExampleText
+\end{mdframed}
+\end{LTXexample}
+
+\clearpage
+
+\Examplesec{Dash Lines}
+\begin{LTXexample}
+\global\mdfdefinestyle{exampledefault}{%
+   pstrickssetting={linestyle=dashed,},linecolor=red,linewidth=5pt}
+\begin{mdframed}[style=exampledefault,]
+\ExampleText
+\end{mdframed}
+\end{LTXexample}
+
+\Examplesec{Double Lines}
+\begin{LTXexample}
+\global\mdfdefinestyle{exampledefault}{%
+   pstrickssetting={doubleline=true,doublesep=3pt},
+   linecolor=red,linewidth=5pt}
+\begin{mdframed}[style=exampledefault,]
+\ExampleText
+\end{mdframed}
+\end{LTXexample}
+\end{document}
+ \endinput
+%    \end{macrocode}
+%
+%\iffalse
+%    \begin{macrocode}
+%</mdframed-example-pstricks>
+%    \end{macrocode}
+%\fi
+%
+%\iffalse
+%    \begin{macrocode}
+%<*mdframed-example-texsx>
+%    \end{macrocode}
+%\fi
+%
+% \section{The file mdframed-example-texsx}
+
+%    \begin{macrocode}
+%Documenation of the package mdframed
+%%$Id$
+\setcounter{errorcontextlines}{999}
+\documentclass[parskip=false,english,11pt,ltxlipsum]{ltxmdf}
+\ltxmdfsetifoot  $Id$
+
+\usepackage{showexpl}
+\lstset{style=lstltxmdf,explpreset={pos=b,rframe={}},}
+
+\newcommand\Loadedframemethod{default}
+\usepackage[framemethod=\Loadedframemethod]{mdframed}
+
+\title{The \Pack{mdframed} package}
+\subtitle{Examples for \Opt{framemethod=\Loadedframemethod}}
+\author{\href{mailto:marco.daniel@mada-nada.de}{Marco Daniel}}
+\version{\mdversion}
+\introduction{In this document I collect various examples for \Opt{framemethod=\Loadedframemethod}.
+Some presented examples are more or less exorbitant.}
+
+\mdfsetup{skipabove=\topskip,skipbelow=\topskip}
+\newrobustcmd\ExampleText{%
+        An \textit{inhomogeneous linear} differential equation has the form
+         \begin{align}
+            L[v ] = f,
+         \end{align}
+        where $L$ is a linear differential operator, $v$ is
+        the dependent variable, and $f$ is a given non-zero
+        function of the independent variables alone.
+}
+
+\newcounter{examplecount}
+\setcounter{examplecount}{0}
+\renewcommand\thesubsection{}
+\newcommand\Examplesec[1]{%
+\stepcounter{examplecount}%
+\subsection{Example~\arabic{examplecount}~--~#1\relax}%
+}
+
+\begin{document}
+\maketitle
+\section{Loading}
+In the preamble only the package \Pack{mdframed} width the option \Opt{framemethod=\Loadedframemethod} is loaded. All other modifications will be done by \Cmd{mdfdefinestyle} or \Cmd{mdfsetup}.
+
+{\large\color{red!50!black}
+\NOTE Every \Cmd{global} inside the examples is necessary to work with the package \Pack{showexpl}.}
+
+\section{Examples}
+All examples have the following settings:
+
+\begin{tltxmdfexample}
+\mdfsetup{skipabove=\topskip,skipbelow=\topskip}
+\newrobustcmd\ExampleText{%
+An \textit{inhomogeneous linear} differential equation
+has the form
+\begin{align}
+L[v ] = f,
+\end{align}
+where $L$ is a linear differential operator, $v$ is
+the dependent variable, and $f$ is a given non-zero
+function of the independent variables alone.
+}
+\end{tltxmdfexample}
+\clearpage
+\Examplesec{Package listings}
+The example below is inspired by the following post on StackExchange \href{http://tex.stackexchange.com/questions/27673/background-overflows-when-using-rounded-corners-for-listings-package-listings}{Background overflows when using rounded corners for listings (package: `listings`)}
+
+Here the solution which can be decorate as usual.
+
+\begin{tltxmdfexample}[moretexcs={BeforeBeginEnvironment,AfterEndEnvironment},morekeywords={lstlisting}]
+\BeforeBeginEnvironment{lstlisting}{%
+    \begin{mdframed}[<modification>]%
+    \vspace{-0.7em}}
+\AfterEndEnvironment{lstlisting}{%
+    \vspace{-0.5em}%
+    \end{mdframed}}
+\end{tltxmdfexample}
+
+\Examplesec{Package multicol}
+How I wrote in \enquote{Known Problems} you can't combine \Pack{multicol}  with \Pack{mdframed}. In a simple way without any breaks you can use:
+\begin{LTXexample}
+\begin{multicols}{2}
+\lipsum[1]
+\begin{mdframed}
+\ExampleText
+\end{mdframed}
+\lipsum[2]
+\end{multicols}
+\end{LTXexample}
+\clearpage
+\twocolumn[\Examplesec{Working in twocolumn mode}]
+\begin{tltxmdfexample}
+\twocolumn[%
+  \Examplesec{Working in
+          twocolumn mode}]
+\lipsum[2]
+\begin{mdframed}[%
+   leftmargin=10pt,%
+   rightmargin=10pt,%
+   linecolor=red,
+   backgroundcolor=yellow]
+\ExampleText
+\end{mdframed}
+\lipsum[2]
+\end{tltxmdfexample}
+\lipsum[2]\lipsum[2]
+\begin{mdframed}[leftmargin=10pt,%
+                 rightmargin=10pt,%
+                 linecolor=red,
+                 backgroundcolor=yellow]
+\ExampleText
+\end{mdframed}
+\lipsum[2]
+\onecolumn
+\Examplesec{Working inside enumerate}
+\begin{LTXexample}
+Text Text Text Text Text Text Text Text
+\begin{enumerate}
+\item in the following \ldots
+      \begin{mdframed}[linecolor=blue,linewidth=2]
+         \ExampleText
+      \end{mdframed}
+\item \lipsum[2]
+\end{enumerate}
+Text Text Text Text Text Text
+\end{LTXexample}
+\end{document}
+ \endinput
+%    \end{macrocode}
+%
+%\iffalse
+%    \begin{macrocode}
+%</mdframed-example-texsx>
+%    \end{macrocode}
+%\fi
+%
+% \Finale
+%
+\endinput
+

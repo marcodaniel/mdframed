@@ -1,12 +1,13 @@
 # Makefile for mdframed project folder
-# $Id: Makefile 271 2011-12-09 12:25:08Z marco $
+# $Id$
 SHELL     := /bin/bash
 PACKAGE   = mdframed
+EXAMPLEA  = mdframed-examples
 EXAMPLED  = mdframed-example-default
 EXAMPLET  = mdframed-example-tikz
 EXAMPLEP  = mdframed-example-pstricks
 EXAMPLESX = mdframed-example-texsx
-EXAMPLLIST =  $(EXAMPLED) $(EXAMPLET) $(EXAMPLEP) $(EXAMPLESX) 
+EXAMPLLIST =  $(EXAMPLEA) $(EXAMPLED) $(EXAMPLET) $(EXAMPLEP) $(EXAMPLESX) 
 PDFLATEX  = pdflatex
 LATEX     = latex
 DVIPS     = dvips
@@ -29,7 +30,10 @@ docsty: $(PACKAGE).dtx
 	$(PDFLATEX) $(PACKAGE).dtx
 	$(PDFLATEX) $(PACKAGE).dtx
 
-examples: $(EXAMPLED).tex $(EXAMPLET).tex $(EXAMPLEP).tex $(EXAMPLESX).tex
+examples: $(EXAMPLEA).dtx
+#EXAMPLEA
+	$(PDFLATEX) $(EXAMPLEA).dtx
+	$(PDFLATEX) $(EXAMPLEA).dtx
 #EXAMPLED
 	$(PDFLATEX) $(EXAMPLED).tex
 	$(PDFLATEX) $(EXAMPLED).tex

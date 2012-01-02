@@ -1,0 +1,127 @@
+
+%%$Id: mdframed-examples.dtx 270 2011-12-09 12:19:09Z marco $
+\setcounter{errorcontextlines}{999}
+\documentclass[parskip=false,english,11pt,ltxlipsum]{ltxmdf}
+\ltxmdfsetifoot  $Id: mdframed-examples.dtx 270 2011-12-09 12:19:09Z marco $
+
+\usepackage{showexpl}
+\lstset{style=lstltxmdf,explpreset={pos=b,rframe={}},}
+
+\newcommand\Loadedframemethod{default}
+\usepackage[framemethod=\Loadedframemethod]{mdframed}
+
+\title{The \Pack{mdframed} package}
+\subtitle{Examples for \Opt{framemethod=\Loadedframemethod}}
+\author{\href{mailto:marco.daniel@mada-nada.de}{Marco Daniel}}
+\version{\mdversion}
+\introduction{In this document I collect various examples for \Opt{framemethod=\Loadedframemethod}.
+Some presented examples are more or less exorbitant.}
+
+\mdfsetup{skipabove=\topskip,skipbelow=\topskip}
+\newrobustcmd\ExampleText{%
+        An \textit{inhomogeneous linear} differential equation has the form
+         \begin{align}
+            L[v ] = f,
+         \end{align}
+        where $L$ is a linear differential operator, $v$ is
+        the dependent variable, and $f$ is a given non-zero
+        function of the independent variables alone.
+}
+
+\newcounter{examplecount}
+\setcounter{examplecount}{0}
+\renewcommand\thesubsection{}
+\newcommand\Examplesec[1]{%
+\stepcounter{examplecount}%
+\subsection{Example~\arabic{examplecount}~--~#1\relax}%
+}
+
+\begin{document}
+\maketitle
+\section{Loading}
+In the preamble only the package \Pack{mdframed} width the option \Opt{framemethod=\Loadedframemethod} is loaded. All other modifications will be done by \Cmd{mdfdefinestyle} or \Cmd{mdfsetup}.
+
+{\large\color{red!50!black}
+\NOTE Every \Cmd{global} inside the examples is necessary to work with the package \Pack{showexpl}.}
+
+\section{Examples}
+All examples have the following settings:
+
+\begin{tltxmdfexample}
+\mdfsetup{skipabove=\topskip,skipbelow=\topskip}
+\newrobustcmd\ExampleText{%
+An \textit{inhomogeneous linear} differential equation
+has the form
+\begin{align}
+L[v ] = f,
+\end{align}
+where $L$ is a linear differential operator, $v$ is
+the dependent variable, and $f$ is a given non-zero
+function of the independent variables alone.
+}
+\end{tltxmdfexample}
+\clearpage
+\Examplesec{Package listings}
+The example below is inspired by the following post on StackExchange \href{http://tex.stackexchange.com/questions/27673/background-overflows-when-using-rounded-corners-for-listings-package-listings}{Background overflows when using rounded corners for listings (package: `listings`)}
+
+Here the solution which can be decorate as usual.
+
+\begin{tltxmdfexample}[moretexcs={BeforeBeginEnvironment,AfterEndEnvironment},morekeywords={lstlisting}]
+\BeforeBeginEnvironment{lstlisting}{%
+    \begin{mdframed}[<modification>]%
+    \vspace{-0.7em}}
+\AfterEndEnvironment{lstlisting}{%
+    \vspace{-0.5em}%
+    \end{mdframed}}
+\end{tltxmdfexample}
+
+\Examplesec{Package multicol}
+How I wrote in \enquote{Known Problems} you can't combine \Pack{multicol}  with \Pack{mdframed}. In a simple way without any breaks you can use:
+\begin{LTXexample}
+\begin{multicols}{2}
+\lipsum[1]
+\begin{mdframed}
+\ExampleText
+\end{mdframed}
+\lipsum[2]
+\end{multicols}
+\end{LTXexample}
+\clearpage
+\twocolumn[\Examplesec{Working in twocolumn mode}]
+\begin{tltxmdfexample}
+\twocolumn[%
+  \Examplesec{Working in
+          twocolumn mode}]
+\lipsum[2]
+\begin{mdframed}[%
+   leftmargin=10pt,%
+   rightmargin=10pt,%
+   linecolor=red,
+   backgroundcolor=yellow]
+\ExampleText
+\end{mdframed}
+\lipsum[2]
+\end{tltxmdfexample}
+\lipsum[2]\lipsum[2]
+\begin{mdframed}[leftmargin=10pt,%
+                 rightmargin=10pt,%
+                 linecolor=red,
+                 backgroundcolor=yellow]
+\ExampleText
+\end{mdframed}
+\lipsum[2]
+\onecolumn
+\Examplesec{Working inside enumerate}
+\begin{LTXexample}
+Text Text Text Text Text Text Text Text
+\begin{enumerate}
+\item in the following \ldots
+      \begin{mdframed}[linecolor=blue,linewidth=2]
+         \ExampleText
+      \end{mdframed}
+\item \lipsum[2]
+\end{enumerate}
+Text Text Text Text Text Text
+\end{LTXexample}
+\end{document}
+ \endinput
