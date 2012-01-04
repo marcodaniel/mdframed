@@ -331,13 +331,13 @@ Have fun!
 %<*example>
 % \fi
 \begin{tltxmdfexample}
-%  \usepackage[<GLOBAL OPTIONS>]{mdframed}
+  \usepackage[<GLOBAL OPTIONS>]{mdframed}
 \end{tltxmdfexample}
 % \iffalse
 %</example>
 % \fi
 % 
-% Onyle the option \Opt{framemethod} should be load by the 
+% Only the option \Opt{framemethod} should be load by the 
 % optional argument of \Cmd{usepackage}. All other options
 % should be loaded with \Cmd{mdfsetup} or related environments.
 % \minisec{Provided environment}
@@ -356,12 +356,12 @@ Have fun!
 % To create own environments with \Pack{mdframed} see section \ref{sec:cmds}.
 % 
 % \minisec{Autodetecting floats}
-% \Pack{mdframed} detects the environment is used inside \Pack{float}
+% \Pack{mdframed} detects whether the environment is used inside \Pack{float}
 % or \Pack{minipage} environments. If you use \Pack{mdframed} in such
 % an environment \Pack{mdframed} will use the option \Opt{nobreak} automatically. 
 % 
 % \minisec{Twoside-mode}
-% When you are using \Pack{mdframed} inside \Pack{twoside} mode you  can set
+% If you are using \Pack{mdframed} inside \Pack{twoside} mode you can set
 % the option \Opt{innermargin} and \Opt{outermargin} (see section \ref{optlength}).
 % The length will be ignored if you use the option \Opt{usetwoside}.
 % 
@@ -653,7 +653,6 @@ Have fun!
 % \item \Opt{psroundlinecolor=\Opt{backgroundcolor}}
 % \item \Opt{frametitlerulecolor=\Opt{linecolor}}
 % \item \Opt{frametitlebackgroundcolor=\Opt{backgroundcolor}}
-% \item \Opt{frametitlebottomrulecolor=\Opt{linecolor}}
 % \item \Opt{settings=\{\}}
 % \item \Opt{frametitlesettings=\{\}}
 % \item \Opt{font=\{\}}
@@ -957,11 +956,11 @@ Have fun!
 % \ExplOpt[none]{frametitle} 
 %      The environment gets a title. To set a title use 
 %      \Opt{frametitle=\{The Title of the frame\}} as an option of the environment.
-% \ExplOpt[\Cmd{bfseries}\Cmd{large}]{frametitleformat}
+% \ExplOpt[\Cmd{normalfont}\Cmd{bfseries}]{frametitlefont}
 %      Sets the format of the \Opt{frametitle}.
 % \ExplOpt[\Cmd{raggedleft}]{frametitlealignment}
 %      Align the \Opt{frametitle}. This option must be set via \Cmd{mdfsetup}.
-% \ExplOpt[true]{frametitlerule} 
+% \ExplOpt[false]{frametitlerule} 
 %      Set this key to \Opt{false} to get no line between the frame title
 %      and the text.
 % \ExplOpt[.2pt]{frametitlerulewidth}
@@ -1358,11 +1357,9 @@ Have fun!
 % \begin{itemize*}
 % \item fixes documentation (Thanks to Dietrich Grau)
 % \item fixes bug in \Cmd{newmdtheoremenv}
-% \item fixes bug with overfull boxes (Thanks to Dietrich Grau)
-% \item defined \Cmd{newpsstyle}\Opt{mdfbackgroundstyle} and \Opt{mdflinestyle} \limitation[PSTricks]
+% \item defined new styles via \Cmd{newpsstyle}\limitation[PSTricks]
 % \item expand frame title option by option \Opt{frametitlerule}, \Opt{frametitlerulewidth}
 %       \Opt{frametitlefont}, \Opt{frametitleaboveskip}, \Opt{frametitlebelowskip}, \Opt{frametitlealignment}
-% \item added \Cmd{@parboxrestore} to \Cmd{mdf@lrbox}
 % \item removed limitation of three lines for PSTricks
 % \end{itemize*}
 %
@@ -1775,7 +1772,6 @@ Have fun!
     {psroundlinecolor==\mdf@backgroundcolor},%
     {frametitlerulecolor==\mdf@linecolor},
     {frametitlebackgroundcolor==\mdf@backgroundcolor},%
-    {frametitlebottomrulecolor==\mdf@linecolor},%
     {settings=={}},%
     {frametitlesettings=={}},%
     {font=={}},%
@@ -2196,9 +2192,9 @@ Have fun!
     \endmdf@lrbox%
    \mdf@ignorevbadness%
    \global\setbox\mdf@frametitlebox\vbox{\unvbox\mdf@frametitlebox}%
-   \global\mdfframetitleboxwidth=\wd\mdf@frametitlebox%
-   \global\mdfframetitleboxheight=\ht\mdf@frametitlebox%
-   \global\mdfframetitleboxdepth=\dp\mdf@frametitlebox%
+   \global\mdfframetitleboxwidth=\wd\mdf@frametitlebox\relax%
+   \global\mdfframetitleboxheight=\ht\mdf@frametitlebox\relax%
+   \global\mdfframetitleboxdepth=\dp\mdf@frametitlebox\relax%
    \global\mdfframetitleboxtotalheight=\dimexpr\ht\mdf@frametitlebox+\dp\mdf@frametitlebox
             +\mdf@frametitleaboveskip@length+\mdf@frametitlebelowskip@length\relax%
    \color@endgroup%
@@ -4172,7 +4168,7 @@ Have fun!
 \newpsstyle{mdfframetitlerule}{%
    linecolor=\mdf@frametitlerulecolor,%
    fillcolor=\mdf@frametitlerulecolor,%
-   fillstyle=solid,%
+   fillstyle=solid,dimen=outer,%
 }
 %
 %    \end{macrocode}
@@ -4274,8 +4270,6 @@ Have fun!
           \nodexn{(mdf@P)-(0,\mdf@outerlinewidth@length)
                           -0.5(0,\mdf@middlelinewidth@length)}{mdf@P}
          }{}%
-        %Frametitlebackground
-          \drawbrackgroundframetitle@single
 %        \psclip{%
          %Four lines
           \mdf@test@ltrb{\mdf@pstricksbox@fl{mdf@O}{mdf@P}}{}
@@ -4306,6 +4300,8 @@ Have fun!
         %no line
          \mdf@test@noline{\psframe[style=mdfbackgroundstyle](mdf@O)(mdf@P)}{}
 %         }
+        %Frametitlebackground
+          \drawbrackgroundframetitle@single
         %output%
           \rput[bl](mdf@A){\box\mdf@splitbox@one}
 %          \psdot(mdf@A)\uput[90](mdf@A){mdf at A}
@@ -4406,8 +4402,6 @@ Have fun!
                           -0.5(0,\mdf@middlelinewidth@length)}{mdf@P}
          }{}%
 %      \psclip{
-     %Frametitlebackground
-       \drawbrackgroundframetitle@first
       %Four or Three lines
        \ifboolexpr{test {\mdf@test@ltrb} or test {\mdf@test@ltr}}%
         {\mdf@pstricksbox@tl{(mdf@O)(mdf@O|mdf@P)(mdf@P)(mdf@P|mdf@O)}}%
@@ -4538,8 +4532,6 @@ Have fun!
                           -0.5(\mdf@middlelinewidth@length,0)}{mdf@P}
          }{}%
       %%
-     %Frametitlebackground
-       \drawbrackgroundframetitle@middle
       \ifboolexpr{bool {mdf@leftline} and bool {mdf@rightline}}%
                {\mdf@pstricksbox@tncl{(mdf@O|mdf@P)}{(mdf@P|mdf@O)}}{}%
       \ifboolexpr{bool {mdf@leftline} and not (bool {mdf@rightline})}%
@@ -4548,6 +4540,8 @@ Have fun!
                {\mdf@pstricksbox@ol{(mdf@P)(mdf@P|mdf@O)}}{}%
       \ifboolexpr{not (bool {mdf@leftline}) and not (bool {mdf@rightline})}%
                {\psframe[style=mdfbackgroundstyle](mdf@O)(mdf@P)}{}%
+     %Frametitlebackground
+       \drawbrackgroundframetitle@middle
       %output%
        \rput[bl](mdf@A){\box\mdf@splitbox@two}
 %       \psdot(mdf@A)\uput[90](mdf@A){mdf at A}
