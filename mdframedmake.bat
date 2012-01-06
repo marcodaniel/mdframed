@@ -1,4 +1,4 @@
-title Entpacken mdframed.dtx
+title Entpacken mdframed.dtx unter windows
 @echo off
 ::
 pdflatex mdframed.dtx
@@ -16,7 +16,7 @@ pdflatex mdframed-example-tikz.tex
 latex mdframed-example-pstricks.tex
 latex mdframed-example-pstricks.tex
 dvips mdframed-example-pstricks.dvi
-pspdf mdframed-example-pstricks.ps
+call ps2pdf mdframed-example-pstricks.ps
 ::
 pdflatex mdframed-example-texsx.tex
 pdflatex mdframed-example-texsx.tex
