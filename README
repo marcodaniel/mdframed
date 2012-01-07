@@ -10,7 +10,7 @@ The current development status is v1.1beta
 Linux/Mac:
 To create the package run (Terminal)
 
-make all
+  make all
 
 Windows:
 Use the file
