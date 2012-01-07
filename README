@@ -7,9 +7,14 @@ License type: lppl
 
 The current development status is v1.1beta
 
-To create the package run
+Linux/Mac:
+To create the package run (Terminal)
 
 make all
+
+Windows:
+Use the file
+  mdframedmake.bat
 
 The file ltxmdf.cls and the picture are also available in this repo.
 
