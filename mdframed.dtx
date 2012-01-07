@@ -198,11 +198,11 @@ Have fun!
 \fi
 %</internal>
 %<*driver>
-%%$Id: mdframed.dtx 304 2012-01-05 20:05:37Z marco $
+%%$Id: mdframed.dtx 305 2012-01-07 09:41:50Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,11pt,]{ltxmdf}
 \usepackage[framemethod=TikZ]{mdframed}
-\ltxmdfsetifoot$Id: mdframed.dtx 304 2012-01-05 20:05:37Z marco $
+\ltxmdfsetifoot$Id: mdframed.dtx 305 2012-01-07 09:41:50Z marco $
 
 \EnableCrossrefs
 \CodelineIndex
@@ -1494,10 +1494,10 @@ Have fun!
 %
 % \subsection{The Explanation of mdframed.sty}
 %
-% %$Id: mdframed.dtx 304 2012-01-05 20:05:37Z marco $
-% %$Rev: 304 $
+% %$Id: mdframed.dtx 305 2012-01-07 09:41:50Z marco $
+% %$Rev: 305 $
 % %$Author: marco $
-% %$Date: 2012-01-05 21:05:37 +0100 (Do, 05. Jan 2012) $
+% %$Date: 2012-01-07 10:41:50 +0100 (Sa, 07. Jan 2012) $
 % \begin{macro}{mdversion,mdframedpackagename,mdf@maindate@svn}
 % Set package information
 %    \begin{macrocode}
@@ -1510,7 +1510,7 @@ Have fun!
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{mdframed}%
-     [\mdf@maindate@svn$Id: mdframed.dtx 304 2012-01-05 20:05:37Z marco $%
+     [\mdf@maindate@svn$Id: mdframed.dtx 305 2012-01-07 09:41:50Z marco $%
       \mdversion: \mdframedpackagename]
 %    \end{macrocode}
 %
@@ -1996,10 +1996,13 @@ Have fun!
 %
 % \changes{v1.0b}{2011/11/26}{added command  \protect\Cmd{@parboxrestore} to \protect\Cmd{mdf@lrbox}}
 % \changes{v1.1release}{2012/01/03}{changed definition of \protect\Cmd{mdf@lrbox} (Thanks Lars Madsen)}
+% \changes{v1.1release}{2012/01/06}{expand definition of \protect\Cmd{mdf@lrbox} by \protect\Cmd{mdf@restoreparams}}
 % \begin{macro}{mdf@lrbox,endmdf@lrbox}
 % Modification of the default |\lrbox| and |\endlrbox|
 %    \begin{macrocode}
 \def\mdf@lrbox#1{%
+  \edef\mdf@restoreparams{%
+   \parindent=\the\parindent \parskip=\the\parskip}%
   \setbox#1\vbox\bgroup
    \begingroup
     \mdf@horizontalmargin@equation%
@@ -2009,38 +2012,19 @@ Have fun!
     \textwidth=\hsize%
     \let\if@nobreak\iffalse
     \let\if@noskipsec\iffalse
-%    \let\par\@@par
+    \let\par\@@par
     \let\-\@dischyph
     \let\'\@acci\let\`\@accii\let\=\@acciii
-%    \parindent\z@ \parskip\z@skip
+    \parindent\z@ \parskip\z@skip
     \linewidth\hsize
     \@totalleftmargin\z@
     \leftskip\z@skip \rightskip\z@skip
     \parfillskip\@flushglue \lineskip\normallineskip%
     \baselineskip\normalbaselineskip%
-    \ignorespaces%
+    \everypar{\mdf@restoreparams}\ignorespaces%
 }
 
-\def\mdf@lrbox#1{%
-  \setbox#1\vbox\bgroup
-   \begingroup
-    \mdf@horizontalmargin@equation%
-    \color@setgroup%
-    \hsize=\mdf@horizontalspaceofbox%
-    \columnwidth=\hsize%
-    \textwidth=\hsize%
-    \let\if@nobreak\iffalse
-    \let\if@noskipsec\iffalse
-%    \let\par\@@par
-    \let\-\@dischyph
-    \let\'\@acci\let\`\@accii\let\=\@acciii
-    \linewidth\hsize
-    \@totalleftmargin\z@
-    \leftskip\z@skip \rightskip\z@skip
-    \parfillskip\@flushglue \lineskip\normallineskip%
-    \baselineskip\normalbaselineskip%
-    \ignorespaces%
-}
+
 \def\endmdf@lrbox{\endgroup\unskip\color@endgroup\egroup}
 
 %    \end{macrocode}
@@ -2926,7 +2910,7 @@ Have fun!
 %% Public License, as described in lppl.txt in the base LaTeX distribution.
 %% Either version 1.0 or, at your option, any later version.
 
-%%$Id: mdframed.dtx 304 2012-01-05 20:05:37Z marco $
+%%$Id: mdframed.dtx 305 2012-01-07 09:41:50Z marco $
 %
 %    \end{macrocode}
 %
@@ -2936,7 +2920,7 @@ Have fun!
 \def\mdframedOpackagename{md-frame-0}
 \def\mdf@frameOdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-0.mdf}%
-    [\mdf@frameOdate@svn$Id: mdframed.dtx 304 2012-01-05 20:05:37Z marco $%
+    [\mdf@frameOdate@svn$Id: mdframed.dtx 305 2012-01-07 09:41:50Z marco $%
      \mdversion: \mdframedOpackagename]
 %    \end{macrocode}
 % \end{macro}
@@ -3358,7 +3342,7 @@ Have fun!
 %% Public License, as described in lppl.txt in the base LaTeX distribution.
 %% Either version 1.0 or, at your option, any later version.
 
-%%$Id: mdframed.dtx 304 2012-01-05 20:05:37Z marco $
+%%$Id: mdframed.dtx 305 2012-01-07 09:41:50Z marco $
 %
 %    \end{macrocode}
 % \changes{v1.1beta}{2011/12/16}{added lost semicolons}
@@ -3368,7 +3352,7 @@ Have fun!
 \def\mdframedIpackagename{md-frame-1}
 \def\mdf@frameIdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-1.mdf}%
-          [\mdf@frameIdate@svn$Id: mdframed.dtx 304 2012-01-05 20:05:37Z marco $ %
+          [\mdf@frameIdate@svn$Id: mdframed.dtx 305 2012-01-07 09:41:50Z marco $ %
            \mdversion: \mdframedIpackagename]
 %
 %    \end{macrocode}
@@ -4032,7 +4016,7 @@ Have fun!
 %% Public License, as described in lppl.txt in the base LaTeX distribution.
 %% Either version 1.0 or, at your option, any later version.
 
-%%$Id: mdframed.dtx 304 2012-01-05 20:05:37Z marco $
+%%$Id: mdframed.dtx 305 2012-01-07 09:41:50Z marco $
 %
 %    \end{macrocode}
 %
@@ -4042,7 +4026,7 @@ Have fun!
 \def\mdframedIIpackagename{md-frame-2}
 \def\mdf@frameIIdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-2.mdf}%
-         [\mdf@frameIIdate@svn$Id: mdframed.dtx 304 2012-01-05 20:05:37Z marco $ %
+         [\mdf@frameIIdate@svn$Id: mdframed.dtx 305 2012-01-07 09:41:50Z marco $ %
           \mdversion: \mdframedIIpackagename]
 %    \end{macrocode}
 % \end{macro}
@@ -4726,10 +4710,10 @@ Have fun!
 %
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 304 2012-01-05 20:05:37Z marco $
+%%$Id: mdframed.dtx 305 2012-01-07 09:41:50Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt]{ltxmdf}
-\ltxmdfsetifoot  $Id: mdframed.dtx 304 2012-01-05 20:05:37Z marco $
+\ltxmdfsetifoot  $Id: mdframed.dtx 305 2012-01-07 09:41:50Z marco $
 
 \usepackage{showexpl}
 \lstset{style=lstltxmdf,explpreset={pos=b,rframe={}},}
@@ -4919,10 +4903,10 @@ The example below is inspired by the following post on StackExchange \href{http:
 %
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 304 2012-01-05 20:05:37Z marco $
+%%$Id: mdframed.dtx 305 2012-01-07 09:41:50Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt]{ltxmdf}
-\ltxmdfsetifoot  $Id: mdframed.dtx 304 2012-01-05 20:05:37Z marco $
+\ltxmdfsetifoot  $Id: mdframed.dtx 305 2012-01-07 09:41:50Z marco $
 
 \usepackage{showexpl}
 \lstset{style=lstltxmdf,explpreset={pos=b,rframe={}},}
@@ -5150,10 +5134,10 @@ color(100bp)=(black!5)}
 %
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 304 2012-01-05 20:05:37Z marco $
+%%$Id: mdframed.dtx 305 2012-01-07 09:41:50Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt]{ltxmdf}
-\ltxmdfsetifoot$Id: mdframed.dtx 304 2012-01-05 20:05:37Z marco $
+\ltxmdfsetifoot$Id: mdframed.dtx 305 2012-01-07 09:41:50Z marco $
 
 \lstDeleteShortInline{|}
 \newcommand\Loadedframemethod{PSTricks}
@@ -5278,10 +5262,10 @@ function of the independent variables alone.
 
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 304 2012-01-05 20:05:37Z marco $
+%%$Id: mdframed.dtx 305 2012-01-07 09:41:50Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt,ltxlipsum]{ltxmdf}
-\ltxmdfsetifoot  $Id: mdframed.dtx 304 2012-01-05 20:05:37Z marco $
+\ltxmdfsetifoot  $Id: mdframed.dtx 305 2012-01-07 09:41:50Z marco $
 
 \usepackage{showexpl}
 \lstset{style=lstltxmdf,explpreset={pos=b,rframe={}},}
