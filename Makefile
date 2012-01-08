@@ -1,6 +1,6 @@
 ################################################################
 ## Makefile for mdframed project folder
-## $Id: Makefile 308 2012-01-07 16:55:41Z marco $
+## $Id: Makefile 313 2012-01-08 12:51:10Z marco $
 ################################################################
 ## Definitions
 ################################################################
@@ -17,7 +17,7 @@ EXAMPLEP  = mdframed-example-pstricks
 EXAMPLESX = mdframed-example-texsx
 EXAMPLLIST=  $(EXAMPLED) $(EXAMPLET) $(EXAMPLEP) $(EXAMPLESX) 
 FILELIST  =  $(PACKAGE) $(EXAMPLED) $(EXAMPLET) $(EXAMPLEP) $(EXAMPLESX)
-AUXFILES  = aux dtxe glo gls hd ins idx ilg ind log out ps thm tmp toc 
+AUXFILES  = aux dtxe glo glolog gls hd ins idx idxlog ilg ind log out ps thm tmp toc 
 ################################################################
 ## Colordefinition
 ################################################################
