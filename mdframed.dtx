@@ -14,12 +14,21 @@ Author's name: Marco Daniel and Elke Schubert (supports tikz implementation)
 License type: lppl
 
 ================================================================
+The revision history is printed in the documentation.
+
+================================================================
 The current development is available at github:
 https://github.com/marcodaniel/mdframed
 
 ================================================================
-The package provides two dtx files, one Makefile and 
-one documentclass. By running the script `make all` you will
+The package provides 
+ * one dtx files,
+ * one Makefile (compiling for Linux/Mac),
+ * one mdframedmake.bat (compiling for Windows)
+ * one personal documentclass ltxmdf.cls 
+ * one example picture donald-duck.jpg 
+
+By running the script `make all` you will
 produce the following files:
 - README.txt
 - mdframed.sty
@@ -28,7 +37,6 @@ produce the following files:
 - md-frame-1.mdf
 - md-frame-2.mdf
 - md-frame-3.mdf
-- mdframed-examples.pdf
 - mdframed-example-default.tex
 - mdframed-example-default.pdf
 - mdframed-example-tikz.tex
@@ -37,8 +45,6 @@ produce the following files:
 - mdframed-example-pstricks.pdf
 - mdframed-example-texsx.tex  
 - mdframed-example-texsx.pdf
-- ltxmdf.cls 
-- donald-duck.jpg 
 
 I recommend the following installation in your texmf-tree:
 
@@ -53,13 +59,12 @@ I recommend the following installation in your texmf-tree:
 - mdframed-example-pstricks.pdf
 - mdframed-example-texsx.tex  
 - mdframed-example-texsx.pdf
+- donald-duck.jpg
 
 
 /source/latex/mdframed/
 - Makefile
 - mdframed.dtx
-- mdframed-examples.dtx
-- donald-duck.jpg
 
 /tex/latex/mdframed
 - mdframed.sty
@@ -198,11 +203,11 @@ Have fun!
 \fi
 %</internal>
 %<*driver>
-%%$Id: mdframed.dtx 308 2012-01-07 16:55:41Z marco $
+%%$Id: mdframed.dtx 312 2012-01-08 12:43:36Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,11pt,]{ltxmdf}
 \usepackage[framemethod=TikZ]{mdframed}
-\ltxmdfsetifoot$Id: mdframed.dtx 308 2012-01-07 16:55:41Z marco $
+\ltxmdfsetifoot$Id: mdframed.dtx 312 2012-01-08 12:43:36Z marco $
 
 \EnableCrossrefs
 \CodelineIndex
@@ -276,7 +281,6 @@ Have fun!
 % breakable frames. I think an example is the best way to demonstrate its properties.
 % 
 % 
-% %\newtheorem{mdtheorem}{Theorem}[section]
 % \newmdtheoremenv[outerlinewidth=2,leftmargin=40,rightmargin=40,%
 %     backgroundcolor=yellow,outerlinecolor=blue,innertopmargin=0pt,%
 %     splittopskip=\topskip,skipbelow=\baselineskip,%
@@ -316,6 +320,7 @@ Have fun!
 % The package itself loads the packages 
 %  \begin{itemize}
 %   \item \Pack{kvoptions},
+%   \item \Pack{xparse} (new),
 %   \item \Pack{etoolbox} and
 %   \item \Pack{color}.
 %  \end{itemize}
@@ -340,6 +345,7 @@ Have fun!
 % Only the option \Opt{framemethod} should be load by the 
 % optional argument of \Cmd{usepackage}. All other options
 % should be loaded with \Cmd{mdfsetup} or related environments.
+% The package should be loaed after \Pack{amsthm} if you need the package.
 % \minisec{Provided environment}
 % The package defines only one environment with the following syntax:
 % \iffalse
@@ -485,42 +491,38 @@ Have fun!
 % \ExplCmd{renewmdenv} 
 %      By using this command you can redefine environments which are created by \Cmd{newmdenv}.
 % 
-% \ExplCmd{newmdtheoremenv} 
-% Since the package is often used to highlight theorem environments, 
-% I have created a command\footnote{Thanks to Martin Scharrer and Enrico Gregorio:\newline
-% \href{http://tex.stackexchange.com/questions/26298/own-command-to-create-new-environment}%
-% {Own command to create new environment}}
-% to simplify this process. The command has the following syntax:
-% 
-% \iffalse
-%<*example>
-% \fi
-\begin{tltxmdfexample}[deletekeywords={mdframed}]
- \newmdtheoremenv[<mdframed-options>]{<envname>}%
-                 [<numberedlike>]{<caption>}[<within>]
-\end{tltxmdfexample}
-% \iffalse
-%</example>
-% \fi
-% The last four arguments are equivalent to the command \Cmd{newtheorem}.
-% Only the first optional argument is able to pass \Pack{mdframed}-options. A simple example is:
+% \ExplCmd{surroundwithmdframed} 
+%      Sometimes you have predefined environments. This commands allows you to set
+%      a \Env{environmet} surround this predefined environment. To set a \Env{mdframed}
+%      around the environment \Env{verbatim} you can simple say without changing the
+%      original name.
 % \iffalse
 %<*example>
 % \fi
 \begin{tltxmdfexample}
- \theoremstyle{<some style>}
- \newmdtheoremenv[linecolor=blue]{lemma}%
-                 {Lemma}[section]
- ... 
- \begin{lemma}[Some title]
-   foo   foo   foo   foo   foo   foo
- \end{lemma}
+  \surroundwithmdframed[linewidth=2pt]{verbatim}
 \end{tltxmdfexample}
 % \iffalse
 %</example>
 % \fi
-% So far there is no \Cmd{renewmdtheoremenv}!
+%
 % 
+% \ExplCmd{mdflength} 
+%      If you want to work with length defined by \Pack{mdframed} (for example
+%      \Opt{innerleftmargin}) you can now simple use the command \Cmd{mdflength}.
+% \iffalse
+%<*example>
+% \fi
+\begin{tltxmdfexample}
+  Some Text \hspace{\mdflength{innerleftmargin}} Some Text
+
+  \the\mdflength{innerleftmargin}
+\end{tltxmdfexample}
+% \iffalse
+%</example>
+% \fi
+%  
+%
 % 
 % \ExplCmd{mdfsetup}To set the options 
 % you can use the optional argument of \Cmd{usepackage} or
@@ -616,68 +618,6 @@ Have fun!
 % limited to the preamble.
 % I tried to define self explained names.
 % 
-% Befor the explanation of every option starts here a list of all available options.
-% \begin{flushleft}
-% \begin{itemize*}[]
-% \item \Opt{skipabove=0pt}
-% \item \Opt{skipbelow=0pt}
-% \item \Opt{leftmargin=0pt}
-% \item \Opt{rightmargin=0pt}
-% \item \Opt{innerleftmargin=10pt}
-% \item \Opt{innerrightmargin=10pt}
-% \item \Opt{innertopmargin=0.4\Cmd{baselineskip}}
-% \item \Opt{innerbottommargin=0.4\Cmd{baselineskip}}
-% \item \Opt{splittopskip=0pt}
-% \item \Opt{splitbottomskip=0pt}
-% \item \Opt{outermargin=0pt}
-% \item \Opt{innermargin=0pt}
-% \item \Opt{linewidth=0.4pt}
-% \item \Opt{innerlinewidth=0pt}
-% \item \Opt{middlelinewidth=\Opt{linewidth}}
-% \item \Opt{outerlinewidth=0pt}
-% \item \Opt{roundcorner=0pt}
-% \item \Opt{footenotedistance=\Cmd{medskipamount}}
-% \item \Opt{userdefinedwidth=\Cmd{linewidth}}
-% \item \Opt{frametitleaboveskip=5pt}
-% \item \Opt{frametitlebelowskip=5pt}
-% \item \Opt{frametitlerulewidth=.2pt}
-% \item \Opt{frametitle=\{\}}
-% \item \Opt{defaultunit=pt}
-% \item \Opt{linecolor=black}
-% \item \Opt{backgroundcolor=white}
-% \item \Opt{fontcolor=black}
-% \item \Opt{frametitlefontcolor=black}
-% \item \Opt{innerlinecolor=\Opt{linecolor}}
-% \item \Opt{outerlinecolor=\Opt{linecolor}}
-% \item \Opt{middlelinecolor=\Opt{linecolor}}
-% \item \Opt{psroundlinecolor=\Opt{backgroundcolor}}
-% \item \Opt{frametitlerulecolor=\Opt{linecolor}}
-% \item \Opt{frametitlebackgroundcolor=\Opt{backgroundcolor}}
-% \item \Opt{settings=\{\}}
-% \item \Opt{frametitlesettings=\{\}}
-% \item \Opt{font=\{\}}
-% \item \Opt{frametitlefont=\Cmd{normalfont}\Cmd{bfseries}}
-% \item \Opt{alignment=\{\}}
-% \item \Opt{frametitlealignment=\{\}}
-% \item \Opt{ntheorem=false}
-% \item \Opt{topline=true}
-% \item \Opt{leftline=true}
-% \item \Opt{bottomline=true}
-% \item \Opt{rightline=true}
-% \item \Opt{hidealllines=false}
-% \item \Opt{frametitlerule=false}
-% \item \Opt{nobreak=false}
-% \item \Opt{footnoteinside=true}
-% \item \Opt{usetwoside=true}
-% \item \Opt{repeatframetitle=false}(not well supported)
-% \item \Opt{align=left/right/center}
-% \item \Opt{tikzsetting}
-% \item \Opt{pstrickssetting}
-% \item \Opt{xcolor}
-% \item \Opt{needspace}
-% \item \Opt{style}
-% \end{itemize*}
-% \end{flushleft}
 % \subsubsection{Options with lengths}\label{optlength}
 % 
 % In figure \eqref{fig:laengen} you can see the adjustable lengths 
@@ -981,8 +921,102 @@ Have fun!
 %
 % \ExplOpt[false]{repeatframetitle}
 %      Repeat the frame title on every frame. The feature is currently not
-%      well implemented.+
-%      
+%      well implemented!!!
+% 
+%
+% \subsection{Theorems}
+% In this section is described which commands can help you to define 
+% theorem environments with \Pack{mdframed}.
+% 
+% \ExplCmd{newmdtheoremenv} 
+% Since the package is often used to highlight theorem environments, 
+% I have created a command\footnote{Thanks to Martin Scharrer and Enrico Gregorio:\newline
+% \href{http://tex.stackexchange.com/questions/26298/own-command-to-create-new-environment}%
+% {Own command to create new environment}}
+% to simplify this process. The command has the following syntax:
+% 
+% \iffalse
+%<*example>
+% \fi
+\begin{tltxmdfexample}[deletekeywords={mdframed}]
+ \newmdtheoremenv[<mdframed-options>]{<envname>}%
+                 [<numberedlike>]{<caption>}[<within>]
+\end{tltxmdfexample}
+% \iffalse
+%</example>
+% \fi
+% The last four arguments are equivalent to the command \Cmd{newtheorem}.
+% Only the first optional argument is able to pass \Pack{mdframed}-options. A simple example is:
+% \iffalse
+%<*example>
+% \fi
+\begin{tltxmdfexample}
+ \theoremstyle{<some style>}
+ \newmdtheoremenv[linecolor=blue]{lemma}%
+                 {Lemma}[section]
+ ... 
+ \begin{lemma}[Some title]
+   foo   foo   foo   foo   foo   foo
+ \end{lemma}
+\end{tltxmdfexample}
+% \iffalse
+%</example>
+% \fi
+% So far there is no \Cmd{renewmdtheoremenv}!
+%
+%
+% \ExplCmd{mdtheorem} 
+% This is a special kind of \Cmd{newtheorem}. The command has the following syntax.
+% \iffalse
+%<*example>
+% \fi
+\begin{tltxmdfexample}[deletekeywords={mdframed}]
+ \mdtheorem[<mdframed-options>]{<envname>}%
+                 [<numberedlike>]{<caption>}[<within>]
+\end{tltxmdfexample}
+% \iffalse
+%</example>
+% \fi
+% How you can see the arguments are equal to \Cmd{newtheorem} but the
+% command ignores every \Cmd{theoremstyle}. This is based on the following
+% behavior. 
+%
+% The command \Cmd{mdtheorem} creates two environment based on the given
+% first mandotory argument. The first environment is named like the given
+% argument and creates a numbered theorem. The second environment is named
+% like the first mandatory argument with a star. This environment has the 
+% same formating but isn't numbered.
+%
+% The syntax of the new defined environments is equal to the normal theorem
+% environments.
+% \iffalse
+%<*example>
+% \fi
+\begin{tltxmdfexample}[deletekeywords={mdframed}]
+ \begin{environemt}[optional title]
+  ...
+ \end{environment}
+\end{tltxmdfexample}
+% \iffalse
+%</example>
+% \fi
+% What happened? The caption of the command will be set as the frame title.
+% In this way all option of the frametitle are available. Furthermore 
+% \Pack{mdframed} provided additional options explained below.
+%
+% \ExplOpt[\{:\}]{theoremseparator}
+%      Sets the separator of the caption and the title of the theorem.
+%      The \Opt{theoremseparator} will be printed only if an theorem 
+%      title is given.
+% \ExplOpt[\{\}]{theoremtitlefont}
+%      Via the option \Opt{frametitlefont} you can manipulate the font
+%      of the frame title. The option \Opt{theoremtitlefont} allows to
+%      set a different font to the title of the theorem. 
+% \ExplOpt[\protect\Cmd{space}]{theoremspace}
+%      Sets the space after \Opt{theoremseparator}.
+%
+% Examples can be found in the attached files.
+%     
 % \subsection{Footnotes}
 % Inside the environment you can use the command \Cmd{footnote} as usual.
 % \Pack{mdframed} uses the syntax of environment \Pack{minipage} with
@@ -1020,6 +1054,7 @@ Have fun!
 % \end{description}
 % 
 % The examples are often not equivalent but normally they can be adapted to another method.
+% So I really recommend to have a look to all example files.
 % 
 % \section{Errors, Warnings and Messages}
 % 
@@ -1353,14 +1388,20 @@ Have fun!
 % 
 % \subsection{Revision history}\label{rev}
 % \raggedright
-% \minisec{Version 1.1beta submitted never}
+% \minisec{Version 1.2 submitted 8 Jan 2012}
 % \begin{itemize*}
-% \item fixes documentation (Thanks to Dietrich Grau)
-% \item fixes bug in \Cmd{newmdtheoremenv}
+% \item fixed documentation (Thanks to Dietrich Grau)
+% \item fixed bug in combination with \Pack{amsthm}
+% \item fixed bug in \Cmd{newmdtheoremenv}
 % \item defined new styles via \Cmd{newpsstyle}\limitation[PSTricks]
+% \item added new commands for interaction with \Pack{TikZ} and \Pack{PSTricks}
 % \item expand frame title option by option \Opt{frametitlerule}, \Opt{frametitlerulewidth}
 %       \Opt{frametitlefont}, \Opt{frametitleaboveskip}, \Opt{frametitlebelowskip}, \Opt{frametitlealignment}
 % \item removed limitation of three lines for PSTricks
+% \item defined new commands \Cmd{surroundwithmdframed}, \Cmd{mdflength}, \Cmd{mdtheorem}
+% \item load \Pack{xparse} by default
+% \item changed internal names
+% \item expanded examples
 % \end{itemize*}
 %
 % \minisec{Version 1.0b submitted 9 Dec 2011}
@@ -1494,10 +1535,10 @@ Have fun!
 %
 % \subsection{The Explanation of mdframed.sty}
 %
-% %$Id: mdframed.dtx 308 2012-01-07 16:55:41Z marco $
-% %$Rev: 308 $
+% %$Id: mdframed.dtx 312 2012-01-08 12:43:36Z marco $
+% %$Rev: 312 $
 % %$Author: marco $
-% %$Date: 2012-01-07 17:55:41 +0100 (Sa, 07. Jan 2012) $
+% %$Date: 2012-01-08 13:43:36 +0100 (So, 08. Jan 2012) $
 % \begin{macro}{mdversion,mdframedpackagename,mdf@maindate@svn}
 % Set package information
 %    \begin{macrocode}
@@ -1510,7 +1551,7 @@ Have fun!
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{mdframed}%
-     [\mdf@maindate@svn$Id: mdframed.dtx 308 2012-01-07 16:55:41Z marco $%
+     [\mdf@maindate@svn$Id: mdframed.dtx 312 2012-01-08 12:43:36Z marco $%
       \mdversion: \mdframedpackagename]
 %    \end{macrocode}
 %
@@ -1536,7 +1577,7 @@ Have fun!
 % Loading required packages
 %    \begin{macrocode}
 \RequirePackage{kvoptions}
-\RequirePackage{etex}
+\RequirePackage{xparse}
 \RequirePackage{etoolbox}[2011/01/03]
 \RequirePackage{zref-abspage}
 \RequirePackage{color}
@@ -1779,6 +1820,10 @@ Have fun!
     {printheight==none},%
     {alignment=={}},%
     {frametitlealignment=={}},%
+    {theoremseparator=={:}},%
+    {theoremcountersep=={.}},%
+    {theoremtitlefont=={}},%
+    {theoremspace=={\space}},%
 }
 %    \end{macrocode}
 % \end{macro}
@@ -2001,8 +2046,11 @@ Have fun!
 % Modification of the default |\lrbox| and |\endlrbox|
 %    \begin{macrocode}
 \def\mdf@lrbox#1{%
+%%patch to work with amsthm
+  \mdf@patchamsthm
+%%end patch
   \edef\mdf@restoreparams{%
-   \parindent=\the\parindent \parskip=\the\parskip}%
+   \parindent=\the\parindent \parskip=\the\parskip}
   \setbox#1\vbox\bgroup
    \begingroup
     \mdf@horizontalmargin@equation%
@@ -2044,7 +2092,22 @@ Have fun!
 %    \end{macrocode}
 % \end{macro}
 %
-%%  \changes{v1.1release}{2012/01/07}{Added \protect\Cmd{mbox} to the definition. 
+%
+% \begin{macro}{mdf@patchamsth}
+% The package \Pack{amsthm} provides a not compatible starting of
+% theorem. So I have to change the header of amsthm.
+%    \begin{macrocode}
+\@ifpackageloaded{amsthm}{%
+ \newrobustcmd\mdf@patchamsthm{%
+     \let\mdf@deferred@thm@head\deferred@thm@head
+     \patchcmd{\deferred@thm@head}{\indent}{}{}{}
+     }%
+ }{\let\mdf@patchamsthm\relax}%
+%    \end{macrocode}
+% \end{macro}
+%
+%
+%  \changes{v1.1release}{2012/01/07}{Added \protect\Cmd{mbox} to the definition. 
 %                        \protect\Cmd{item}\protect\Cmd{mbox}\protect\Cmd{relax} -- Need for amsthm}
 % \begin{macro}{mdf@trivlist,endmdf@trivlist}
 % Modification of the default |\trivlist| and |\endtrivlist|.
@@ -2060,7 +2123,10 @@ Have fun!
   \itemindent\z@%
   \let\@itemlabel\@empty%
   \def\makelabel##1{##1}%
-  \item\mbox{}\relax}
+  \item\leavevmode\hrule \@height\z@ \@width\linewidth\relax%
+%%  \item\mbox{}\relax% second version
+%%  \item\relax% first Version
+}
 \let\endmdf@trivlist\endtrivlist
 \patchcmd\endmdf@trivlist\@endparenv\mdf@endparenv{}{}
 \def\mdf@endparenv{%
@@ -2096,9 +2162,23 @@ Have fun!
 %    \end{macrocode}
 % \end{macro}
 %
+%
+% \begin{macro}{mdflength,surroundwithmdframed}
+% Helper macros to work with mdframed
+%    \begin{macrocode}
+\newrobustcmd*{\mdflength}[1]{\csuse{mdf@#1@length}}
+
+\newrobustcmd*{\surroundwithmdframed}[2][]{%
+  \BeforeBeginEnvironment{#2}{\begin{mdframed}[#1]}%
+  \AfterEndEnvironment{#2}{\end{mdframed}}%
+}
+%    \end{macrocode}
+% \end{macro}
+%
+%
 % \changes{v1.1beta}{2011/12/15}{Redefinition of \protect\Cmd{newmdtheoremenv}.
 %                                -- Now check of theorem definition.}
-% \begin{macro}{newmdenv,renewmdenv,newmdtheoremenv}
+% \begin{macro}{newmdenv,renewmdenv,newmdtheoremenv,mdtheorem}
 % Defining of the new environment defintions.
 %    \begin{macrocode}
 \newrobustcmd*\newmdenv[2][]{%
@@ -2115,24 +2195,98 @@ Have fun!
   \newmdenv[#1]{#2}%
   }%
 
-\newrobustcmd*\newmdtheoremenv[2][]{%CHANGE!!!!!!!!!+++EXPAND!!!!!!!!!!!!!
-  \BeforeBeginEnvironment{#2}{\begin{mdframed}[#1]}%
-  \AfterEndEnvironment{#2}{\end{mdframed}}%
-  \newtheorem{#2}%
+
+\DeclareDocumentCommand\newmdtheoremenv{O{} m o m o }{%
+ \ifboolexpr{ test {\IfNoValueTF {#3}} and test {\IfNoValueTF {#5}} }%
+    {\newtheorem{#2}{#4}}{%
+     \IfValueTF{#3}{\newtheorem{#2}[#3]{#4}}{}%
+     \IfValueTF{#5}{\newtheorem{#2}{#4}[#5]}{}%
+    }%
+  \BeforeBeginEnvironment{#2}{%
+     \begin{mdframed}[#1]}%
+  \AfterEndEnvironment{#2}{%
+     \end{mdframed}}%
 }
-%    \end{macrocode}
-% \end{macro}
-%
-% \changes{v1.2}{2012/01/07}{Creating new theorem cmd}
-% \begin{macro}{mdtheorem}
-% Defining of the new theorem environment defintions with a \Pack{mdframed} style.
-%    \begin{macrocode}
 
-%\newrobustcmd*\mdtheorem[1][]{%
-% \ifstrempty{#1}{\mdtheorem@i[]}{\mdtheorem@i[#1]}%
-%}
-
-
+\DeclareDocumentCommand{\mdtheorem}{ O{} m o m o }%
+ {\ifcsdef{#2}%
+   {\mdf@PackageWarning{Environment #2 already exits\MessageBreak}}%
+   {%
+    \IfNoValueTF {#3}%
+     {%#3 not given -- number relationship
+      \IfNoValueTF {#5}
+        {%#3+#5 not given
+        \@definecounter{#2}%
+        \expandafter\xdef\csname the#2\endcsname{\@thmcounter{#2}}
+        \newenvironment{#2}[1][]{%
+          \refstepcounter{#2}
+          \ifstrempty{##1}%
+            {\let\@temptitle\relax}%
+            {%
+             \def\@temptitle{\mdf@theoremseparator%
+                             \mdf@theoremspace%
+                             \mdf@theoremtitlefont%
+                             ##1}%
+             }
+          \begin{mdframed}[#1,frametitle={\strut#4\ \csname the#2\endcsname\@temptitle}]}%
+          {\end{mdframed}}%
+        \newenvironment{#2*}[1][]{%
+          \ifstrempty{##1}{\let\@temptitle\relax}{\def\@temptitle{:\ ##1}}
+          \begin{mdframed}[#1,frametitle={\strut#4\@temptitle}]}%
+          {\end{mdframed}}%
+        }%
+        {%#5 given -- reset counter
+        \@definecounter{#2}\@newctr{#2}[#5]%
+        \expandafter\xdef\csname the#2\endcsname{\@thmcounter{#2}}
+        \expandafter\xdef\csname the#2\endcsname{%
+               \expandafter\noexpand\csname the#5\endcsname \@thmcountersep
+                  \@thmcounter{#2}}%
+        \newenvironment{#2}[1][]{%
+          \refstepcounter{#2}
+          \ifstrempty{##1}%
+            {\let\@temptitle\relax}%
+            {%
+             \def\@temptitle{\mdf@theoremseparator%
+                             \mdf@theoremspace%
+                             \mdf@theoremtitlefont%
+                             ##1}%
+             }
+          \begin{mdframed}[#1,frametitle={\strut#4\ \csname the#2\endcsname\@temptitle}]}%
+          {\end{mdframed}}%
+        \newenvironment{#2*}[1][]{%
+          \ifstrempty{##1}%
+            {\let\@temptitle\relax}%
+            {%
+             \def\@temptitle{\mdf@theoremseparator%
+                             \mdf@theoremspace%
+                             \mdf@theoremtitlefont%
+                             ##1}%
+             }
+          \begin{mdframed}[#1,frametitle={\strut#4\@temptitle}]}%
+          {\end{mdframed}}%
+        }%
+     }%
+     {%#3 given -- number relationship
+        \global\@namedef{the#2}{\@nameuse{the#3}}%
+        \newenvironment{#2}[1][]{%
+          \refstepcounter{#3}
+          \ifstrempty{##1}%
+            {\let\@temptitle\relax}%
+            {%
+             \def\@temptitle{\mdf@theoremseparator%
+                             \mdf@theoremspace%
+                             \mdf@theoremtitlefont%
+                             ##1}%
+             }
+          \begin{mdframed}[#1,frametitle={\strut#4\ \csname the#2\endcsname\@temptitle}]}%
+          {\end{mdframed}}%
+        \newenvironment{#2*}[1][]{%
+          \ifstrempty{##1}{\let\@temptitle\relax}{\def\@temptitle{:\ ##1}}
+          \begin{mdframed}[#1,frametitle={\strut#4\@temptitle}]}%
+          {\end{mdframed}}%
+     }%
+   }%
+ }
 
 %    \end{macrocode}
 % \end{macro}
@@ -2927,7 +3081,7 @@ Have fun!
 %% Public License, as described in lppl.txt in the base LaTeX distribution.
 %% Either version 1.0 or, at your option, any later version.
 
-%%$Id: mdframed.dtx 308 2012-01-07 16:55:41Z marco $
+%%$Id: mdframed.dtx 312 2012-01-08 12:43:36Z marco $
 %
 %    \end{macrocode}
 %
@@ -2937,7 +3091,7 @@ Have fun!
 \def\mdframedOpackagename{md-frame-0}
 \def\mdf@frameOdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-0.mdf}%
-    [\mdf@frameOdate@svn$Id: mdframed.dtx 308 2012-01-07 16:55:41Z marco $%
+    [\mdf@frameOdate@svn$Id: mdframed.dtx 312 2012-01-08 12:43:36Z marco $%
      \mdversion: \mdframedOpackagename]
 %    \end{macrocode}
 % \end{macro}
@@ -3359,7 +3513,7 @@ Have fun!
 %% Public License, as described in lppl.txt in the base LaTeX distribution.
 %% Either version 1.0 or, at your option, any later version.
 
-%%$Id: mdframed.dtx 308 2012-01-07 16:55:41Z marco $
+%%$Id: mdframed.dtx 312 2012-01-08 12:43:36Z marco $
 %
 %    \end{macrocode}
 % \changes{v1.1beta}{2011/12/16}{added lost semicolons}
@@ -3369,7 +3523,7 @@ Have fun!
 \def\mdframedIpackagename{md-frame-1}
 \def\mdf@frameIdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-1.mdf}%
-          [\mdf@frameIdate@svn$Id: mdframed.dtx 308 2012-01-07 16:55:41Z marco $ %
+          [\mdf@frameIdate@svn$Id: mdframed.dtx 312 2012-01-08 12:43:36Z marco $ %
            \mdversion: \mdframedIpackagename]
 %
 %    \end{macrocode}
@@ -4033,7 +4187,7 @@ Have fun!
 %% Public License, as described in lppl.txt in the base LaTeX distribution.
 %% Either version 1.0 or, at your option, any later version.
 
-%%$Id: mdframed.dtx 308 2012-01-07 16:55:41Z marco $
+%%$Id: mdframed.dtx 312 2012-01-08 12:43:36Z marco $
 %
 %    \end{macrocode}
 %
@@ -4043,7 +4197,7 @@ Have fun!
 \def\mdframedIIpackagename{md-frame-2}
 \def\mdf@frameIIdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-2.mdf}%
-         [\mdf@frameIIdate@svn$Id: mdframed.dtx 308 2012-01-07 16:55:41Z marco $ %
+         [\mdf@frameIIdate@svn$Id: mdframed.dtx 312 2012-01-08 12:43:36Z marco $ %
           \mdversion: \mdframedIIpackagename]
 %    \end{macrocode}
 % \end{macro}
@@ -4727,10 +4881,10 @@ Have fun!
 %
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 308 2012-01-07 16:55:41Z marco $
+%%$Id: mdframed.dtx 312 2012-01-08 12:43:36Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt]{ltxmdf}
-\ltxmdfsetifoot  $Id: mdframed.dtx 308 2012-01-07 16:55:41Z marco $
+\ltxmdfsetifoot  $Id: mdframed.dtx 312 2012-01-08 12:43:36Z marco $
 
 \usepackage{showexpl}
 \lstset{style=lstltxmdf,explpreset={pos=b,rframe={}},}
@@ -4830,6 +4984,29 @@ function of the independent variables alone.
 \includegraphics[width=\linewidth]{donald-duck}
 \end{mdframed}
 \end{LTXexample}
+
+\clearpage
+\Examplesec{Theorem environments}
+\begin{LTXexample}
+\mdfdefinestyle{theoremstyle}{%
+     linecolor=red,linewidth=2pt,%
+     frametitlerule=true,%
+     frametitlebackgroundcolor=gray!20,
+     innertopmargin=\topskip,
+   }
+\mdtheorem[style=theoremstyle]{definition}{Definition}
+\begin{definition}
+\ExampleText
+\end{definition}
+\begin{definition}[Inhomogeneous linear]
+\ExampleText
+\end{definition}
+\begin{definition*}[Inhomogeneous linear]
+\ExampleText
+\end{definition*}
+\end{LTXexample}
+
+
 \clearpage
 \Examplesec{theorem with separate header and the help of TikZ (complex)}
 \begin{LTXexample}
@@ -4920,10 +5097,10 @@ The example below is inspired by the following post on StackExchange \href{http:
 %
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 308 2012-01-07 16:55:41Z marco $
+%%$Id: mdframed.dtx 312 2012-01-08 12:43:36Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt]{ltxmdf}
-\ltxmdfsetifoot  $Id: mdframed.dtx 308 2012-01-07 16:55:41Z marco $
+\ltxmdfsetifoot  $Id: mdframed.dtx 312 2012-01-08 12:43:36Z marco $
 
 \usepackage{showexpl}
 \lstset{style=lstltxmdf,explpreset={pos=b,rframe={}},}
@@ -5101,7 +5278,7 @@ color(100bp)=(black!5)}
 \define@key{mdf}{exercisepoints}{%
     \def\mdf@@exercisepoints{#1}
 }
-\renewrobustcmd\mdfcreateextratikz{%
+\newrobustcmd\mdfcreateextratikzlocal{%
       \node[titregris,xshift=1cm] at (P-|O) {~\textbf{\theexercise}~};
       \ifdefempty{\mdf@@exercisepoints}%
       {}%
@@ -5120,7 +5297,7 @@ color(100bp)=(black!5)}
   skipabove={\dimexpr0.5\baselineskip+\topskip\relax},
   needspace=3\baselineskip,
   frametitlefont=\sffamily\bfseries,
-  settings={\global\stepcounter{exercise}},
+  settings={\global\stepcounter{exercise}\let\mdfcreateextratikz\mdfcreateextratikzlocal},
   }
 
 \begin{mdframed}[style=exercisestyle,]
@@ -5130,6 +5307,27 @@ color(100bp)=(black!5)}
 \begin{mdframed}[style=exercisestyle,exercisepoints=10]
 \ExampleText
 \end{mdframed}
+
+\clearpage
+\Examplesec{Theorem environments}
+\begin{LTXexample}
+\mdfdefinestyle{theoremstyle}{%
+     linecolor=red,linewidth=2pt,%
+     frametitlerule=true,%
+     apptotikzsetting={\tikzset{mdfframetitlebackground/.append style={%
+                         shade,left color=white, right color=blue!20}}},
+     frametitlerulecolor=green!60,
+     frametitlerulewidth=1pt,
+     innertopmargin=\topskip,
+   }
+\mdtheorem[style=theoremstyle]{definition}{Definition}
+\begin{definition}[Inhomogeneous linear]
+\ExampleText
+\end{definition}
+\begin{definition*}[Inhomogeneous linear]
+\ExampleText
+\end{definition*}
+\end{LTXexample}
 
 \end{document}
  \endinput
@@ -5151,10 +5349,10 @@ color(100bp)=(black!5)}
 %
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 308 2012-01-07 16:55:41Z marco $
+%%$Id: mdframed.dtx 312 2012-01-08 12:43:36Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt]{ltxmdf}
-\ltxmdfsetifoot$Id: mdframed.dtx 308 2012-01-07 16:55:41Z marco $
+\ltxmdfsetifoot$Id: mdframed.dtx 312 2012-01-08 12:43:36Z marco $
 
 \lstDeleteShortInline{|}
 \newcommand\Loadedframemethod{PSTricks}
@@ -5279,10 +5477,10 @@ function of the independent variables alone.
 
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 308 2012-01-07 16:55:41Z marco $
+%%$Id: mdframed.dtx 312 2012-01-08 12:43:36Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt,ltxlipsum]{ltxmdf}
-\ltxmdfsetifoot  $Id: mdframed.dtx 308 2012-01-07 16:55:41Z marco $
+\ltxmdfsetifoot  $Id: mdframed.dtx 312 2012-01-08 12:43:36Z marco $
 
 \usepackage{showexpl}
 \lstset{style=lstltxmdf,explpreset={pos=b,rframe={}},}
@@ -5355,6 +5553,11 @@ Here the solution which can be decorate as usual.
     \end{mdframed}}
 \end{tltxmdfexample}
 
+With the new command \Cmd{surroundwithmdframed} you can use
+\begin{tltxmdfexample}[moretexcs={BeforeBeginEnvironment,AfterEndEnvironment},morekeywords={lstlisting}]
+\surroundwithmdframed{listings}
+\end{tltxmdfexample}
+
 \Examplesec{Package multicol}
 How I wrote in \enquote{Known Problems} you can't combine \Pack{multicol}  with \Pack{mdframed}. In a simple way without any breaks you can use:
 \begin{LTXexample}
@@ -5372,7 +5575,7 @@ How I wrote in \enquote{Known Problems} you can't combine \Pack{multicol}  with 
 \twocolumn[%
   \Examplesec{Working in
           twocolumn mode}]
-\lipsum[2]
+\lipsum[1]\lipsum[2]
 \begin{mdframed}[%
    leftmargin=10pt,%
    rightmargin=10pt,%
@@ -5382,7 +5585,7 @@ How I wrote in \enquote{Known Problems} you can't combine \Pack{multicol}  with 
 \end{mdframed}
 \lipsum[2]
 \end{tltxmdfexample}
-\lipsum[2]\lipsum[2]
+\lipsum[1]\lipsum[2]
 \begin{mdframed}[leftmargin=10pt,%
                  rightmargin=10pt,%
                  linecolor=red,
@@ -5390,6 +5593,7 @@ How I wrote in \enquote{Known Problems} you can't combine \Pack{multicol}  with 
 \ExampleText
 \end{mdframed}
 \lipsum[2]
+\clearpage
 \onecolumn
 \Examplesec{Working inside enumerate}
 \begin{LTXexample}
