@@ -8,15 +8,15 @@
 %% Public License, as described in lppl.txt in the base LaTeX distribution.
 %% Either version 1.0 or, at your option, any later version.
 
-%%$Id: ltxmdf.cls 281 2011-12-17 18:48:02Z marco $
-%%$Rev: 281 $
+%%$Id: ltxmdf.cls 311 2012-01-08 12:17:24Z marco $
+%%$Rev: 311 $
 %%$Author: marco $
-%%$Date: 2011-12-17 19:48:02 +0100 (Sa, 17. Dez 2011) $
+%%$Date: 2012-01-08 13:17:24 +0100 (So, 08. Jan 2012) $
 
 %% Allgemeine Angaben
 \def\ltxmdf@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{ltxmdf}[\ltxmdf@svn$Id: ltxmdf.cls 281 2011-12-17 18:48:02Z marco $ ltxmdf]
+\ProvidesPackage{ltxmdf}[\ltxmdf@svn$Id: ltxmdf.cls 311 2012-01-08 12:17:24Z marco $ ltxmdf]
 \DeclareOption{tocdepthsec}{\def\ltxmdf@tocdepth{1}}
 \DeclareOption{tocdepthsub}{\def\ltxmdf@tocdepth{2}}
 \newif\ifltxmdf@lipsum
@@ -92,7 +92,7 @@
 \def\ltxmdfsetifoot$#1: #2 #3 #4-#5-#6 #7 #8${%
   \ifoot{#2 #3 #4-#5-#6 #7 #8}
 }
-\ltxmdfsetifoot$Id: ltxmdf.cls 281 2011-12-17 18:48:02Z marco $
+\ltxmdfsetifoot$Id: ltxmdf.cls 311 2012-01-08 12:17:24Z marco $
 
 
 %Tikz und Farbe
@@ -129,7 +129,9 @@
                    ExampleText,titregris,draw,gray,thick,fill,white,shading,exersicetitle,
                    exersicebackground,color,green,black,exercise,exercisepoints,
                    text,rectangle,rounded,corners,right,minimum,height,xshift,at,
-                   exercisestyle,settings,frametitlefont},%
+                   exercisestyle,settings,frametitlefont,
+                   frametitlerule,frametitlebelowskip,frametitleaboveskip,
+                   frametitlebackgroundcolor,frametitlerulecolor},%
      moretexcs={newmdtheoremenv,newmdenv,theoremstyle,mdfsetup,@length,%
                    md@putbox@single,@tempboxa,mdf@,%
                    mdf@linewidth,mdf@leftmargin@length,interruptlength,%
@@ -140,7 +142,8 @@
                    mdf@innerrightmargin@length,mdfdefinestyle,mdfapptodefinestyle,defcounter,
                    tikzstyle,pgfdeclarehorizontalshading,theexercise,mdf@@exercisepoints,
                    define@key,renewrobustcmd,mdfcreateextratikz,node,ifdefempty,
-                   mdf@frametitlefont,dimexpr,mdframedtitleenv,ifstrempty},%
+                   mdf@frametitlefont,dimexpr,mdframedtitleenv,ifstrempty,
+                   mdtheorem,surroundwithmdframed},%
 }
 
 
@@ -165,7 +168,7 @@
 \def\version#1{\def\@version{#1}}
 \def\date#1{\def\@date{#1}}
 \def\@@date$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6}
-\date{\@@date$Id: ltxmdf.cls 281 2011-12-17 18:48:02Z marco $}
+\date{\@@date$Id: ltxmdf.cls 311 2012-01-08 12:17:24Z marco $}
 
 \long\def\introduction#1{\def\@introduction{#1}}
 
