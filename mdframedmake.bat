@@ -1,3 +1,7 @@
+::################################################################
+::## Makefile for mdframed project folder (WINDOWS)
+::## $Id: mdframedmake.bat 315 2012-01-08 12:53:05Z marco $
+::################################################################
 title Entpacken mdframed.dtx unter windows
 @echo off
 ::
