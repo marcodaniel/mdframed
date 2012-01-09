@@ -168,13 +168,16 @@ Have fun!
 \Msg{*}
 \Msg{* \space\space documentation.sty}
 \Msg{*}
-\Msg{* To produce the documentation run the file documentation.dtx}
+\Msg{* To produce the documentation run the file mdframed.dtx}
 \Msg{* once through LaTeX. Then, run}
 \Msg{*}
 \Msg{* \space\space makeindex -s gglo.ist -o mdframed.gls mdframed.glo}
 \Msg{* \space\space makeindex -s gind.ist mdframed.idx}
 \Msg{*}
-\Msg{* through makeIndex to produce the glossary. Finally, run LaTeX once again.}
+\Msg{* through makeIndex to produce the glossary. Finally, run PdfLaTeX once again.}
+\Msg{*}
+\Msg{* To create the examples run (pdf)latex on the tex-files.}
+\Msg{*}
 \Msg{* That's all!}
 \Msg{*}
 \Msg{* Happy TeXing!}
@@ -203,11 +206,11 @@ Have fun!
 \fi
 %</internal>
 %<*driver>
-%%$Id: mdframed.dtx 318 2012-01-09 17:14:33Z marco $
+%%$Id: mdframed.dtx 320 2012-01-09 18:44:33Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,11pt,]{ltxmdf}
 \usepackage[framemethod=TikZ]{mdframed}
-\ltxmdfsetifoot$Id: mdframed.dtx 318 2012-01-09 17:14:33Z marco $
+\ltxmdfsetifoot$Id: mdframed.dtx 320 2012-01-09 18:44:33Z marco $
 
 \EnableCrossrefs
 \CodelineIndex
@@ -1535,14 +1538,14 @@ Have fun!
 %
 % \subsection{The Explanation of mdframed.sty}
 %
-% %$Id: mdframed.dtx 318 2012-01-09 17:14:33Z marco $
-% %$Rev: 318 $
+% %$Id: mdframed.dtx 320 2012-01-09 18:44:33Z marco $
+% %$Rev: 320 $
 % %$Author: marco $
-% %$Date: 2012-01-09 18:14:33 +0100 (Mo, 09. Jan 2012) $
+% %$Date: 2012-01-09 19:44:33 +0100 (Mo, 09. Jan 2012) $
 % \begin{macro}{mdversion,mdframedpackagename,mdf@maindate@svn}
 % Set package information
 %    \begin{macrocode}
-\def\mdversion{v1.2}
+\def\mdversion{v1.2a}
 \def\mdframedpackagename{mdframed}
 \def\mdf@maindate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 %    \end{macrocode}
@@ -1551,7 +1554,7 @@ Have fun!
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{mdframed}%
-     [\mdf@maindate@svn$Id: mdframed.dtx 318 2012-01-09 17:14:33Z marco $%
+     [\mdf@maindate@svn$Id: mdframed.dtx 320 2012-01-09 18:44:33Z marco $%
       \mdversion: \mdframedpackagename]
 %    \end{macrocode}
 %
@@ -3082,7 +3085,7 @@ Have fun!
 %% Public License, as described in lppl.txt in the base LaTeX distribution.
 %% Either version 1.0 or, at your option, any later version.
 
-%%$Id: mdframed.dtx 318 2012-01-09 17:14:33Z marco $
+%%$Id: mdframed.dtx 320 2012-01-09 18:44:33Z marco $
 %
 %    \end{macrocode}
 %
@@ -3092,7 +3095,7 @@ Have fun!
 \def\mdframedOpackagename{md-frame-0}
 \def\mdf@frameOdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-0.mdf}%
-    [\mdf@frameOdate@svn$Id: mdframed.dtx 318 2012-01-09 17:14:33Z marco $%
+    [\mdf@frameOdate@svn$Id: mdframed.dtx 320 2012-01-09 18:44:33Z marco $%
      \mdversion: \mdframedOpackagename]
 %    \end{macrocode}
 % \end{macro}
@@ -3514,7 +3517,7 @@ Have fun!
 %% Public License, as described in lppl.txt in the base LaTeX distribution.
 %% Either version 1.0 or, at your option, any later version.
 
-%%$Id: mdframed.dtx 318 2012-01-09 17:14:33Z marco $
+%%$Id: mdframed.dtx 320 2012-01-09 18:44:33Z marco $
 %
 %    \end{macrocode}
 % \changes{v1.1beta}{2011/12/16}{added lost semicolons}
@@ -3524,7 +3527,7 @@ Have fun!
 \def\mdframedIpackagename{md-frame-1}
 \def\mdf@frameIdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-1.mdf}%
-          [\mdf@frameIdate@svn$Id: mdframed.dtx 318 2012-01-09 17:14:33Z marco $ %
+          [\mdf@frameIdate@svn$Id: mdframed.dtx 320 2012-01-09 18:44:33Z marco $ %
            \mdversion: \mdframedIpackagename]
 %
 %    \end{macrocode}
@@ -4188,7 +4191,7 @@ Have fun!
 %% Public License, as described in lppl.txt in the base LaTeX distribution.
 %% Either version 1.0 or, at your option, any later version.
 
-%%$Id: mdframed.dtx 318 2012-01-09 17:14:33Z marco $
+%%$Id: mdframed.dtx 320 2012-01-09 18:44:33Z marco $
 %
 %    \end{macrocode}
 %
@@ -4198,7 +4201,7 @@ Have fun!
 \def\mdframedIIpackagename{md-frame-2}
 \def\mdf@frameIIdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-2.mdf}%
-         [\mdf@frameIIdate@svn$Id: mdframed.dtx 318 2012-01-09 17:14:33Z marco $ %
+         [\mdf@frameIIdate@svn$Id: mdframed.dtx 320 2012-01-09 18:44:33Z marco $ %
           \mdversion: \mdframedIIpackagename]
 %    \end{macrocode}
 % \end{macro}
@@ -4882,10 +4885,10 @@ Have fun!
 %
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 318 2012-01-09 17:14:33Z marco $
+%%$Id: mdframed.dtx 320 2012-01-09 18:44:33Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt]{ltxmdf}
-\ltxmdfsetifoot  $Id: mdframed.dtx 318 2012-01-09 17:14:33Z marco $
+\ltxmdfsetifoot  $Id: mdframed.dtx 320 2012-01-09 18:44:33Z marco $
 
 \usepackage{showexpl}
 \lstset{style=lstltxmdf,explpreset={pos=b,rframe={}},}
@@ -5098,10 +5101,10 @@ The example below is inspired by the following post on StackExchange \href{http:
 %
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 318 2012-01-09 17:14:33Z marco $
+%%$Id: mdframed.dtx 320 2012-01-09 18:44:33Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt]{ltxmdf}
-\ltxmdfsetifoot  $Id: mdframed.dtx 318 2012-01-09 17:14:33Z marco $
+\ltxmdfsetifoot  $Id: mdframed.dtx 320 2012-01-09 18:44:33Z marco $
 
 \usepackage{showexpl}
 \lstset{style=lstltxmdf,explpreset={pos=b,rframe={}},}
@@ -5350,10 +5353,10 @@ color(100bp)=(black!5)}
 %
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 318 2012-01-09 17:14:33Z marco $
+%%$Id: mdframed.dtx 320 2012-01-09 18:44:33Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt]{ltxmdf}
-\ltxmdfsetifoot$Id: mdframed.dtx 318 2012-01-09 17:14:33Z marco $
+\ltxmdfsetifoot$Id: mdframed.dtx 320 2012-01-09 18:44:33Z marco $
 
 \lstDeleteShortInline{|}
 \newcommand\Loadedframemethod{PSTricks}
@@ -5478,10 +5481,10 @@ function of the independent variables alone.
 
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 318 2012-01-09 17:14:33Z marco $
+%%$Id: mdframed.dtx 320 2012-01-09 18:44:33Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt,ltxlipsum]{ltxmdf}
-\ltxmdfsetifoot  $Id: mdframed.dtx 318 2012-01-09 17:14:33Z marco $
+\ltxmdfsetifoot  $Id: mdframed.dtx 320 2012-01-09 18:44:33Z marco $
 
 \usepackage{showexpl}
 \lstset{style=lstltxmdf,explpreset={pos=b,rframe={}},}
