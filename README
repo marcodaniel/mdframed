@@ -5,7 +5,7 @@ environment mdframed which automatically deals with page breaks.
 Author's name: Marco Daniel and Elke Schubert (!new)
 License type: lppl
 
-The current development status is v1.1beta
+The current development status is v1.2a
 
 Linux/Mac:
 To create the package run (Terminal)
