@@ -1,12 +1,12 @@
 ################################################################
 ## Makefile for mdframed project folder
-## $Id: Makefile 313 2012-01-08 12:51:10Z marco $
+## $Id: Makefile 319 2012-01-09 18:38:06Z marco $
 ################################################################
 ## Definitions
 ################################################################
 .SILENT:
 SHELL     := /bin/bash
-.PHONY: all clean
+.PHONY: all clean ctan allwithoutclean
 ################################################################
 ## Name list
 ################################################################
@@ -123,7 +123,10 @@ clean:
 
 all:	docsty examples clean
 
-
+allwithoutclean: docsty examples
+################################################################
+## maintaner tool
+################################################################
 changeversion:
 	@echo 
 	@echo -e "$(OK_COLOR)Aktuell wird die folgende Version verwendet"
@@ -132,3 +135,26 @@ changeversion:
 	@read -p "Bitte neue Version eingeben: " REPLY &&  sed -rie "s/(\\\\def\\\\mdversion\{).*(})/\1$$REPLY\2/" $(PACKAGE).dtx&&\
 	 echo -e "$(OK_COLOR)Version geändert zu $$REPLY$(NO_COLOR)"
 	@echo
+
+ctan: allwithoutclean
+	echo  "" ;\
+	echo -e "\t$(ERROR_COLOR)Start ctanify$(NO_COLOR)" ;\
+	ctanify $(PACKAGE).ins $(PACKAGE).pdf README.txt ltxmdf.cls \
+	        donald-duck.jpg=doc/latex/mdframed/ \
+	        $(EXAMPLED).tex=doc/latex/mdframed/ \
+	        $(EXAMPLED).pdf=doc/latex/mdframed/ \
+	        $(EXAMPLET).tex=doc/latex/mdframed/ \
+	        $(EXAMPLET).pdf=doc/latex/mdframed/ \
+	        $(EXAMPLEP).tex=doc/latex/mdframed/ \
+	        $(EXAMPLEP).pdf=doc/latex/mdframed/ \
+	        $(EXAMPLESX).tex=doc/latex/mdframed/ \
+	        $(EXAMPLESX).pdf=doc/latex/mdframed/ \
+	        Makefile=source/latex/mdframed/ \
+	        mdframedmake.bat=source/latex/mdframed/ \
+	        md-frame-0.mdf=tex/latex/mdframed/ \
+	        md-frame-1.mdf=tex/latex/mdframed/ \
+	        md-frame-2.mdf=tex/latex/mdframed/ \
+	        md-frame-3.mdf=tex/latex/mdframed/ ;\
+	  if [ $$? = 0 ] ; then \
+	     echo -e "\t$(OK_COLOR)ctanify without errors$(NO_COLOR)" ;\
+	  fi ;\
