@@ -153,13 +153,13 @@ Have fun!
 \endpostamble
 \usedir{tex/latex/mdframed}
 \generate{\file{mdframed.sty}{\from{mdframed.dtx}{package}}}
-\nopreamble\nopostamble
+\nopreamble\nopostamble\usedir{tex/latex/mdframed}
 \generate{\file{md-frame-0.mdf}{\from{mdframed.dtx}{mdframedefault}}}
-\nopreamble\nopostamble
+\nopreamble\nopostamble\usedir{tex/latex/mdframed}
 \generate{\file{md-frame-1.mdf}{\from{mdframed.dtx}{mdframetikz}}}
-\nopreamble\nopostamble
+\nopreamble\nopostamble\usedir{tex/latex/mdframed}
 \generate{\file{md-frame-2.mdf}{\from{mdframed.dtx}{mdframepstricks}}}
-\nopreamble\nopostamble
+\nopreamble\nopostamble\usedir{tex/latex/mdframed}
 \generate{\file{md-frame-3.mdf}{\from{mdframed.dtx}{mdframepstricks}}}
 \Msg{*********************************************************}
 \Msg{*}
@@ -184,16 +184,16 @@ Have fun!
 %<*internal>
 \usedir{source/latex/mdframed}
 \generate{\file{mdframed.ins}{\from{mdframed.dtx}{install}}}
-\nopreamble\nopostamble
-\usedir{doc/latex/mdframed}
+
+\nopreamble\nopostamble\usedir{doc/latex/mdframed}
 \generate{\file{README.txt}{\from{mdframed.dtx}{readme}}}
-\nopreamble\nopostamble
+\nopreamble\nopostamble\usedir{source/latex/mdframed}
 \generate{\file{mdframed-example-default.tex}{\from{mdframed.dtx}{mdframed-example-default}}}
-\nopreamble\nopostamble
+\nopreamble\nopostamble\usedir{source/latex/mdframed}
 \generate{\file{mdframed-example-tikz.tex}{\from{mdframed.dtx}{mdframed-example-tikz}}}
-\nopreamble\nopostamble
+\nopreamble\nopostamble\usedir{source/latex/mdframed}
 \generate{\file{mdframed-example-pstricks.tex}{\from{mdframed.dtx}{mdframed-example-pstricks}}}
-\nopreamble\nopostamble
+\nopreamble\nopostamble\usedir{source/latex/mdframed}
 \generate{\file{mdframed-example-texsx.tex}{\from{mdframed.dtx}{mdframed-example-texsx}}}
 
 \ifx\fmtname\nameofplainTeX
@@ -203,11 +203,11 @@ Have fun!
 \fi
 %</internal>
 %<*driver>
-%%$Id: mdframed.dtx 312 2012-01-08 12:43:36Z marco $
+%%$Id: mdframed.dtx 318 2012-01-09 17:14:33Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,11pt,]{ltxmdf}
 \usepackage[framemethod=TikZ]{mdframed}
-\ltxmdfsetifoot$Id: mdframed.dtx 312 2012-01-08 12:43:36Z marco $
+\ltxmdfsetifoot$Id: mdframed.dtx 318 2012-01-09 17:14:33Z marco $
 
 \EnableCrossrefs
 \CodelineIndex
@@ -218,7 +218,7 @@ Have fun!
 %</driver>
 % \fi
 %
-% CheckSum{3517}
+% \CheckSum{5128}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -1535,10 +1535,10 @@ Have fun!
 %
 % \subsection{The Explanation of mdframed.sty}
 %
-% %$Id: mdframed.dtx 312 2012-01-08 12:43:36Z marco $
-% %$Rev: 312 $
+% %$Id: mdframed.dtx 318 2012-01-09 17:14:33Z marco $
+% %$Rev: 318 $
 % %$Author: marco $
-% %$Date: 2012-01-08 13:43:36 +0100 (So, 08. Jan 2012) $
+% %$Date: 2012-01-09 18:14:33 +0100 (Mo, 09. Jan 2012) $
 % \begin{macro}{mdversion,mdframedpackagename,mdf@maindate@svn}
 % Set package information
 %    \begin{macrocode}
@@ -1551,7 +1551,7 @@ Have fun!
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{mdframed}%
-     [\mdf@maindate@svn$Id: mdframed.dtx 312 2012-01-08 12:43:36Z marco $%
+     [\mdf@maindate@svn$Id: mdframed.dtx 318 2012-01-09 17:14:33Z marco $%
       \mdversion: \mdframedpackagename]
 %    \end{macrocode}
 %
@@ -2616,7 +2616,7 @@ Have fun!
 %    \end{macrocode}
 % \end{macro}
 %
-%
+% \changes{v1.2a}{2012/01/09}{take account of \protect\Cmd{parskip} for the vertical calculation}
 % \begin{macro}{mdf@freepagevspace}
 %    \begin{macrocode}
 \newrobustcmd*\mdf@freepagevspace{%
@@ -2627,6 +2627,7 @@ Have fun!
           {\mdf@freevspace@length\vsize}%
           {\mdf@freevspace@length=\pagegoal\relax%
            \advance\mdf@freevspace@length by -\pagetotal\relax%
+           \addtolength\mdf@freevspace@length{\dimexpr-\parskip\relax}\relax%
           }%
 }
 %    \end{macrocode}
@@ -3081,7 +3082,7 @@ Have fun!
 %% Public License, as described in lppl.txt in the base LaTeX distribution.
 %% Either version 1.0 or, at your option, any later version.
 
-%%$Id: mdframed.dtx 312 2012-01-08 12:43:36Z marco $
+%%$Id: mdframed.dtx 318 2012-01-09 17:14:33Z marco $
 %
 %    \end{macrocode}
 %
@@ -3091,7 +3092,7 @@ Have fun!
 \def\mdframedOpackagename{md-frame-0}
 \def\mdf@frameOdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-0.mdf}%
-    [\mdf@frameOdate@svn$Id: mdframed.dtx 312 2012-01-08 12:43:36Z marco $%
+    [\mdf@frameOdate@svn$Id: mdframed.dtx 318 2012-01-09 17:14:33Z marco $%
      \mdversion: \mdframedOpackagename]
 %    \end{macrocode}
 % \end{macro}
@@ -3513,7 +3514,7 @@ Have fun!
 %% Public License, as described in lppl.txt in the base LaTeX distribution.
 %% Either version 1.0 or, at your option, any later version.
 
-%%$Id: mdframed.dtx 312 2012-01-08 12:43:36Z marco $
+%%$Id: mdframed.dtx 318 2012-01-09 17:14:33Z marco $
 %
 %    \end{macrocode}
 % \changes{v1.1beta}{2011/12/16}{added lost semicolons}
@@ -3523,7 +3524,7 @@ Have fun!
 \def\mdframedIpackagename{md-frame-1}
 \def\mdf@frameIdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-1.mdf}%
-          [\mdf@frameIdate@svn$Id: mdframed.dtx 312 2012-01-08 12:43:36Z marco $ %
+          [\mdf@frameIdate@svn$Id: mdframed.dtx 318 2012-01-09 17:14:33Z marco $ %
            \mdversion: \mdframedIpackagename]
 %
 %    \end{macrocode}
@@ -4187,7 +4188,7 @@ Have fun!
 %% Public License, as described in lppl.txt in the base LaTeX distribution.
 %% Either version 1.0 or, at your option, any later version.
 
-%%$Id: mdframed.dtx 312 2012-01-08 12:43:36Z marco $
+%%$Id: mdframed.dtx 318 2012-01-09 17:14:33Z marco $
 %
 %    \end{macrocode}
 %
@@ -4197,7 +4198,7 @@ Have fun!
 \def\mdframedIIpackagename{md-frame-2}
 \def\mdf@frameIIdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-2.mdf}%
-         [\mdf@frameIIdate@svn$Id: mdframed.dtx 312 2012-01-08 12:43:36Z marco $ %
+         [\mdf@frameIIdate@svn$Id: mdframed.dtx 318 2012-01-09 17:14:33Z marco $ %
           \mdversion: \mdframedIIpackagename]
 %    \end{macrocode}
 % \end{macro}
@@ -4881,10 +4882,10 @@ Have fun!
 %
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 312 2012-01-08 12:43:36Z marco $
+%%$Id: mdframed.dtx 318 2012-01-09 17:14:33Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt]{ltxmdf}
-\ltxmdfsetifoot  $Id: mdframed.dtx 312 2012-01-08 12:43:36Z marco $
+\ltxmdfsetifoot  $Id: mdframed.dtx 318 2012-01-09 17:14:33Z marco $
 
 \usepackage{showexpl}
 \lstset{style=lstltxmdf,explpreset={pos=b,rframe={}},}
@@ -5097,10 +5098,10 @@ The example below is inspired by the following post on StackExchange \href{http:
 %
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 312 2012-01-08 12:43:36Z marco $
+%%$Id: mdframed.dtx 318 2012-01-09 17:14:33Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt]{ltxmdf}
-\ltxmdfsetifoot  $Id: mdframed.dtx 312 2012-01-08 12:43:36Z marco $
+\ltxmdfsetifoot  $Id: mdframed.dtx 318 2012-01-09 17:14:33Z marco $
 
 \usepackage{showexpl}
 \lstset{style=lstltxmdf,explpreset={pos=b,rframe={}},}
@@ -5349,10 +5350,10 @@ color(100bp)=(black!5)}
 %
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 312 2012-01-08 12:43:36Z marco $
+%%$Id: mdframed.dtx 318 2012-01-09 17:14:33Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt]{ltxmdf}
-\ltxmdfsetifoot$Id: mdframed.dtx 312 2012-01-08 12:43:36Z marco $
+\ltxmdfsetifoot$Id: mdframed.dtx 318 2012-01-09 17:14:33Z marco $
 
 \lstDeleteShortInline{|}
 \newcommand\Loadedframemethod{PSTricks}
@@ -5477,10 +5478,10 @@ function of the independent variables alone.
 
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 312 2012-01-08 12:43:36Z marco $
+%%$Id: mdframed.dtx 318 2012-01-09 17:14:33Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt,ltxlipsum]{ltxmdf}
-\ltxmdfsetifoot  $Id: mdframed.dtx 312 2012-01-08 12:43:36Z marco $
+\ltxmdfsetifoot  $Id: mdframed.dtx 318 2012-01-09 17:14:33Z marco $
 
 \usepackage{showexpl}
 \lstset{style=lstltxmdf,explpreset={pos=b,rframe={}},}
