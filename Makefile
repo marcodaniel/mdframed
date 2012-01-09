@@ -1,6 +1,6 @@
 ################################################################
 ## Makefile for mdframed project folder
-## $Id: Makefile 319 2012-01-09 18:38:06Z marco $
+## $Id: Makefile 321 2012-01-09 18:57:42Z marco $
 ################################################################
 ## Definitions
 ################################################################
@@ -123,7 +123,7 @@ clean:
 
 all:	docsty examples clean
 
-allwithoutclean: docsty examples
+
 ################################################################
 ## maintaner tool
 ################################################################
@@ -136,7 +136,7 @@ changeversion:
 	 echo -e "$(OK_COLOR)Version geändert zu $$REPLY$(NO_COLOR)"
 	@echo
 
-ctan: allwithoutclean
+usectanify:
 	echo  "" ;\
 	echo -e "\t$(ERROR_COLOR)Start ctanify$(NO_COLOR)" ;\
 	ctanify $(PACKAGE).ins $(PACKAGE).pdf README.txt ltxmdf.cls \
@@ -155,6 +155,12 @@ ctan: allwithoutclean
 	        md-frame-1.mdf=tex/latex/mdframed/ \
 	        md-frame-2.mdf=tex/latex/mdframed/ \
 	        md-frame-3.mdf=tex/latex/mdframed/ ;\
-	  if [ $$? = 0 ] ; then \
+	if [ $$? = 0 ] ; then \
 	     echo -e "\t$(OK_COLOR)ctanify without errors$(NO_COLOR)" ;\
-	  fi ;\
+	     echo -e "" ;\
+	else \
+	  echo -e "\t$(ERROR_COLOR)ctanify with erros$(NO_COLOR)" ;\
+	  exit 0;\
+	fi ;\
+
+ctan: docsty examples usectanify clean
