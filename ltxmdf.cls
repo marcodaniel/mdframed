@@ -8,15 +8,26 @@
 %% Public License, as described in lppl.txt in the base LaTeX distribution.
 %% Either version 1.0 or, at your option, any later version.
 
+<<<<<<< HEAD
 %%$Id: ltxmdf.cls 332 2012-02-04 09:40:16Z marco $
 %%$Rev: 332 $
 %%$Author: marco $
 %%$Date: 2012-02-04 10:40:16 +0100 (Sa, 04. Feb 2012) $
+=======
+%%$Id: ltxmdf.cls 311 2012-01-08 12:17:24Z marco $
+%%$Rev: 311 $
+%%$Author: marco $
+%%$Date: 2012-01-08 13:17:24 +0100 (So, 08. Jan 2012) $
+>>>>>>> 1b0af32106a894e95bb4f6d8c8fe42ebc10aa2fa
 
 %% Allgemeine Angaben
 \def\ltxmdf@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \NeedsTeXFormat{LaTeX2e}
+<<<<<<< HEAD
 \ProvidesPackage{ltxmdf}[\ltxmdf@svn$Id: ltxmdf.cls 332 2012-02-04 09:40:16Z marco $ ltxmdf]
+=======
+\ProvidesPackage{ltxmdf}[\ltxmdf@svn$Id: ltxmdf.cls 311 2012-01-08 12:17:24Z marco $ ltxmdf]
+>>>>>>> 1b0af32106a894e95bb4f6d8c8fe42ebc10aa2fa
 \DeclareOption{tocdepthsec}{\def\ltxmdf@tocdepth{1}}
 \DeclareOption{tocdepthsub}{\def\ltxmdf@tocdepth{2}}
 \newif\ifltxmdf@lipsum
@@ -92,7 +103,11 @@
 \def\ltxmdfsetifoot$#1: #2 #3 #4-#5-#6 #7 #8${%
   \ifoot{#2 #3 #4-#5-#6 #7 #8}
 }
+<<<<<<< HEAD
 \ltxmdfsetifoot$Id: ltxmdf.cls 332 2012-02-04 09:40:16Z marco $
+=======
+\ltxmdfsetifoot$Id: ltxmdf.cls 311 2012-01-08 12:17:24Z marco $
+>>>>>>> 1b0af32106a894e95bb4f6d8c8fe42ebc10aa2fa
 
 
 %Tikz und Farbe
@@ -168,9 +183,13 @@
 \def\version#1{\def\@version{#1}}
 \def\date#1{\def\@date{#1}}
 \def\@@date$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6}
+<<<<<<< HEAD
 \date{\@@date$Id: ltxmdf.cls 332 2012-02-04 09:40:16Z marco $}
 \let\mdfdateID\@@date
 
+=======
+\date{\@@date$Id: ltxmdf.cls 311 2012-01-08 12:17:24Z marco $}
+>>>>>>> 1b0af32106a894e95bb4f6d8c8fe42ebc10aa2fa
 
 \long\def\introduction#1{\def\@introduction{#1}}
 
