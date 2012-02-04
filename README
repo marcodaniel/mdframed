@@ -1,0 +1,13 @@
+%%$Id: README 80 2010-12-21 13:06:09Z marco $
+%%$Rev: 80 $
+%%$Author: marco $
+%%$Date: 2010-12-21 14:06:09 +0100 (Di, 21. Dez 2010) $
+
+Working with the command \fbox or \fcolorbox, one has to
+handle page breaks by hand. The present package defines the
+environment mdframed which automatically deals with page breaks.
+
+Author's name: Marco Daniel and Elke Schubert (!new)
+License type: lppl
+
+The current development status is v1.1beta
