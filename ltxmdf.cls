@@ -9,16 +9,16 @@
 %% Either version 1.0 or, at your option, any later version.
 
 
-%%$Id: ltxmdf.cls 337 2012-02-04 11:21:26Z marco $
-%%$Rev: 337 $
+%%$Id: ltxmdf.cls 347 2012-03-04 13:04:28Z marco $
+%%$Rev: 347 $
 %%$Author: marco $
-%%$Date: 2012-02-04 12:21:26 +0100 (Sa, 04. Feb 2012) $
+%%$Date: 2012-03-04 14:04:28 +0100 (So, 04. Mär 2012) $
 
 
 %% Allgemeine Angaben
 \def\ltxmdf@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{ltxmdf}[\ltxmdf@svn$Id: ltxmdf.cls 337 2012-02-04 11:21:26Z marco $ ltxmdf]
+\ProvidesPackage{ltxmdf}[\ltxmdf@svn$Id: ltxmdf.cls 347 2012-03-04 13:04:28Z marco $ ltxmdf]
 \DeclareOption{tocdepthsec}{\def\ltxmdf@tocdepth{1}}
 \DeclareOption{tocdepthsub}{\def\ltxmdf@tocdepth{2}}
 \newif\ifltxmdf@lipsum
@@ -95,7 +95,7 @@
   \ifoot{#2 #3 #4-#5-#6 #7 #8}
 }
 
-\ltxmdfsetifoot$Id: ltxmdf.cls 337 2012-02-04 11:21:26Z marco $
+\ltxmdfsetifoot$Id: ltxmdf.cls 347 2012-03-04 13:04:28Z marco $
 
 
 
@@ -117,7 +117,7 @@
      texcsstyle=*\color{red!50!black}\bfseries,
      moretexcs=intertext,
      keywordstyle=\color{blue!60!black}\bfseries,%
-     columns=fixed,%
+     columns=fullflexible,%
      fontadjust=true,%
      basewidth=0.65em,%
      breakatwhitespace=true,
@@ -172,7 +172,7 @@
 \def\version#1{\def\@version{#1}}
 \def\date#1{\def\@date{#1}}
 \def\@@date$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6}
-\date{\@@date$Id: ltxmdf.cls 337 2012-02-04 11:21:26Z marco $}
+\date{\@@date$Id: ltxmdf.cls 347 2012-03-04 13:04:28Z marco $}
 \let\mdfdateID\@@date
 
 
