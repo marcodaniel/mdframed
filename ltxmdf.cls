@@ -9,16 +9,16 @@
 %% Either version 1.0 or, at your option, any later version.
 
 
-%%$Id: ltxmdf.cls 347 2012-03-04 13:04:28Z marco $
-%%$Rev: 347 $
+%%$Id: ltxmdf.cls 350 2012-03-12 18:33:59Z marco $
+%%$Rev: 350 $
 %%$Author: marco $
-%%$Date: 2012-03-04 14:04:28 +0100 (So, 04. Mär 2012) $
+%%$Date: 2012-03-12 19:33:59 +0100 (Mo, 12. Mär 2012) $
 
 
 %% Allgemeine Angaben
 \def\ltxmdf@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{ltxmdf}[\ltxmdf@svn$Id: ltxmdf.cls 347 2012-03-04 13:04:28Z marco $ ltxmdf]
+\ProvidesPackage{ltxmdf}[\ltxmdf@svn$Id: ltxmdf.cls 350 2012-03-12 18:33:59Z marco $ ltxmdf]
 \DeclareOption{tocdepthsec}{\def\ltxmdf@tocdepth{1}}
 \DeclareOption{tocdepthsub}{\def\ltxmdf@tocdepth{2}}
 \newif\ifltxmdf@lipsum
@@ -95,7 +95,7 @@
   \ifoot{#2 #3 #4-#5-#6 #7 #8}
 }
 
-\ltxmdfsetifoot$Id: ltxmdf.cls 347 2012-03-04 13:04:28Z marco $
+\ltxmdfsetifoot$Id: ltxmdf.cls 350 2012-03-12 18:33:59Z marco $
 
 
 
@@ -130,12 +130,12 @@
                    splitbottomskip,middlelinewidth,middlelinecolor,tikzsetting,%
                    rightline,bottomline,innerrightmargin,style,linewidth,lem,section,%
                    definedstyle,mdfapptodefinestyle,needspace,mdf@globalstyle@cnt,framemethod,%
-                   ExampleText,titregris,draw,gray,thick,fill,white,shading,exersicetitle,
-                   exersicebackground,color,green,black,exercise,exercisepoints,
-                   text,rectangle,rounded,corners,right,minimum,height,xshift,at,
-                   exercisestyle,settings,frametitlefont,
-                   frametitlerule,frametitlebelowskip,frametitleaboveskip,
-                   frametitlebackgroundcolor,frametitlerulecolor},%
+                   ExampleText,titregris,draw,gray,thick,fill,white,shading,exersicetitle,%
+                   exersicebackground,color,green,black,exercise,exercisepoints,%
+                   text,rectangle,rounded,corners,right,minimum,height,xshift,at,%
+                   exercisestyle,settings,frametitlefont,%
+                   frametitlerule,frametitlebelowskip,frametitleaboveskip,%
+                   frametitlebackgroundcolor,frametitlerulecolor,picins,figure},%
      moretexcs={newmdtheoremenv,newmdenv,theoremstyle,mdfsetup,@length,%
                    md@putbox@single,@tempboxa,mdf@,%
                    mdf@linewidth,mdf@leftmargin@length,interruptlength,%
@@ -143,11 +143,12 @@
                    color,md@frame@leftline@single,mdf@innerbottommargin@length,%
                    mdf@middlelinewidth@length,mdfboundingboxheight,%
                    md@frame@rightline@single,mdfboundingboxwidth,%
-                   mdf@innerrightmargin@length,mdfdefinestyle,mdfapptodefinestyle,defcounter,
-                   tikzstyle,pgfdeclarehorizontalshading,theexercise,mdf@@exercisepoints,
-                   define@key,renewrobustcmd,mdfcreateextratikz,node,ifdefempty,
-                   mdf@frametitlefont,dimexpr,mdframedtitleenv,ifstrempty,
-                   mdtheorem,surroundwithmdframed},%
+                   mdf@innerrightmargin@length,mdfdefinestyle,mdfapptodefinestyle,defcounter,%
+                   tikzstyle,pgfdeclarehorizontalshading,theexercise,mdf@@exercisepoints,%
+                   define@key,renewrobustcmd,mdfcreateextratikz,node,ifdefempty,%
+                   mdf@frametitlefont,dimexpr,mdframedtitleenv,ifstrempty,@undefined,%
+                   mdtheorem,surroundwithmdframed,@captype,@dblarg,@newcaption,newcaption,%
+                   },%
 }
 
 
@@ -172,7 +173,7 @@
 \def\version#1{\def\@version{#1}}
 \def\date#1{\def\@date{#1}}
 \def\@@date$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6}
-\date{\@@date$Id: ltxmdf.cls 347 2012-03-04 13:04:28Z marco $}
+\date{\@@date$Id: ltxmdf.cls 350 2012-03-12 18:33:59Z marco $}
 \let\mdfdateID\@@date
 
 
