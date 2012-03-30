@@ -206,11 +206,11 @@ Have fun!
 \fi
 %</internal>
 %<*driver>
-%%$Id: mdframed.dtx 353 2012-03-23 13:11:51Z marco $
+%%$Id: mdframed.dtx 360 2012-03-30 06:43:25Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,11pt,]{ltxmdf}
 \usepackage[framemethod=TikZ]{mdframed}
-\ltxmdfsetifoot$Id: mdframed.dtx 353 2012-03-23 13:11:51Z marco $
+\ltxmdfsetifoot$Id: mdframed.dtx 360 2012-03-30 06:43:25Z marco $
 
 \EnableCrossrefs
 \CodelineIndex
@@ -221,7 +221,7 @@ Have fun!
 %</driver>
 % \fi
 %
-% \CheckSum{5266}
+% \CheckSum{5807}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -250,7 +250,7 @@ Have fun!
 % \author{\href{mailto:marco.daniel@mada-nada.de}{Marco Daniel}%
 %        \href{mailto:marco.daniel@mada-nada.de}{Elke Schubert}}}
 % \version{\mdversion}
-% \date{\mdfdateID$Id: mdframed.dtx 353 2012-03-23 13:11:51Z marco $}
+% \date{\mdfdateID$Id: mdframed.dtx 360 2012-03-30 06:43:25Z marco $}
 % \introduction{The standard methods for framing text (\Cmd{fbox}
 %              or \Cmd{fcolorbox}) require you to handle page breaks
 %              by hand, meaning that you have to split the \Cmd{fbox}
@@ -1257,6 +1257,7 @@ Have fun!
 %   \item Improve documentation and examples.
 %   \item Create styles for \Opt{frametitle}.
 %   \item Create an inline version of \Env{mdframed} that's works like \Cmd{fbox}
+%   \item Add \Cmd{ht}\Cmd{strutbox} to file \Pack{md-frame-1.mdf}
 % \end{enumerate}                
 % 
 % \section{Acknowledgements}
@@ -1608,14 +1609,14 @@ Have fun!
 %
 % \subsection{The Explanation of mdframed.sty}
 %
-% %$Id: mdframed.dtx 353 2012-03-23 13:11:51Z marco $
-% %$Rev: 353 $
+% %$Id: mdframed.dtx 360 2012-03-30 06:43:25Z marco $
+% %$Rev: 360 $
 % %$Author: marco $
-% %$Date: 2012-03-23 14:11:51 +0100 (Fr, 23. Mär 2012) $
+% %$Date: 2012-03-30 08:43:25 +0200 (Fr, 30. Mär 2012) $
 % \begin{macro}{mdversion,mdframedpackagename,mdf@maindate@svn}
 % Set package information
 %    \begin{macrocode}
-\def\mdversion{v1.4c}
+\def\mdversion{v1.4d}
 \def\mdframedpackagename{mdframed}
 \def\mdf@maindate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 %    \end{macrocode}
@@ -1624,7 +1625,7 @@ Have fun!
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{mdframed}%
-     [\mdf@maindate@svn$Id: mdframed.dtx 353 2012-03-23 13:11:51Z marco $%
+     [\mdf@maindate@svn$Id: mdframed.dtx 360 2012-03-30 06:43:25Z marco $%
       \mdversion: \mdframedpackagename]
 %    \end{macrocode}
 %
@@ -1924,6 +1925,7 @@ Have fun!
     {usetwoside==true},%
     {repeatframetitle==false},%Noch nicht richtig implementiert
     {shadow==false},%
+    {everyline==false},%
 }
 %%special boolflag hidealllines:
 \newbool{mdf@hidealllines}%
@@ -2886,6 +2888,13 @@ Have fun!
     \mdf@dolist{\mdf@advancelength@freevspace@sub}{%calculate with \dimen@
               outerlinewidth,middlelinewidth,innerlinewidth,%
               innertopmargin,splitbottomskip}%
+    \ifbool{mdf@everyline}{%
+      \ifbool{mdf@bottomline}{%
+               \advance\dimen@ by -\mdf@innerlinewidth@length%
+               \advance\dimen@ by -\mdf@middlelinewidth@length%
+               \advance\dimen@ by -\mdf@outerlinewidth@length%
+           }{}%
+        }{}%
     \ifbool{mdf@topline}{}{%
                \advance\dimen@ by \mdf@innerlinewidth@length%
                \advance\dimen@ by \mdf@middlelinewidth@length%
@@ -3005,19 +3014,34 @@ Have fun!
   \mdf@dolist{\mdf@advancelength@freevspace@add}{%used \dimen@
                 outerlinewidth,middlelinewidth,innerlinewidth,%
                 innerbottommargin}%%%Addition der Linien unten
+   \ifbool{mdf@everyline}{%
+      \ifbool{mdf@topline}{%
+               \advance\dimen@ by \mdf@innerlinewidth@length%
+               \advance\dimen@ by \mdf@middlelinewidth@length%
+               \advance\dimen@ by \mdf@outerlinewidth@length%
+           }{}%
+        }{}%
    \ifbool{mdf@bottomline}{}{%
-               \advance\dimen@i by \mdf@innerlinewidth@length%
-               \advance\dimen@i by \mdf@middlelinewidth@length%
-               \advance\dimen@i by \mdf@outerlinewidth@length%
+               \advance\dimen@ by -\mdf@innerlinewidth@length%
+               \advance\dimen@ by -\mdf@middlelinewidth@length%
+               \advance\dimen@ by -\mdf@outerlinewidth@length%
           \relax}%
    \ifdimgreater{\dimen@}{\mdf@freevspace@length}%
     {%
-   \advance\mdf@freevspace@length by -\mdf@splitbottomskip@length\relax%
-   \ifbool{mdf@bottomline}{}{%
-               \advance\dimen@i by -\mdf@innerlinewidth@length%
-               \advance\dimen@i by -\mdf@middlelinewidth@length%
-               \advance\dimen@i by -\mdf@outerlinewidth@length%
-          \relax}%
+     \advance\mdf@freevspace@length by -\mdf@splitbottomskip@length\relax%
+     \advance\mdf@freevspace@length by .5\ht\strutbox\relax%
+     \ifbool{mdf@everyline}{%
+       \ifbool{mdf@topline}{%
+               \advance\mdf@freevspace@length by -\mdf@innerlinewidth@length%
+               \advance\mdf@freevspace@length by -\mdf@middlelinewidth@length%
+               \advance\mdf@freevspace@length by -\mdf@outerlinewidth@length%
+           }{}%
+       \ifbool{mdf@bottomline}{%
+               \advance\mdf@freevspace@length by -\mdf@innerlinewidth@length%
+               \advance\mdf@freevspace@length by -\mdf@middlelinewidth@length%
+               \advance\mdf@freevspace@length by -\mdf@outerlinewidth@length%
+          \relax}{}%
+        }{}%
         \splitmaxdepth\z@ \splittopskip\mdf@splittopskip@length%
         \mdf@ignorevbadness%
         \setbox\mdf@splitbox@two\vsplit\mdf@splitbox@one to \mdf@freevspace@length%
@@ -3182,7 +3206,7 @@ Have fun!
 %% Either version 1.0 or, at your option, any later version.
 %%
 %%
-%%$Id: mdframed.dtx 353 2012-03-23 13:11:51Z marco $
+%%$Id: mdframed.dtx 360 2012-03-30 06:43:25Z marco $
 %
 %    \end{macrocode}
 %
@@ -3192,7 +3216,7 @@ Have fun!
 \def\mdframedOpackagename{md-frame-0}
 \def\mdf@frameOdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-0.mdf}%
-    [\mdf@frameOdate@svn$Id: mdframed.dtx 353 2012-03-23 13:11:51Z marco $%
+    [\mdf@frameOdate@svn$Id: mdframed.dtx 360 2012-03-30 06:43:25Z marco $%
      \mdversion: \mdframedOpackagename]
 %    \end{macrocode}
 % \end{macro}
@@ -3418,6 +3442,17 @@ Have fun!
             +\ifbool{mdf@topline}{\mdf@middlelinewidth@length}{0pt}\relax}%
   }%
 }%
+\def\mdf@frame@bottomline@first{%
+  \rlap{\ifbool{mdf@leftline}{\hspace*{-\mdf@middlelinewidth@length}}{}\mdf@linecolor@default%
+     \ifbool{mdf@bottomline}{%
+         \rule[\dimexpr-\mdfboundingboxdepth-\mdf@middlelinewidth@length\relax]%
+              {\dimexpr\mdfboundingboxtotalwidth
+                       \ifbool{mdf@rightline}{+\mdf@middlelinewidth@length}{}%
+                       \ifbool{mdf@leftline}{+\mdf@middlelinewidth@length}{}\relax}%
+              {\mdf@middlelinewidth@length}}%
+         {}%
+  }%
+}%
 \def\mdf@putbox@first{%%%% Ausgabe der Teilbox 1
   \ifvoid\mdf@splitbox@two
   \else%
@@ -3443,6 +3478,8 @@ Have fun!
         \ifbool{mdf@leftline}{%
            \hspace*{\mdf@middlelinewidth@length}%
            \mdf@frame@leftline@first}{}%
+        \ifbool{mdf@everyline}%
+               {\mdf@frame@bottomline@first}{}%
         \ifbool{mdf@topline}{%
             \mdf@frame@topline@first}{}%
         \mdf@frame@background@first%
@@ -3516,6 +3553,20 @@ Have fun!
           {\mdfboundingboxtotalheight}%
   }%
 }%
+\def\mdf@frame@topline@second{%
+  \rlap{\ifbool{mdf@leftline}{\hspace*{-\mdf@middlelinewidth@length}}{}\mdf@linecolor@default%
+     \ifbool{mdf@topline}{%
+          \rule[\dimexpr\mdfboundingboxheight-\mdfboundingboxdepth%
+                       +\mdf@innerbottommargin@length\relax]%
+                {\dimexpr\mdfboundingboxtotalwidth
+                       \ifbool{mdf@rightline}{+\mdf@middlelinewidth@length}{}%
+                       \ifbool{mdf@leftline}{+\mdf@middlelinewidth@length}{}\relax
+                }%
+               {\mdf@middlelinewidth@length}}%
+         {}%
+  }%
+}%
+
 \def\mdf@putbox@second{%
   \ifvoid\mdf@splitbox@one%
   \else
@@ -3539,6 +3590,8 @@ Have fun!
         \ifbool{mdf@leftline}{%
            \hspace*{\mdf@middlelinewidth@length}%
            \mdf@frame@leftline@second}{}%
+        \ifbool{mdf@everyline}%
+               {\mdf@frame@topline@second}{}%
         \mdf@frame@background@second%
         \ifbool{mdf@bottomline}{%
             \mdf@frame@bottomline@second}{}%
@@ -3602,6 +3655,30 @@ Have fun!
           {\mdfboundingboxtotalheight}%
   }%
 }%
+\def\mdf@frame@topline@middle{%
+  \rlap{\ifbool{mdf@leftline}{\hspace*{-\mdf@middlelinewidth@length}}{}\mdf@linecolor@default%
+     \ifbool{mdf@topline}{%
+          \rule[\dimexpr\mdfboundingboxtotalheight-\mdfboundingboxdepth\relax]%
+                {\dimexpr\mdfboundingboxtotalwidth
+                       \ifbool{mdf@rightline}{+\mdf@middlelinewidth@length}{}%
+                       \ifbool{mdf@leftline}{+\mdf@middlelinewidth@length}{}\relax
+                }%
+               {\mdf@middlelinewidth@length}}%
+         {}%
+  }%
+}%
+\def\mdf@frame@bottomline@middle{%
+  \rlap{\ifbool{mdf@leftline}{\hspace*{-\mdf@middlelinewidth@length}}{}\mdf@linecolor@default%
+     \ifbool{mdf@bottomline}{%
+         \rule[\dimexpr-\mdfboundingboxdepth-\mdf@middlelinewidth@length\relax]%
+              {\dimexpr\mdfboundingboxtotalwidth
+                       \ifbool{mdf@rightline}{+\mdf@middlelinewidth@length}{}%
+                       \ifbool{mdf@leftline}{+\mdf@middlelinewidth@length}{}\relax}%
+              {\mdf@middlelinewidth@length}}%
+         {}%
+  }%
+}%
+
 \def\mdf@putbox@middle{%
   \ifvoid\mdf@splitbox@two%
   \else
@@ -3626,7 +3703,11 @@ Have fun!
            \hspace*{\mdf@middlelinewidth@length}%
            \mdf@frame@leftline@middle}{}%
         \mdf@frame@background@middle%
+        \ifbool{mdf@everyline}%
+               {\mdf@frame@topline@middle}{}%
         \ifdefempty{\mdf@frametitle}{}{\mdf@frame@frametitlebackground@middle}%
+        \ifbool{mdf@everyline}%
+               {\mdf@frame@bottomline@middle}{}%
         \hspace*{\mdf@innerleftmargin@length}%
         \ifbool{mdf@rightline}{%
             \mdf@frame@rightline@middle}{}%
@@ -3662,7 +3743,7 @@ Have fun!
 %% Either version 1.0 or, at your option, any later version.
 %%
 %%
-%%$Id: mdframed.dtx 353 2012-03-23 13:11:51Z marco $
+%%$Id: mdframed.dtx 360 2012-03-30 06:43:25Z marco $
 %
 %    \end{macrocode}
 % \changes{v1.1beta}{2011/12/16}{added lost semicolons}
@@ -3672,7 +3753,7 @@ Have fun!
 \def\mdframedIpackagename{md-frame-1}
 \def\mdf@frameIdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-1.mdf}%
-          [\mdf@frameIdate@svn$Id: mdframed.dtx 353 2012-03-23 13:11:51Z marco $ %
+          [\mdf@frameIdate@svn$Id: mdframed.dtx 360 2012-03-30 06:43:25Z marco $ %
            \mdversion: \mdframedIpackagename]
 %
 %    \end{macrocode}
@@ -3996,7 +4077,7 @@ Have fun!
 \def\mdf@putbox@first{%
   \ifvoid\mdf@splitbox@two
   \else%
-        \mdf@makebox@out{%
+   \mdf@makebox@out{%
     \mdf@makeboxalign@left%
     \mdf@tikz@settings%
     \setlength\mdfboundingboxwidth{\wd\mdf@splitbox@two}%
@@ -4010,7 +4091,6 @@ Have fun!
       \advance\mdfboundingboxwidth by \mdf@innerlinewidth@length\relax%
       \advance\mdfboundingboxwidth by \mdf@middlelinewidth@length\relax%
       \advance\mdfboundingboxwidth by \mdf@outerlinewidth@length\relax}{}%
-%
     \setlength\mdfboundingboxheight{\dimexpr\ht\mdf@splitbox@two+\dp\mdf@splitbox@two\relax}%
     \advance\mdfboundingboxheight by \mdf@innertopmargin@length\relax%
     \advance\mdfboundingboxheight by \mdf@splitbottomskip@length\relax%
@@ -4018,13 +4098,19 @@ Have fun!
       \advance\mdfboundingboxheight by \mdf@innerlinewidth@length\relax%
       \advance\mdfboundingboxheight by \mdf@middlelinewidth@length\relax%
       \advance\mdfboundingboxheight by \mdf@outerlinewidth@length\relax}{}%
-%
+%%%%%%%%%
+    \ifbool{mdf@everyline}{%
+     \ifbool{mdf@bottomline}{%
+      \advance\mdfboundingboxheight by \mdf@innerlinewidth@length\relax%
+      \advance\mdfboundingboxheight by \mdf@middlelinewidth@length\relax%
+      \advance\mdfboundingboxheight by \mdf@outerlinewidth@length\relax}{}%
+     }{}%
+%%%%%%%%%%%%%%
     %\ifdimequal{\pagegoal}{\maxdimen}{\enlargethispage{\baselineskip}}{}% ???
     \ifdimgreater{\pagegoal-\maxdimen}{0pt}{}{\enlargethispage{\baselineskip}}%
     \mdf@makebox@in[\mdfboundingboxwidth]{%
     \null%
     \begin{tikzpicture}[remember picture]
-%
       \pgfmathsetlengthmacro\mdf@Ax{+\mdf@innerleftmargin@length}%
       \pgfmathsetlengthmacro\mdf@Ay{+\mdf@splitbottomskip@length}%
       \pgfmathsetlengthmacro\mdf@Ox{+0pt}%
@@ -4047,14 +4133,67 @@ Have fun!
           \pgfmathsetlengthmacro\mdf@Py%
               {\mdf@Py-\mdf@outerlinewidth@length-0.5\mdf@middlelinewidth@length}%
         }{}%
-%
+%%
+     \ifbool{mdf@everyline}{%
+      \ifbool{mdf@bottomline}%
+        {%
+         \pgfmathsetlengthmacro\mdf@Ay%
+              {\mdf@Ay+\mdf@outerlinewidth@length+\mdf@middlelinewidth@length%
+                +\mdf@innerlinewidth@length}%
+         \pgfmathsetlengthmacro\mdf@Oy%
+              {\mdf@Oy+\mdf@outerlinewidth@length+0.5\mdf@middlelinewidth@length}%
+        }{}%
+      \ifbool{mdf@topline}%
+        {%
+         \pgfmathsetlengthmacro\mdf@Py%
+              {\mdf@Py-\mdf@outerlinewidth@length-0.5\mdf@middlelinewidth@length}%
+        }{}%
+     }{}%
+%%
       \coordinate(O)at(\mdf@Ox,\mdf@Oy);%
       \coordinate(P)at(\mdf@Px,\mdf@Py);%
-%
       \ifbool{mdf@shadow}
          {\path[mdfshadow] (O) -- (O|-P) to[mdfcorners] (P) -- (P|-O) -- (O);}{}%
-%
      \begin{scope}[use as bounding box]
+%%%%%%%%%%%%
+    \ifbool{mdf@everyline}{%
+      \mdf@test@ltrb{\mdf@tikzbox@tfl{(O)--(O|-P)--(P)--(P|-O)--cycle}}{}%
+      \mdf@test@ltb{\mdf@tikzbox@tfl{(P|-O)--(O)--(O|-P)--(P)}}{}%
+      \mdf@test@trb{\mdf@tikzbox@tfl{(O|-P)--(P)--(P|-O)--(O)}}{}%
+      \mdf@test@ltr{\mdf@tikzbox@tfl{(O)--(O|-P)--(P)--(P|-O)}}{}%
+      \mdf@test@lrb{\mdf@tikzbox@tfl{(P-|O)--(O)--(O-|P)--(P)}}{}%
+      \mdf@test@lb{\mdf@tikzbox@otl{(P|-O)--(O)--(O|-P)}%
+                                 {(P)--(P|-O)[mdfcorners]--(O)--(O|-P)}%
+                 }{}%
+      \mdf@test@rb{\mdf@tikzbox@otl{(P)--(P|-O)--(O)}%
+                                 {(O|-P)--(P)[mdfcorners]--(P|-O)--(O)}%
+                 }{}%
+      \mdf@test@tr{\mdf@tikzbox@otl{(O-|P)--(P)--(P-|O)}%
+                                 {(O)--(O|-P)[mdfcorners]--(P)--(P|-O)}%
+                 }{}%
+      \mdf@test@lt{\mdf@tikzbox@otl{(O)--(O|-P)--(P)}%
+                                 {(P|-O)--(O)[mdfcorners]--(O|-P)--(P)}%
+                 }{}%
+      \mdf@test@lr{\mdf@tikzbox@otl{(O)--(O|-P)(P)--(P|-O)}%
+                                 {(O)rectangle(P)}%
+                 }{}%
+      \mdf@test@tb{\mdf@tikzbox@otl{(O)--(O-|P)(O|-P)--(P)}%
+                                 {(O)rectangle(P)}%
+                 }{}%
+      \mdf@test@l{\mdf@tikzbox@otl{(O)--(O|-P)}%
+                                 {(O)rectangle(P)}%
+                 }{}%
+      \mdf@test@r{\mdf@tikzbox@otl{(O-|P)--(P)}%
+                                 {(O)rectangle(P)}%
+                 }{}%
+      \mdf@test@t{\mdf@tikzbox@otl{(O|-P)--(P)}%
+                                 {(O)rectangle(P)}%
+                 }{}%
+      \mdf@test@b{\mdf@tikzbox@otl{(O)--(O-|P)}%
+                                 {(O)rectangle(P)}%
+                 }{}%
+      \mdf@test@noline{\path[mdfbackground,mdfcorners](O)rectangle(P);}{}%
+    }{
       \ifboolexpr{test {\mdf@test@ltrb} or test {\mdf@test@ltr}}%
         {\mdf@tikzbox@tfl{(O)--(O|-P)--(P)--(P|-O)}}%
         {}%
@@ -4077,11 +4216,10 @@ Have fun!
         {\mdf@tikzbox@otl{(O-|P)--(P)}{(O)rectangle(P)}}%
         {}%
       \mdf@test@b{\path[mdfbackground](O)rectangle(P);}{}%
-%
       \mdf@test@noline{\path[mdfbackground,mdfcorners](O)--(O|-P)--(P)--(P|-O);}{}%
-%    
+    }
+%%%%%%%%%%%%
       \drawbrackgroundframetitle@first
-%
       \node[mdfbox]at(\mdf@Ax,\mdf@Ay){\box\mdf@splitbox@two};% Ausgabebox einfuegen
      \end{scope}
      %HIER KOMMT EIN WEITERES MAKRO
@@ -4126,13 +4264,29 @@ Have fun!
        \end{scope}
 }%
 %
+\def\drawbrackgroundframetitle@@middle{%
+       \begin{scope}%background frame title
+        \ifbool{mdf@leftline}{
+         \pgfmathsetlengthmacro\mdf@Ox%
+             {\mdf@Ox+\mdf@innerlinewidth@length+0.5\mdf@middlelinewidth@length}
+         }{}%
+        \ifbool{mdf@rightline}{%
+         \pgfmathsetlengthmacro\mdf@Px%
+             {\mdf@Px-\mdf@innerlinewidth@length-0.5\mdf@middlelinewidth@length}
+         }{}%
+         \pgfmathsetlengthmacro\mdf@Fy
+             {\mdf@Py-\mdfframetitleboxtotalheight}
+         \path[mdfframetitlebackground,rounded corners=\z@]
+             (\mdf@Ox,\mdf@Fy) -- (\mdf@Ox,\mdf@Py)%
+             --(\mdf@Px,\mdf@Py) --(\mdf@Px,\mdf@Fy);
+       \end{scope}
+}%
 \def\mdf@putbox@middle{%
   \ifvoid\mdf@splitbox@two
   \else%
         \mdf@makebox@out{%
     \mdf@makeboxalign@left%
     \mdf@tikz@settings%
-%
     \setlength\mdfboundingboxwidth{\wd\mdf@splitbox@two}%
     \advance\mdfboundingboxwidth by \mdf@innerleftmargin@length\relax%
     \advance\mdfboundingboxwidth by \mdf@innerrightmargin@length\relax%
@@ -4144,10 +4298,20 @@ Have fun!
       \advance\mdfboundingboxwidth by \mdf@innerlinewidth@length\relax%
       \advance\mdfboundingboxwidth by \mdf@middlelinewidth@length\relax%
       \advance\mdfboundingboxwidth by \mdf@outerlinewidth@length\relax}{}%
-%
     \setlength\mdfboundingboxheight{\dimexpr\ht\mdf@splitbox@two+\dp\mdf@splitbox@two\relax}%
     \advance\mdfboundingboxheight by \mdf@splitbottomskip@length\relax%
-%
+%%%%%%%%%
+    \ifbool{mdf@everyline}{%
+     \ifbool{mdf@topline}{%
+      \advance\mdfboundingboxheight by \mdf@innerlinewidth@length\relax%
+      \advance\mdfboundingboxheight by \mdf@middlelinewidth@length\relax%
+      \advance\mdfboundingboxheight by \mdf@outerlinewidth@length\relax}{}%
+     \ifbool{mdf@bottomline}{%
+      \advance\mdfboundingboxheight by \mdf@innerlinewidth@length\relax%
+      \advance\mdfboundingboxheight by \mdf@middlelinewidth@length\relax%
+      \advance\mdfboundingboxheight by \mdf@outerlinewidth@length\relax}{}%
+     }{}%
+%%%%%%%%%%%%%%
     \mdf@makebox@in[\mdfboundingboxwidth]{%
     \null%
     \begin{tikzpicture}[remember picture]
@@ -4170,14 +4334,67 @@ Have fun!
           \pgfmathsetlengthmacro\mdf@Px%
               {\mdf@Px-\mdf@outerlinewidth@length-0.5\mdf@middlelinewidth@length}%
          }{}%
-%
+%%
+     \ifbool{mdf@everyline}{%
+      \ifbool{mdf@bottomline}%
+        {%
+         \pgfmathsetlengthmacro\mdf@Ay%
+              {\mdf@Ay+\mdf@outerlinewidth@length+\mdf@middlelinewidth@length%
+                +\mdf@innerlinewidth@length}%
+         \pgfmathsetlengthmacro\mdf@Oy%
+              {\mdf@Oy+\mdf@outerlinewidth@length+0.5\mdf@middlelinewidth@length}%
+        }{}%
+      \ifbool{mdf@topline}%
+        {%
+         \pgfmathsetlengthmacro\mdf@Py%
+              {\mdf@Py-\mdf@outerlinewidth@length-0.5\mdf@middlelinewidth@length}%
+        }{}%
+     }{}%
+%%
       \coordinate(O)at(\mdf@Ox,\mdf@Oy);%
       \coordinate(P)at(\mdf@Px,\mdf@Py);%
-%
       \ifbool{mdf@shadow}
          {\path[mdfshadow](O) rectangle (P);}{}%
-%
      \begin{scope}[use as bounding box]
+%%%%%%%%%%%%
+    \ifbool{mdf@everyline}{%
+      \mdf@test@ltrb{\mdf@tikzbox@tfl{(O)--(O|-P)--(P)--(P|-O)--cycle}}{}%
+      \mdf@test@ltb{\mdf@tikzbox@tfl{(P|-O)--(O)--(O|-P)--(P)}}{}%
+      \mdf@test@trb{\mdf@tikzbox@tfl{(O|-P)--(P)--(P|-O)--(O)}}{}%
+      \mdf@test@ltr{\mdf@tikzbox@tfl{(O)--(O|-P)--(P)--(P|-O)}}{}%
+      \mdf@test@lrb{\mdf@tikzbox@tfl{(P-|O)--(O)--(O-|P)--(P)}}{}%
+      \mdf@test@lb{\mdf@tikzbox@otl{(P|-O)--(O)--(O|-P)}%
+                                 {(P)--(P|-O)[mdfcorners]--(O)--(O|-P)}%
+                 }{}%
+      \mdf@test@rb{\mdf@tikzbox@otl{(P)--(P|-O)--(O)}%
+                                 {(O|-P)--(P)[mdfcorners]--(P|-O)--(O)}%
+                 }{}%
+      \mdf@test@tr{\mdf@tikzbox@otl{(O-|P)--(P)--(P-|O)}%
+                                 {(O)--(O|-P)[mdfcorners]--(P)--(P|-O)}%
+                 }{}%
+      \mdf@test@lt{\mdf@tikzbox@otl{(O)--(O|-P)--(P)}%
+                                 {(P|-O)--(O)[mdfcorners]--(O|-P)--(P)}%
+                 }{}%
+      \mdf@test@lr{\mdf@tikzbox@otl{(O)--(O|-P)(P)--(P|-O)}%
+                                 {(O)rectangle(P)}%
+                 }{}%
+      \mdf@test@tb{\mdf@tikzbox@otl{(O)--(O-|P)(O|-P)--(P)}%
+                                 {(O)rectangle(P)}%
+                 }{}%
+      \mdf@test@l{\mdf@tikzbox@otl{(O)--(O|-P)}%
+                                 {(O)rectangle(P)}%
+                 }{}%
+      \mdf@test@r{\mdf@tikzbox@otl{(O-|P)--(P)}%
+                                 {(O)rectangle(P)}%
+                 }{}%
+      \mdf@test@t{\mdf@tikzbox@otl{(O|-P)--(P)}%
+                                 {(O)rectangle(P)}%
+                 }{}%
+      \mdf@test@b{\mdf@tikzbox@otl{(O)--(O-|P)}%
+                                 {(O)rectangle(P)}%
+                 }{}%
+      \mdf@test@noline{\path[mdfbackground,mdfcorners](O)rectangle(P);}{}%
+    }{
       \ifboolexpr{bool {mdf@leftline} and bool {mdf@rightline}}%
                {\mdf@tikzbox@otl{(O)--(O|-P)(P)--(P|-O)}{(O)rectangle(P)}}{}%
       \ifboolexpr{bool {mdf@leftline} and not (bool {mdf@rightline})}%
@@ -4186,9 +4403,9 @@ Have fun!
                {\mdf@tikzbox@otl{(P)--(P|-O)}{(O)rectangle(P)}}{}%
       \ifboolexpr{not (bool {mdf@leftline}) and not (bool {mdf@rightline})}%
                {\path[mdfbackground](O)rectangle(P);}{}%
-%
+    }
+%%%%%%%%
       \drawbrackgroundframetitle@middle
-%
       \node[mdfbox]at(\mdf@Ax,\mdf@Ay){\box\mdf@splitbox@two};% Ausgabebox einfuegen
      \end{scope}
      %HIER KOMMT EIN WEITERES MAKRO
@@ -4237,7 +4454,6 @@ Have fun!
         \mdf@makebox@out{%
     \mdf@makeboxalign@left%
     \mdf@tikz@settings%
-%
     \setlength\mdfboundingboxwidth{\wd\mdf@splitbox@one}%
     \advance\mdfboundingboxwidth by \mdf@innerleftmargin@length\relax%
     \advance\mdfboundingboxwidth by \mdf@innerrightmargin@length\relax%
@@ -4249,14 +4465,20 @@ Have fun!
       \advance\mdfboundingboxwidth by \mdf@innerlinewidth@length\relax%
       \advance\mdfboundingboxwidth by \mdf@middlelinewidth@length\relax%
       \advance\mdfboundingboxwidth by \mdf@outerlinewidth@length\relax}{}%
-%
     \setlength\mdfboundingboxheight{\dimexpr\ht\mdf@splitbox@one+\dp\mdf@splitbox@one\relax}%
     \advance\mdfboundingboxheight by \mdf@innerbottommargin@length\relax%
     \ifbool{mdf@bottomline}{%
       \advance\mdfboundingboxheight by \mdf@innerlinewidth@length\relax%
       \advance\mdfboundingboxheight by \mdf@middlelinewidth@length\relax%
       \advance\mdfboundingboxheight by \mdf@outerlinewidth@length\relax}{}%
-%
+%%%%%%%%%
+    \ifbool{mdf@everyline}{%
+     \ifbool{mdf@topline}{%
+      \advance\mdfboundingboxheight by \mdf@innerlinewidth@length\relax%
+      \advance\mdfboundingboxheight by \mdf@middlelinewidth@length\relax%
+      \advance\mdfboundingboxheight by \mdf@outerlinewidth@length\relax}{}%
+     }{}%
+%%%%%%%%%%%%%%
     \mdf@makebox@in[\mdfboundingboxwidth]{%
     \null%
     \begin{tikzpicture}[remember picture]
@@ -4269,7 +4491,7 @@ Have fun!
       \ifbool{mdf@leftline}%
         {%
          \pgfmathsetlengthmacro\mdf@Ax%
-              {\mdf@Ax+\mdf@outerlinewidth@length+% 
+              {\mdf@Ax+\mdf@outerlinewidth@length+%
                \mdf@middlelinewidth@length+\mdf@innerlinewidth@length}%
           \pgfmathsetlengthmacro\mdf@Ox%
               {\mdf@Ox+\mdf@outerlinewidth@length+0.5\mdf@middlelinewidth@length}%
@@ -4287,14 +4509,59 @@ Have fun!
           \pgfmathsetlengthmacro\mdf@Oy%
               {\mdf@Oy+\mdf@outerlinewidth@length+0.5\mdf@middlelinewidth@length}%
          }{}%
-%
+%%
+     \ifbool{mdf@everyline}{%
+      \ifbool{mdf@topline}%
+        {%
+         \pgfmathsetlengthmacro\mdf@Py%
+              {\mdf@Py-\mdf@outerlinewidth@length-0.5\mdf@middlelinewidth@length}%
+        }{}%
+     }{}%
+%%
       \coordinate(O)at(\mdf@Ox,\mdf@Oy);%
       \coordinate(P)at(\mdf@Px,\mdf@Py);%
-%
       \ifbool{mdf@shadow}
          {\path[mdfshadow]  (O|-P) to[mdfcorners] (O) to[mdfcorners] (P|-O) -- (P) -- (O|-P);}{}%
-%
      \begin{scope}[use as bounding box]
+%%%%%%%%%%%%
+    \ifbool{mdf@everyline}{%
+      \mdf@test@ltrb{\mdf@tikzbox@tfl{(O)--(O|-P)--(P)--(P|-O)--cycle}}{}%
+      \mdf@test@ltb{\mdf@tikzbox@tfl{(P|-O)--(O)--(O|-P)--(P)}}{}%
+      \mdf@test@trb{\mdf@tikzbox@tfl{(O|-P)--(P)--(P|-O)--(O)}}{}%
+      \mdf@test@ltr{\mdf@tikzbox@tfl{(O)--(O|-P)--(P)--(P|-O)}}{}%
+      \mdf@test@lrb{\mdf@tikzbox@tfl{(P-|O)--(O)--(O-|P)--(P)}}{}%
+      \mdf@test@lb{\mdf@tikzbox@otl{(P|-O)--(O)--(O|-P)}%
+                                 {(P)--(P|-O)[mdfcorners]--(O)--(O|-P)}%
+                 }{}%
+      \mdf@test@rb{\mdf@tikzbox@otl{(P)--(P|-O)--(O)}%
+                                 {(O|-P)--(P)[mdfcorners]--(P|-O)--(O)}%
+                 }{}%
+      \mdf@test@tr{\mdf@tikzbox@otl{(O-|P)--(P)--(P-|O)}%
+                                 {(O)--(O|-P)[mdfcorners]--(P)--(P|-O)}%
+                 }{}%
+      \mdf@test@lt{\mdf@tikzbox@otl{(O)--(O|-P)--(P)}%
+                                 {(P|-O)--(O)[mdfcorners]--(O|-P)--(P)}%
+                 }{}%
+      \mdf@test@lr{\mdf@tikzbox@otl{(O)--(O|-P)(P)--(P|-O)}%
+                                 {(O)rectangle(P)}%
+                 }{}%
+      \mdf@test@tb{\mdf@tikzbox@otl{(O)--(O-|P)(O|-P)--(P)}%
+                                 {(O)rectangle(P)}%
+                 }{}%
+      \mdf@test@l{\mdf@tikzbox@otl{(O)--(O|-P)}%
+                                 {(O)rectangle(P)}%
+                 }{}%
+      \mdf@test@r{\mdf@tikzbox@otl{(O-|P)--(P)}%
+                                 {(O)rectangle(P)}%
+                 }{}%
+      \mdf@test@t{\mdf@tikzbox@otl{(O|-P)--(P)}%
+                                 {(O)rectangle(P)}%
+                 }{}%
+      \mdf@test@b{\mdf@tikzbox@otl{(O)--(O-|P)}%
+                                 {(O)rectangle(P)}%
+                 }{}%
+      \mdf@test@noline{\path[mdfbackground,mdfcorners](O)rectangle(P);}{}%
+    }{%
       \ifboolexpr{test {\mdf@test@ltrb} or test {\mdf@test@lrb}}%
         {\mdf@tikzbox@tfl{(P-|O)--(O)--(O-|P)--(P)}}%
         {}%
@@ -4317,11 +4584,9 @@ Have fun!
         {\mdf@tikzbox@otl{(O-|P)--(P)}{(O)rectangle(P)}}%
         {}%
       \mdf@test@t{\path[mdfbackground,mdfcorners](O|-P)--(O)--(O-|P)--(P);}{}%
-%
       \mdf@test@noline{\path[mdfbackground,mdfcorners](O|-P)--(O)--(O-|P)--(P);}{}%
-%
+    }%
       \drawbrackgroundframetitle@second
-%
       \node[mdfbox] at (\mdf@Ax,\mdf@Ay){\box\mdf@splitbox@one};% Ausgabebox einfuegen
      \end{scope}
      %HIER KOMMT EIN WEITERES MAKRO
@@ -4357,7 +4622,7 @@ Have fun!
 %% Either version 1.0 or, at your option, any later version.
 %%
 %%
-%%$Id: mdframed.dtx 353 2012-03-23 13:11:51Z marco $
+%%$Id: mdframed.dtx 360 2012-03-30 06:43:25Z marco $
 %
 %    \end{macrocode}
 %
@@ -4367,7 +4632,7 @@ Have fun!
 \def\mdframedIIpackagename{md-frame-2}
 \def\mdf@frameIIdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-2.mdf}%
-         [\mdf@frameIIdate@svn$Id: mdframed.dtx 353 2012-03-23 13:11:51Z marco $ %
+         [\mdf@frameIIdate@svn$Id: mdframed.dtx 360 2012-03-30 06:43:25Z marco $ %
           \mdversion: \mdframedIIpackagename]
 %    \end{macrocode}
 % \end{macro}
@@ -4704,6 +4969,14 @@ Have fun!
       \advance\mdfboundingboxheight by \mdf@innerlinewidth@length\relax%
       \advance\mdfboundingboxheight by \mdf@middlelinewidth@length\relax%
       \advance\mdfboundingboxheight by \mdf@outerlinewidth@length\relax}{}%
+%%%%%%%%%
+    \ifbool{mdf@everyline}{%
+     \ifbool{mdf@bottomline}{%
+      \advance\mdfboundingboxheight by \mdf@innerlinewidth@length\relax%
+      \advance\mdfboundingboxheight by \mdf@middlelinewidth@length\relax%
+      \advance\mdfboundingboxheight by \mdf@outerlinewidth@length\relax}{}%
+     }{}%
+%%%%%%%%%%%%%%
      \psset{linearc=\mdf@roundcorner@length,cornersize=absolute}%
      \expandafter\psset\expandafter{\mdf@psset@local}%
      \mdf@makebox@in[\mdfboundingboxwidth]{%
@@ -4736,6 +5009,18 @@ Have fun!
           \nodexn{(mdf@P)-(0,\mdf@outerlinewidth@length)
                           -0.5(0,\mdf@middlelinewidth@length)}{mdf@P}
          }{}%
+%%%%%%%%%%%
+      \ifbool{mdf@everyline}{%
+       \ifbool{mdf@bottomline}%
+         {%
+          \nodexn{(mdf@A)+(0,\mdf@outerlinewidth@length)
+                          +(0,\mdf@middlelinewidth@length)
+                          +(0,\mdf@innerlinewidth@length)}{mdf@A}%
+          \nodexn{(mdf@O)+(0,\mdf@outerlinewidth@length)
+                          +0.5(0,\mdf@middlelinewidth@length)}{mdf@O}%
+         }{}%
+      }{}%
+%%%%%%%%%%
        \ifbool{mdf@shadow}
            {\pscustom[style=mdfshadow,linestyle=none]{%
                 \psline[linejoin=2,linecap=1,](mdf@P|mdf@O)(mdf@P)(mdf@O|mdf@P)%
@@ -4744,6 +5029,37 @@ Have fun!
                 }
            }{}
 %      \psclip{
+%%%%%%%%%%%%%
+    \ifbool{mdf@everyline}{%
+         %Four lines
+          \mdf@test@ltrb{\mdf@pstricksbox@fl{mdf@O}{mdf@P}}{}
+         %three lines
+          \mdf@test@ltb{\mdf@pstricksbox@tl{(mdf@P|mdf@O)(mdf@O)(mdf@O|mdf@P)(mdf@P)}}{}
+          \mdf@test@trb{\mdf@pstricksbox@tl{(mdf@O)(mdf@P|mdf@O)(mdf@P)(mdf@O|mdf@P)}}{}
+          \mdf@test@ltr{\mdf@pstricksbox@tl{(mdf@O)(mdf@O|mdf@P)(mdf@P)(mdf@P|mdf@O)}}{}%
+          \mdf@test@lrb{\mdf@pstricksbox@tl{(mdf@O|mdf@P)(mdf@O)(mdf@P|mdf@O)(mdf@P)}}{}%
+         %two lines combinded
+          \mdf@test@lb{\mdf@pstricksbox@tcl{(mdf@P|mdf@O)(mdf@P)(mdf@O|mdf@P)}%
+                                           {(mdf@O|mdf@P)(mdf@O)(mdf@P|mdf@O)}}{}
+          \mdf@test@rb{\mdf@pstricksbox@tcl{(mdf@P)(mdf@O|mdf@P)(mdf@O)}%
+                                           {(mdf@O)(mdf@P|mdf@O)(mdf@P)}}{}
+          \mdf@test@tr{\mdf@pstricksbox@tcl{(mdf@P|mdf@O)(mdf@O)(mdf@O|mdf@P)}%
+                                           {(mdf@O|mdf@P)(mdf@P)(mdf@P|mdf@O)}}{}
+          \mdf@test@lt{\mdf@pstricksbox@tcl{(mdf@O)(mdf@P|mdf@O)(mdf@P)}%
+                                           {(mdf@O)(mdf@O|mdf@P)(mdf@P)}}{}
+         %two lines not combinded combinded
+          \mdf@test@lr{\mdf@pstricksbox@tncl{(mdf@O|mdf@P)}{(mdf@P|mdf@O)}
+                      }{}
+          \mdf@test@tb{\mdf@pstricksbox@tncl{(mdf@P|mdf@O)}{(mdf@O|mdf@P)}
+                      }{}
+        %single line
+         \mdf@test@l{\mdf@pstricksbox@ol{(mdf@O)(mdf@O|mdf@P)}}{}
+         \mdf@test@r{\mdf@pstricksbox@ol{(mdf@P)(mdf@P|mdf@O)}}{}
+         \mdf@test@t{\mdf@pstricksbox@ol{(mdf@P)(mdf@O|mdf@P)}}{}
+         \mdf@test@b{\mdf@pstricksbox@ol{(mdf@O)(mdf@P|mdf@O)}}{}
+        %no line
+         \mdf@test@noline{\psframe[style=mdfbackgroundstyle](mdf@O)(mdf@P)}{}%
+     }{%
       %Four or Three lines
        \ifboolexpr{test {\mdf@test@ltrb} or test {\mdf@test@ltr}}%
         {\mdf@pstricksbox@tl{(mdf@O)(mdf@O|mdf@P)(mdf@P)(mdf@P|mdf@O)}}%
@@ -4768,6 +5084,7 @@ Have fun!
       %no line
       \mdf@test@b{\psframe[style=mdfbackgroundstyle](mdf@O)(mdf@P)}{}%
       \mdf@test@noline{\psframe[style=mdfbackgroundstyle](mdf@O)(mdf@P)}{}%
+     }%
 %     }
      %Frametitlebackground
        \drawbrackgroundframetitle@first
@@ -4847,6 +5164,18 @@ Have fun!
       \advance\mdfboundingboxwidth by \mdf@outerlinewidth@length\relax}{}%
     \setlength\mdfboundingboxheight{\dimexpr\ht\mdf@splitbox@two+\dp\mdf@splitbox@two\relax}%
     \advance\mdfboundingboxheight by \mdf@splitbottomskip@length\relax%
+%%%%%%%%%
+    \ifbool{mdf@everyline}{%
+     \ifbool{mdf@topline}{%
+      \advance\mdfboundingboxheight by \mdf@innerlinewidth@length\relax%
+      \advance\mdfboundingboxheight by \mdf@middlelinewidth@length\relax%
+      \advance\mdfboundingboxheight by \mdf@outerlinewidth@length\relax}{}%
+     \ifbool{mdf@bottomline}{%
+      \advance\mdfboundingboxheight by \mdf@innerlinewidth@length\relax%
+      \advance\mdfboundingboxheight by \mdf@middlelinewidth@length\relax%
+      \advance\mdfboundingboxheight by \mdf@outerlinewidth@length\relax}{}%
+     }{}%
+%%%%%%%%%%%%%%
      \psset{unit=1truecm}%
      \mdf@makebox@in[\mdfboundingboxwidth]{%
       \null%
@@ -4874,9 +5203,57 @@ Have fun!
                           -0.5(\mdf@middlelinewidth@length,0)}{mdf@P}
          }{}%
       %%
+%%%%%%%%%%%
+      \ifbool{mdf@everyline}{%
+       \ifbool{mdf@bottomline}%
+         {%
+          \nodexn{(mdf@A)+(0,\mdf@outerlinewidth@length)
+                          +(0,\mdf@middlelinewidth@length)
+                          +(0,\mdf@innerlinewidth@length)}{mdf@A}%
+          \nodexn{(mdf@O)+(0,\mdf@outerlinewidth@length)
+                          +0.5(0,\mdf@middlelinewidth@length)}{mdf@O}%
+         }{}%
+       \ifbool{mdf@topline}%
+         {%
+          \nodexn{(mdf@P)-(0,\mdf@outerlinewidth@length)
+                          -0.5(0,\mdf@middlelinewidth@length)}{mdf@P}
+         }{}%
+       }{}%
+%%%%%%%%%%
       %%
       \ifbool{mdf@shadow}
          {\psframe[style=mdfshadow](mdf@O)(mdf@P)}{}
+%%%%%%%%%%%%%
+    \ifbool{mdf@everyline}{%
+         %Four lines
+          \mdf@test@ltrb{\mdf@pstricksbox@fl{mdf@O}{mdf@P}}{}
+         %three lines
+          \mdf@test@ltb{\mdf@pstricksbox@tl{(mdf@P|mdf@O)(mdf@O)(mdf@O|mdf@P)(mdf@P)}}{}
+          \mdf@test@trb{\mdf@pstricksbox@tl{(mdf@O)(mdf@P|mdf@O)(mdf@P)(mdf@O|mdf@P)}}{}
+          \mdf@test@ltr{\mdf@pstricksbox@tl{(mdf@O)(mdf@O|mdf@P)(mdf@P)(mdf@P|mdf@O)}}{}%
+          \mdf@test@lrb{\mdf@pstricksbox@tl{(mdf@O|mdf@P)(mdf@O)(mdf@P|mdf@O)(mdf@P)}}{}%
+         %two lines combinded
+          \mdf@test@lb{\mdf@pstricksbox@tcl{(mdf@P|mdf@O)(mdf@P)(mdf@O|mdf@P)}%
+                                           {(mdf@O|mdf@P)(mdf@O)(mdf@P|mdf@O)}}{}
+          \mdf@test@rb{\mdf@pstricksbox@tcl{(mdf@P)(mdf@O|mdf@P)(mdf@O)}%
+                                           {(mdf@O)(mdf@P|mdf@O)(mdf@P)}}{}
+          \mdf@test@tr{\mdf@pstricksbox@tcl{(mdf@P|mdf@O)(mdf@O)(mdf@O|mdf@P)}%
+                                           {(mdf@O|mdf@P)(mdf@P)(mdf@P|mdf@O)}}{}
+          \mdf@test@lt{\mdf@pstricksbox@tcl{(mdf@O)(mdf@P|mdf@O)(mdf@P)}%
+                                           {(mdf@O)(mdf@O|mdf@P)(mdf@P)}}{}
+         %two lines not combinded combinded
+          \mdf@test@lr{\mdf@pstricksbox@tncl{(mdf@O|mdf@P)}{(mdf@P|mdf@O)}
+                      }{}
+          \mdf@test@tb{\mdf@pstricksbox@tncl{(mdf@P|mdf@O)}{(mdf@O|mdf@P)}
+                      }{}
+        %single line
+         \mdf@test@l{\mdf@pstricksbox@ol{(mdf@O)(mdf@O|mdf@P)}}{}
+         \mdf@test@r{\mdf@pstricksbox@ol{(mdf@P)(mdf@P|mdf@O)}}{}
+         \mdf@test@t{\mdf@pstricksbox@ol{(mdf@P)(mdf@O|mdf@P)}}{}
+         \mdf@test@b{\mdf@pstricksbox@ol{(mdf@O)(mdf@P|mdf@O)}}{}
+        %no line
+         \mdf@test@noline{\psframe[style=mdfbackgroundstyle](mdf@O)(mdf@P)}{}%
+     }{%
       \ifboolexpr{bool {mdf@leftline} and bool {mdf@rightline}}%
                {\mdf@pstricksbox@tncl{(mdf@O|mdf@P)}{(mdf@P|mdf@O)}}{}%
       \ifboolexpr{bool {mdf@leftline} and not (bool {mdf@rightline})}%
@@ -4885,6 +5262,7 @@ Have fun!
                {\mdf@pstricksbox@ol{(mdf@P)(mdf@P|mdf@O)}}{}%
       \ifboolexpr{not (bool {mdf@leftline}) and not (bool {mdf@rightline})}%
                {\psframe[style=mdfbackgroundstyle](mdf@O)(mdf@P)}{}%
+    }%
      %Frametitlebackground
        \drawbrackgroundframetitle@middle
       %output%
@@ -4951,6 +5329,14 @@ Have fun!
       \advance\mdfboundingboxheight by \mdf@innerlinewidth@length\relax%
       \advance\mdfboundingboxheight by \mdf@middlelinewidth@length\relax%
       \advance\mdfboundingboxheight by \mdf@outerlinewidth@length\relax}{}%
+%%%%%%%%%
+    \ifbool{mdf@everyline}{%
+     \ifbool{mdf@topline}{%
+      \advance\mdfboundingboxheight by \mdf@innerlinewidth@length\relax%
+      \advance\mdfboundingboxheight by \mdf@middlelinewidth@length\relax%
+      \advance\mdfboundingboxheight by \mdf@outerlinewidth@length\relax}{}%
+     }{}%
+%%%%%%%%%%%%%%
      \psset{unit=1truecm}%
    \mdf@makebox@in[\mdfboundingboxwidth]{%
        \null%
@@ -4982,6 +5368,15 @@ Have fun!
           \nodexn{(mdf@O)+(0,\mdf@outerlinewidth@length)
                           +0.5(0,\mdf@middlelinewidth@length)}{mdf@O}
          }{}%
+%%%%%%%%%%%
+      \ifbool{mdf@everyline}{%
+       \ifbool{mdf@topline}%
+         {%
+          \nodexn{(mdf@P)-(0,\mdf@outerlinewidth@length)
+                          -0.5(0,\mdf@middlelinewidth@length)}{mdf@P}
+         }{}%
+       }{}%
+%%%%%%%%%%
       %%
        \ifbool{mdf@shadow}
            {\pscustom[style=mdfshadow,linestyle=none]{%
@@ -4990,6 +5385,37 @@ Have fun!
                 \closedshadow
                 }
            }{}
+%%%%%%%%%%%%%
+    \ifbool{mdf@everyline}{%
+         %Four lines
+          \mdf@test@ltrb{\mdf@pstricksbox@fl{mdf@O}{mdf@P}}{}
+         %three lines
+          \mdf@test@ltb{\mdf@pstricksbox@tl{(mdf@P|mdf@O)(mdf@O)(mdf@O|mdf@P)(mdf@P)}}{}
+          \mdf@test@trb{\mdf@pstricksbox@tl{(mdf@O)(mdf@P|mdf@O)(mdf@P)(mdf@O|mdf@P)}}{}
+          \mdf@test@ltr{\mdf@pstricksbox@tl{(mdf@O)(mdf@O|mdf@P)(mdf@P)(mdf@P|mdf@O)}}{}%
+          \mdf@test@lrb{\mdf@pstricksbox@tl{(mdf@O|mdf@P)(mdf@O)(mdf@P|mdf@O)(mdf@P)}}{}%
+         %two lines combinded
+          \mdf@test@lb{\mdf@pstricksbox@tcl{(mdf@P|mdf@O)(mdf@P)(mdf@O|mdf@P)}%
+                                           {(mdf@O|mdf@P)(mdf@O)(mdf@P|mdf@O)}}{}
+          \mdf@test@rb{\mdf@pstricksbox@tcl{(mdf@P)(mdf@O|mdf@P)(mdf@O)}%
+                                           {(mdf@O)(mdf@P|mdf@O)(mdf@P)}}{}
+          \mdf@test@tr{\mdf@pstricksbox@tcl{(mdf@P|mdf@O)(mdf@O)(mdf@O|mdf@P)}%
+                                           {(mdf@O|mdf@P)(mdf@P)(mdf@P|mdf@O)}}{}
+          \mdf@test@lt{\mdf@pstricksbox@tcl{(mdf@O)(mdf@P|mdf@O)(mdf@P)}%
+                                           {(mdf@O)(mdf@O|mdf@P)(mdf@P)}}{}
+         %two lines not combinded combinded
+          \mdf@test@lr{\mdf@pstricksbox@tncl{(mdf@O|mdf@P)}{(mdf@P|mdf@O)}
+                      }{}
+          \mdf@test@tb{\mdf@pstricksbox@tncl{(mdf@P|mdf@O)}{(mdf@O|mdf@P)}
+                      }{}
+        %single line
+         \mdf@test@l{\mdf@pstricksbox@ol{(mdf@O)(mdf@O|mdf@P)}}{}
+         \mdf@test@r{\mdf@pstricksbox@ol{(mdf@P)(mdf@P|mdf@O)}}{}
+         \mdf@test@t{\mdf@pstricksbox@ol{(mdf@P)(mdf@O|mdf@P)}}{}
+         \mdf@test@b{\mdf@pstricksbox@ol{(mdf@O)(mdf@P|mdf@O)}}{}
+        %no line
+         \mdf@test@noline{\psframe[style=mdfbackgroundstyle](mdf@O)(mdf@P)}{}%
+     }{%
       %Four + Three
       \ifboolexpr{test {\mdf@test@ltrb} or test {\mdf@test@lrb}}%
         {\mdf@pstricksbox@tl{(mdf@O|mdf@P)(mdf@O)(mdf@P|mdf@O)(mdf@P)}}{}%
@@ -5013,6 +5439,7 @@ Have fun!
      %no line
       \mdf@test@t{\psframe[style=mdfbackgroundstyle](mdf@O)(mdf@P)}{}%
       \mdf@test@noline{\psframe[style=mdfbackgroundstyle](mdf@O)(mdf@P)}{}%
+    }%
      %Frametitlebackground
        \drawbrackgroundframetitle@second
       %output%
@@ -5072,10 +5499,10 @@ Have fun!
 %
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 353 2012-03-23 13:11:51Z marco $
+%%$Id: mdframed.dtx 360 2012-03-30 06:43:25Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt]{ltxmdf}
-\ltxmdfsetifoot  $Id: mdframed.dtx 353 2012-03-23 13:11:51Z marco $
+\ltxmdfsetifoot  $Id: mdframed.dtx 360 2012-03-30 06:43:25Z marco $
 
 \usepackage{showexpl}
 \lstset{style=lstltxmdf,explpreset={pos=b,rframe={}},}
@@ -5086,7 +5513,7 @@ Have fun!
 \title{The \Pack{mdframed} package}
 \subtitle{Examples for \Opt{framemethod=\Loadedframemethod}}
 \author{\href{mailto:marco.daniel@mada-nada.de}{Marco Daniel}}
-\date{\mdfdateID$Id: mdframed.dtx 353 2012-03-23 13:11:51Z marco $}
+\date{\mdfdateID$Id: mdframed.dtx 360 2012-03-30 06:43:25Z marco $}
 \version{\mdversion}
 \introduction{In this document I collect various examples for \Opt{framemethod=\Loadedframemethod}.
 Some presented examples are more or less exorbitant.}
@@ -5289,10 +5716,10 @@ The example below is inspired by the following post on StackExchange \href{http:
 %
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 353 2012-03-23 13:11:51Z marco $
+%%$Id: mdframed.dtx 360 2012-03-30 06:43:25Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt]{ltxmdf}
-\ltxmdfsetifoot  $Id: mdframed.dtx 353 2012-03-23 13:11:51Z marco $
+\ltxmdfsetifoot  $Id: mdframed.dtx 360 2012-03-30 06:43:25Z marco $
 
 
 \usepackage{showexpl}
@@ -5304,7 +5731,7 @@ The example below is inspired by the following post on StackExchange \href{http:
 \title{The \Pack{mdframed} package}
 \subtitle{Examples for \Opt{framemethod=\Loadedframemethod}}
 \author{\href{mailto:marco.daniel@mada-nada.de}{Marco Daniel}}
-\date{\mdfdateID$Id: mdframed.dtx 353 2012-03-23 13:11:51Z marco $}
+\date{\mdfdateID$Id: mdframed.dtx 360 2012-03-30 06:43:25Z marco $}
 \version{\mdversion}
 \introduction{In this document I collect various examples for \Opt{framemethod=\Loadedframemethod}.
 Some presented examples are more or less exorbitant.}
@@ -5543,10 +5970,10 @@ color(100bp)=(black!5)}
 %
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 353 2012-03-23 13:11:51Z marco $
+%%$Id: mdframed.dtx 360 2012-03-30 06:43:25Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt]{ltxmdf}
-\ltxmdfsetifoot$Id: mdframed.dtx 353 2012-03-23 13:11:51Z marco $
+\ltxmdfsetifoot$Id: mdframed.dtx 360 2012-03-30 06:43:25Z marco $
 
 \lstDeleteShortInline{|}
 \newcommand\Loadedframemethod{PSTricks}
@@ -5558,7 +5985,7 @@ color(100bp)=(black!5)}
 \title{The \Pack{mdframed} package}
 \subtitle{Examples for \Opt{framemethod=\Loadedframemethod}}
 \author{\href{mailto:marco.daniel@mada-nada.de}{Marco Daniel}}
-\date{\mdfdateID$Id: mdframed.dtx 353 2012-03-23 13:11:51Z marco $}
+\date{\mdfdateID$Id: mdframed.dtx 360 2012-03-30 06:43:25Z marco $}
 \version{\mdversion}
 \introduction{In this document I collect various examples for \Opt{framemethod=\Loadedframemethod}.
 Some presented examples are more or less exorbitant.}
@@ -5685,10 +6112,10 @@ function of the independent variables alone.
 
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 353 2012-03-23 13:11:51Z marco $
+%%$Id: mdframed.dtx 360 2012-03-30 06:43:25Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt,ltxlipsum]{ltxmdf}
-\ltxmdfsetifoot  $Id: mdframed.dtx 353 2012-03-23 13:11:51Z marco $
+\ltxmdfsetifoot  $Id: mdframed.dtx 360 2012-03-30 06:43:25Z marco $
 
 
 \usepackage{showexpl}
@@ -5700,7 +6127,7 @@ function of the independent variables alone.
 \title{The \Pack{mdframed} package}
 \subtitle{Examples for \Opt{framemethod=\Loadedframemethod}}
 \author{\href{mailto:marco.daniel@mada-nada.de}{Marco Daniel}}
-\date{\mdfdateID$Id: mdframed.dtx 353 2012-03-23 13:11:51Z marco $}
+\date{\mdfdateID$Id: mdframed.dtx 360 2012-03-30 06:43:25Z marco $}
 \version{\mdversion}
 \introduction{In this document I collect various examples for \Opt{framemethod=\Loadedframemethod}.
 Some presented examples are more or less exorbitant.}
