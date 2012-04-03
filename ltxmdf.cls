@@ -9,16 +9,16 @@
 %% Either version 1.0 or, at your option, any later version.
 
 
-%%$Id: ltxmdf.cls 350 2012-03-12 18:33:59Z marco $
-%%$Rev: 350 $
+%%$Id: ltxmdf.cls 363 2012-04-02 18:17:46Z marco $
+%%$Rev: 363 $
 %%$Author: marco $
-%%$Date: 2012-03-12 19:33:59 +0100 (Mo, 12. Mär 2012) $
+%%$Date: 2012-04-02 20:17:46 +0200 (Mo, 02. Apr 2012) $
 
 
 %% Allgemeine Angaben
 \def\ltxmdf@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{ltxmdf}[\ltxmdf@svn$Id: ltxmdf.cls 350 2012-03-12 18:33:59Z marco $ ltxmdf]
+\ProvidesPackage{ltxmdf}[\ltxmdf@svn$Id: ltxmdf.cls 363 2012-04-02 18:17:46Z marco $ ltxmdf]
 \DeclareOption{tocdepthsec}{\def\ltxmdf@tocdepth{1}}
 \DeclareOption{tocdepthsub}{\def\ltxmdf@tocdepth{2}}
 \newif\ifltxmdf@lipsum
@@ -70,6 +70,9 @@
 \RequirePackage{graphicx}
 
 \RequirePackage[numbered]{hypdoc}
+%set columns of index
+\c@IndexColumns = 2
+
     \hypersetup{%
         breaklinks=true,
         pdftitle={Documenation of mdframed},%
@@ -95,7 +98,7 @@
   \ifoot{#2 #3 #4-#5-#6 #7 #8}
 }
 
-\ltxmdfsetifoot$Id: ltxmdf.cls 350 2012-03-12 18:33:59Z marco $
+\ltxmdfsetifoot$Id: ltxmdf.cls 363 2012-04-02 18:17:46Z marco $
 
 
 
@@ -173,7 +176,7 @@
 \def\version#1{\def\@version{#1}}
 \def\date#1{\def\@date{#1}}
 \def\@@date$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6}
-\date{\@@date$Id: ltxmdf.cls 350 2012-03-12 18:33:59Z marco $}
+\date{\@@date$Id: ltxmdf.cls 363 2012-04-02 18:17:46Z marco $}
 \let\mdfdateID\@@date
 
 
