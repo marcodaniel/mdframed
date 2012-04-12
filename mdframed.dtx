@@ -206,11 +206,11 @@ Have fun!
 \fi
 %</internal>
 %<*driver>
-%%$Id: mdframed.dtx 373 2012-04-06 10:59:28Z marco $
+%%$Id: mdframed.dtx 377 2012-04-12 17:05:19Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,11pt,]{ltxmdf}
 \usepackage[framemethod=TikZ]{mdframed}
-\ltxmdfsetifoot$Id: mdframed.dtx 373 2012-04-06 10:59:28Z marco $
+\ltxmdfsetifoot$Id: mdframed.dtx 377 2012-04-12 17:05:19Z marco $
 
 \EnableCrossrefs
 \CodelineIndex
@@ -250,7 +250,7 @@ Have fun!
 % \author{\href{mailto:marco.daniel@mada-nada.de}{Marco Daniel}%
 %        \href{mailto:marco.daniel@mada-nada.de}{Elke Schubert}}}
 % \version{\mdversion}
-% \date{\mdfdateID$Id: mdframed.dtx 373 2012-04-06 10:59:28Z marco $}
+% \date{\mdfdateID$Id: mdframed.dtx 377 2012-04-12 17:05:19Z marco $}
 % \introduction{The standard methods for framing text (\Cmd{fbox}
 %              or \Cmd{fcolorbox}) require you to handle page breaks
 %              by hand, meaning that you have to split the \Cmd{fbox}
@@ -1454,8 +1454,13 @@ Have fun!
 % 
 % \subsection{Revision history}\label{rev}
 % \raggedright
+% \minisec{Version 1.5a submitted DD MMM 2012}
+% \begin{itemize*}
+%  \item Tobias Weh inspired the excurs-environment not Tobias Schwan. Sorry,
+%        I fixed it.
+% \end{itemize*}
 %
-% \minisec{Version 1.5 submitted DD MM 2012}
+% \minisec{Version 1.5 submitted 10 Mar 2012}
 % \begin{itemize*}
 %  \item fixed bug (Thanks Nicolas Roy)
 %  \item expanded documentation (Thanks Martin Wilhelm Leidig)
@@ -1470,11 +1475,12 @@ Have fun!
 %  \item added approach to documentation to work with \Pack{picins}
 %  \item new implementation of option \Opt{hidealllines}, now you can set
 %        \Cmd{mdfsetup}\Opt{\{hidealllines=true,leftline=true\}} printing
-%        only the left line (inspired by Tobias Schwan)
+%        only the left line (inspired by Tobias Weh)
 %  \item added option \Opt{everyline} to draw a top and bottom line at 
 %        splitted frames
 % \end{itemize*}
 %
+% \footnotesize 
 % \minisec{Version 1.4 submitted 4 Mar 2012}
 % \begin{itemize*}
 %  \item fixed bug in combination with \Cmd{marginpar} (Thanks Juan Carlos Trujillo Ortega)
@@ -1522,7 +1528,6 @@ Have fun!
 % \item added \Cmd{@parboxrestore} to \Cmd{mdf@lrbox}
 % \end{itemize*}
 % 
-% \footnotesize 
 % \minisec{Version 1.0 submitted 13 Nov 2011}
 % \begin{itemize*}
 % \item add option \Opt{userdefinedwidth}
@@ -1643,14 +1648,14 @@ Have fun!
 %
 % \subsection{The Explanation of mdframed.sty}
 %
-% %$Id: mdframed.dtx 373 2012-04-06 10:59:28Z marco $
-% %$Rev: 373 $
+% %$Id: mdframed.dtx 377 2012-04-12 17:05:19Z marco $
+% %$Rev: 377 $
 % %$Author: marco $
-% %$Date: 2012-04-06 12:59:28 +0200 (Fr, 06. Apr 2012) $
+% %$Date: 2012-04-12 19:05:19 +0200 (Do, 12. Apr 2012) $
 % \begin{macro}{mdversion,mdframedpackagename,mdf@maindate@svn}
 % Set package information
 %    \begin{macrocode}
-\def\mdversion{v1.5}
+\def\mdversion{v1.5a}
 \def\mdframedpackagename{mdframed}
 \def\mdf@maindate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 %    \end{macrocode}
@@ -1659,7 +1664,7 @@ Have fun!
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{mdframed}%
-     [\mdf@maindate@svn$Id: mdframed.dtx 373 2012-04-06 10:59:28Z marco $%
+     [\mdf@maindate@svn$Id: mdframed.dtx 377 2012-04-12 17:05:19Z marco $%
       \mdversion: \mdframedpackagename]
 %    \end{macrocode}
 %
@@ -1934,10 +1939,10 @@ Have fun!
     {theoremcountersep=={.}},%
     {theoremtitlefont=={}},%
     {theoremspace=={\space}},%
-    {singleextra=={}},%\mdf@singleextra
-    {firstextra=={}},%\mdf@firstextra
-    {middleextra=={}},%\mdf@middleextra
-    {secondextra=={}},%\mdf@secondextra
+    {singleextra=={}},
+    {firstextra=={}},
+    {middleextra=={}},
+    {secondextra=={}},
 }
 %    \end{macrocode}
 % \end{macro}
@@ -2218,7 +2223,13 @@ Have fun!
 \@ifpackageloaded{amsthm}{%
  \newrobustcmd\mdf@patchamsthm{%
      \let\mdf@deferred@thm@head\deferred@thm@head
-     \patchcmd{\deferred@thm@head}{\indent}{}{}{}
+     \patchcmd{\deferred@thm@head}{\indent}{}%
+       {\mdf@PackageInfo{mdframed detected package amsthm ^^J
+                         changed the theoerem header of amsthm\MessageBreak}%
+       }{%
+        \mdf@PackageInfo{mdframed detected package amsthm ^^J
+                         changed the theoerem header of amsthm failed\MessageBreak}%
+        }%
      }%
  }{\let\mdf@patchamsthm\relax}%
 %    \end{macrocode}
@@ -3246,7 +3257,7 @@ Have fun!
 %% Either version 1.0 or, at your option, any later version.
 %%
 %%
-%%$Id: mdframed.dtx 373 2012-04-06 10:59:28Z marco $
+%%$Id: mdframed.dtx 377 2012-04-12 17:05:19Z marco $
 %
 %    \end{macrocode}
 %
@@ -3256,7 +3267,7 @@ Have fun!
 \def\mdframedOpackagename{md-frame-0}
 \def\mdf@frameOdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-0.mdf}%
-    [\mdf@frameOdate@svn$Id: mdframed.dtx 373 2012-04-06 10:59:28Z marco $%
+    [\mdf@frameOdate@svn$Id: mdframed.dtx 377 2012-04-12 17:05:19Z marco $%
      \mdversion: \mdframedOpackagename]
 %    \end{macrocode}
 % \end{macro}
@@ -3783,7 +3794,7 @@ Have fun!
 %% Either version 1.0 or, at your option, any later version.
 %%
 %%
-%%$Id: mdframed.dtx 373 2012-04-06 10:59:28Z marco $
+%%$Id: mdframed.dtx 377 2012-04-12 17:05:19Z marco $
 %
 %    \end{macrocode}
 % \changes{v1.1beta}{2011/12/16}{added lost semicolons}
@@ -3793,7 +3804,7 @@ Have fun!
 \def\mdframedIpackagename{md-frame-1}
 \def\mdf@frameIdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-1.mdf}%
-          [\mdf@frameIdate@svn$Id: mdframed.dtx 373 2012-04-06 10:59:28Z marco $ %
+          [\mdf@frameIdate@svn$Id: mdframed.dtx 377 2012-04-12 17:05:19Z marco $ %
            \mdversion: \mdframedIpackagename]
 %
 %    \end{macrocode}
@@ -4666,7 +4677,7 @@ Have fun!
 %% Either version 1.0 or, at your option, any later version.
 %%
 %%
-%%$Id: mdframed.dtx 373 2012-04-06 10:59:28Z marco $
+%%$Id: mdframed.dtx 377 2012-04-12 17:05:19Z marco $
 %
 %    \end{macrocode}
 %
@@ -4676,7 +4687,7 @@ Have fun!
 \def\mdframedIIpackagename{md-frame-2}
 \def\mdf@frameIIdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-2.mdf}%
-         [\mdf@frameIIdate@svn$Id: mdframed.dtx 373 2012-04-06 10:59:28Z marco $ %
+         [\mdf@frameIIdate@svn$Id: mdframed.dtx 377 2012-04-12 17:05:19Z marco $ %
           \mdversion: \mdframedIIpackagename]
 %    \end{macrocode}
 % \end{macro}
@@ -5547,10 +5558,10 @@ Have fun!
 %
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 373 2012-04-06 10:59:28Z marco $
+%%$Id: mdframed.dtx 377 2012-04-12 17:05:19Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt]{ltxmdf}
-\ltxmdfsetifoot  $Id: mdframed.dtx 373 2012-04-06 10:59:28Z marco $
+\ltxmdfsetifoot  $Id: mdframed.dtx 377 2012-04-12 17:05:19Z marco $
 
 \usepackage{showexpl}
 \lstset{style=lstltxmdf,explpreset={pos=b,rframe={}},}
@@ -5561,7 +5572,7 @@ Have fun!
 \title{The \Pack{mdframed} package}
 \subtitle{Examples for \Opt{framemethod=\Loadedframemethod}}
 \author{\href{mailto:marco.daniel@mada-nada.de}{Marco Daniel}}
-\date{\mdfdateID$Id: mdframed.dtx 373 2012-04-06 10:59:28Z marco $}
+\date{\mdfdateID$Id: mdframed.dtx 377 2012-04-12 17:05:19Z marco $}
 \version{\mdversion}
 \introduction{In this document I collect various examples for \Opt{framemethod=\Loadedframemethod}.
 Some presented examples are more or less exorbitant.}
@@ -5764,10 +5775,10 @@ The example below is inspired by the following post on StackExchange \href{http:
 %
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 373 2012-04-06 10:59:28Z marco $
+%%$Id: mdframed.dtx 377 2012-04-12 17:05:19Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt]{ltxmdf}
-\ltxmdfsetifoot  $Id: mdframed.dtx 373 2012-04-06 10:59:28Z marco $
+\ltxmdfsetifoot  $Id: mdframed.dtx 377 2012-04-12 17:05:19Z marco $
 
 
 \usepackage{showexpl}
@@ -5779,7 +5790,7 @@ The example below is inspired by the following post on StackExchange \href{http:
 \title{The \Pack{mdframed} package}
 \subtitle{Examples for \Opt{framemethod=\Loadedframemethod}}
 \author{\href{mailto:marco.daniel@mada-nada.de}{Marco Daniel}}
-\date{\mdfdateID$Id: mdframed.dtx 373 2012-04-06 10:59:28Z marco $}
+\date{\mdfdateID$Id: mdframed.dtx 377 2012-04-12 17:05:19Z marco $}
 \version{\mdversion}
 \introduction{In this document I collect various examples for \Opt{framemethod=\Loadedframemethod}.
 Some presented examples are more or less exorbitant.}
@@ -5969,10 +5980,10 @@ function of the independent variables alone.
 %
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 373 2012-04-06 10:59:28Z marco $
+%%$Id: mdframed.dtx 377 2012-04-12 17:05:19Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt]{ltxmdf}
-\ltxmdfsetifoot$Id: mdframed.dtx 373 2012-04-06 10:59:28Z marco $
+\ltxmdfsetifoot$Id: mdframed.dtx 377 2012-04-12 17:05:19Z marco $
 
 \lstDeleteShortInline{|}
 \newcommand\Loadedframemethod{PSTricks}
@@ -5984,7 +5995,7 @@ function of the independent variables alone.
 \title{The \Pack{mdframed} package}
 \subtitle{Examples for \Opt{framemethod=\Loadedframemethod}}
 \author{\href{mailto:marco.daniel@mada-nada.de}{Marco Daniel}}
-\date{\mdfdateID$Id: mdframed.dtx 373 2012-04-06 10:59:28Z marco $}
+\date{\mdfdateID$Id: mdframed.dtx 377 2012-04-12 17:05:19Z marco $}
 \version{\mdversion}
 \introduction{In this document I collect various examples for \Opt{framemethod=\Loadedframemethod}.
 Some presented examples are more or less exorbitant.}
@@ -6111,10 +6122,10 @@ function of the independent variables alone.
 
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 373 2012-04-06 10:59:28Z marco $
+%%$Id: mdframed.dtx 377 2012-04-12 17:05:19Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt,ltxlipsum]{ltxmdf}
-\ltxmdfsetifoot  $Id: mdframed.dtx 373 2012-04-06 10:59:28Z marco $
+\ltxmdfsetifoot  $Id: mdframed.dtx 377 2012-04-12 17:05:19Z marco $
 
 
 \usepackage{showexpl}
@@ -6127,7 +6138,7 @@ function of the independent variables alone.
 \title{The \Pack{mdframed} package}
 \subtitle{Examples for \Opt{framemethod=\Loadedframemethod}}
 \author{\href{mailto:marco.daniel@mada-nada.de}{Marco Daniel}}
-\date{\mdfdateID$Id: mdframed.dtx 373 2012-04-06 10:59:28Z marco $}
+\date{\mdfdateID$Id: mdframed.dtx 377 2012-04-12 17:05:19Z marco $}
 \version{\mdversion}
 \introduction{In this document I collect various examples for \Opt{framemethod=\Loadedframemethod}.
 Some presented examples are more or less exorbitant.}
@@ -6245,7 +6256,7 @@ Text Text Text Text Text Text Text Text
 Text Text Text Text Text Text
 \end{LTXexample}
 \clearpage
-\Examplesec{digression-environement inspired by Tobias Schwan}
+\Examplesec{digression-environement inspired by Tobias Weh}
 \begin{lstlisting}
 \usetikzlibrary{calc,arrows}
 \tikzset{

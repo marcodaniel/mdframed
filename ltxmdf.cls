@@ -9,16 +9,16 @@
 %% Either version 1.0 or, at your option, any later version.
 
 
-%%$Id: ltxmdf.cls 363 2012-04-02 18:17:46Z marco $
-%%$Rev: 363 $
+%%$Id: ltxmdf.cls 374 2012-04-08 10:47:37Z marco $
+%%$Rev: 374 $
 %%$Author: marco $
-%%$Date: 2012-04-02 20:17:46 +0200 (Mo, 02. Apr 2012) $
+%%$Date: 2012-04-08 12:47:37 +0200 (So, 08. Apr 2012) $
 
 
 %% Allgemeine Angaben
 \def\ltxmdf@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{ltxmdf}[\ltxmdf@svn$Id: ltxmdf.cls 363 2012-04-02 18:17:46Z marco $ ltxmdf]
+\ProvidesPackage{ltxmdf}[\ltxmdf@svn$Id: ltxmdf.cls 374 2012-04-08 10:47:37Z marco $ ltxmdf]
 \DeclareOption{tocdepthsec}{\def\ltxmdf@tocdepth{1}}
 \DeclareOption{tocdepthsub}{\def\ltxmdf@tocdepth{2}}
 \newif\ifltxmdf@lipsum
@@ -98,7 +98,7 @@
   \ifoot{#2 #3 #4-#5-#6 #7 #8}
 }
 
-\ltxmdfsetifoot$Id: ltxmdf.cls 363 2012-04-02 18:17:46Z marco $
+\ltxmdfsetifoot$Id: ltxmdf.cls 374 2012-04-08 10:47:37Z marco $
 
 
 
@@ -151,6 +151,7 @@
                    define@key,renewrobustcmd,mdfcreateextratikz,node,ifdefempty,%
                    mdf@frametitlefont,dimexpr,mdframedtitleenv,ifstrempty,@undefined,%
                    mdtheorem,surroundwithmdframed,@captype,@dblarg,@newcaption,newcaption,%
+                   mdflength,%
                    },%
 }
 
@@ -176,7 +177,7 @@
 \def\version#1{\def\@version{#1}}
 \def\date#1{\def\@date{#1}}
 \def\@@date$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6}
-\date{\@@date$Id: ltxmdf.cls 363 2012-04-02 18:17:46Z marco $}
+\date{\@@date$Id: ltxmdf.cls 374 2012-04-08 10:47:37Z marco $}
 \let\mdfdateID\@@date
 
 
