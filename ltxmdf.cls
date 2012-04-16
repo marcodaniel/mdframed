@@ -9,16 +9,16 @@
 %% Either version 1.0 or, at your option, any later version.
 
 
-%%$Id: ltxmdf.cls 374 2012-04-08 10:47:37Z marco $
-%%$Rev: 374 $
+%%$Id: ltxmdf.cls 379 2012-04-16 10:52:55Z marco $
+%%$Rev: 379 $
 %%$Author: marco $
-%%$Date: 2012-04-08 12:47:37 +0200 (So, 08. Apr 2012) $
+%%$Date: 2012-04-16 12:52:55 +0200 (Mo, 16. Apr 2012) $
 
 
 %% Allgemeine Angaben
 \def\ltxmdf@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{ltxmdf}[\ltxmdf@svn$Id: ltxmdf.cls 374 2012-04-08 10:47:37Z marco $ ltxmdf]
+\ProvidesPackage{ltxmdf}[\ltxmdf@svn$Id: ltxmdf.cls 379 2012-04-16 10:52:55Z marco $ ltxmdf]
 \DeclareOption{tocdepthsec}{\def\ltxmdf@tocdepth{1}}
 \DeclareOption{tocdepthsub}{\def\ltxmdf@tocdepth{2}}
 \newif\ifltxmdf@lipsum
@@ -98,7 +98,7 @@
   \ifoot{#2 #3 #4-#5-#6 #7 #8}
 }
 
-\ltxmdfsetifoot$Id: ltxmdf.cls 374 2012-04-08 10:47:37Z marco $
+\ltxmdfsetifoot$Id: ltxmdf.cls 379 2012-04-16 10:52:55Z marco $
 
 
 
@@ -136,13 +136,14 @@
                    ExampleText,titregris,draw,gray,thick,fill,white,shading,exersicetitle,%
                    exersicebackground,color,green,black,exercise,exercisepoints,%
                    text,rectangle,rounded,corners,right,minimum,height,xshift,at,%
-                   exercisestyle,settings,frametitlefont,%
+                   exercisestyle,settings,frametitlefont,innerbottommargin,innerleftmargin,%
                    frametitlerule,frametitlebelowskip,frametitleaboveskip,%
-                   frametitlebackgroundcolor,frametitlerulecolor,picins,figure},%
+                   frametitlebackgroundcolor,frametitlerulecolor,picins,figure,hidealllines,
+                   fontcolor,firstextra,secondextra,middleextra,singleextra,overlay,node},%
      moretexcs={newmdtheoremenv,newmdenv,theoremstyle,mdfsetup,@length,%
                    md@putbox@single,@tempboxa,mdf@,%
                    mdf@linewidth,mdf@leftmargin@length,interruptlength,%
-                   setlength,newrobustcmd,overlaplines,appto,md@frame@leftline@singe,%
+                   setlength,newrobustcmd,overlaplines,appto,md@frame@leftline@singe,
                    color,md@frame@leftline@single,mdf@innerbottommargin@length,%
                    mdf@middlelinewidth@length,mdfboundingboxheight,%
                    md@frame@rightline@single,mdfboundingboxwidth,%
@@ -151,7 +152,7 @@
                    define@key,renewrobustcmd,mdfcreateextratikz,node,ifdefempty,%
                    mdf@frametitlefont,dimexpr,mdframedtitleenv,ifstrempty,@undefined,%
                    mdtheorem,surroundwithmdframed,@captype,@dblarg,@newcaption,newcaption,%
-                   mdflength,%
+                   mdflength,tikzset,path,p1,p2%
                    },%
 }
 
@@ -177,7 +178,7 @@
 \def\version#1{\def\@version{#1}}
 \def\date#1{\def\@date{#1}}
 \def\@@date$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6}
-\date{\@@date$Id: ltxmdf.cls 374 2012-04-08 10:47:37Z marco $}
+\date{\@@date$Id: ltxmdf.cls 379 2012-04-16 10:52:55Z marco $}
 \let\mdfdateID\@@date
 
 
