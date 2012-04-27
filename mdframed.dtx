@@ -244,11 +244,11 @@ Have fun!
 % \changes{v1.0a}{2011/11/26}{Created dtx and fixes bugs}
 % \changes{v1.1beta}{2012/01/02}{Renamed some commands so that every command have the same prefix \protect\Cmd{mdf@}}
 %
-% \title{The \Pack{mdframed} package
-%       \footnote{Extending the package \texttt{framed.sty}}
+% \title{The \Pack{mdframed} package}
 % \subtitle{auto-split frame environment}
-% \author{\href{mailto:marco.daniel@mada-nada.de}{Marco Daniel}%
-%        \href{mailto:marco.daniel@mada-nada.de}{Elke Schubert}}}
+% \author{\href{mailto:marco.daniel@mada-nada.de}{Marco Daniel} 
+%         \href{mailto:marco.daniel@mada-nada.de}{Elke Schubert}%
+%         \footnote{\Pack{TikZ} implementation}}
 % \version{\mdversion}
 % \date{\mdfdateID$Id: mdframed.dtx 389 2012-04-27 20:46:58Z marco $}
 % \introduction{The standard methods for framing text (\Cmd{fbox}
@@ -1285,7 +1285,8 @@ Have fun!
 % \section{Acknowledgements}
 %  \textsf{Dick Nickalls;\quad Dietrich Grau;\quad Piazza Luca;\quad Jobst Hoffmann;
 %         \quad Martin Scharrer;\quad Enrico Gregorio;\quad Heiko Oberdiek;
-%         \quad Philipp Stephani}.
+%         \quad Philipp Stephani; \quad Nicolas Markey\footnote{Many thanks 
+%         for improving the splitting algorithm}} .
 % \medskip
 % 
 % \noindent Thanks for proofreading 
@@ -1454,8 +1455,10 @@ Have fun!
 % 
 % \subsection{Revision history}\label{rev}
 % \raggedright
-% \minisec{Version 1.5a submitted DD MMM 2012}
+% \minisec{Version 1.6 submitted DD MMM 2012}
 % \begin{itemize*}
+%  \item Expand and improved the splitting algorithm with a great idea of
+%        Nicolas Markey
 %  \item Tobias Weh inspired the excurs-environment not Tobias Schwan. Sorry,
 %        I fixed it.
 %  \item Improved \Cmd{mdtheorem} to handle \Cmd{listtheorems} provided by \Pack{ntheorem}.
