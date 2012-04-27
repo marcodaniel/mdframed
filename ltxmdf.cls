@@ -12,7 +12,11 @@
 %%$Id: ltxmdf.cls 379 2012-04-16 10:52:55Z marco $
 %%$Rev: 379 $
 %%$Author: marco $
+<<<<<<< HEAD
 %%$Date: 2012-04-16 12:52:55 +0200 (Mo, 16 Apr 2012) $
+=======
+%%$Date: 2012-04-16 12:52:55 +0200 (Mo, 16. Apr 2012) $
+>>>>>>> 40cbb1a77527641e81e50b47214948cd592ef2e4
 
 
 %% Allgemeine Angaben
