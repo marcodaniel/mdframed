@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="mdframed : auto-split frame environment for LaTeX" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>mdframed</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/marcodaniel/mdframed">Fork Me on GitHub</a>
+
+          <h1 id="project_title">mdframed</h1>
+          <h2 id="project_tagline">auto-split frame environment for LaTeX</h2>
+
+          <section id="downloads">
+            <a class="zip_download_link" href="https://github.com/marcodaniel/mdframed/zipball/master">Download this project as a .zip file</a>
+            <a class="tar_download_link" href="https://github.com/marcodaniel/mdframed/tarball/master">Download this project as a tar.gz file</a>
+          </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <blockquote>
+<p>Work in progress.</p>
+</blockquote>
+
+<h1>Quick introduction</h1>
+
+<p>Welcome! This homepage provides a quick introduction to <code>mdframed</code>, a LaTeX package for auto-split frame environments. For further details please refer to the <a href="https://github.com/downloads/marcodaniel/mdframed/mdframed.pdf">documentation</a>. The original goal of the <code>mdframed</code> package is the possibility of "drawing frames around theorems which can be splitted on several pages."</p>
+
+<h2>What is mdframed?</h2>
+
+<p><code>mdframed</code> is a LaTeX package for drawing frames around a given material. Through the manipulation of frames by a simplified <code>&lt;key&gt;=&lt;value&gt;</code> syntax, <code>mdframed</code> is able to provide several features and also support several packages.</p>
+
+<p><code>mdframed</code> is already shipped with MikTeX and TeX Live and it's also available in the <a href="http://www.ctan.org/">Comprehensive TeX Archive Network - CTAN</a>. You can easily update the package through your update manager. The development branch is available <a href="https://github.com/marcodaniel/mdframed">here at GitHub</a>.</p>
+
+<h2>How does mdframed draw the frames?</h2>
+
+<p>The package provides three different options for drawing a frame:</p>
+
+<ol>
+<li>
+<code>mdframed</code> can use default LaTeX commands like <code>\\rule</code> or <code>\\hrule</code>, so no extra package is loaded.</li>
+<li>The package can rely on <code>TikZ</code>, giving you more options to manipulate the frames.</li>
+<li>
+<code>mdframed</code> can also rely on <code>PSTricks</code>. You will have more options to manipulate the frames.</li>
+</ol><h1>Basic usage</h1>
+
+<p>The package is loaded as usual, like any other LaTeX package:</p>
+
+<div class="highlight">
+<pre><span class="k">\usepackage</span><span class="nb">{</span>mdframed<span class="nb">}</span>
+</pre>
+</div>
+
+
+<p>I recommend to load <code>mdframed</code> after <code>xcolor</code>.</p>
+
+<p>The drawing method (default LaTeX commands, <code>TikZ</code> or <code>PSTricks</code>) must be chosen by setting the optional argument of <code>\usepackage</code>:</p>
+
+<div class="highlight">
+<pre><span class="k">\usepackage</span><span class="na">[framemethod=default]</span><span class="nb">{</span>mdframed<span class="nb">}</span> <span class="c">% default setting</span>
+<span class="k">\usepackage</span><span class="na">[framemethod=tikz]</span><span class="nb">{</span>mdframed<span class="nb">}</span>
+<span class="k">\usepackage</span><span class="na">[framemethod=pstricks]</span><span class="nb">{</span>mdframed<span class="nb">}</span>
+</pre>
+</div>
+
+
+<p>All other options can be set by using the command <code>\mdfsetup</code>. Of course, <code>mdframed</code> offers more possibilities to set environments with special settings. </p>
+
+<p>To set a special key you can just call</p>
+
+<div class="highlight">
+<pre><span class="k">\mdfsetup</span><span class="nb">{</span>leftmargin=12pt<span class="nb">}</span>
+</pre>
+</div>
+
+
+<p>Then you simple use:</p>
+
+<div class="highlight">
+<pre><span class="k">\begin</span><span class="nb">{</span>mdframed<span class="nb">}</span>
+CONTENTS
+<span class="k">\end</span><span class="nb">{</span>mdframed<span class="nb">}</span>
+</pre>
+</div>
+
+
+<p>To see all allowed keys, please have a closer look at the <a href="https://github.com/downloads/marcodaniel/mdframed/mdframed.pdf">documentation</a>.</p>
+
+<h1>Examples</h1>
+
+<p>I created some examples files listed below. Through the examples are drawn with different <code>framemethod</code>'s, you can easily adapt them.</p>
+
+<ul>
+<li><a href="https://github.com/downloads/marcodaniel/mdframed/mdframed-example-default.pdf">mdframed-example-default.pdf</a></li>
+<li><a href="https://github.com/downloads/marcodaniel/mdframed/mdframed-example-tikz.pdf">mdframed-example-tikz.pdf</a></li>
+<li><a href="https://github.com/downloads/marcodaniel/mdframed/mdframed-example-pstricks.pdf">mdframed-example-pstricks.pdf</a></li>
+<li><a href="https://github.com/downloads/marcodaniel/mdframed/mdframed-example-texsx.pdf">mdframed-example-texsx.pdf</a></li>
+</ul><div class="highlight">
+<pre><span class="k">\tikzset</span><span class="nb">{</span>
+warningsymbol/.style=<span class="nb">{</span>
+rectangle,draw=red,
+fill=white,scale=1,
+overlay<span class="nb">}}</span>
+<span class="k">\mdfdefinestyle</span><span class="nb">{</span>warning<span class="nb">}{</span><span class="c">%</span>
+hidealllines=true,leftline=true,
+skipabove=12,skipbelow=12pt,
+innertopmargin=0.4em,<span class="c">%</span>
+innerbottommargin=0.4em,<span class="c">%</span>
+innerrightmargin=0.7em,<span class="c">%</span>
+rightmargin=0.7em,<span class="c">%</span>
+innerleftmargin=1.7em,<span class="c">%</span>
+leftmargin=0.7em,<span class="c">%</span>
+middlelinewidth=.2em,<span class="c">%</span>
+linecolor=red,<span class="c">%</span>
+fontcolor=red,<span class="c">%</span>
+firstextra=<span class="nb">{</span><span class="k">\path</span> let <span class="k">\p</span>1=(P), <span class="k">\p</span>2=(O) in (<span class="s">$</span><span class="o">(</span><span class="nv">\x</span><span class="m">2</span><span class="nb">,</span><span class="m">0</span><span class="o">)+</span><span class="m">0</span><span class="nb">.</span><span class="m">5</span><span class="nb">∗</span><span class="o">(</span><span class="m">0</span><span class="nb">,</span><span class="nv">\y</span><span class="m">1</span><span class="o">)</span><span class="s">$</span>)
+node[warningsymbol] <span class="nb">{</span><span class="k">\$</span><span class="nb">}</span>;<span class="nb">}</span>,<span class="c">%</span>
+secondextra=<span class="nb">{</span><span class="k">\path</span> let <span class="k">\p</span>1=(P), <span class="k">\p</span>2=(O) in (<span class="s">$</span><span class="o">(</span><span class="nv">\x</span><span class="m">2</span><span class="nb">,</span><span class="m">0</span><span class="o">)+</span><span class="m">0</span><span class="nb">.</span><span class="m">5</span><span class="nb">∗</span><span class="o">(</span><span class="m">0</span><span class="nb">,</span><span class="nv">\y</span><span class="m">1</span><span class="o">)</span><span class="s">$</span>)
+node[warningsymbol] <span class="nb">{</span><span class="k">\$</span><span class="nb">}</span>;<span class="nb">}</span>,<span class="c">%</span>
+middleextra=<span class="nb">{</span><span class="k">\path</span> let <span class="k">\p</span>1=(P), <span class="k">\p</span>2=(O) in (<span class="s">$</span><span class="o">(</span><span class="nv">\x</span><span class="m">2</span><span class="nb">,</span><span class="m">0</span><span class="o">)+</span><span class="m">0</span><span class="nb">.</span><span class="m">5</span><span class="nb">∗</span><span class="o">(</span><span class="m">0</span><span class="nb">,</span><span class="nv">\y</span><span class="m">1</span><span class="o">)</span><span class="s">$</span>)
+node[warningsymbol] <span class="nb">{</span><span class="k">\$</span><span class="nb">}</span>;<span class="nb">}</span>,<span class="c">%</span>
+singleextra=<span class="nb">{</span><span class="k">\path</span> let <span class="k">\p</span>1=(P), <span class="k">\p</span>2=(O) in (<span class="s">$</span><span class="o">(</span><span class="nv">\x</span><span class="m">2</span><span class="nb">,</span><span class="m">0</span><span class="o">)+</span><span class="m">0</span><span class="nb">.</span><span class="m">5</span><span class="nb">∗</span><span class="o">(</span><span class="m">0</span><span class="nb">,</span><span class="nv">\y</span><span class="m">1</span><span class="o">)</span><span class="s">$</span>)
+node[warningsymbol] <span class="nb">{</span><span class="k">\$</span><span class="nb">}</span>;<span class="nb">}</span>,<span class="c">%</span>
+<span class="nb">}</span>
+<span class="k">\begin</span><span class="nb">{</span>mdframed<span class="nb">}</span>[style=warning]
+<span class="k">\ExampleText</span>
+<span class="k">\end</span><span class="nb">{</span>mdframed<span class="nb">}</span>
+</pre>
+</div>
+
+
+<p><img src="http://www.mada-nada.de/mdframeddownloads/gitpic1" alt="gitpic1"></p>
+
+<div class="highlight">
+<pre><span class="k">\mdfdefinestyle</span><span class="nb">{</span>theoremstyle<span class="nb">}{</span><span class="c">%</span>
+linecolor=red,linewidth=2pt,<span class="c">%</span>
+frametitlerule=true,<span class="c">%</span>
+frametitlebackgroundcolor=gray!20,
+innertopmargin=<span class="k">\topskip</span>,
+<span class="nb">}</span>
+<span class="k">\mdtheorem</span><span class="na">[style=theoremstyle]</span><span class="nb">{</span>definition<span class="nb">}{</span>Definition<span class="nb">}</span>
+<span class="k">\begin</span><span class="nb">{</span>definition<span class="nb">}</span>
+<span class="k">\ExampleText</span>
+<span class="k">\end</span><span class="nb">{</span>definition<span class="nb">}</span>
+<span class="k">\begin</span><span class="nb">{</span>definition<span class="nb">}</span>[Inhomogeneous linear]
+<span class="k">\ExampleText</span>
+<span class="k">\end</span><span class="nb">{</span>definition<span class="nb">}</span>
+<span class="k">\begin</span><span class="nb">{</span>definition∗<span class="nb">}</span>[Inhomogeneous linear]
+<span class="k">\ExampleText</span>
+<span class="k">\end</span><span class="nb">{</span>definition∗<span class="nb">}</span>
+</pre>
+</div>
+
+
+<p><img src="http://www.mada-nada.de/mdframeddownloads/gitpic4" alt="gitpic4"></p>
+
+<div class="highlight">
+<pre><span class="k">\mdfdefinestyle</span><span class="nb">{</span>theoremstyle<span class="nb">}{</span><span class="c">%</span>
+linecolor=red,linewidth=2pt,<span class="c">%</span>
+frametitlerule=true,<span class="c">%</span>
+apptotikzsetting=<span class="nb">{</span><span class="k">\tikzset</span><span class="nb">{</span>mdfframetitlebackground/.append style=<span class="nb">{</span><span class="c">%</span>
+shade,left color=white, right color=blue!20<span class="nb">}}}</span>,
+frametitlerulecolor=green!60,
+frametitlerulewidth=1pt,
+innertopmargin=<span class="k">\topskip</span>,
+<span class="nb">}</span>
+<span class="k">\mdtheorem</span><span class="na">[style=theoremstyle]</span><span class="nb">{</span>definition<span class="nb">}{</span>Definition<span class="nb">}</span>
+<span class="k">\begin</span><span class="nb">{</span>definition<span class="nb">}</span>[Inhomogeneous linear]
+<span class="k">\ExampleText</span>
+<span class="k">\end</span><span class="nb">{</span>definition<span class="nb">}</span>
+<span class="k">\begin</span><span class="nb">{</span>definition∗<span class="nb">}</span>[Inhomogeneous linear]
+<span class="k">\ExampleText</span>
+<span class="k">\end</span><span class="nb">{</span>definition∗<span class="nb">}</span>
+</pre>
+</div>
+
+
+<p><img src="http://www.mada-nada.de/mdframeddownloads/gitpic3" alt="gitpic3"></p>
+
+<div class="highlight">
+<pre><span class="k">\mdtheorem</span>[<span class="c">%</span>
+apptotikzsetting=<span class="nb">{</span><span class="k">\tikzset</span><span class="nb">{</span>mdfbackground/.append style=<span class="c">%</span>
+<span class="nb">{</span>top color=yellow!40!white,
+bottom color=yellow!80!black<span class="nb">}</span>,
+mdfframetitlebackground/.append style =<span class="c">%</span>
+<span class="nb">{</span>top color=purple!40!white,
+bottom color=purple!80!black<span class="nb">}</span>
+<span class="nb">}}</span>,
+,roundcorner=10pt,middlelinewidth=2pt,
+shadow=true,frametitlerule=true,frametitlerulewidth=4pt,
+innertopmargin=10pt,<span class="c">%</span>
+]<span class="nb">{</span>alternativtheorem<span class="nb">}{</span>Theorem<span class="nb">}</span>
+<span class="k">\begin</span><span class="nb">{</span>alternativtheorem<span class="nb">}</span>[Inhomogeneous linear]
+<span class="k">\ExampleText</span>
+<span class="k">\end</span><span class="nb">{</span>alternativtheorem<span class="nb">}</span>
+</pre>
+</div>
+
+
+<p><img src="http://www.mada-nada.de/mdframeddownloads/gitpic5" alt="gitpic5"></p>
+
+<div class="highlight">
+<pre><span class="k">\mdfsetup</span><span class="nb">{</span>splitbottomskip=0.8cm,splittopskip=0cm,
+innerrightmargin=2cm,innertopmargin=1cm,<span class="c">%</span>
+innerlinewidth=2pt,outerlinewidth=2pt,
+middlelinewidth=10pt,backgroundcolor=red,
+linecolor=blue,middlelinecolor=gray,
+tikzsetting=<span class="nb">{</span>draw=yellow,line width=3pt,<span class="c">%</span>
+dashed,<span class="c">%</span>
+dash pattern= on 10pt off 3pt<span class="nb">}</span>,
+rightline=false,bottomline=false<span class="nb">}</span>
+<span class="k">\begin</span><span class="nb">{</span>mdframed<span class="nb">}</span>
+<span class="k">\ExampleText</span>
+<span class="k">\end</span><span class="nb">{</span>mdframed<span class="nb">}</span>
+</pre>
+</div>
+
+
+<p><img src="http://www.mada-nada.de/mdframeddownloads/gitpic2" alt="gitpic2"></p>
+
+<h1>Help</h1>
+
+<h2>I have a problem! What can I do?</h2>
+
+<p>The most important part is to provide a <a href="http://meta.tex.stackexchange.com/questions/228/ive-just-been-told-i-have-to-write-a-minimal-example-what-is-that">minimal working example (MWE)</a> for me to be able to reproduce the problem. The problems are categorized (bug, feature request or special settings),so please have a look at the next sections to get the best way of report them.</p>
+
+<h2>I found a bug! What can I do?</h2>
+
+<p>In this case you can fill out a bug report <a href="https://github.com/marcodaniel/mdframed/issues?direction=desc&amp;sort=created&amp;state=open">at github</a>. You can also send me an e-mail.</p>
+
+<h2>I have a feature request! What can I do?</h2>
+
+<p>Use the same method used for reporting bugs.</p>
+
+<h2>I want a special setting! What can I do?</h2>
+
+<p>I recommend the <a href="http://tex.stackexchange.com/">TeX.sx Q&amp;A site</a>. There you will find high motivated experts of TeX, LaTeX, ConTeXt, and related typesetting systems.</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">mdframed maintained by <a href="https://github.com/marcodaniel">marcodaniel</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("mdframed latex package");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+
+  </body>
+</html>
