@@ -83,17 +83,27 @@ help:
 ################################################################
 docsty: $(PACKAGE).dtx
 	echo -e "" ;\
-	echo -e "\t$(ERROR_COLOR)Typesetting $(PACKAGE).dtx$(NO_COLOR)" ;\
+	echo -e "\t$(WARN_COLOR)Typesetting $(PACKAGE).dtx$(NO_COLOR)" ;\
 	pdflatex -draftmode -interaction=nonstopmode $(PACKAGE).dtx > /dev/null ;\
 	if [ $$? = 0 ] ; then \
 	  echo -e "\t$(OK_COLOR)compilation in draftmode without erros$(NO_COLOR)" ;\
-	  makeindex -q -t $(PACKAGE).glolog  -s gglo.ist -o $(PACKAGE).gls $(PACKAGE).glo ;\
-	  if [ $$? = 0 ] ; then \
+	  if [ -f $(PACKAGE).glo ] ; then \
+	   echo -e "\t$(WARN_COLOR)Typesetting $(PACKAGE).glo$(NO_COLOR)" ;\
+	   makeindex -q -t $(PACKAGE).glolog  -s gglo.ist -o $(PACKAGE).gls $(PACKAGE).glo ;\
+	   if [ $$? = 0 ] ; then \
 	     echo -e "\t$(OK_COLOR)compilation of Glossar without errors$(NO_COLOR)" ;\
+	   else \
+	     echo -e "\t$(ERROR_COLOR)compilation of Glossar with errors$(NO_COLOR)" ;\
+	   fi ;\
 	  fi ;\
-	  makeindex -q -t $(PACKAGE).idxlog -s gind.ist $(PACKAGE).idx ;\
-	  if [ $$? = 0 ] ; then \
+	  if [ -f $(PACKAGE).idx ] ; then \
+	   echo -e "\t$(WARN_COLOR)Typesetting $(PACKAGE).idx$(NO_COLOR)" ;\
+	   makeindex -q -t $(PACKAGE).idxlog -s gind.ist $(PACKAGE).idx ;\
+	   if [ $$? = 0 ] ; then \
 	     echo -e "\t$(OK_COLOR)compilation of Index without errors$(NO_COLOR)" ;\
+	   else \
+	     echo -e "\t$(ERROR_COLOR)compilation of Index with errors$(NO_COLOR)" ;\
+	   fi ;\
 	  fi ;\
 	  pdflatex $(PACKAGE).dtx > /dev/null ;\
 	  if [ $$? = 0 ] ; then \
