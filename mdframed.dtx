@@ -174,7 +174,8 @@ Have fun!
 \Msg{* \space\space makeindex -s gglo.ist -o mdframed.gls mdframed.glo}
 \Msg{* \space\space makeindex -s gind.ist mdframed.idx}
 \Msg{*}
-\Msg{* through makeIndex to produce the glossary. Finally, run PdfLaTeX once again.}
+\Msg{* through makeIndex to produce the glossary.}
+\Msg{* Finally, run PdfLaTeX once again.}
 \Msg{*}
 \Msg{* To create the examples run (pdf)latex on the tex-files.}
 \Msg{*}
@@ -186,18 +187,24 @@ Have fun!
 %<install>\endbatchfile
 %<*internal>
 \usedir{source/latex/mdframed}
-\generate{\file{mdframed.ins}{\from{mdframed.dtx}{install}}}
+\generate{\file{mdframed.ins}
+          {\from{mdframed.dtx}{install}}}
 
 \nopreamble\nopostamble\usedir{doc/latex/mdframed}
-\generate{\file{README.txt}{\from{mdframed.dtx}{readme}}}
+\generate{\file{README.txt}
+          {\from{mdframed.dtx}{readme}}}
 \nopreamble\nopostamble\usedir{source/latex/mdframed}
-\generate{\file{mdframed-example-default.tex}{\from{mdframed.dtx}{mdframed-example-default}}}
+\generate{\file{mdframed-example-default.tex}
+          {\from{mdframed.dtx}{mdframed-example-default}}}
 \nopreamble\nopostamble\usedir{source/latex/mdframed}
-\generate{\file{mdframed-example-tikz.tex}{\from{mdframed.dtx}{mdframed-example-tikz}}}
+\generate{\file{mdframed-example-tikz.tex}
+          {\from{mdframed.dtx}{mdframed-example-tikz}}}
 \nopreamble\nopostamble\usedir{source/latex/mdframed}
-\generate{\file{mdframed-example-pstricks.tex}{\from{mdframed.dtx}{mdframed-example-pstricks}}}
+\generate{\file{mdframed-example-pstricks.tex}
+          {\from{mdframed.dtx}{mdframed-example-pstricks}}}
 \nopreamble\nopostamble\usedir{source/latex/mdframed}
-\generate{\file{mdframed-example-texsx.tex}{\from{mdframed.dtx}{mdframed-example-texsx}}}
+\generate{\file{mdframed-example-texsx.tex}
+          {\from{mdframed.dtx}{mdframed-example-texsx}}}
 
 \ifx\fmtname\nameofplainTeX
   \expandafter\endbatchfile
@@ -206,22 +213,22 @@ Have fun!
 \fi
 %</internal>
 %<*driver>
-%%$Id: mdframed.dtx 389 2012-05-19 10:12:13Z marco $
+%%$Id: mdframed.dtx 393 2012-05-19 22:01:31Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,11pt,]{ltxmdf}
 \usepackage[framemethod=TikZ]{mdframed}
-\ltxmdfsetifoot$Id: mdframed.dtx 389 2012-05-19 10:12:13Z marco $
+\ltxmdfsetifoot$Id: mdframed.dtx 393 2012-05-19 22:01:31Z marco $
 
 \EnableCrossrefs
 \CodelineIndex
-\RecordChanges
+%%\RecordChanges
 \begin{document}
   \DocInput{mdframed.dtx}
 \end{document}
 %</driver>
 % \fi
 %
-% \CheckSum{5921}
+% CheckSum{5945}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -251,7 +258,7 @@ Have fun!
 % \author{\href{mailto:marco.daniel@mada-nada.de}{Marco Daniel}%
 %        \href{mailto:marco.daniel@mada-nada.de}{Elke Schubert}}}
 % \version{\mdversion}
-% \date{\mdfdateID$Id: mdframed.dtx 389 2012-05-19 10:12:13Z marco $}
+% \date{\mdfdateID$Id: mdframed.dtx 393 2012-05-19 22:01:31Z marco $}
 % \introduction{The standard methods for framing text (\Cmd{fbox}
 %              or \Cmd{fcolorbox}) require you to handle page breaks
 %              by hand, meaning that you have to split the \Cmd{fbox}
@@ -370,7 +377,8 @@ Have fun!
 % \minisec{Autodetecting floats}
 % \Pack{mdframed} detects whether the environment is used inside \Pack{float}
 % or \Pack{minipage} environments. If you use \Pack{mdframed} in such
-% an environment \Pack{mdframed} will use the option \Opt{nobreak} automatically. 
+% an environment \Pack{mdframed} will use the option \Opt{nobreak} 
+% automatically. 
 % 
 % \minisec{Twoside-mode}
 % If you are using \Pack{mdframed} inside \Pack{twoside}-mode you can set
@@ -424,8 +432,8 @@ Have fun!
 % 		\FirstSecond[line width=7mm,draw=green!20]
 % 	\end{scope}
 % 	\FirstSecond[line width=2mm,draw=red!20,use as bounding box]
-% 	\node[anchor=south,font=\bfseries,text width=4cm,align=center] at (2.4,0.7)
-% 	     {First box -- first part of the output};
+% 	\node[anchor=south,font=\bfseries,text width=4cm,align=center] 
+%            at (2.4,0.7) {First box -- first part of the output};
 % \end{tikzpicture}
 % \hfill\null
 % 
@@ -517,8 +525,8 @@ Have fun!
 %
 % 
 % \ExplCmd{mdflength} 
-%      If you want to work with length defined by \Pack{mdframed} (for example
-%      \Opt{innerleftmargin}) you can now simple use the command \Cmd{mdflength}.
+%     If you want to work with length defined by \Pack{mdframed} (for example
+%     \Opt{innerleftmargin}) you can now simple use the command \Cmd{mdflength}.
 % \iffalse
 %<*example>
 % \fi
@@ -542,7 +550,8 @@ Have fun!
 % argument of \Cmd{usepackage}. So you are avoiding breaking of non robust 
 % commands.}^^A
 % \footnote{Thanks to Heiko Oberdiek and Philipp Stephani
-% \href{https://groups.google.com/group/de.comp.text.tex/browse_thread/thread/15c5ad290490d426?hl=de}^^A
+% \href{https://groups.google.com/group/de.comp.text.tex/^^A
+%       browse_thread/thread/15c5ad290490d426?hl=de}^^A
 %       {kvoptions-Declaration von Optionen schl\"agt fehl}}
 % 
 % \ExplCmd{mdfdefinestyle} 
@@ -588,8 +597,8 @@ Have fun!
 % \ExplOpt[none]{xcolor}
 % By setting this key, the package \Pack{xcolor} will
 % be loaded with the given value(s). Without any value \mbox{\Pack{mdframed}} 
-% loads the package \Pack{color} without any options. If the package \Pack{xcolor} 
-% is already loaded the given option will be ignored. 
+% loads the package \Pack{color} without any options. If the package 
+% \Pack{xcolor} is already loaded the given option will be ignored. 
 % I recommend to load \Pack{xcolor} before \Pack{mdframed}.
 % 
 % \ExplOpt[default]{framemethod} 
@@ -600,8 +609,8 @@ Have fun!
 %  \item \Pack{TikZ} {\small(the package \Pack{TikZ} will be loaded)} or
 %  \item \Pack{PSTricks} {\small(the package \Pack{pstricks} will be loaded)}.
 % \end{enumerate}
-% The option \Opt{framemethod} requires a string. Allowed combinations are listed
-% in the following table.
+% The option \Opt{framemethod} requires a string. Allowed combinations are
+% listed in the following table.
 % \begin{table}[!ht]
 % \centering
 % \renewcommand*\arraystretch{1.3}
@@ -774,7 +783,8 @@ Have fun!
 % \ExplOpt[.4\textbackslash baselineskip]{innerbottommargin} 
 %      Sets the length of the inner bottom margin of the environment.
 % 
-% \paragraph*{The following lengths are not shown in figure \eqref{fig:laengen}.}
+% \paragraph*{The following lengths are not shown in figure
+%             \eqref{fig:laengen}.}
 % 
 % \mbox{}
 % \ExplOpt[0pt]{userdefinedwidth} 
@@ -859,8 +869,8 @@ Have fun!
 %      the example files.
 % \ExplOpt[left]{align} 
 %      Sometimes it is useful to align the environment itself. 
-%      For this you have the option \Opt{align} which can be set to the following
-%      strings: 
+%      For this you have the option \Opt{align} which can be set to the 
+%      following strings: 
 %      \begin{itemize}
 %       \item \Opt{left},
 %       \item \Opt{right} and
@@ -874,12 +884,13 @@ Have fun!
 %      Try to ignore the last descenders of the environment \Env{mdframed}. The
 %      complete idea was inspired by Tobias Weh and the solution was provided
 %      by Stefan Lemke. See 
-%      \href{http://tex.stackexchange.com/questions/47584/how-to-make-mdframed-ignore-descenders-in-last-line}^^A
+%      \href{http://tex.stackexchange.com/questions/47584/how-to-make-^^A
+%            mdframed-ignore-descenders-in-last-line}^^A
 %           {How to make mdframed ignore descenders in last line}
 %
 % \ExplOpt[false]{shadow}
-%      Draw a shadow. The shadow doesn't influence the bounding box so the shadow
-%      can be drawn in the margin without any overfull box.
+%      Draw a shadow. The shadow doesn't influence the bounding box so the 
+%      shadow can be drawn in the margin without any overfull box.
 %      Note if you are using the TikZ you must load the library.
 %      \Pack{mdframed} doesn't do the job to avoid double loading of a library.
 %
@@ -975,24 +986,66 @@ Have fun!
 %      Set this key to \Opt{true} to get a line between the frame title
 %      and the text.
 % \ExplOpt[.2pt]{frametitlerulewidth}
-%      Sets the width of the line between the text and the title of \Env{mdframed}.
+%      Sets the width of the line between the text and the title of 
+%      \Env{mdframed}.
 % \ExplOpt[5pt]{frametitleaboveskip}
 %      Sets the skip of the frame title to the margin above of \Env{mdframed}.
 % \ExplOpt[5pt]{frametitlebelowskip}
 %      Sets the skip of the frame title to the rule of the frame title.
 % \ExplOpt[white]{frametitlebackgroundcolor}
 %      Sets the color of the background of the frametitle
+% \ExplOpt[false]{repeatframetitle}
+%      Repeat the frame title on every frame. 
 %
 % \minisec{FYI and Note}
-% \Pack{mdframed} can't handle page breaks inside the frametitle well. 
-% If you get a page break please have a closer look to the output.
-% 
-% If a frame title is given the optional length \Opt{innertopmargin} is
-% set between the rule under the frame title and the contents of \Env{mdframed}.
+% The splitting of the frame title is really a fiddly issue. If you want to use
+% the option \Opt{repeatframetitle} a splitting is more than wrong. On the other
+% hand if you use the option \Opt{repeatframetitle} the user must prepare the 
+% contents well.
 %
-% \ExplOpt[false]{repeatframetitle}
-%      Repeat the frame title on every frame. The feature is currently not
-%      well implemented!!!
+% The following picture demonstrates the behaviour of the lengths if the option
+% \Opt{frametitle} is used.
+% 
+% \begin{center}
+% \begin{tikzpicture}[scale=0.9]
+%      %Declaration
+%      \tikzstyle{every node}=[font=\bfseries\large\sffamily]
+%      \coordinate (innersep) at (3.2,2.25);
+%      \coordinate (outersep) at (3.2,2);
+%      %Center box
+%      \node[fill=green!10,draw=black,,
+%            minimum width=9cm,minimum height=3cm,]%
+%            (CenterNode) {Contents of the box};
+%      %frametitle box
+%      \node[fill=yellow!70,draw=black,
+%            minimum width=9cm,minimum height=3cm,anchor=south]%
+%            at (CenterNode.north) (frametitle) {frame title};
+% % frametitlerule
+%     \draw[line width=3pt,blue!60!black] (frametitle.south west) -- (frametitle.south east)
+%               node[pos=1,anchor=west,text width=4cm] 
+%                  {\Opt{\large frametitlerulewidth}\\\Opt{\large frametitlerule}};
+% % frametitlebelowskip
+%     \draw[very thick,blue!60!black,latex-latex,shorten >=0.2cm] (frametitle.south) -- (frametitle.center)
+%               node[pos=0.5,anchor=west] 
+%                  {\Opt{\large frametitlebelowskip}};
+% % frametitleaboveskip
+%     \draw[very thick,blue!60!black,latex-latex,shorten >=0.2cm] (frametitle.north) -- (frametitle.center)
+%               node[pos=0.5,anchor=west] 
+%                  {\Opt{\large frametitleaboveskip}};
+% % innertopmargin
+%     \draw[very thick,blue!60!black,latex-latex,shorten >=0.2cm] (CenterNode.north) -- (CenterNode.center)
+%               node[pos=0.5,anchor=west] 
+%                  {\Opt{\large innertopmargin}};
+% % splittopskip
+%     \draw[very thick,blue!60!black,latex-latex,shorten >=0.2cm] (CenterNode.north) -- (CenterNode.center)
+%               node[pos=0.5,anchor=east] 
+%                  {\Opt{\large splittopskip}};
+% % global frame
+%  \draw[thick] (-5.5,-2.1) rectangle (9.9,5.5);
+% \end{tikzpicture}
+%  \captionof{figure}{Behavior of the lengths if \Opt{frametitle} is used}
+%  \label{fig:frametitlelaengen}
+% \end{center}
 % 
 %
 % \subsection{Theorems}
@@ -1036,7 +1089,8 @@ Have fun!
 %
 %
 % \ExplCmd{mdtheorem} 
-% This is a special kind of \Cmd{newtheorem}. The command has the following syntax.
+% This is a special kind of \Cmd{newtheorem}. The command has the following 
+% syntax.
 % \iffalse
 %<*example>
 % \fi
@@ -1128,9 +1182,10 @@ Have fun!
 % another method.
 % So I really recommend to have a look to all example files.
 %
-% The Korean \TeX Group created a very nice presentation. I want to show the link
-% because it's really a great work:
-% \href{http://prezi.com/zc355i9tcsgz/talk-kts-2012-mdframed/}{kts 2012 mdframed}.
+% The Korean \TeX Group created a very nice presentation. I want to show the 
+% link because it's really a great work:
+% \href{http://prezi.com/zc355i9tcsgz/talk-kts-2012-mdframed/}^^A
+%      {kts 2012 mdframed}.
 % 
 % \section{Errors, Warnings and Messages}
 % 
@@ -1301,6 +1356,8 @@ Have fun!
 % \iffalse
 %</example>
 % \fi 
+%  \item \Pack{mdframed} can't handle the option \Opt{allowframebreaks} of the
+%         class \Pack{beamer}.
 % \end{enumerate}
 % 
 % 
@@ -1316,7 +1373,8 @@ Have fun!
 %   \item Improve footnotes.
 %   \item Improve documentation and examples.
 %   \item Create styles for \Opt{frametitle}.
-%   \item Create an inline version of \Env{mdframed} that's works like \Cmd{fbox}
+%   \item Create an inline version of \Env{mdframed} that's works like 
+%         \Cmd{fbox}
 %   \item Add \Cmd{ht}\Cmd{strutbox} to file \Pack{md-frame-1.mdf}
 % \end{enumerate}                
 % 
@@ -1505,12 +1563,15 @@ Have fun!
 % 
 % \subsection{Revision history}\label{rev}
 % \raggedright
-% \minisec{Version 1.6a submitted DD MMM 2012}
+% \minisec{Version 1.6b submitted DD MMM 2012}
 % \begin{itemize*}
 %  \item improved formating of the file \Pack{mdframed.dtx}
 %  \item fixed bug in combination with Cmd{parskip} -- Thanks David Carlisle.
 %  \item added extra loop to compute the splitting point.
 %  \item added new option \Opt{ignorelastdescenders} -- Thanks Stephan Lehmke.
+%  \item Improved option \Opt{repeatframetitle}
+%  \item fixed bug: \Opt{framemethod=tikz} used wrong computed length by setting
+%        \Opt{everyline=true}
 % \end{itemize*}
 %
 % \minisec{Version 1.5a submitted DD MMM 2012}
@@ -1704,8 +1765,8 @@ Have fun!
 % And finally, here's how it all works\ldots
 %
 %\StopEventually{^^A
-%  \clearpage
-%  \PrintChanges^^A
+%  %%\clearpage
+%  %%\PrintChanges^^A
 %  \clearpage
 %  \PrintIndex^^A
 %}
@@ -1717,14 +1778,14 @@ Have fun!
 %
 % \subsection{The Explanation of mdframed.sty}
 %
-% %$Id: mdframed.dtx 389 2012-05-19 10:12:13Z marco $
-% %$Rev: 389 $
+% %$Id: mdframed.dtx 393 2012-05-19 22:01:31Z marco $
+% %$Rev: 393 $
 % %$Author: marco $
-% %$Date: 2012-05-19 12:12:13 +0200 (Sa, 19 Mai 2012) $
+% %$Date: 2012-05-20 00:01:31 +0200 (So, 20 Mai 2012) $
 % \begin{macro}{mdversion,mdframedpackagename,mdf@maindate@svn}
 % Set package information
 %    \begin{macrocode}
-\def\mdversion{v1.6a}
+\def\mdversion{v1.6b}
 \def\mdframedpackagename{mdframed}
 \def\mdf@maindate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 %    \end{macrocode}
@@ -1733,7 +1794,7 @@ Have fun!
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{mdframed}%
-     [\mdf@maindate@svn$Id: mdframed.dtx 389 2012-05-19 10:12:13Z marco $%
+     [\mdf@maindate@svn$Id: mdframed.dtx 393 2012-05-19 22:01:31Z marco $%
       \mdversion: \mdframedpackagename]
 %    \end{macrocode}
 %
@@ -2154,7 +2215,8 @@ Have fun!
 % \end{macro}
 %
 % \begin{macro}{mdf@style}
-% Redefinition of the option |style| to use the key in combination with |mdfdefinedstyle|.
+% Redefinition of the option |style| to use the key in combination with 
+% |mdfdefinedstyle|.
 %    \begin{macrocode}
 \define@key{mdf}{style}{%
   \ifcsundef{mdf@definestyle@#1}{%
@@ -2196,7 +2258,7 @@ Have fun!
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{new\ldots}
+% \begin{macro}{new...}
 %  Initialize all commands and length which will we used later
 %    \begin{macrocode}
 \newsavebox\mdf@frametitlebox
@@ -2232,6 +2294,10 @@ Have fun!
 \newlength\mdf@freevspace@length
 \newlength\mdf@horizontalwidthofbox@length
 \newlength\mdf@verticalmarginwhole@length
+
+\newtoggle{mdf@notfirstframetitle}%
+\togglefalse{mdf@notfirstframetitle}%
+
 
 % Command to expand the tikz code. (see md-frame-1.mdf)
 \newrobustcmd\mdfcreateextratikz{}
@@ -2280,8 +2346,9 @@ Have fun!
 %
 % \begin{macro}{mdf@ignorevbadness,mdf@restorevbadness}
 % Avoiding warnings during the splitting process by \Cmd{vsplit}.
-% see \href{http://tex.stackexchange.com/questions/38496/how-to-avoid-underfull-vbox-in-combination-with-vsplit/38499#38499}
-% {How to avoid underfull vbox in combination with \Cmd{vsplit}?}
+% see \href{http://tex.stackexchange.com/questions/38496/how-to-avoid-^^A
+%           underfull-vbox-in-combination-with-vsplit/38499#38499}^^A
+%          {How to avoid underfull vbox in combination with \Cmd{vsplit}?}
 %    \begin{macrocode}
 \newrobustcmd*\mdf@ignorevbadness{%
    \edef\mdf@currentvbadness{\the\vbadness}%
@@ -2304,7 +2371,8 @@ Have fun!
                         changed the theoerem header of amsthm\MessageBreak}%
       }{%
        \mdf@PackageError{mdframed detected package amsthm ^^J
-                         changed the theoerem header of amsthm failed\MessageBreak}%
+                         changed the theoerem header of amsthm
+                         failed\MessageBreak}%
        }%
      }%
 }{\let\mdf@patchamsthm\relax}%
@@ -2448,7 +2516,8 @@ Have fun!
                              ##1}%
              \mdf@thm@caption{#2}{{#4}{\csname the#2\endcsname}{##1}}%
              }%
-          \begin{mdframed}[#1,frametitle={\strut#4\ \csname the#2\endcsname\@temptitle}]}%
+          \begin{mdframed}[#1,frametitle={\strut#4\ \csname the#2\endcsname%
+                                          \@temptitle}]}%
           {\end{mdframed}}%
         \newenvironment{#2*}[1][]{%
           \ifstrempty{##1}{\let\@temptitle\relax}{\def\@temptitle{:\ ##1}}%
@@ -2472,7 +2541,8 @@ Have fun!
                              ##1}%
              \mdf@thm@caption{#2}{{#4}{\csname the#2\endcsname}{##1}}%
              }
-          \begin{mdframed}[#1,frametitle={\strut#4\ \csname the#2\endcsname\@temptitle}]}%
+          \begin{mdframed}[#1,frametitle={\strut#4\ \csname the#2\endcsname%
+                                          \@temptitle}]}%
           {\end{mdframed}}%
         \newenvironment{#2*}[1][]{%
           \ifstrempty{##1}%
@@ -2501,7 +2571,8 @@ Have fun!
                              ##1}%
              \mdf@thm@caption{#2}{{#4}{\csname the#2\endcsname}{##1}}%
              }
-          \begin{mdframed}[#1,frametitle={\strut#4\ \csname the#2\endcsname\@temptitle}]}%
+          \begin{mdframed}[#1,frametitle={\strut#4\ \csname the#2\endcsname%
+                                          \@temptitle}]}%
           {\end{mdframed}}%
         \newenvironment{#2*}[1][]{%
           \ifstrempty{##1}{\let\@temptitle\relax}{\def\@temptitle{:\ ##1}}%
@@ -2514,7 +2585,8 @@ Have fun!
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{mdfframedtitleenv,mdf@@frametitle,mdf@setopt@body,mdf@setopt@title}
+% \begin{macro}{mdfframedtitleenv,mdf@@frametitle,
+%               mdf@setopt@body,mdf@setopt@title}
 % Default definition of the frame tile used by |mdframed|.
 % \textcolor{red}{\bfseries Need a better documenation and must be improved!!!}
 %    \begin{macrocode}
@@ -2522,8 +2594,20 @@ Have fun!
     \mdf@lrbox{\mdf@frametitlebox}%
      \mdf@frametitlealignment%
        \leavevmode\color{\mdf@frametitlefontcolor}%
-           \normalfont\mdf@frametitlefont{#1}\par\unskip%
-       \hrule \@height\z@ \@width\hsize
+           \normalfont\mdf@frametitlefont{#1}
+%    \end{macrocode}
+% Trying to ignore last descenders of the environment.
+%    \begin{macrocode}
+       \ifbool{mdf@ignorelastdescenders}%
+         {%
+          \par\strut\par
+          \unskip\unskip\setbox0=\lastbox
+          \vspace*{\dimexpr\ht\strutbox-\baselineskip\relax}%
+         }{}%
+    \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%%
+%    \end{macrocode}
+%
+%    \begin{macrocode}
     \endmdf@lrbox\relax%
    \mdf@ignorevbadness%
    \setbox\mdf@frametitlebox=\vbox{\unvbox\mdf@frametitlebox}%
@@ -2721,12 +2805,12 @@ Have fun!
       \def\mdf@reserveda{%
         \mdf@footnoteoutput%
         \endmdf@lrbox%
-        \ifdefempty{\mdf@frametitle}{}{\mdf@@frametitle@use}
+        \ifdefempty{\mdf@frametitle}{}{\mdf@@frametitle@use}%
         \detected@mdf@put@frame}%
     \else%
       \def\mdf@reserveda{%
         \endmdf@lrbox%
-        \ifdefempty{\mdf@frametitle}{}{\mdf@@frametitle@use}
+        \ifdefempty{\mdf@frametitle}{}{\mdf@@frametitle@use}%
         \detected@mdf@put@frame%
         \mdf@footnoteoutput%
         }%
@@ -2734,7 +2818,8 @@ Have fun!
     \mdf@reserveda%
     \endmdf@trivlist%
 %    \end{macrocode}
-% End group and set the command \Cmd{@doendpe} to behave like \Cmd{end\{center\}}
+% End group and set the command \Cmd{@doendpe} to behave like 
+% \Cmd{end\{center\}}
 %    \begin{macrocode}
 \color@endgroup\@doendpe%
 }
@@ -2821,18 +2906,20 @@ Have fun!
              innerlinewidth,innerleftmargin,innerrightmargin,%
              innerlinewidth,middlelinewidth,outerlinewidth,%
              rightmargin}%
-    \notbool{mdf@leftline}{%
-                \advance\mdf@horizontalspaceofbox by \mdf@innerlinewidth@length\relax%
-                \advance\mdf@horizontalspaceofbox by \mdf@middlelinewidth@length\relax%
-                \advance\mdf@horizontalspaceofbox by \mdf@outerlinewidth@length\relax%
-           }{}%      
-    \notbool{mdf@rightline}{%
-                \advance\mdf@horizontalspaceofbox by \mdf@innerlinewidth@length\relax%
-                \advance\mdf@horizontalspaceofbox by \mdf@middlelinewidth@length\relax%
-                \advance\mdf@horizontalspaceofbox by \mdf@outerlinewidth@length\relax% 
-           }{}%
+    \notbool{mdf@leftline}%
+       {%
+        \advance\mdf@horizontalspaceofbox by \mdf@innerlinewidth@length\relax%
+        \advance\mdf@horizontalspaceofbox by \mdf@middlelinewidth@length\relax%
+        \advance\mdf@horizontalspaceofbox by \mdf@outerlinewidth@length\relax%
+       }{}%      
+    \notbool{mdf@rightline}%
+       {%
+        \advance\mdf@horizontalspaceofbox by \mdf@innerlinewidth@length\relax%
+        \advance\mdf@horizontalspaceofbox by \mdf@middlelinewidth@length\relax%
+        \advance\mdf@horizontalspaceofbox by \mdf@outerlinewidth@length\relax% 
+       }{}%
     \ifdimless{\mdf@horizontalspaceofbox}{3cm}%
-              {\mdf@PackageWarning{You have only a width of 3cm}}{}
+      {\mdf@PackageWarning{You have only a width of 3cm}}{}%
     \hsize=\mdf@horizontalspaceofbox%
 }
 %    \end{macrocode}
@@ -2842,26 +2929,37 @@ Have fun!
 % Space in relation of horizontal lines.
 %    \begin{macrocode}
 \newrobustcmd*\mdf@keeplines@single{%
-  \notbool{mdf@topline}{%
-      \advance\mdf@verticalmarginwhole@length by -\mdf@innerlinewidth@length%
-      \advance\mdf@verticalmarginwhole@length by -\mdf@middlelinewidth@length%
-      \advance\mdf@verticalmarginwhole@length by -\mdf@outerlinewidth@length%
+  \notbool{mdf@topline}%
+     {%
+      \advance\mdf@verticalmarginwhole@length %
+               by -\mdf@innerlinewidth@length\relax%
+      \advance\mdf@verticalmarginwhole@length %
+               by -\mdf@middlelinewidth@length\relax%
+      \advance\mdf@verticalmarginwhole@length %
+               by -\mdf@outerlinewidth@length\relax%
      }{}%
-  \notbool{mdf@bottomline}{%
-      \advance\mdf@verticalmarginwhole@length by -\mdf@innerlinewidth@length%
-      \advance\mdf@verticalmarginwhole@length by -\mdf@middlelinewidth@length%
-      \advance\mdf@verticalmarginwhole@length by -\mdf@outerlinewidth@length%
+  \notbool{mdf@bottomline}%
+     {%
+      \advance\mdf@verticalmarginwhole@length %
+               by -\mdf@innerlinewidth@length\relax%
+      \advance\mdf@verticalmarginwhole@length %
+               by -\mdf@middlelinewidth@length\relax%
+      \advance\mdf@verticalmarginwhole@length %
+               by -\mdf@outerlinewidth@length\relax%
      }{}%
 }
 %    \end{macrocode}
 % \end{macro}
 %
 %
-% \begin{macro}{mdf@advancelength@verticalmarginwhole,mdf@advancelength@freevspace@sub,mdf@advancelength@freevspace@add}
+% \begin{macro}{mdf@advancelength@verticalmarginwhole,
+%               mdf@advancelength@freevspace@sub,
+%               mdf@advancelength@freevspace@add}
 % Loop macros to calculate the height. Used by |\mdf@dolist|.
 %    \begin{macrocode}
 \newrobustcmd*\mdf@advancelength@verticalmarginwhole[1]{%
-  \advance\mdf@verticalmarginwhole@length by \csname mdf@#1@length\endcsname\relax%
+  \advance\mdf@verticalmarginwhole@length %
+           by \csname mdf@#1@length\endcsname\relax%
 }
 \newrobustcmd*\mdf@advancelength@freevspace@sub[1]{%
   \advance\dimen@ by -\csname mdf@#1@length\endcsname\relax%
@@ -2893,8 +2991,9 @@ Have fun!
       \setlength{\mdf@verticalmarginwhole@length}%
                  {\dimexpr\ht\mdf@splitbox@one+\dp\mdf@splitbox@one\relax}%
       \mdf@dolist{\mdf@advancelength@verticalmarginwhole}{%
-                  outerlinewidth,middlelinewidth,innerlinewidth,innertopmargin,
-                  innerbottommargin,innerlinewidth,middlelinewidth,outerlinewidth}%
+                  outerlinewidth,middlelinewidth,innerlinewidth,innertopmargin,%
+                  innerbottommargin,innerlinewidth,middlelinewidth,%
+                  outerlinewidth}%
       \mdf@keeplines@single%
       \def\mdf@reserved@a{\mdf@putbox@single}%
    \fi
@@ -3035,21 +3134,6 @@ Have fun!
     \setbox\mdf@splitbox@two\vbox{\unvbox\mdf@splitbox@two}%
     \setbox\mdf@splitbox@one\vbox{\unvbox\mdf@splitbox@one}%
 %    \end{macrocode}
-% \textcolor{red}{\bfseries repeating frame title must be improved}
-%    \begin{macrocode}
-    \ifbool{mdf@repeatframetitle}%
-      {%
-       \setbox\mdf@splitbox@one\vbox{%
-           \vbox to \mdf@splittopskip@length{\hsize\z@}
-           %\par\unskip\nointerlineskip
-           \unvcopy\mdf@frametitlebox%
-           \mdf@@frametitlerule%
-           \vbox to\dimexpr
-             -\mdf@splittopskip@length+\ht\strutbox+\dp\strutbox
-             +\mdf@innertopmargin@length\relax{\hsize\z@}%
-           \unvbox\mdf@splitbox@one}%
-      }{}%
-%    \end{macrocode}
 % Test whether the splitted box fits the required dimension
 %    \begin{macrocode}
     \ifdimgreater{\ht\mdf@splitbox@two+\dp\mdf@splitbox@two}{\dimen@}%
@@ -3057,7 +3141,8 @@ Have fun!
        \mdf@PackageInfo{Box was splittet wrong^^M starting loop to iterate 
                         the splitting point\MessageBreak}%
 %    \end{macrocode}
-% restore save box \Cmd{mdf@splitbox@one} by the save one \Cmd{mdf@splitbox@save}
+% restore save box \Cmd{mdf@splitbox@one} by the save one
+% \Cmd{mdf@splitbox@save}
 %    \begin{macrocode}
        \setbox\mdf@splitbox@one=\vbox{\unvcopy\mdf@splitbox@save}%
 %    \end{macrocode}
@@ -3078,19 +3163,21 @@ Have fun!
           \setbox\mdf@splitbox@one=\vbox{\unvcopy\mdf@splitbox@save}%
           \splitmaxdepth\z@ \splittopskip\mdf@splittopskip@length%
           \mdf@ignorevbadness%
-          \setbox\mdf@splitbox@two\vsplit\mdf@splitbox@one to \dimen@i
+          \setbox\mdf@splitbox@two\vsplit\mdf@splitbox@one to \dimen@i\relax%
           \setbox\mdf@splitbox@two\vbox{\unvbox\mdf@splitbox@two}%
           \setbox\mdf@splitbox@one\vbox{\unvbox\mdf@splitbox@one}%
-       \repeat
+       \repeat%
       }{}%
 %    \end{macrocode}
 % Test if the last frame is empty
 %    \begin{macrocode}
     \ifvoid\mdf@splitbox@one\relax%
-      \mdf@PackageWarning{You got a bad break because the splittet box is empty^^M
+      \mdf@PackageWarning{You got a bad break because the splittet box 
+                          is empty^^M
                           You have to change the page settings^^M
                           like enlargethispage or something else^^M
-                          the package increases do \enlargethispage{\baselineskip}\MessageBreak}%
+                          the package increases do 
+                          \enlargethispage{\baselineskip}\MessageBreak}%
       \setbox\mdf@splitbox@one=\vbox{\unvcopy\mdf@splitbox@save}
       \enlargethispage{\baselineskip}%
       \def\mdf@reserved@a{\mdf@put@frame}%
@@ -3099,14 +3186,14 @@ Have fun!
 % Test if first splitted frame doesn't have the original with.
 %    \begin{macrocode}
     \ifdim\wd\mdf@splitbox@two=\wd\mdf@splitbox@one\relax
-    \else
+    \else%
       \mdf@PackageInfo{You first box width is to small^^M
                        mdframed fixed it\MessageBreak}%
       \setbox\mdf@splitbox@two=\vbox%
                    {%
                     \hrule \@height\z@ \@width\wd\mdf@splitbox@one\relax
                     \unvcopy\mdf@splitbox@two%
-                   }
+                   }%
     \fi%
 %    \end{macrocode}
 % Test if the first frame is empty
@@ -3153,16 +3240,47 @@ Have fun!
 %    \begin{macrocode}
   \setlength{\mdf@freevspace@length}{\vsize}%
 %    \end{macrocode}
+% \textcolor{red}{\bfseries repeating frame title must be improved}
+%    \begin{macrocode}
+    \ifbool{mdf@repeatframetitle}%
+      {%
+%    \end{macrocode}
+% Remember that the first title was printed
+%    \begin{macrocode}
+       \toggletrue{mdf@notfirstframetitle}%
+%    \end{macrocode}
+% remove the vertical skip added by option \Opt{splittopskip} to connect the
+% boxes
+%    \begin{macrocode}
+       \splitmaxdepth\z@ \splittopskip\z@%
+       \setbox\mdf@splitbox@one=\vbox{\break\unvbox\mdf@splitbox@one}%
+       \mdf@ignorevbadness%
+       \setbox0=\vsplit\mdf@splitbox@one to \z@\relax%
+       \setbox\mdf@splitbox@one=\vbox{\unvbox\mdf@splitbox@one}
+%    \end{macrocode}
+% combine frame title with the contents of mdframed
+%    \begin{macrocode}
+       \setbox\mdf@splitbox@one\vbox%
+          {%
+           \vbox to \mdf@frametitleaboveskip@length{}
+           \unvcopy\mdf@frametitlebox\relax%
+           \mdf@@frametitlerule\relax%
+           \unvbox\mdf@splitbox@one\relax%
+          }%
+       \setbox\mdf@splitbox@one=\vbox{\unvbox\mdf@splitbox@one}%
+      }{}%
+%    \end{macrocode}
 % \Cmd{dimen@} is equal to the natural height of the rest
 %    \begin{macrocode}
   \setlength{\dimen@}{\dimexpr\ht\mdf@splitbox@one+\dp\mdf@splitbox@one\relax}%
 %    \end{macrocode}
-% Assume no middle box -- add bottom length to the natural height of the contents
+% Assume no middle box -- add bottom length to the natural height of the 
+% contents
 %    \begin{macrocode}
   \mdf@dolist{\mdf@advancelength@freevspace@add}%
         {%used \dimen@
          innerbottommargin,innerlinewidth,middlelinewidth,outerlinewidth,%
-        }
+        }%
 %    \end{macrocode}
 % add top length of lines if \Opt{everyline} is set to \Opt{true}
 %    \begin{macrocode}
@@ -3170,9 +3288,9 @@ Have fun!
     {%
      \ifbool{mdf@topline}%
       {%
-       \advance\dimen@ by \mdf@innerlinewidth@length%
-       \advance\dimen@ by \mdf@middlelinewidth@length%
-       \advance\dimen@ by \mdf@outerlinewidth@length%
+       \advance\dimen@ by \mdf@innerlinewidth@length\relax%
+       \advance\dimen@ by \mdf@middlelinewidth@length\relax%
+       \advance\dimen@ by \mdf@outerlinewidth@length\relax%
       }{}%
     }{}%
 %    \end{macrocode}
@@ -3180,9 +3298,9 @@ Have fun!
 %    \begin{macrocode}
    \notbool{mdf@bottomline}%
      {%
-      \advance\dimen@ by -\mdf@innerlinewidth@length%
-      \advance\dimen@ by -\mdf@middlelinewidth@length%
-      \advance\dimen@ by -\mdf@outerlinewidth@length%
+      \advance\dimen@ by -\mdf@innerlinewidth@length\relax%
+      \advance\dimen@ by -\mdf@middlelinewidth@length\relax%
+      \advance\dimen@ by -\mdf@outerlinewidth@length\relax%
       \relax%
      }{}%
 %    \end{macrocode}
@@ -3200,15 +3318,15 @@ Have fun!
        {%
         \ifbool{mdf@topline}%
           {%
-           \advance\mdf@freevspace@length by -\mdf@innerlinewidth@length%
-           \advance\mdf@freevspace@length by -\mdf@middlelinewidth@length%
-           \advance\mdf@freevspace@length by -\mdf@outerlinewidth@length%
+           \advance\mdf@freevspace@length by -\mdf@innerlinewidth@length\relax%
+           \advance\mdf@freevspace@length by -\mdf@middlelinewidth@length\relax%
+           \advance\mdf@freevspace@length by -\mdf@outerlinewidth@length\relax%
           }{}%
         \ifbool{mdf@bottomline}%
           {%
-           \advance\mdf@freevspace@length by -\mdf@innerlinewidth@length%
-           \advance\mdf@freevspace@length by -\mdf@middlelinewidth@length%
-           \advance\mdf@freevspace@length by -\mdf@outerlinewidth@length%
+           \advance\mdf@freevspace@length by -\mdf@innerlinewidth@length\relax%
+           \advance\mdf@freevspace@length by -\mdf@middlelinewidth@length\relax%
+           \advance\mdf@freevspace@length by -\mdf@outerlinewidth@length\relax%
            \relax}{}%
        }{}%
 %    \end{macrocode}
@@ -3237,39 +3355,24 @@ Have fun!
         \dimen@i=\mdf@freevspace@length%\relax
         \@tempcnta=\z@\relax
         \loop
-        \ifdim\dimexpr\ht\mdf@splitbox@two+\dp\mdf@splitbox@two\relax>\mdf@freevspace@length        
-          \advance\dimen@i by -\p@\relax     
-          \advance\@tempcnta by \@ne\relax
+        \ifdim\dimexpr\ht\mdf@splitbox@two+\dp\mdf@splitbox@two\relax>%
+              \mdf@freevspace@length\relax        
+          \advance\dimen@i by -\p@\relax%     
+          \advance\@tempcnta by \@ne\relax%
           \ifnum\@tempcnta>100
-            \let\iterate\relax
+            \let\iterate\relax%
             \mdf@PackageWarning{correct box splittet fails^^M
                                 It seems you are using a non splittable
-                                contents\MessageBreak}
+                                contents\MessageBreak}%
           \fi
           \setbox\mdf@splitbox@one=\vbox{\unvcopy\mdf@splitbox@save}%
           \splitmaxdepth\z@ \splittopskip\mdf@splittopskip@length%
           \mdf@ignorevbadness%
-          \setbox\mdf@splitbox@two\vsplit\mdf@splitbox@one to \dimen@i
+          \setbox\mdf@splitbox@two\vsplit\mdf@splitbox@one to \dimen@i\relax%
           \setbox\mdf@splitbox@two\vbox{\unvbox\mdf@splitbox@two}%
           \setbox\mdf@splitbox@one\vbox{\unvbox\mdf@splitbox@one}%
         \repeat%
        }{}%
-%    \end{macrocode}
-% \textcolor{red}{\bfseries repeating frame title must be improved}
-%    \begin{macrocode}
-       \ifbool{mdf@repeatframetitle}{%
-                  \setbox\mdf@splitbox@one\vbox{%
-                       \vbox to \mdf@splittopskip@length{\hsize\z@}
-                       %\par\unskip\nointerlineskip
-                       \unvcopy\mdf@frametitlebox%
-                       \mdf@@frametitlerule%
-                       \vbox to%
-                          \dimexpr%
-                            -\mdf@splittopskip@length+\ht\strutbox+\dp\strutbox%
-                            +\mdf@innertopmargin@length%
-                          \relax{\hsize\z@}%
-                       \unvbox\mdf@splitbox@one}%
-               }{}%
 %    \end{macrocode}
 % Test whether last frame is empty
 %    \begin{macrocode}
@@ -3443,7 +3546,7 @@ Have fun!
 %% Either version 1.0 or, at your option, any later version.
 %%
 %%
-%%$Id: mdframed.dtx 389 2012-05-19 10:12:13Z marco $
+%%$Id: mdframed.dtx 393 2012-05-19 22:01:31Z marco $
 %
 %    \end{macrocode}
 %
@@ -3453,7 +3556,7 @@ Have fun!
 \def\mdframedOpackagename{md-frame-0}
 \def\mdf@frameOdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-0.mdf}%
-    [\mdf@frameOdate@svn$Id: mdframed.dtx 389 2012-05-19 10:12:13Z marco $%
+    [\mdf@frameOdate@svn$Id: mdframed.dtx 393 2012-05-19 22:01:31Z marco $%
      \mdversion: \mdframedOpackagename]
 %    \end{macrocode}
 % \end{macro}
@@ -3482,8 +3585,24 @@ Have fun!
            +\mdf@innerrightmargin@length\relax
           }{\mdf@frametitlerulewidth@length}%
        }\hrule \@height\z@ \@width\hsize}%
-  }{}%
-  \par\unskip\vskip\mdf@innertopmargin@length%
+  }{%
+   \vbox{\hsize\mdfframetitleboxwidth%
+     \par\unskip\vskip\mdf@frametitlebelowskip@length%
+     \rlap{\noindent\hspace*{-\mdf@innerleftmargin@length}%
+     \mdf@frametitlerulecolor@default%
+     \rule{\dimexpr\mdfframetitleboxwidth%
+           +\mdf@innerleftmargin@length
+           +\mdf@innerrightmargin@length\relax
+          }{\z@}%
+       }\hrule \@height\z@ \@width\hsize}%
+    }%
+  \iftoggle{mdf@notfirstframetitle}%
+    {%
+      \par\unskip\vskip\mdf@splittopskip@length%
+    }%
+    {%
+      \par\unskip\vskip\mdf@innertopmargin@length%
+    }%
 }%
   
 %    \end{macrocode}
@@ -3717,8 +3836,8 @@ Have fun!
    }%
 }%
 \def\mdf@frame@frametitlebackground@first{%
- \ifdimless{\mdfframetitleboxtotalheight}{\mdfboundingboxtotalheight}%
-  {%
+ \ifbool{mdf@repeatframetitle}%
+  {%repeating title = true
    \rlap%
     {%
      \mdf@frametitlebackground@default%
@@ -3730,26 +3849,42 @@ Have fun!
           {\mdfboundingboxtotalwidth}%
           {\mdfframetitleboxtotalheight}%
     }%
-   \global\mdfframetitleboxtotalheight=-\p@\relax%
   }%
-  {%
-   \mdf@PackageWarning{You got a page break inside the frame title\MessageBreak
-                       Current this isn't well supported}%
-   \rlap%
+  {%repeating title = false -- maybe splitted
+   \ifdimless{\mdfframetitleboxtotalheight}{\mdfboundingboxtotalheight}%
     {%
-     \mdf@frametitlebackground@default%
-     \rule[-\mdfboundingboxdepth]%
-          {\mdfboundingboxtotalwidth}%
-          {\mdfboundingboxtotalheight}%
+     \rlap%
+      {%
+       \mdf@frametitlebackground@default%
+       \rule[\dimexpr
+               -\mdfboundingboxdepth
+               +\mdfboundingboxtotalheight
+               -\mdfframetitleboxtotalheight
+             \relax]%
+            {\mdfboundingboxtotalwidth}%
+            {\mdfframetitleboxtotalheight}%
+      }%
+     \global\mdfframetitleboxtotalheight=-\p@\relax%
     }%
-   \global\mdfframetitleboxtotalheight=%
-        \dimexpr%
-          \mdfframetitleboxtotalheight
-          -\mdfboundingboxheight
-          +\mdf@frametitlebelowskip@length
-          +.5\baselineskip-1pt
-%         +\dp\strutbox
-        \relax%
+    {%
+     \mdf@PackageWarning{You got a page break inside the frame title\MessageBreak
+                         Current this isn't well supported}%
+     \rlap%
+      {%
+       \mdf@frametitlebackground@default%
+       \rule[-\mdfboundingboxdepth]%
+            {\mdfboundingboxtotalwidth}%
+            {\mdfboundingboxtotalheight}%
+      }%
+     \global\mdfframetitleboxtotalheight=%
+          \dimexpr%
+            \mdfframetitleboxtotalheight
+            -\mdfboundingboxheight
+            +\mdf@frametitlebelowskip@length
+            +.5\baselineskip-1pt
+%           +\dp\strutbox
+          \relax%
+    }%
   }%
 }%
 \def\mdf@frame@leftline@first{%
@@ -3923,9 +4058,8 @@ Have fun!
    }%
 }%
 \def\mdf@frame@frametitlebackground@second{%
- \ifdimless{\mdfframetitleboxtotalheight}{\z@}%
-  {}%
-  {%
+ \ifbool{mdf@repeatframetitle}%
+  {%repeating title = true
    \rlap%
     {%
      \mdf@frametitlebackground@default%
@@ -3936,6 +4070,23 @@ Have fun!
            \relax]%
           {\mdfboundingboxtotalwidth}%
           {\mdfframetitleboxtotalheight}%
+    }%
+  }%
+  {%repeating title = false -- maybe splitted
+   \ifdimless{\mdfframetitleboxtotalheight}{\z@}%
+    {}%
+    {%
+     \rlap%
+      {%
+       \mdf@frametitlebackground@default%
+       \rule[\dimexpr
+               -\mdfboundingboxdepth
+               +\mdfboundingboxtotalheight
+               -\mdfframetitleboxtotalheight
+             \relax]%
+            {\mdfboundingboxtotalwidth}%
+            {\mdfframetitleboxtotalheight}%
+      }%
     }%
   }%
 }%
@@ -4114,9 +4265,8 @@ Have fun!
    }%
 }%
 \def\mdf@frame@frametitlebackground@middle{%
- \ifdimless{\mdfframetitleboxtotalheight}{\z@}%
-  {}%
-  {%
+ \ifbool{mdf@repeatframetitle}%
+  {%repeating title = true
    \rlap%
     {%
      \mdf@frametitlebackground@default%
@@ -4128,8 +4278,25 @@ Have fun!
           {\mdfboundingboxtotalwidth}%
           {\mdfframetitleboxtotalheight}%
     }%
-   \global\mdfframetitleboxtotalheight=-\p@\relax%
   }%
+  {%repeating title = false -- maybe splitted
+   \ifdimless{\mdfframetitleboxtotalheight}{\z@}%
+    {}%
+    {%
+     \rlap%
+      {%
+       \mdf@frametitlebackground@default%
+       \rule[\dimexpr
+               -\mdfboundingboxdepth
+               +\mdfboundingboxtotalheight
+               -\mdfframetitleboxtotalheight
+             \relax]%
+            {\mdfboundingboxtotalwidth}%
+            {\mdfframetitleboxtotalheight}%
+      }%
+     \global\mdfframetitleboxtotalheight=-\p@\relax%
+    }%
+    }%
 }%
 \def\mdf@frame@rightline@middle{%
   \rlap%
@@ -4279,7 +4446,7 @@ Have fun!
 %% Either version 1.0 or, at your option, any later version.
 %%
 %%
-%%$Id: mdframed.dtx 389 2012-05-19 10:12:13Z marco $
+%%$Id: mdframed.dtx 393 2012-05-19 22:01:31Z marco $
 %
 %    \end{macrocode}
 % \changes{v1.1beta}{2011/12/16}{added lost semicolons}
@@ -4289,8 +4456,8 @@ Have fun!
 \def\mdframedIpackagename{md-frame-1}
 \def\mdf@frameIdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-1.mdf}%
-          [\mdf@frameIdate@svn$Id: mdframed.dtx 389 2012-05-19 10:12:13Z marco $ %
-           \mdversion: \mdframedIpackagename]
+      [\mdf@frameIdate@svn$Id: mdframed.dtx 393 2012-05-19 22:01:31Z marco $ %
+       \mdversion: \mdframedIpackagename]
 %
 %    \end{macrocode}
 % \end{macro}
@@ -4406,8 +4573,19 @@ Have fun!
                rectangle (\dimen@,\mdf@frametitlerulewidth@length);
      \endgroup}
    }%
-  }{}
-  \par\unskip\vskip\mdf@innertopmargin@length%
+  }{%
+   \vbox{\hsize0pt
+     \par\unskip\vskip\mdf@frametitlebelowskip@length
+     \noindent\rlap{}
+   }%
+  }%
+  \iftoggle{mdf@notfirstframetitle}%
+    {%
+      \par\unskip\vskip\mdf@splittopskip@length%
+    }%
+    {%
+      \par\unskip\vskip\mdf@innertopmargin@length%
+    }%
 }%
   
 %    \end{macrocode}
@@ -4583,26 +4761,53 @@ Have fun!
 %  Output of the first breakable contents.
 %    \begin{macrocode}
 \def\drawbrackgroundframetitle@first{%
- \ifdefempty{\mdf@frametitle}{}%
- {%
-  \ifdimgreater{\mdfboundingboxheight}{\mdfframetitleboxtotalheight}% 
   {%
-   \drawbrackgroundframetitle@@first
-   \pgfmathsetlength{\global\mdfframetitleboxtotalheight}{-\p@}%
-  }{\mdf@PackageWarning{You got a page break inside the frame title\MessageBreak
-                       Currently this isn't well supported}%
-    \drawbrackgroundframetitle@@first
-    \pgfmathsetlength{\global\mdfframetitleboxtotalheight}%
-                     {\mdfframetitleboxtotalheight
-                      -\mdfboundingboxheight
-                      -\mdf@innerlinewidth@length
-                      -0.5\mdf@middlelinewidth@length%
-                      +\mdf@frametitlebelowskip@length
-                      +\mdf@splitbottomskip@length
-                      +\mdf@splittopskip@length
-                      +\dp\strutbox%
-                     }%
-  }%
+   \ifbool{mdf@repeatframetitle}%
+     {%repeating title = true
+       \begin{scope}%background frame title
+        \ifbool{mdf@leftline}{
+         \pgfmathsetlengthmacro\mdf@Ox%
+             {\mdf@Ox+\mdf@innerlinewidth@length+0.5\mdf@middlelinewidth@length}
+         }{}%
+        \ifbool{mdf@rightline}{%
+         \pgfmathsetlengthmacro\mdf@Px%
+             {\mdf@Px-\mdf@innerlinewidth@length-0.5\mdf@middlelinewidth@length}
+         }{}%
+        \ifbool{mdf@topline}{%
+         \pgfmathsetlengthmacro\mdf@Py%
+            {\mdf@Py-\mdf@innerlinewidth@length-.5\mdf@middlelinewidth@length}
+         }{}%
+         \pgfmathsetlengthmacro\mdf@Fy
+             {\mdf@Py-\mdfframetitleboxtotalheight}
+      \coordinate(P)at(\mdf@Px,\mdf@Py);%
+         \path[mdfframetitlebackground]
+             (\mdf@Ox,\mdf@Fy) -- (\mdf@Ox,\mdf@Py)%
+             --(\mdf@Px,\mdf@Py) --(\mdf@Px,\mdf@Fy);
+       \end{scope}
+     }%
+     {%
+      \ifdefempty{\mdf@frametitle}{}%
+        {%
+         \ifdimgreater{\mdfboundingboxheight}{\mdfframetitleboxtotalheight}%
+         {%
+          \drawbrackgroundframetitle@@first
+          \pgfmathsetlength{\global\mdfframetitleboxtotalheight}{-\p@}%
+         }{\mdf@PackageWarning{You got a page break inside the frame title\MessageBreak
+                              Currently this isn't well supported}%
+           \drawbrackgroundframetitle@@first
+           \pgfmathsetlength{\global\mdfframetitleboxtotalheight}%
+                            {\mdfframetitleboxtotalheight
+                                    -\mdfboundingboxheight
+                             -\mdf@innerlinewidth@length
+                             -0.5\mdf@middlelinewidth@length%
+                             +\mdf@frametitlebelowskip@length
+                             +\mdf@splitbottomskip@length
+                             +\mdf@splittopskip@length
+                             +\dp\strutbox%
+                            }%
+          }%
+        }%
+     }%
  }%
 }%
 %
@@ -4698,17 +4903,12 @@ Have fun!
          \pgfmathsetlengthmacro\mdf@Oy%
             {\mdf@Oy+\mdf@outerlinewidth@length+0.5\mdf@middlelinewidth@length}%
         }{}%
-      \ifbool{mdf@topline}%
-        {%
-         \pgfmathsetlengthmacro\mdf@Py%
-            {\mdf@Py-\mdf@outerlinewidth@length-0.5\mdf@middlelinewidth@length}%
-        }{}%
      }{}%
 %%
       \coordinate(O)at(\mdf@Ox,\mdf@Oy);%
       \coordinate(P)at(\mdf@Px,\mdf@Py);%
       \ifbool{mdf@shadow}
-         {\path[mdfshadow] (O) -- (O|-P) to[mdfcorners] (P) -- (P|-O) -- (O);}{}%
+        {\path[mdfshadow] (O) -- (O|-P) to[mdfcorners] (P) -- (P|-O) -- (O);}{}%
      \begin{scope}[use as bounding box]
 %%%%%%%%%%%%
     \ifbool{mdf@everyline}{%
@@ -4776,12 +4976,13 @@ Have fun!
         {\mdf@tikzbox@otl{(O-|P)--(P)}{(O)rectangle(P)}}%
         {}%
       \mdf@test@b{\path[mdfbackground](O)rectangle(P);}{}%
-      \mdf@test@noline{\path[mdfbackground,mdfcorners](O)--(O|-P)--(P)--(P|-O);}%
+      \mdf@test@noline{\path[mdfbackground,mdfcorners]%
+                             (O)--(O|-P)--(P)--(P|-O);}%
                       {}%
     }
 %%%%%%%%%%%%
       \drawbrackgroundframetitle@first
-      \node[mdfbox]at(\mdf@Ax,\mdf@Ay){\box\mdf@splitbox@two};% 
+      \node[mdfbox]at(\mdf@Ax,\mdf@Ay){\box\mdf@splitbox@two};%
      \end{scope}
      %HIER KOMMT EIN WEITERES MAKRO
      \mdf@firstextra
@@ -4799,18 +5000,48 @@ Have fun!
 %  Output of the middle breakable contents.
 %    \begin{macrocode}
 \def\drawbrackgroundframetitle@middle{%
- \ifdefempty{\mdf@frametitle}{}{%
-  \ifdimless{\mdfframetitleboxtotalheight}{\z@} 
-  {}{%
-   \drawbrackgroundframetitle@@middle%
-   \pgfmathsetlength{\global\mdfframetitleboxtotalheight}{-\p@}%
-  }%
- }%
-}%
-%
-\def\drawbrackgroundframetitle@@middle{%
+ \ifdefempty{\mdf@frametitle}{}%
+  {%
+   \ifbool{mdf@repeatframetitle}%
+     {%repeating title = true
        \begin{scope}%background frame title
         \ifbool{mdf@leftline}{
+         \pgfmathsetlengthmacro\mdf@Ox%
+             {\mdf@Ox+\mdf@innerlinewidth@length+0.5\mdf@middlelinewidth@length}
+         }{}%
+        \ifbool{mdf@rightline}{%
+         \pgfmathsetlengthmacro\mdf@Px%
+             {\mdf@Px-\mdf@innerlinewidth@length-0.5\mdf@middlelinewidth@length}
+         }{}%
+        \ifbool{mdf@everyline}%
+          {%
+           \ifbool{mdf@topline}{%
+            \pgfmathsetlengthmacro\mdf@Py%
+               {\mdf@Py-\mdf@innerlinewidth@length%
+                       -.5\mdf@middlelinewidth@length}
+            }{}%
+          }{}%
+         \pgfmathsetlengthmacro\mdf@Fy
+             {\mdf@Py-\mdfframetitleboxtotalheight}
+      \coordinate(P)at(\mdf@Px,\mdf@Py);%
+         \path[mdfframetitlebackground]
+             (\mdf@Ox,\mdf@Fy) -- (\mdf@Ox,\mdf@Py)%
+             --(\mdf@Px,\mdf@Py) --(\mdf@Px,\mdf@Fy);
+       \end{scope}
+     }%
+     {%
+      \ifdimless{\mdfframetitleboxtotalheight}{\z@} 
+        {}%
+        {%
+         \drawbrackgroundframetitle@@middle%
+         \pgfmathsetlength{\global\mdfframetitleboxtotalheight}{-\p@}%
+        }%
+     }%
+   }%
+}%
+\def\drawbrackgroundframetitle@@middle{%
+       \begin{scope}%background frame title
+        \ifbool{mdf@leftline}{%
          \pgfmathsetlengthmacro\mdf@Ox%
              {\mdf@Ox+\mdf@innerlinewidth@length+0.5\mdf@middlelinewidth@length}
          }{}%
@@ -4987,12 +5218,43 @@ Have fun!
 %  Output of the last breakable contents.
 %    \begin{macrocode}
 \def\drawbrackgroundframetitle@second{%
- \ifdefempty{\mdf@frametitle}{}{%
-  \ifdimless{\mdfframetitleboxtotalheight}{\z@} 
-  {}{%
-   \drawbrackgroundframetitle@@second%
-  }%
- }%
+ \ifdefempty{\mdf@frametitle}{}%
+  {%
+   \ifbool{mdf@repeatframetitle}%
+     {%repeating title = true
+       \begin{scope}%background frame title
+        \ifbool{mdf@leftline}{
+         \pgfmathsetlengthmacro\mdf@Ox%
+             {\mdf@Ox+\mdf@innerlinewidth@length+0.5\mdf@middlelinewidth@length}
+         }{}%
+        \ifbool{mdf@rightline}{%
+         \pgfmathsetlengthmacro\mdf@Px%
+             {\mdf@Px-\mdf@innerlinewidth@length-0.5\mdf@middlelinewidth@length}
+         }{}%
+        \ifbool{mdf@everyline}%
+          {%
+           \ifbool{mdf@topline}{%
+            \pgfmathsetlengthmacro\mdf@Py%
+               {\mdf@Py-\mdf@innerlinewidth@length%
+                       -.5\mdf@middlelinewidth@length}
+            }{}%
+          }{}%
+         \pgfmathsetlengthmacro\mdf@Fy
+             {\mdf@Py-\mdfframetitleboxtotalheight}
+      \coordinate(P)at(\mdf@Px,\mdf@Py);%
+         \path[mdfframetitlebackground]
+             (\mdf@Ox,\mdf@Fy) -- (\mdf@Ox,\mdf@Py)%
+             --(\mdf@Px,\mdf@Py) --(\mdf@Px,\mdf@Fy);
+       \end{scope}      
+     }%
+     {%
+       \ifdimless{\mdfframetitleboxtotalheight}{\z@} 
+         {}%
+         {%
+          \drawbrackgroundframetitle@@second%
+         }%
+     }%
+   }%
 }%
 %
 \def\drawbrackgroundframetitle@@second{%
@@ -5158,7 +5420,8 @@ Have fun!
         {\mdf@tikzbox@otl{(O-|P)--(P)}{(O)rectangle(P)}}%
         {}%
       \mdf@test@t{\path[mdfbackground,mdfcorners](O|-P)--(O)--(O-|P)--(P);}{}%
-      \mdf@test@noline{\path[mdfbackground,mdfcorners](O|-P)--(O)--(O-|P)--(P);}%
+      \mdf@test@noline{\path[mdfbackground,mdfcorners]%
+                            (O|-P)--(O)--(O-|P)--(P);}%
                       {}%
     }%
       \drawbrackgroundframetitle@second
@@ -5198,7 +5461,7 @@ Have fun!
 %% Either version 1.0 or, at your option, any later version.
 %%
 %%
-%%$Id: mdframed.dtx 389 2012-05-19 10:12:13Z marco $
+%%$Id: mdframed.dtx 393 2012-05-19 22:01:31Z marco $
 %
 %    \end{macrocode}
 %
@@ -5208,8 +5471,8 @@ Have fun!
 \def\mdframedIIpackagename{md-frame-2}
 \def\mdf@frameIIdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-2.mdf}%
-         [\mdf@frameIIdate@svn$Id: mdframed.dtx 389 2012-05-19 10:12:13Z marco $ %
-          \mdversion: \mdframedIIpackagename]
+      [\mdf@frameIIdate@svn$Id: mdframed.dtx 393 2012-05-19 22:01:31Z marco $ %
+       \mdversion: \mdframedIIpackagename]
 %    \end{macrocode}
 % \end{macro}
 %
@@ -5370,10 +5633,21 @@ Have fun!
               (!\ptTpsL{innerrightmargin}
                 \ptTps{\mdfframetitleboxwidth} add \ptTpsL{frametitlerulewidth})
      \end{pspicture}
-     \endgroup}
+     \endgroup}%
    }%
-  }{}
-  \par\unskip\vskip\mdf@innertopmargin@length%
+  }{%
+   \vbox{\hsize0pt
+     \par\unskip\vskip\mdf@frametitlebelowskip@length
+     \noindent\rlap{}
+   }%
+  }%
+  \iftoggle{mdf@notfirstframetitle}%
+    {%
+      \par\unskip\vskip\mdf@splittopskip@length%
+    }%
+    {%
+      \par\unskip\vskip\mdf@innertopmargin@length%
+    }%
 }%
 %
 % \begin{macro}{mdf@putbox@single}
@@ -5467,14 +5741,18 @@ Have fun!
           \mdf@test@lrb{%
               \mdf@pstricksbox@tl{(mdf@O|mdf@P)(mdf@O)(mdf@P|mdf@O)(mdf@P)}}{}%
          %two lines combinded
-          \mdf@test@lb{\mdf@pstricksbox@tcl{(mdf@P|mdf@O)(mdf@P)(mdf@O|mdf@P)}%
-                                           {(mdf@O|mdf@P)(mdf@O)(mdf@P|mdf@O)}}{}
-          \mdf@test@rb{\mdf@pstricksbox@tcl{(mdf@P)(mdf@O|mdf@P)(mdf@O)}%
-                                           {(mdf@O)(mdf@P|mdf@O)(mdf@P)}}{}
-          \mdf@test@tr{\mdf@pstricksbox@tcl{(mdf@P|mdf@O)(mdf@O)(mdf@O|mdf@P)}%
-                                           {(mdf@O|mdf@P)(mdf@P)(mdf@P|mdf@O)}}{}
-          \mdf@test@lt{\mdf@pstricksbox@tcl{(mdf@O)(mdf@P|mdf@O)(mdf@P)}%
-                                           {(mdf@O)(mdf@O|mdf@P)(mdf@P)}}{}
+          \mdf@test@lb{\mdf@pstricksbox@tcl%
+                           {(mdf@P|mdf@O)(mdf@P)(mdf@O|mdf@P)}%
+                           {(mdf@O|mdf@P)(mdf@O)(mdf@P|mdf@O)}}{}
+          \mdf@test@rb{\mdf@pstricksbox@tcl%
+                           {(mdf@P)(mdf@O|mdf@P)(mdf@O)}%
+                           {(mdf@O)(mdf@P|mdf@O)(mdf@P)}}{}
+          \mdf@test@tr{\mdf@pstricksbox@tcl%
+                           {(mdf@P|mdf@O)(mdf@O)(mdf@O|mdf@P)}%
+                           {(mdf@O|mdf@P)(mdf@P)(mdf@P|mdf@O)}}{}
+          \mdf@test@lt{\mdf@pstricksbox@tcl%
+                           {(mdf@O)(mdf@P|mdf@O)(mdf@P)}%
+                           {(mdf@O)(mdf@O|mdf@P)(mdf@P)}}{}
          %two lines not combinded combinded
           \mdf@test@lr{\mdf@pstricksbox@tncl{(mdf@O|mdf@P)}{(mdf@P|mdf@O)}
                       }{}
@@ -5635,14 +5913,18 @@ Have fun!
           \mdf@test@lrb{%
               \mdf@pstricksbox@tl{(mdf@O|mdf@P)(mdf@O)(mdf@P|mdf@O)(mdf@P)}}{}%
          %two lines combinded
-          \mdf@test@lb{\mdf@pstricksbox@tcl{(mdf@P|mdf@O)(mdf@P)(mdf@O|mdf@P)}%
-                                           {(mdf@O|mdf@P)(mdf@O)(mdf@P|mdf@O)}}{}
-          \mdf@test@rb{\mdf@pstricksbox@tcl{(mdf@P)(mdf@O|mdf@P)(mdf@O)}%
-                                           {(mdf@O)(mdf@P|mdf@O)(mdf@P)}}{}
-          \mdf@test@tr{\mdf@pstricksbox@tcl{(mdf@P|mdf@O)(mdf@O)(mdf@O|mdf@P)}%
-                                           {(mdf@O|mdf@P)(mdf@P)(mdf@P|mdf@O)}}{}
-          \mdf@test@lt{\mdf@pstricksbox@tcl{(mdf@O)(mdf@P|mdf@O)(mdf@P)}%
-                                           {(mdf@O)(mdf@O|mdf@P)(mdf@P)}}{}
+          \mdf@test@lb{\mdf@pstricksbox@tcl%
+                           {(mdf@P|mdf@O)(mdf@P)(mdf@O|mdf@P)}%
+                           {(mdf@O|mdf@P)(mdf@O)(mdf@P|mdf@O)}}{}
+          \mdf@test@rb{\mdf@pstricksbox@tcl%
+                           {(mdf@P)(mdf@O|mdf@P)(mdf@O)}%
+                           {(mdf@O)(mdf@P|mdf@O)(mdf@P)}}{}
+          \mdf@test@tr{\mdf@pstricksbox@tcl%
+                           {(mdf@P|mdf@O)(mdf@O)(mdf@O|mdf@P)}%
+                           {(mdf@O|mdf@P)(mdf@P)(mdf@P|mdf@O)}}{}
+          \mdf@test@lt{\mdf@pstricksbox@tcl%
+                           {(mdf@O)(mdf@P|mdf@O)(mdf@P)}%
+                           {(mdf@O)(mdf@O|mdf@P)(mdf@P)}}{}
          %two lines not combinded combinded
           \mdf@test@lr{\mdf@pstricksbox@tncl{(mdf@O|mdf@P)}{(mdf@P|mdf@O)}
                       }{}
@@ -5698,22 +5980,33 @@ Have fun!
  \fi
 }%
 \def\drawbrackgroundframetitle@first{%
- \ifdefempty{\mdf@frametitle}{}{%
-   \ifdimgreater{\mdfboundingboxheight}{\mdfframetitleboxtotalheight}%
+ \ifdefempty{\mdf@frametitle}{}%
   {%
-   \drawbrackgroundframetitle@@first
-   \global\mdfframetitleboxtotalheight=-\p@%
-  }{\mdf@PackageWarning{You got a page break inside the frame title\MessageBreak
-                       Currently this isn't well supported}%
-    \drawbrackgroundframetitle@@first
-    \global\mdfframetitleboxtotalheight=\dimexpr\mdfframetitleboxtotalheight
-                    -\mdfboundingboxheight
-                    -\mdf@innerlinewidth@length-0.5\mdf@middlelinewidth@length%
-                    +\mdf@frametitlebelowskip@length+\mdf@splitbottomskip@length
-                    +\mdf@splittopskip@length
-                    +\dp\strutbox\relax%
+   \ifbool{mdf@repeatframetitle}%
+     {%repeating title = true
+      \drawbrackgroundframetitle@@@first
+     }%
+     {%
+      \ifdimgreater{\mdfboundingboxheight}{\mdfframetitleboxtotalheight}%
+        {%
+         \drawbrackgroundframetitle@@first
+         \global\mdfframetitleboxtotalheight=-\p@%
+        }{\mdf@PackageWarning{You got a page break inside the frame 
+                              title\MessageBreak
+                              Currently this isn't well supported}%
+          \drawbrackgroundframetitle@@first
+          \global\mdfframetitleboxtotalheight=\dimexpr
+                          \mdfframetitleboxtotalheight
+                          -\mdfboundingboxheight
+                          -\mdf@innerlinewidth@length
+                          -0.5\mdf@middlelinewidth@length%
+                          +\mdf@frametitlebelowskip@length
+                          +\mdf@splitbottomskip@length
+                          +\mdf@splittopskip@length
+                          +\dp\strutbox\relax%
+        }%
+     }%
   }%
- }%
 }%
 \def\drawbrackgroundframetitle@@first{%
  \begingroup%
@@ -5732,6 +6025,25 @@ Have fun!
  \ifdimgreater{\mdfboundingboxheight}{\mdfframetitleboxtotalheight}
     {\nodexn{(mdf@P)-(0,\mdfframetitleboxtotalheight)}{mdf@F}}%
     {\nodexn{(mdf@O)}{mdf@F}}%
+  \psline[style=mdfframetitlebackgroundstyle](mdf@O|mdf@F)(mdf@O|mdf@P)
+                                             (mdf@P)(mdf@P|mdf@F)%
+ \endgroup
+}
+\def\drawbrackgroundframetitle@@@first{%
+ \begingroup%
+  \ifbool{mdf@leftline}{%
+       \nodexn{(mdf@O)+(\mdf@innerlinewidth@length,0)
+               +0.5(\mdf@middlelinewidth@length,0)}{mdf@O}%
+       }{}%
+  \ifbool{mdf@rightline}{%
+       \nodexn{(mdf@P)-(\mdf@innerlinewidth@length,0)
+               -0.5(\mdf@middlelinewidth@length,0)}{mdf@P}%
+       }{}%
+  \ifbool{mdf@topline}{%
+       \nodexn{(mdf@P)-(0,\mdf@innerlinewidth@length)
+               -0.5(0,\mdf@middlelinewidth@length)}{mdf@P}%
+       }{}%
+  \nodexn{(mdf@P)-(0,\mdfframetitleboxtotalheight)}{mdf@F}%
   \psline[style=mdfframetitlebackgroundstyle](mdf@O|mdf@F)(mdf@O|mdf@P)
                                              (mdf@P)(mdf@P|mdf@F)%
  \endgroup
@@ -5835,12 +6147,15 @@ Have fun!
           \mdf@test@lrb{%
               \mdf@pstricksbox@tl{(mdf@O|mdf@P)(mdf@O)(mdf@P|mdf@O)(mdf@P)}}{}%
          %two lines combinded
-          \mdf@test@lb{\mdf@pstricksbox@tcl{(mdf@P|mdf@O)(mdf@P)(mdf@O|mdf@P)}%
-                                           {(mdf@O|mdf@P)(mdf@O)(mdf@P|mdf@O)}}{}
-          \mdf@test@rb{\mdf@pstricksbox@tcl{(mdf@P)(mdf@O|mdf@P)(mdf@O)}%
-                                           {(mdf@O)(mdf@P|mdf@O)(mdf@P)}}{}
-          \mdf@test@tr{\mdf@pstricksbox@tcl{(mdf@P|mdf@O)(mdf@O)(mdf@O|mdf@P)}%
-                                           {(mdf@O|mdf@P)(mdf@P)(mdf@P|mdf@O)}}{}
+          \mdf@test@lb{\mdf@pstricksbox@tcl%
+                           {(mdf@P|mdf@O)(mdf@P)(mdf@O|mdf@P)}%
+                           {(mdf@O|mdf@P)(mdf@O)(mdf@P|mdf@O)}}{}
+          \mdf@test@rb{\mdf@pstricksbox@tcl%
+                           {(mdf@P)(mdf@O|mdf@P)(mdf@O)}%
+                           {(mdf@O)(mdf@P|mdf@O)(mdf@P)}}{}
+          \mdf@test@tr{\mdf@pstricksbox@tcl%
+                           {(mdf@P|mdf@O)(mdf@O)(mdf@O|mdf@P)}%
+                           {(mdf@O|mdf@P)(mdf@P)(mdf@P|mdf@O)}}{}
           \mdf@test@lt{\mdf@pstricksbox@tcl{(mdf@O)(mdf@P|mdf@O)(mdf@P)}%
                                            {(mdf@O)(mdf@O|mdf@P)(mdf@P)}}{}
          %two lines not combinded combinded
@@ -5869,9 +6184,9 @@ Have fun!
        \drawbrackgroundframetitle@middle
       %output%
        \rput[bl](mdf@A){\box\mdf@splitbox@two}
-%       \psdot(mdf@A)\uput[90](mdf@A){mdf at A}
-%       \psdot(mdf@P)\uput[90](mdf@P){mdf at P}
-%       \psdot(mdf@O)\uput[90](mdf@O){mdf at O}
+       %\psdot(mdf@A)\uput[90](mdf@A){mdf at A}
+       %\psdot(mdf@P)\uput[90](mdf@P){mdf at P}
+       %\psdot(mdf@O)\uput[90](mdf@O){mdf at O}
       \mdf@middleextra
      \end{pspicture}%
     }%
@@ -5880,12 +6195,20 @@ Have fun!
  \fi
 }%
 \def\drawbrackgroundframetitle@middle{%
- \ifdefempty{\mdf@frametitle}{}{%
-   \ifdimless{\mdfframetitleboxtotalheight}{\z@}
-  {}{%
-    \drawbrackgroundframetitle@@middle
-    \global\mdfframetitleboxtotalheight=-\p@\relax%
-  }%
+ \ifdefempty{\mdf@frametitle}{}%
+  {%
+   \ifbool{mdf@repeatframetitle}%
+     {%repeating title = true
+      \drawbrackgroundframetitle@@@middle
+     }%
+     {%
+      \ifdimless{\mdfframetitleboxtotalheight}{\z@}
+        {}%
+        {%
+          \drawbrackgroundframetitle@@middle
+          \global\mdfframetitleboxtotalheight=-\p@\relax%
+        }%
+     }%
  }%
 }%
 \def\drawbrackgroundframetitle@@middle{%
@@ -5901,6 +6224,28 @@ Have fun!
   \nodexn{(mdf@P)-(0,\mdfframetitleboxtotalheight)}{mdf@F}%
   \psline[style=mdfframetitlebackgroundstyle,linearc=\z@]%
          (mdf@O|mdf@F)(mdf@O|mdf@P)(mdf@P)(mdf@P|mdf@F)%
+ \endgroup
+}
+\def\drawbrackgroundframetitle@@@middle{%
+ \begingroup%
+  \ifbool{mdf@leftline}{%
+       \nodexn{(mdf@O)+(\mdf@innerlinewidth@length,0)
+               +0.5(\mdf@middlelinewidth@length,0)}{mdf@O}%
+       }{}%
+  \ifbool{mdf@rightline}{%
+       \nodexn{(mdf@P)-(\mdf@innerlinewidth@length,0)
+               -0.5(\mdf@middlelinewidth@length,0)}{mdf@P}%
+       }{}%
+  \ifbool{mdf@everyline}%
+    {%
+     \ifbool{mdf@topline}{%
+        \nodexn{(mdf@P)-(0,\mdf@innerlinewidth@length)
+                -0.5(0,\mdf@middlelinewidth@length)}{mdf@P}%
+        }{}%
+     }{}%
+  \nodexn{(mdf@P)-(0,\mdfframetitleboxtotalheight)}{mdf@F}%
+  \psline[style=mdfframetitlebackgroundstyle](mdf@O|mdf@F)(mdf@O|mdf@P)
+                                             (mdf@P)(mdf@P|mdf@F)%
  \endgroup
 }
 %    \end{macrocode}
@@ -5984,7 +6329,8 @@ Have fun!
       %%
        \ifbool{mdf@shadow}
            {\pscustom[style=mdfshadow,linestyle=none]{%
-                \psline[linejoin=2,linecap=1,](mdf@O|mdf@P)(mdf@O)(mdf@P|mdf@O)(mdf@P)%
+                \psline[linejoin=2,linecap=1,](mdf@O|mdf@P)(mdf@O)%
+                                              (mdf@P|mdf@O)(mdf@P)%
                 \psline[linejoin=2,linecap=1,linearc=\z@](mdf@O|mdf@P)(mdf@P)
                 \closedshadow
                 }
@@ -6003,14 +6349,18 @@ Have fun!
           \mdf@test@lrb{%
               \mdf@pstricksbox@tl{(mdf@O|mdf@P)(mdf@O)(mdf@P|mdf@O)(mdf@P)}}{}%
          %two lines combinded
-          \mdf@test@lb{\mdf@pstricksbox@tcl{(mdf@P|mdf@O)(mdf@P)(mdf@O|mdf@P)}%
-                                           {(mdf@O|mdf@P)(mdf@O)(mdf@P|mdf@O)}}{}
-          \mdf@test@rb{\mdf@pstricksbox@tcl{(mdf@P)(mdf@O|mdf@P)(mdf@O)}%
-                                           {(mdf@O)(mdf@P|mdf@O)(mdf@P)}}{}
-          \mdf@test@tr{\mdf@pstricksbox@tcl{(mdf@P|mdf@O)(mdf@O)(mdf@O|mdf@P)}%
-                                           {(mdf@O|mdf@P)(mdf@P)(mdf@P|mdf@O)}}{}
-          \mdf@test@lt{\mdf@pstricksbox@tcl{(mdf@O)(mdf@P|mdf@O)(mdf@P)}%
-                                           {(mdf@O)(mdf@O|mdf@P)(mdf@P)}}{}
+          \mdf@test@lb{\mdf@pstricksbox@tcl%
+                           {(mdf@P|mdf@O)(mdf@P)(mdf@O|mdf@P)}%
+                           {(mdf@O|mdf@P)(mdf@O)(mdf@P|mdf@O)}}{}
+          \mdf@test@rb{\mdf@pstricksbox@tcl%
+                           {(mdf@P)(mdf@O|mdf@P)(mdf@O)}%
+                           {(mdf@O)(mdf@P|mdf@O)(mdf@P)}}{}
+          \mdf@test@tr{\mdf@pstricksbox@tcl%
+                           {(mdf@P|mdf@O)(mdf@O)(mdf@O|mdf@P)}%
+                           {(mdf@O|mdf@P)(mdf@P)(mdf@P|mdf@O)}}{}
+          \mdf@test@lt{\mdf@pstricksbox@tcl%
+                           {(mdf@O)(mdf@P|mdf@O)(mdf@P)}%
+                           {(mdf@O)(mdf@O|mdf@P)(mdf@P)}}{}
          %two lines not combinded combinded
           \mdf@test@lr{\mdf@pstricksbox@tncl{(mdf@O|mdf@P)}{(mdf@P|mdf@O)}
                       }{}
@@ -6030,10 +6380,10 @@ Have fun!
      %Two combinded
       \ifboolexpr{test {\mdf@test@ltb} or test {\mdf@test@lb}}%
         {\mdf@pstricksbox@tcl{(mdf@P|mdf@O)(mdf@P)(mdf@O|mdf@P)}%
-                                           {(mdf@O|mdf@P)(mdf@O)(mdf@P|mdf@O)}}{}
+                             {(mdf@O|mdf@P)(mdf@O)(mdf@P|mdf@O)}}{}
       \ifboolexpr{test {\mdf@test@trb} or test {\mdf@test@rb}}%
         {\mdf@pstricksbox@tcl{(mdf@P)(mdf@O|mdf@P)(mdf@O)}%
-                                           {(mdf@O)(mdf@P|mdf@O)(mdf@P)}}{}
+                             {(mdf@O)(mdf@P|mdf@O)(mdf@P)}}{}
      %Two not combinded
       \ifboolexpr{test {\mdf@test@ltr} or test {\mdf@test@lr}}%
         {\mdf@pstricksbox@tncl{(mdf@O|mdf@P)}{(mdf@P|mdf@O)}}{}%
@@ -6063,11 +6413,18 @@ Have fun!
  \fi
 }%
 \def\drawbrackgroundframetitle@second{%
- \ifdefempty{\mdf@frametitle}{}{%
-   \ifdimless{\mdfframetitleboxtotalheight}{\z@}
-  {}{%
-    \drawbrackgroundframetitle@@second
-  }%
+ \ifdefempty{\mdf@frametitle}{}%
+  {%
+   \ifbool{mdf@repeatframetitle}%
+     {%repeating title = true
+      \drawbrackgroundframetitle@@@second
+     }%
+     {%
+      \ifdimless{\mdfframetitleboxtotalheight}{\z@}
+        {}{%
+          \drawbrackgroundframetitle@@second
+        }%
+     }%
  }%
 }%
 \def\drawbrackgroundframetitle@@second{%
@@ -6083,6 +6440,28 @@ Have fun!
   \nodexn{(mdf@P)-(0,\mdfframetitleboxtotalheight)}{mdf@F}%
   \psline[style=mdfframetitlebackgroundstyle,linearc=\z@]%
          (mdf@O|mdf@F)(mdf@O|mdf@P)(mdf@P)(mdf@P|mdf@F)%
+ \endgroup
+}
+\def\drawbrackgroundframetitle@@@second{%
+ \begingroup%
+  \ifbool{mdf@leftline}{%
+       \nodexn{(mdf@O)+(\mdf@innerlinewidth@length,0)
+               +0.5(\mdf@middlelinewidth@length,0)}{mdf@O}%
+       }{}%
+  \ifbool{mdf@rightline}{%
+       \nodexn{(mdf@P)-(\mdf@innerlinewidth@length,0)
+               -0.5(\mdf@middlelinewidth@length,0)}{mdf@P}%
+       }{}%
+  \ifbool{mdf@everyline}%
+    {%
+     \ifbool{mdf@topline}{%
+        \nodexn{(mdf@P)-(0,\mdf@innerlinewidth@length)
+                -0.5(0,\mdf@middlelinewidth@length)}{mdf@P}%
+        }{}%
+     }{}%
+  \nodexn{(mdf@P)-(0,\mdfframetitleboxtotalheight)}{mdf@F}%
+  \psline[style=mdfframetitlebackgroundstyle](mdf@O|mdf@F)(mdf@O|mdf@P)
+                                             (mdf@P)(mdf@P|mdf@F)%
  \endgroup
 }
 %    \end{macrocode}
@@ -6108,10 +6487,10 @@ Have fun!
 %
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 389 2012-05-19 10:12:13Z marco $
+%%$Id: mdframed.dtx 393 2012-05-19 22:01:31Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt]{ltxmdf}
-\ltxmdfsetifoot  $Id: mdframed.dtx 389 2012-05-19 10:12:13Z marco $
+\ltxmdfsetifoot  $Id: mdframed.dtx 393 2012-05-19 22:01:31Z marco $
 
 \usepackage{showexpl}
 \lstset{style=lstltxmdf,explpreset={pos=b,rframe={}},}
@@ -6122,7 +6501,7 @@ Have fun!
 \title{The \Pack{mdframed} package}
 \subtitle{Examples for \Opt{framemethod=\Loadedframemethod}}
 \author{\href{mailto:marco.daniel@mada-nada.de}{Marco Daniel}}
-\date{\mdfdateID$Id: mdframed.dtx 389 2012-05-19 10:12:13Z marco $}
+\date{\mdfdateID$Id: mdframed.dtx 393 2012-05-19 22:01:31Z marco $}
 \version{\mdversion}
 \introduction{In this document I collect various examples for 
               \Opt{framemethod=\Loadedframemethod}.
@@ -6275,8 +6654,9 @@ function of the independent variables alone.
 \clearpage
 \Examplesec{hide only a part of a line}
 The example below is inspired by the following post on StackExchange 
-\href{http://tex.stackexchange.com/questions/24101/theorem-decorations-that-stay-with-theorem-environment}%
-{Theorem decorations that stay with theorem environment}
+\href{http://tex.stackexchange.com/questions/24101/theorem-decorations^^A
+      -that-stay-with-theorem-environment}%
+     {Theorem decorations that stay with theorem environment}
 \begin{LTXexample}
 \makeatletter
 \newlength{\interruptlength}
@@ -6331,10 +6711,10 @@ The example below is inspired by the following post on StackExchange
 %
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 389 2012-05-19 10:12:13Z marco $
+%%$Id: mdframed.dtx 393 2012-05-19 22:01:31Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt]{ltxmdf}
-\ltxmdfsetifoot  $Id: mdframed.dtx 389 2012-05-19 10:12:13Z marco $
+\ltxmdfsetifoot  $Id: mdframed.dtx 393 2012-05-19 22:01:31Z marco $
 
 
 \usepackage{showexpl}
@@ -6346,7 +6726,7 @@ The example below is inspired by the following post on StackExchange
 \title{The \Pack{mdframed} package}
 \subtitle{Examples for \Opt{framemethod=\Loadedframemethod}}
 \author{\href{mailto:marco.daniel@mada-nada.de}{Marco Daniel}}
-\date{\mdfdateID$Id: mdframed.dtx 389 2012-05-19 10:12:13Z marco $}
+\date{\mdfdateID$Id: mdframed.dtx 393 2012-05-19 22:01:31Z marco $}
 \version{\mdversion}
 \introduction{In this document I collect various examples for
               \Opt{framemethod=\Loadedframemethod}.
@@ -6423,7 +6803,9 @@ function of the independent variables alone.
 \begin{LTXexample}
 \begin{mdframed}[userdefinedwidth=6cm,align=center,
                  linecolor=blue,middlelinewidth=4pt,roundcorner=5pt]
-\includegraphics[width=\linewidth]{donald-duck}
+\IfFileExists{donald-duck.jpg}%
+ {\includegraphics[width=\linewidth]{donald-duck}}%
+ {\rule{\linewidth}{4cm}}%
 \end{mdframed}
 \end{LTXexample}
 
@@ -6540,10 +6922,10 @@ function of the independent variables alone.
 %
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 389 2012-05-19 10:12:13Z marco $
+%%$Id: mdframed.dtx 393 2012-05-19 22:01:31Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt]{ltxmdf}
-\ltxmdfsetifoot$Id: mdframed.dtx 389 2012-05-19 10:12:13Z marco $
+\ltxmdfsetifoot$Id: mdframed.dtx 393 2012-05-19 22:01:31Z marco $
 
 \lstDeleteShortInline{|}
 \newcommand\Loadedframemethod{PSTricks}
@@ -6555,7 +6937,7 @@ function of the independent variables alone.
 \title{The \Pack{mdframed} package}
 \subtitle{Examples for \Opt{framemethod=\Loadedframemethod}}
 \author{\href{mailto:marco.daniel@mada-nada.de}{Marco Daniel}}
-\date{\mdfdateID$Id: mdframed.dtx 389 2012-05-19 10:12:13Z marco $}
+\date{\mdfdateID$Id: mdframed.dtx 393 2012-05-19 22:01:31Z marco $}
 \version{\mdversion}
 \introduction{In this document I collect various examples for 
               \Opt{framemethod=\Loadedframemethod}.
@@ -6686,10 +7068,10 @@ function of the independent variables alone.
 
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 389 2012-05-19 10:12:13Z marco $
+%%$Id: mdframed.dtx 393 2012-05-19 22:01:31Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt,ltxlipsum]{ltxmdf}
-\ltxmdfsetifoot  $Id: mdframed.dtx 389 2012-05-19 10:12:13Z marco $
+\ltxmdfsetifoot  $Id: mdframed.dtx 393 2012-05-19 22:01:31Z marco $
 
 
 \usepackage{showexpl}
@@ -6702,7 +7084,7 @@ function of the independent variables alone.
 \title{The \Pack{mdframed} package}
 \subtitle{Examples for \Opt{framemethod=\Loadedframemethod}}
 \author{\href{mailto:marco.daniel@mada-nada.de}{Marco Daniel}}
-\date{\mdfdateID$Id: mdframed.dtx 389 2012-05-19 10:12:13Z marco $}
+\date{\mdfdateID$Id: mdframed.dtx 393 2012-05-19 22:01:31Z marco $}
 \version{\mdversion}
 \introduction{In this document I collect various examples for 
               \Opt{framemethod=\Loadedframemethod}.
@@ -6757,8 +7139,10 @@ function of the independent variables alone.
 \clearpage
 \Examplesec{Package listings}
 The example below is inspired by the following post on StackExchange 
-\href{http://tex.stackexchange.com/questions/27673/background-overflows-when-using-rounded-corners-for-listings-package-listings}%
-{Background overflows when using rounded corners for listings (package: `listings`)}
+\href{http://tex.stackexchange.com/questions/27673/background-overflows-^^A
+      when-using-rounded-corners-for-listings-package-listings}%
+     {Background overflows when using rounded corners for listings 
+      (package: `listings`)}
 
 Here the solution which can be decorate as usual.
 
