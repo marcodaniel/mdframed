@@ -1,6 +1,6 @@
 ################################################################
 ## Makefile for mdframed project folder
-## $Id: Makefile 321 2012-01-09 18:57:42Z marco $
+## $Id: Makefile 389 2012-05-19 10:12:13Z marco $
 ################################################################
 ## Definitions
 ################################################################
@@ -15,8 +15,13 @@ EXAMPLED  = mdframed-example-default
 EXAMPLET  = mdframed-example-tikz
 EXAMPLEP  = mdframed-example-pstricks
 EXAMPLESX = mdframed-example-texsx
+STYLE_I   = md-frame-0
+STYLE_II  = md-frame-1
+STYLE_III = md-frame-2
+STYLE_IV  = md-frame-3
 EXAMPLLIST=  $(EXAMPLED) $(EXAMPLET) $(EXAMPLEP) $(EXAMPLESX) 
 FILELIST  =  $(PACKAGE) $(EXAMPLED) $(EXAMPLET) $(EXAMPLEP) $(EXAMPLESX)
+STYLELIST = $(STYLE_I) $(STYLE_II) $(STYLE_III) $(STYLE_IV)
 AUXFILES  = aux dtxe glo glolog gls hd ins idx idxlog ilg ind log out ps thm tmp toc 
 ################################################################
 ## Colordefinition
@@ -36,6 +41,7 @@ help:
 	@echo -e "\tmake examples\t\t--\tcompiles all example files"
 	@echo -e "\tmake clean\t\t--\tremove all helpfiles created by mdframed"
 	@echo -e "\tmake changeversion\t--\tmaintaner tool to change the version"
+	@echo -e "\tmake localinstall\t--\tinstall the package in TEXMFHOME"
 	@echo -e "$(WARN_COLOR)End help$(NO_COLOR)"
 
 ################################################################
@@ -123,6 +129,28 @@ clean:
 
 all:	docsty examples clean
 
+################################################################
+## personal setting
+################################################################
+localinstall:	docsty examples makelocalinstall clean
+
+makelocalinstall:
+	echo  "" ;\
+	echo -e "\t$(ERROR_COLOR)Start local install$(NO_COLOR)" ;\
+	PATHTEXHOME=`kpsewhich --var-value=TEXMFHOME` ;\
+	echo -e "\t$(ERROR_COLOR)Creating folders if don't exist$(NO_COLOR)" ;\
+	mkdir -p $$PATHTEXHOME/doc/latex/$(PACKAGE)/ ;\
+	mkdir -p $$PATHTEXHOME/tex/latex/$(PACKAGE)/ ;\
+	for I in $(FILELIST) ;\
+	do \
+	  cp $$I.pdf $$PATHTEXHOME/doc/latex/$(PACKAGE)/  ;\
+	done ;\
+	for I in $(STYLELIST) ;\
+	do \
+	  cp $$I.mdf $$PATHTEXHOME/tex/latex/$(PACKAGE)/  ;\
+	done ;\
+	cp $(PACKAGE).sty $$PATHTEXHOME/tex/latex/$(PACKAGE)/  ;\
+	echo -e "\t$(OK_COLOR)Installation done$(NO_COLOR)" ;\
 
 ################################################################
 ## maintaner tool
