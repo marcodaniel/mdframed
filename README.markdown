@@ -7,7 +7,7 @@ environment mdframed which automatically deals with page breaks.
 ### License
 
 Author's name: Marco Daniel and Elke Schubert (supports tikz implementation)
-License type: lppl
+License type: [LPPL-LaTeX project public license](http://www.latex-project.org/lppl/)
 
 ### Revision history
 The revision history is printed in the documentation.
