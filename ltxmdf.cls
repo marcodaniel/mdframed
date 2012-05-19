@@ -73,7 +73,7 @@
 %set columns of index
 \c@IndexColumns = 2
 
-    \hypersetup{%
+\hypersetup{%
         breaklinks=true,
         pdftitle={Documenation of mdframed},%
         pdfauthor={Marco Daniel},%
@@ -81,7 +81,7 @@
         linkcolor=ltxmdfblue,
         urlcolor=cyan,
         bookmarksdepth=\ltxmdf@tocdepth,
-    }
+}
 
 
 %Kopf- und Fusszeilen
@@ -288,29 +288,7 @@
 
 \IndexPrologue{\section*{Index}%
                  \markboth{Index}{Index}The index only collect package relevant words.}
-%\DoNotIndex{\newrobustcmd,\DeclareBoolOption,\DeclareListParser,\deflength}
-%\DoNotIndex{\z@,\@ne,\@M}
-%\DoNotIndex{\define@key}
-%\DoNotIndex{\@nil,\dimen@,\dimen@i}
-%\DoNotIndex{\@mpfn,\@mpfootins,\@mpfootnotetext,\c@mpfootnote}
-%\DoNotIndex{\advance,\begingroup,\ifx,\fi,\else,\@plus,\@height,\@width,\dp,\ht,\wd}
-%\DoNotIndex{\closeout,\day,\def,\edef,\else,\empty,\endgroup,\csname,\endcsname,\endinput}
-%\DoNotIndex{\def,\long,\edef,\xdef,\gdef,\let,\global}
-%\DoNotIndex{\if,\ifnum,\ifdim,\ifcat,\ifmmode,\ifvmode,\ifhmode,%
-%            \iftrue,\iffalse,\ifvoid,\ifx,\ifeof,\ifcase,\else,\or,\fi}
-%\DoNotIndex{\box,\copy,\setbox,\unvbox,\unhbox,\hbox,%
-%            \vbox,\vtop,\vcenter}
-%\DoNotIndex{\@empty,\immediate,\write}
-%\DoNotIndex{\egroup,\bgroup,\expandafter,\begingroup,\endgroup}
-%\DoNotIndex{\divide,\advance,\multiply,\count,\dimen}
-%\DoNotIndex{\relax,\space,\string}
-%\DoNotIndex{\csname,\endcsname,\@spaces,\openin,\openout,%
-%            \closein,\closeout}
-%\DoNotIndex{\catcode,\endinput}
-%\DoNotIndex{\jobname,\message,\read,\the,\m@ne,\noexpand}
-%\DoNotIndex{\hsize,\vsize,\hskip,\vskip,\kern,\hfil,\hfill,\hss}
-%\DoNotIndex{\m@ne,\z@,\z@skip,\@ne,\tw@,\p@}
-%\DoNotIndex{\dp,\wd,\ht,\vss,\unskip}
+
 
 \def\macro#1{%
      \MakePrivateLetters
@@ -408,29 +386,12 @@
     \par\kern.5ex\noindent\ignorespaces
    }
 
-% % \newcommand*\mdoption[1]{\textsf{\color{ltxmdfblue}#1}}
-% % \newcommand*\mdname{\textsf{mdframed}\xspace}
-% % \newcommand*\mdpack[1]{\texttt{#1}\xspace}
-% % \newcommand*\mdsetting[1]{\textsf{#1}\xspace}
-% % \newcommand*\mdcommand[1]{\texttt{\textbackslash #1}\xspace}
-% % 
-% % \newcommand*\mdDescribeMacro[2][]{\par\kern\baselineskip%
-% %                                    \noindent\makebox[0pt][l]{\kern-2em%
-% %                                    \textsf{\bfseries\color{ltxmdfblue}#2}%
-% %                                    }\hfill\mbox{\mdDefault{#1}}\par\kern.5ex\noindent\ignorespaces}
-% % \newcommand*{\mdDefault}[1]{%
-% %  \ifx\relax#1\relax\else{\small\mdsetting{default=#1}}\fi}
-% % 
-% % \newcommand*\mdDescribeCmd[2][]{\par\kern\baselineskip%
-% %                                    \noindent\makebox[0pt][l]{\kern-2em%
-% %                                    \textsf{\bfseries\color{ltxmdfblue}\textbackslash #2}%
-% %                                    }{#1}\hfill\mbox{\mdDefault{#1}}\par\kern.5ex\noindent\ignorespaces}
-
 
 \newcommand\NOTE{\minisec{Note}}
 
 \newcommand\limitation[1][TikZ]{\newline{\small This works only with \Opt{framemethod=#1}.}}
 
+\endinput
 
 
 
