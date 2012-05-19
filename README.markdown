@@ -13,7 +13,19 @@ License type: [LPPL-LaTeX project public license](http://www.latex-project.org/l
 ### Revision history
 The revision history is printed in the documentation.
 
-### Installation
+### Documenation // Examples
+
+Examples are uploaded at GutHub:
+[DOWNLOAD-PAGE](https://github.com/marcodaniel/mdframed/downloads)
+
+### Installation -- 1
+I provide the file `mdframed.tar.gz` with the correct TDS structure. It can be 
+downloaded at GitHub. Unpack the file and move the folders to TEXMFHOME or 
+TEXMFLOCAL
+
+[DOWNLOAD-PAGE](https://github.com/marcodaniel/mdframed/downloads)
+
+### Installation -- 2
 The package provides
  * one `dtx` files,
  * one `Makefile` (compiling for Linux/Mac),
