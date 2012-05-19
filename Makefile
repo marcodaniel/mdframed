@@ -1,6 +1,6 @@
 ################################################################
 ## Makefile for mdframed project folder
-## $Id: Makefile 389 2012-05-19 10:12:13Z marco $
+## $Id: Makefile 392 2012-05-19 13:21:29Z marco $
 ################################################################
 ## Definitions
 ################################################################
@@ -50,7 +50,7 @@ help:
 %.pdf: %.tex
 	NAME=`basename $< .tex` ;\
 	echo -e "" ;\
-	echo -e "\t$(ERROR_COLOR)Typesetting $$NAME$(NO_COLOR)" ;\
+	echo -e "\t$(WARN_COLOR)Typesetting $$NAME$(NO_COLOR)" ;\
 	pdflatex -draftmode -interaction=nonstopmode $< > /dev/null ;\
 	if [ $$? = 0 ] ; then \
 	  echo -e "\t$(OK_COLOR)compilation in draftmode without erros$(NO_COLOR)" ;\
@@ -65,7 +65,7 @@ help:
 %.ps: %.tex
 	NAME=`basename $< .tex` ;\
 	echo -e "" ;\
-	echo -e "\t$(ERROR_COLOR)Typesetting $$NAME$(NO_COLOR)" ;\
+	echo -e "\t$(WARN_COLOR)Typesetting $$NAME$(NO_COLOR)" ;\
 	latex -draftmode -interaction=nonstopmode $< > /dev/null ;\
 	if [ $$? = 0 ] ; then \
 	  echo -e "\t$(OK_COLOR)compilation in draftmode without erros$(NO_COLOR)" ;\
@@ -127,7 +127,7 @@ examplesx:$(EXAMPLESX).pdf
 
 clean:  
 	echo  "" ;\
-	echo -e "\t$(ERROR_COLOR)Start removing help files$(NO_COLOR)" ;\
+	echo -e "\t$(WARN_COLOR)Start removing help files$(NO_COLOR)" ;\
 	for I in $(FILELIST) ;\
 	do \
 	  for J in $(AUXFILES) ;\
