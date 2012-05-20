@@ -1,6 +1,6 @@
 ################################################################
 ## Makefile for mdframed project folder
-## $Id: Makefile 392 2012-05-19 13:21:29Z marco $
+## $Id: Makefile 395 2012-05-20 08:35:30Z marco $
 ################################################################
 ## Definitions
 ################################################################
@@ -160,6 +160,7 @@ makelocalinstall:
 	  cp $$I.mdf $$PATHTEXHOME/tex/latex/$(PACKAGE)/  ;\
 	done ;\
 	cp $(PACKAGE).sty $$PATHTEXHOME/tex/latex/$(PACKAGE)/  ;\
+	cp ltxmdf.cls $$PATHTEXHOME/tex/latex/$(PACKAGE)/  ;\
 	echo -e "\t$(OK_COLOR)Installation done$(NO_COLOR)" ;\
 
 ################################################################
