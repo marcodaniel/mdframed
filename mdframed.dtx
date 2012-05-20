@@ -228,7 +228,7 @@ Have fun!
 %</driver>
 % \fi
 %
-% \CheckSum{6211}
+% \CheckSum{6238}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -3161,7 +3161,10 @@ Have fun!
                                 It seems you are using a non splittable
                                 contents\MessageBreak}
           \fi
-          \setbox\mdf@splitbox@one=\vbox{\unvcopy\mdf@splitbox@save}%
+%          \immediate\typeout{****mdframed \string\@tempcnta=\the\@tempcnta****}
+%          \immediate \typeout{****mdframed \string\dimen@i=\the\dimen@i****}
+          \mdf@ignorevbadness%          
+          \setbox\mdf@splitbox@one=\vbox{\break\unvcopy\mdf@splitbox@save}%
           \splitmaxdepth\z@ \splittopskip\mdf@splittopskip@length%
           \mdf@ignorevbadness%
           \setbox\mdf@splitbox@two\vsplit\mdf@splitbox@one to \dimen@i\relax%
@@ -3360,13 +3363,15 @@ Have fun!
               \mdf@freevspace@length\relax        
           \advance\dimen@i by -\p@\relax%     
           \advance\@tempcnta by \@ne\relax%
+%          \immediate\typeout{****mdframed \string\@tempcnta=\the\@tempcnta****}
+%          \immediate \typeout{****mdframed \string\dimen@i=\the\dimen@i****}
           \ifnum\@tempcnta>100
             \let\iterate\relax%
             \mdf@PackageWarning{correct box splittet fails^^M
                                 It seems you are using a non splittable
                                 contents\MessageBreak}%
           \fi
-          \setbox\mdf@splitbox@one=\vbox{\unvcopy\mdf@splitbox@save}%
+          \setbox\mdf@splitbox@one=\vbox{\break\unvcopy\mdf@splitbox@save}%
           \splitmaxdepth\z@ \splittopskip\mdf@splittopskip@length%
           \mdf@ignorevbadness%
           \setbox\mdf@splitbox@two\vsplit\mdf@splitbox@one to \dimen@i\relax%
