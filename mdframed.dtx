@@ -213,11 +213,11 @@ Have fun!
 \fi
 %</internal>
 %<*driver>
-%%$Id: mdframed.dtx 394 2012-05-19 22:07:58Z marco $
+%%$Id: mdframed.dtx 396 2012-05-20 09:53:26Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,11pt,]{ltxmdf}
 \usepackage[framemethod=TikZ]{mdframed}
-\ltxmdfsetifoot$Id: mdframed.dtx 394 2012-05-19 22:07:58Z marco $
+\ltxmdfsetifoot$Id: mdframed.dtx 396 2012-05-20 09:53:26Z marco $
 
 \EnableCrossrefs
 \CodelineIndex
@@ -228,7 +228,7 @@ Have fun!
 %</driver>
 % \fi
 %
-% CheckSum{6211}
+% \CheckSum{6211}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -258,7 +258,7 @@ Have fun!
 % \author{\href{mailto:marco.daniel@mada-nada.de}{Marco Daniel}%
 %        \href{mailto:marco.daniel@mada-nada.de}{Elke Schubert}}}
 % \version{\mdversion}
-% \date{\mdfdateID$Id: mdframed.dtx 394 2012-05-19 22:07:58Z marco $}
+% \date{\mdfdateID$Id: mdframed.dtx 396 2012-05-20 09:53:26Z marco $}
 % \introduction{The standard methods for framing text (\Cmd{fbox}
 %              or \Cmd{fcolorbox}) require you to handle page breaks
 %              by hand, meaning that you have to split the \Cmd{fbox}
@@ -757,9 +757,9 @@ Have fun!
 %  \label{fig:laengen}
 % \end{center}
 % 
-% \ExplOpt[0pt]{skipabove} 
+% \ExplOpt[0\,pt]{skipabove} 
 %      Sets an additional skip above the frame.
-% \ExplOpt[0pt]{skipbelow} 
+% \ExplOpt[0\,pt]{skipbelow} 
 %      Sets an additional skip below the frame.
 % \ExplOpt[]{margin} 
 %      This option is not longer supported. Use \Opt{leftmargin}
@@ -769,14 +769,14 @@ Have fun!
 %      effect only in singleside-mode or, in twoside-mode, if the option 
 %      \Opt{usetwoside=false} has been given.  
 %      See also options \Opt{outermargin} and \Opt{innermargin}.
-% \ExplOpt[0pt]{rightmargin} 
+% \ExplOpt[0\,pt]{rightmargin} 
 %      Sets the length of the right margin of the environment. This option has 
 %      an effect only in singleside-mode or, in twoside-mode, if the option 
 %      \Opt{usetwoside=false} has been given.  
 %      See also options \Opt{outermargin} and \Opt{innermargin}.
-% \ExplOpt[10pt]{innerleftmargin} 
+% \ExplOpt[10\,pt]{innerleftmargin} 
 %      Sets the length of the inner left margin of the environment.
-% \ExplOpt[10pt]{innerrightmargin} 
+% \ExplOpt[10\,pt]{innerrightmargin} 
 %      Sets the length of the inner right margin of the environment.
 % \ExplOpt[.4\textbackslash baselineskip]{innertopmargin} 
 %      Sets the length of the inner top margin of the environment.
@@ -787,33 +787,33 @@ Have fun!
 %             \eqref{fig:laengen}.}
 % 
 % \mbox{}
-% \ExplOpt[0pt]{userdefinedwidth} 
+% \ExplOpt[0\,pt]{userdefinedwidth} 
 %      Sets the width of the whole \Pack{mdframed} environment. 
 %      The width represent the width including the line width and
 %      the inner margins. The outer margins will be ignored.
-% \ExplOpt{outermargin} 
+% \ExplOpt[0\,pt]{outermargin} 
 %      Sets the length of the outer margin. This option is only available
 %      in \texttt{twoside}-mode.
-% \ExplOpt{innermargin} 
+% \ExplOpt[0\,pt]{innermargin} 
 %      Sets the length of the inner margin. This option is only available
 %      in \texttt{twoside}-mode.
-% \ExplOpt[0pt]{splittopskip} 
+% \ExplOpt[0\,pt]{splittopskip} 
 %      Sets the length of the skip above the split part of the environment.
-% \ExplOpt[0pt]{splitbottomskip} 
+% \ExplOpt[0\,pt]{splitbottomskip} 
 %      Sets the length of the skip below the split part of the environment.
-% \ExplOpt[0.4pt]{linewidth} 
+% \ExplOpt[0.4\,pt]{linewidth} 
 %      Sets the width of the line around the environment.
 %      \limitation[\Opt{default}]
-% \ExplOpt[0pt]{roundcorner} 
+% \ExplOpt[0\,pt]{roundcorner} 
 %      Sets the size of the radius of the corners of the frames.
 %      \limitation[TikZ or PSTricks]
-% \ExplOpt[0pt]{innerlinewidth} 
+% \ExplOpt[0\,pt]{innerlinewidth} 
 %      Sets the width of the inner line around the environment.
 %      \limitation[TikZ or PSTricks]
-% \ExplOpt[0pt]{outerlinewidth} 
+% \ExplOpt[0\,pt]{outerlinewidth} 
 %      Sets the width of the outer line around the environment.
 %      \limitation[TikZ or PSTricks]
-% \ExplOpt[linewidth]{middlelinewidth} 
+% \ExplOpt[0.4\,pt]{middlelinewidth} 
 %      Sets the width of the middle line around the environment.
 %      \limitation[TikZ or PSTricks]
 % 
@@ -855,7 +855,7 @@ Have fun!
 %      If you set the twoside option you can work with \Opt{outermargin}.
 %      This option disable this and you work with 
 %      \Opt{leftmargin} and \Opt{rightmargin}.
-% \ExplOpt[0pt]{needspace} 
+% \ExplOpt[0\,pt]{needspace} 
 %      Sometimes it is useful to set a minimum height before a 
 %      frame should be splitted. For such cases you can use \Opt{needspace}.
 %      The option requires a length which sets the minimum height before
@@ -900,13 +900,13 @@ Have fun!
 %      Specify the color of the shadow.
 %      
 % 
-% \ExplOpt[none]{pstrickssetting}
+% \ExplOpt[\{\}]{pstrickssetting}
 %      With this key you can pass several options to \Cmd{psset}. 
 %      For example if you want all lines dashed you will have to set 
 %      \Opt{pstrickssetting=\{linestyle=dashed\}}. It is very important
 %      to put the options of \Opt{pstrickssetting} in brackets.
 %      \limitation[PSTricks]
-% \ExplOpt[none]{pstricksappsetting}
+% \ExplOpt[\{\}]{pstricksappsetting}
 %      \Pack{mdframed} works with defined style for the different elements. By 
 %      using \Cmd{addtopsstyle} in combination with this option 
 %      you can expand the definition. The predefined styles are
@@ -920,12 +920,12 @@ Have fun!
 %       \textbf{Before you change one please have a look at the file
 %               \texttt{md-frame-2.mdf} to see the settings.}
 %        \limitation[PSTricks]
-% \ExplOpt[none]{tikzsetting}
+% \ExplOpt[\{\}]{tikzsetting}
 %      With this key you can pass several options to \Cmd{tikzset}. 
 %      Some examples are listed in the next section. It is very important
 %      to put the options of \Opt{tikzsetting} in brackets.
 %      \limitation
-% \ExplOpt[none]{apptotikzsetting}
+% \ExplOpt[\{\}]{apptotikzsetting}
 %      With this key you can add several options to \Opt{tikzsetting}.
 %      This key based on the idea of manipulation of predefined keys
 %      of \Pack{mdframed}. The package \Pack{mdframed} defines via 
@@ -985,12 +985,12 @@ Have fun!
 % \ExplOpt[false]{frametitlerule} 
 %      Set this key to \Opt{true} to get a line between the frame title
 %      and the text.
-% \ExplOpt[.2pt]{frametitlerulewidth}
+% \ExplOpt[.2\,pt]{frametitlerulewidth}
 %      Sets the width of the line between the text and the title of 
 %      \Env{mdframed}.
-% \ExplOpt[5pt]{frametitleaboveskip}
+% \ExplOpt[5\,pt]{frametitleaboveskip}
 %      Sets the skip of the frame title to the margin above of \Env{mdframed}.
-% \ExplOpt[5pt]{frametitlebelowskip}
+% \ExplOpt[5\,pt]{frametitlebelowskip}
 %      Sets the skip of the frame title to the rule of the frame title.
 % \ExplOpt[white]{frametitlebackgroundcolor}
 %      Sets the color of the background of the frametitle
@@ -1013,35 +1013,35 @@ Have fun!
 %      \coordinate (innersep) at (3.2,2.25);
 %      \coordinate (outersep) at (3.2,2);
 %      %Center box
-%      \node[fill=green!10,draw=black,,
-%            minimum width=9cm,minimum height=3cm,]%
+%      \node[fill=green!10,draw=red!70!black,very thick,fill opacity=.2,
+%            text opacity=1,minimum width=9cm,minimum height=3cm,]%
 %            (CenterNode) {Contents of the box};
 %      %frametitle box
-%      \node[fill=yellow!70,draw=black,
-%            minimum width=9cm,minimum height=3cm,anchor=south]%
+%      \node[fill=yellow!70,draw=red!70!black,very thick,fill opacity=.2,
+%            text opacity=1,minimum width=9cm,minimum height=3cm,anchor=south]%
 %            at (CenterNode.north) (frametitle) {frame title};
 % % frametitlerule
 %     \draw[line width=3pt,blue!60!black] (frametitle.south west) -- (frametitle.south east)
 %               node[pos=1,anchor=west,text width=4cm] 
-%                  {\Opt{\large frametitlerulewidth}\\\Opt{\large frametitlerule}};
+%                  {\Opt{frametitlerulewidth}\\\Opt{frametitlerule=true}};
 % % frametitlebelowskip
 %     \draw[very thick,blue!60!black,latex-latex,shorten >=0.2cm] (frametitle.south) -- (frametitle.center)
 %               node[pos=0.5,anchor=west] 
-%                  {\Opt{\large frametitlebelowskip}};
+%                  {\Opt{ frametitlebelowskip}};
 % % frametitleaboveskip
 %     \draw[very thick,blue!60!black,latex-latex,shorten >=0.2cm] (frametitle.north) -- (frametitle.center)
 %               node[pos=0.5,anchor=west] 
-%                  {\Opt{\large frametitleaboveskip}};
+%                  {\Opt{ frametitleaboveskip}};
 % % innertopmargin
 %     \draw[very thick,blue!60!black,latex-latex,shorten >=0.2cm] (CenterNode.north) -- (CenterNode.center)
 %               node[pos=0.5,anchor=west] 
-%                  {\Opt{\large innertopmargin}};
+%                  {\Opt{ innertopmargin}};
 % % splittopskip
 %     \draw[very thick,blue!60!black,latex-latex,shorten >=0.2cm] (CenterNode.north) -- (CenterNode.center)
 %               node[pos=0.5,anchor=east] 
-%                  {\Opt{\large splittopskip}};
+%                  {\Opt{splittopskip}};
 % % global frame
-%  \draw[thick] (-5.5,-2.1) rectangle (9.9,5.5);
+%  \draw[thick] (-5.5,-2.1) rectangle (9.4,5.5);
 % \end{tikzpicture}
 %  \captionof{figure}{Behavior of the lengths if \Opt{frametitle} is used}
 %  \label{fig:frametitlelaengen}
@@ -1391,6 +1391,7 @@ Have fun!
 % I hope I forgot nobody. 
 % \clearpage
 % \appendix
+%
 % \section{More information}
 % %\addtocontents{toc}{\protect\setcounter{tocdepth}{-4}}
 % In the following section I want to present how to create
@@ -1778,10 +1779,10 @@ Have fun!
 %
 % \subsection{The Explanation of mdframed.sty}
 %
-% %$Id: mdframed.dtx 394 2012-05-19 22:07:58Z marco $
-% %$Rev: 394 $
+% %$Id: mdframed.dtx 396 2012-05-20 09:53:26Z marco $
+% %$Rev: 396 $
 % %$Author: marco $
-% %$Date: 2012-05-20 00:07:58 +0200 (So, 20 Mai 2012) $
+% %$Date: 2012-05-20 11:53:26 +0200 (So, 20 Mai 2012) $
 % \begin{macro}{mdversion,mdframedpackagename,mdf@maindate@svn}
 % Set package information
 %    \begin{macrocode}
@@ -1794,7 +1795,7 @@ Have fun!
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{mdframed}%
-     [\mdf@maindate@svn$Id: mdframed.dtx 394 2012-05-19 22:07:58Z marco $%
+     [\mdf@maindate@svn$Id: mdframed.dtx 396 2012-05-20 09:53:26Z marco $%
       \mdversion: \mdframedpackagename]
 %    \end{macrocode}
 %
@@ -3546,7 +3547,7 @@ Have fun!
 %% Either version 1.0 or, at your option, any later version.
 %%
 %%
-%%$Id: mdframed.dtx 394 2012-05-19 22:07:58Z marco $
+%%$Id: mdframed.dtx 396 2012-05-20 09:53:26Z marco $
 %
 %    \end{macrocode}
 %
@@ -3556,7 +3557,7 @@ Have fun!
 \def\mdframedOpackagename{md-frame-0}
 \def\mdf@frameOdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-0.mdf}%
-    [\mdf@frameOdate@svn$Id: mdframed.dtx 394 2012-05-19 22:07:58Z marco $%
+    [\mdf@frameOdate@svn$Id: mdframed.dtx 396 2012-05-20 09:53:26Z marco $%
      \mdversion: \mdframedOpackagename]
 %    \end{macrocode}
 % \end{macro}
@@ -4446,7 +4447,7 @@ Have fun!
 %% Either version 1.0 or, at your option, any later version.
 %%
 %%
-%%$Id: mdframed.dtx 394 2012-05-19 22:07:58Z marco $
+%%$Id: mdframed.dtx 396 2012-05-20 09:53:26Z marco $
 %
 %    \end{macrocode}
 % \changes{v1.1beta}{2011/12/16}{added lost semicolons}
@@ -4456,7 +4457,7 @@ Have fun!
 \def\mdframedIpackagename{md-frame-1}
 \def\mdf@frameIdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-1.mdf}%
-      [\mdf@frameIdate@svn$Id: mdframed.dtx 394 2012-05-19 22:07:58Z marco $ %
+      [\mdf@frameIdate@svn$Id: mdframed.dtx 396 2012-05-20 09:53:26Z marco $ %
        \mdversion: \mdframedIpackagename]
 %
 %    \end{macrocode}
@@ -5461,7 +5462,7 @@ Have fun!
 %% Either version 1.0 or, at your option, any later version.
 %%
 %%
-%%$Id: mdframed.dtx 394 2012-05-19 22:07:58Z marco $
+%%$Id: mdframed.dtx 396 2012-05-20 09:53:26Z marco $
 %
 %    \end{macrocode}
 %
@@ -5471,7 +5472,7 @@ Have fun!
 \def\mdframedIIpackagename{md-frame-2}
 \def\mdf@frameIIdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-2.mdf}%
-      [\mdf@frameIIdate@svn$Id: mdframed.dtx 394 2012-05-19 22:07:58Z marco $ %
+      [\mdf@frameIIdate@svn$Id: mdframed.dtx 396 2012-05-20 09:53:26Z marco $ %
        \mdversion: \mdframedIIpackagename]
 %    \end{macrocode}
 % \end{macro}
@@ -6487,10 +6488,10 @@ Have fun!
 %
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 394 2012-05-19 22:07:58Z marco $
+%%$Id: mdframed.dtx 396 2012-05-20 09:53:26Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt]{ltxmdf}
-\ltxmdfsetifoot  $Id: mdframed.dtx 394 2012-05-19 22:07:58Z marco $
+\ltxmdfsetifoot  $Id: mdframed.dtx 396 2012-05-20 09:53:26Z marco $
 
 \usepackage{showexpl}
 \lstset{style=lstltxmdf,explpreset={pos=b,rframe={}},}
@@ -6501,7 +6502,7 @@ Have fun!
 \title{The \Pack{mdframed} package}
 \subtitle{Examples for \Opt{framemethod=\Loadedframemethod}}
 \author{\href{mailto:marco.daniel@mada-nada.de}{Marco Daniel}}
-\date{\mdfdateID$Id: mdframed.dtx 394 2012-05-19 22:07:58Z marco $}
+\date{\mdfdateID$Id: mdframed.dtx 396 2012-05-20 09:53:26Z marco $}
 \version{\mdversion}
 \introduction{In this document I collect various examples for 
               \Opt{framemethod=\Loadedframemethod}.
@@ -6711,10 +6712,10 @@ The example below is inspired by the following post on StackExchange
 %
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 394 2012-05-19 22:07:58Z marco $
+%%$Id: mdframed.dtx 396 2012-05-20 09:53:26Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt]{ltxmdf}
-\ltxmdfsetifoot  $Id: mdframed.dtx 394 2012-05-19 22:07:58Z marco $
+\ltxmdfsetifoot  $Id: mdframed.dtx 396 2012-05-20 09:53:26Z marco $
 
 
 \usepackage{showexpl}
@@ -6726,7 +6727,7 @@ The example below is inspired by the following post on StackExchange
 \title{The \Pack{mdframed} package}
 \subtitle{Examples for \Opt{framemethod=\Loadedframemethod}}
 \author{\href{mailto:marco.daniel@mada-nada.de}{Marco Daniel}}
-\date{\mdfdateID$Id: mdframed.dtx 394 2012-05-19 22:07:58Z marco $}
+\date{\mdfdateID$Id: mdframed.dtx 396 2012-05-20 09:53:26Z marco $}
 \version{\mdversion}
 \introduction{In this document I collect various examples for
               \Opt{framemethod=\Loadedframemethod}.
@@ -6922,10 +6923,10 @@ function of the independent variables alone.
 %
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 394 2012-05-19 22:07:58Z marco $
+%%$Id: mdframed.dtx 396 2012-05-20 09:53:26Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt]{ltxmdf}
-\ltxmdfsetifoot$Id: mdframed.dtx 394 2012-05-19 22:07:58Z marco $
+\ltxmdfsetifoot$Id: mdframed.dtx 396 2012-05-20 09:53:26Z marco $
 
 \lstDeleteShortInline{|}
 \newcommand\Loadedframemethod{PSTricks}
@@ -6937,7 +6938,7 @@ function of the independent variables alone.
 \title{The \Pack{mdframed} package}
 \subtitle{Examples for \Opt{framemethod=\Loadedframemethod}}
 \author{\href{mailto:marco.daniel@mada-nada.de}{Marco Daniel}}
-\date{\mdfdateID$Id: mdframed.dtx 394 2012-05-19 22:07:58Z marco $}
+\date{\mdfdateID$Id: mdframed.dtx 396 2012-05-20 09:53:26Z marco $}
 \version{\mdversion}
 \introduction{In this document I collect various examples for 
               \Opt{framemethod=\Loadedframemethod}.
@@ -7068,10 +7069,10 @@ function of the independent variables alone.
 
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 394 2012-05-19 22:07:58Z marco $
+%%$Id: mdframed.dtx 396 2012-05-20 09:53:26Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt,ltxlipsum]{ltxmdf}
-\ltxmdfsetifoot  $Id: mdframed.dtx 394 2012-05-19 22:07:58Z marco $
+\ltxmdfsetifoot  $Id: mdframed.dtx 396 2012-05-20 09:53:26Z marco $
 
 
 \usepackage{showexpl}
@@ -7084,7 +7085,7 @@ function of the independent variables alone.
 \title{The \Pack{mdframed} package}
 \subtitle{Examples for \Opt{framemethod=\Loadedframemethod}}
 \author{\href{mailto:marco.daniel@mada-nada.de}{Marco Daniel}}
-\date{\mdfdateID$Id: mdframed.dtx 394 2012-05-19 22:07:58Z marco $}
+\date{\mdfdateID$Id: mdframed.dtx 396 2012-05-20 09:53:26Z marco $}
 \version{\mdversion}
 \introduction{In this document I collect various examples for 
               \Opt{framemethod=\Loadedframemethod}.
