@@ -9,16 +9,16 @@
 %% Either version 1.0 or, at your option, any later version.
 
 
-%%$Id: ltxmdf.cls 379 2012-04-16 10:52:55Z marco $
-%%$Rev: 379 $
+%%$Id: ltxmdf.cls 396 2012-05-20 09:53:26Z marco $
+%%$Rev: 396 $
 %%$Author: marco $
-%%$Date: 2012-04-16 12:52:55 +0200 (Mo, 16 Apr 2012) $
+%%$Date: 2012-05-20 11:53:26 +0200 (So, 20 Mai 2012) $
 
 
 %% Allgemeine Angaben
 \def\ltxmdf@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{ltxmdf}[\ltxmdf@svn$Id: ltxmdf.cls 379 2012-04-16 10:52:55Z marco $ ltxmdf]
+\ProvidesPackage{ltxmdf}[\ltxmdf@svn$Id: ltxmdf.cls 396 2012-05-20 09:53:26Z marco $ ltxmdf]
 \DeclareOption{tocdepthsec}{\def\ltxmdf@tocdepth{1}}
 \DeclareOption{tocdepthsub}{\def\ltxmdf@tocdepth{2}}
 \newif\ifltxmdf@lipsum
@@ -68,7 +68,6 @@
 \RequirePackage{array,booktabs}
 \RequirePackage{xcolor,tikz}
 \RequirePackage{graphicx}
-
 \RequirePackage[numbered]{hypdoc}
 %set columns of index
 \c@IndexColumns = 2
@@ -98,7 +97,7 @@
   \ifoot{#2 #3 #4-#5-#6 #7 #8}
 }
 
-\ltxmdfsetifoot$Id: ltxmdf.cls 379 2012-04-16 10:52:55Z marco $
+\ltxmdfsetifoot$Id: ltxmdf.cls 396 2012-05-20 09:53:26Z marco $
 
 
 
@@ -178,7 +177,7 @@
 \def\version#1{\def\@version{#1}}
 \def\date#1{\def\@date{#1}}
 \def\@@date$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6}
-\date{\@@date$Id: ltxmdf.cls 379 2012-04-16 10:52:55Z marco $}
+\date{\@@date$Id: ltxmdf.cls 396 2012-05-20 09:53:26Z marco $}
 \let\mdfdateID\@@date
 
 
@@ -378,10 +377,10 @@
                             }%
     \hfill\mbox{%
         \ifx\relax#1\relax
-           \space
+           \space%
         \else
-         {\small default=\ttfamily #1}
-        \fi
+         {\small default=\ttfamily #1}%
+        \fi%
       }%
     \par\kern.5ex\noindent\ignorespaces
    }
