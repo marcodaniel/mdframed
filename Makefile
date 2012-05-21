@@ -190,6 +190,7 @@ usectanify:
 	        $(EXAMPLESX).pdf=doc/latex/mdframed/ \
 	        Makefile=source/latex/mdframed/ \
 	        mdframedmake.bat=source/latex/mdframed/ \
+	        mdframedmake.bat=source/latex/mdframed/ \
 	        md-frame-0.mdf=tex/latex/mdframed/ \
 	        md-frame-1.mdf=tex/latex/mdframed/ \
 	        md-frame-2.mdf=tex/latex/mdframed/ \
