@@ -1,6 +1,6 @@
 ################################################################
 ## Makefile for mdframed project folder
-## $Id: Makefile 395 2012-05-20 08:35:30Z marco $
+## $Id: Makefile 399 2012-05-22 17:19:48Z marco $
 ################################################################
 ## Definitions
 ################################################################
@@ -189,7 +189,6 @@ usectanify:
 	        $(EXAMPLESX).tex=doc/latex/mdframed/ \
 	        $(EXAMPLESX).pdf=doc/latex/mdframed/ \
 	        Makefile=source/latex/mdframed/ \
-	        mdframedmake.bat=source/latex/mdframed/ \
 	        mdframedmake.bat=source/latex/mdframed/ \
 	        md-frame-0.mdf=tex/latex/mdframed/ \
 	        md-frame-1.mdf=tex/latex/mdframed/ \
