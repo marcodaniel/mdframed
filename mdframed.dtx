@@ -213,11 +213,13 @@ Have fun!
 \fi
 %</internal>
 %<*driver>
-%%$Id: mdframed.dtx 401 2012-05-22 17:57:45Z marco $
+%%$Id: mdframed.dtx 411 2012-05-26 14:37:29Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,11pt,]{ltxmdf}
 \usepackage[framemethod=TikZ]{mdframed}
-\ltxmdfsetifoot$Id: mdframed.dtx 401 2012-05-22 17:57:45Z marco $
+
+\GetIdInfo$Id: mdframed.dtx 411 2012-05-26 14:37:29Z marco $
+          {documentation of mdframed}
 
 \EnableCrossrefs
 \CodelineIndex
@@ -228,7 +230,6 @@ Have fun!
 %</driver>
 % \fi
 %
-% 
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -248,17 +249,16 @@ Have fun!
 %
 % \GetFileInfo{mdframed.sty}
 %
-% \changes{v1.0a}{2011/11/26}{Created dtx and fixes bugs}
-% \changes{v1.1beta}{2012/01/02}{Renamed some commands so that every command 
-%                                have the same prefix \protect\Cmd{mdf@}}
 %
 % \title{The \Pack{mdframed} package
-%       \footnote{Extending the package \texttt{framed.sty}}
+%       \footnote{Extending the package \texttt{framed.sty}}}
 % \subtitle{auto-split frame environment}
 % \author{\href{mailto:marco.daniel@mada-nada.de}{Marco Daniel}%
-%        \href{mailto:marco.daniel@mada-nada.de}{Elke Schubert}}}
+%        \href{mailto:marco.daniel@mada-nada.de}{Elke Schubert}}
 % \version{\mdversion}
-% \date{\mdfdateID$Id: mdframed.dtx 401 2012-05-22 17:57:45Z marco $}
+% \GetIdInfo$Id: mdframed.dtx 411 2012-05-26 14:37:29Z marco $
+%           {documentation of mdframed}
+% \date{\ExplFileDate}
 % \introduction{The standard methods for framing text (\Cmd{fbox}
 %              or \Cmd{fcolorbox}) require you to handle page breaks
 %              by hand, meaning that you have to split the \Cmd{fbox}
@@ -1759,7 +1759,7 @@ Have fun!
 % \item expanded documentation
 % \end{itemize*}
 %
-% \ltxmdfappendix
+% \clearpage
 %
 % \section{Implementation}\label{implementation}
 %
@@ -1779,10 +1779,10 @@ Have fun!
 %
 % \subsection{The Explanation of mdframed.sty}
 %
-% %$Id: mdframed.dtx 401 2012-05-22 17:57:45Z marco $
-% %$Rev: 401 $
+% %$Id: mdframed.dtx 411 2012-05-26 14:37:29Z marco $
+% %$Rev: 411 $
 % %$Author: marco $
-% %$Date: 2012-05-22 19:57:45 +0200 (Di, 22 Mai 2012) $
+% %$Date: 2012-05-26 16:37:29 +0200 (Sa, 26 Mai 2012) $
 % \begin{macro}{mdversion,mdframedpackagename,mdf@maindate@svn}
 % Set package information
 %    \begin{macrocode}
@@ -1795,7 +1795,7 @@ Have fun!
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{mdframed}%
-     [\mdf@maindate@svn$Id: mdframed.dtx 401 2012-05-22 17:57:45Z marco $%
+     [\mdf@maindate@svn$Id: mdframed.dtx 411 2012-05-26 14:37:29Z marco $%
       \mdversion: \mdframedpackagename]
 %    \end{macrocode}
 %
@@ -3552,7 +3552,7 @@ Have fun!
 %% Either version 1.0 or, at your option, any later version.
 %%
 %%
-%%$Id: mdframed.dtx 401 2012-05-22 17:57:45Z marco $
+%%$Id: mdframed.dtx 411 2012-05-26 14:37:29Z marco $
 %
 %    \end{macrocode}
 %
@@ -3562,7 +3562,7 @@ Have fun!
 \def\mdframedOpackagename{md-frame-0}
 \def\mdf@frameOdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-0.mdf}%
-    [\mdf@frameOdate@svn$Id: mdframed.dtx 401 2012-05-22 17:57:45Z marco $%
+    [\mdf@frameOdate@svn$Id: mdframed.dtx 411 2012-05-26 14:37:29Z marco $%
      \mdversion: \mdframedOpackagename]
 %    \end{macrocode}
 % \end{macro}
@@ -4452,7 +4452,7 @@ Have fun!
 %% Either version 1.0 or, at your option, any later version.
 %%
 %%
-%%$Id: mdframed.dtx 401 2012-05-22 17:57:45Z marco $
+%%$Id: mdframed.dtx 411 2012-05-26 14:37:29Z marco $
 %
 %    \end{macrocode}
 % \changes{v1.1beta}{2011/12/16}{added lost semicolons}
@@ -4462,7 +4462,7 @@ Have fun!
 \def\mdframedIpackagename{md-frame-1}
 \def\mdf@frameIdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-1.mdf}%
-      [\mdf@frameIdate@svn$Id: mdframed.dtx 401 2012-05-22 17:57:45Z marco $ %
+      [\mdf@frameIdate@svn$Id: mdframed.dtx 411 2012-05-26 14:37:29Z marco $ %
        \mdversion: \mdframedIpackagename]
 %
 %    \end{macrocode}
@@ -5467,7 +5467,7 @@ Have fun!
 %% Either version 1.0 or, at your option, any later version.
 %%
 %%
-%%$Id: mdframed.dtx 401 2012-05-22 17:57:45Z marco $
+%%$Id: mdframed.dtx 411 2012-05-26 14:37:29Z marco $
 %
 %    \end{macrocode}
 %
@@ -5477,7 +5477,7 @@ Have fun!
 \def\mdframedIIpackagename{md-frame-2}
 \def\mdf@frameIIdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-2.mdf}%
-      [\mdf@frameIIdate@svn$Id: mdframed.dtx 401 2012-05-22 17:57:45Z marco $ %
+      [\mdf@frameIIdate@svn$Id: mdframed.dtx 411 2012-05-26 14:37:29Z marco $ %
        \mdversion: \mdframedIIpackagename]
 %    \end{macrocode}
 % \end{macro}
@@ -6493,10 +6493,11 @@ Have fun!
 %
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 401 2012-05-22 17:57:45Z marco $
+%%$Id: mdframed.dtx 411 2012-05-26 14:37:29Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt]{ltxmdf}
-\ltxmdfsetifoot  $Id: mdframed.dtx 401 2012-05-22 17:57:45Z marco $
+\GetIdInfo$Id: mdframed.dtx 411 2012-05-26 14:37:29Z marco $
+          {documentation of mdframed}
 
 \usepackage{showexpl}
 \lstset{style=lstltxmdf,explpreset={pos=b,rframe={}},}
@@ -6507,7 +6508,7 @@ Have fun!
 \title{The \Pack{mdframed} package}
 \subtitle{Examples for \Opt{framemethod=\Loadedframemethod}}
 \author{\href{mailto:marco.daniel@mada-nada.de}{Marco Daniel}}
-\date{\mdfdateID$Id: mdframed.dtx 401 2012-05-22 17:57:45Z marco $}
+\date{\ExplFileDate}
 \version{\mdversion}
 \introduction{In this document I collect various examples for 
               \Opt{framemethod=\Loadedframemethod}.
@@ -6719,10 +6720,11 @@ The example below is inspired by the following post on StackExchange
 %
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 401 2012-05-22 17:57:45Z marco $
+%%$Id: mdframed.dtx 411 2012-05-26 14:37:29Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt]{ltxmdf}
-\ltxmdfsetifoot  $Id: mdframed.dtx 401 2012-05-22 17:57:45Z marco $
+\GetIdInfo$Id: mdframed.dtx 411 2012-05-26 14:37:29Z marco $
+          {documentation of mdframed}
 
 
 \usepackage{showexpl}
@@ -6734,7 +6736,7 @@ The example below is inspired by the following post on StackExchange
 \title{The \Pack{mdframed} package}
 \subtitle{Examples for \Opt{framemethod=\Loadedframemethod}}
 \author{\href{mailto:marco.daniel@mada-nada.de}{Marco Daniel}}
-\date{\mdfdateID$Id: mdframed.dtx 401 2012-05-22 17:57:45Z marco $}
+\date{\ExplFileDate}
 \version{\mdversion}
 \introduction{In this document I collect various examples for
               \Opt{framemethod=\Loadedframemethod}.
@@ -6930,10 +6932,11 @@ function of the independent variables alone.
 %
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 401 2012-05-22 17:57:45Z marco $
+%%$Id: mdframed.dtx 411 2012-05-26 14:37:29Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt]{ltxmdf}
-\ltxmdfsetifoot$Id: mdframed.dtx 401 2012-05-22 17:57:45Z marco $
+\GetIdInfo$Id: mdframed.dtx 411 2012-05-26 14:37:29Z marco $
+          {documentation of mdframed}
 
 \lstDeleteShortInline{|}
 \newcommand\Loadedframemethod{PSTricks}
@@ -6945,7 +6948,7 @@ function of the independent variables alone.
 \title{The \Pack{mdframed} package}
 \subtitle{Examples for \Opt{framemethod=\Loadedframemethod}}
 \author{\href{mailto:marco.daniel@mada-nada.de}{Marco Daniel}}
-\date{\mdfdateID$Id: mdframed.dtx 401 2012-05-22 17:57:45Z marco $}
+\date{\ExplFileDate}
 \version{\mdversion}
 \introduction{In this document I collect various examples for 
               \Opt{framemethod=\Loadedframemethod}.
@@ -7076,10 +7079,11 @@ function of the independent variables alone.
 
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 401 2012-05-22 17:57:45Z marco $
+%%$Id: mdframed.dtx 411 2012-05-26 14:37:29Z marco $
 \setcounter{errorcontextlines}{999}
-\documentclass[parskip=false,english,11pt,ltxlipsum]{ltxmdf}
-\ltxmdfsetifoot  $Id: mdframed.dtx 401 2012-05-22 17:57:45Z marco $
+\documentclass[parskip=false,english,11pt,lipsum=true]{ltxmdf}
+\GetIdInfo$Id: mdframed.dtx 411 2012-05-26 14:37:29Z marco $
+          {documentation of mdframed}
 
 
 \usepackage{showexpl}
@@ -7092,7 +7096,7 @@ function of the independent variables alone.
 \title{The \Pack{mdframed} package}
 \subtitle{Examples for \Opt{framemethod=\Loadedframemethod}}
 \author{\href{mailto:marco.daniel@mada-nada.de}{Marco Daniel}}
-\date{\mdfdateID$Id: mdframed.dtx 401 2012-05-22 17:57:45Z marco $}
+\date{\ExplFileDate}
 \version{\mdversion}
 \introduction{In this document I collect various examples for 
               \Opt{framemethod=\Loadedframemethod}.
