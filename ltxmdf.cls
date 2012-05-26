@@ -2,56 +2,63 @@
 %% This documentclass isn't maintanened or efficient for writing
 %%
 %%
-%% Copyright (c) 2010 Marco Daniel
+%% Copyright (c) 2012 Marco Daniel
 %%
 %% This package may be distributed under the terms of the LaTeX Project
 %% Public License, as described in lppl.txt in the base LaTeX distribution.
 %% Either version 1.0 or, at your option, any later version.
 
 
-%%$Id: ltxmdf.cls 396 2012-05-20 09:53:26Z marco $
-%%$Rev: 396 $
+%%$Id: ltxmdf.cls 409 2012-05-26 14:24:03Z marco $
+%%$Rev: 409 $
 %%$Author: marco $
-%%$Date: 2012-05-20 11:53:26 +0200 (So, 20 Mai 2012) $
+%%$Date: 2012-05-26 16:24:03 +0200 (Sa, 26 Mai 2012) $
 
+\RequirePackage{expl3}
+\GetIdInfo$Id: ltxmdf.cls 409 2012-05-26 14:24:03Z marco $
+          {documentation class for Marco Daniel}
 
-%% Allgemeine Angaben
-\def\ltxmdf@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
-\NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{ltxmdf}[\ltxmdf@svn$Id: ltxmdf.cls 396 2012-05-20 09:53:26Z marco $ ltxmdf]
-\DeclareOption{tocdepthsec}{\def\ltxmdf@tocdepth{1}}
-\DeclareOption{tocdepthsub}{\def\ltxmdf@tocdepth{2}}
-\newif\ifltxmdf@lipsum
-\ltxmdf@lipsumfalse
-\DeclareOption{ltxlipsum}{\ltxmdf@lipsumtrue}
-\newif\ifltxmdf@showframe
-\ltxmdf@showframefalse
-\DeclareOption{ltxshowframe}{\ltxmdf@showframetrue}
-\DeclareOption*{\PassOptionsToClass{\CurrentOption}{scrartcl}}
-\DeclareOption*{\PassOptionsToClass{\CurrentOption}{scrartcl}}
-\ExecuteOptions{tocdepthsub}
-\ProcessOptions\relax
-\LoadClass{scrartcl}
+\ProvidesExplClass{\ExplFileName}
+     {\ExplFileDate}{\ExplFileVersion}{\ExplFileDescription}
+
+\RequirePackage{l3keys2e,xparse}
+\keys_define:nn { ltxmdf }
+  {
+    tocdepth  .int_set:N  = \l_ltxmdf_tocdepth_int   ,
+    lipsum    .bool_set:N = \l_ltxmdf_lipsum_bool    ,
+    showframe .bool_set:N = \l_ltxmdf_showframe_bool ,
+  }
+\keys_set:nn { ltxmdf }
+ {
+  tocdepth = 2
+ }
+
+\ProcessKeysOptions { ltxmdf }
+
+\LoadClassWithOptions { scrartcl }
+
+\RequirePackage{ifxetex,ifluatex}
 \RequirePackage{selinput}
 \SelectInputMappings{
-  adieresis={ä},
-  germandbls={ß},
-  Euro={€},
+  adieresis  = {ä} ,
+  germandbls = {ß} ,
+  Euro       = {€} ,
 }
 
 \RequirePackage{etoolbox}
-%Required Packages no font / no language
-%\RequirePackage[nofancy,draft,notoday]{svninfo}
 \RequirePackage[left=2.5cm,right=2.5cm,top=3cm,bottom=3cm]{geometry}
-\ifltxmdf@showframe
-  \RequirePackage{showframe}
-\fi
-\ifltxmdf@lipsum
-  \RequirePackage{lipsum}
-\fi
-\RequirePackage[T1]{fontenc}
-\RequirePackage[scaled=0.82]{beramono}
-\RequirePackage{microtype}
+
+\pdftex_if_engine:TF
+ {
+  \RequirePackage[T1]{fontenc}
+  \RequirePackage[scaled=0.82]{beramono}
+  \RequirePackage{microtype}
+ }
+ {
+  \RequirePackage{fontspec}
+  \setmonofont[Mapping=tex-text]{Courier New}
+ }
+
 \RequirePackage[french=quotes]{csquotes}
 \RequirePackage{xspace}
 \begingroup
@@ -79,30 +86,36 @@
         colorlinks=true,%
         linkcolor=ltxmdfblue,
         urlcolor=cyan,
-        bookmarksdepth=\ltxmdf@tocdepth,
+        bookmarksdepth= \int_use:N \l_ltxmdf_tocdepth_int,
 }
-
+\bool_if:NT \l_ltxmdf_showframe_bool
+ {
+  \RequirePackage{showframe}
+ }
+\bool_if:NT \l_ltxmdf_lipsum_bool
+ {
+  \RequirePackage{lipsum}
+  \RequirePackage{kantlipsum}
+ }
 
 %Kopf- und Fusszeilen
 \clearscrheadfoot
 \pagestyle{scrheadings}
 \automark[subsection]{section}
 \renewcommand{\sectionmark}[1]{\markboth{\sectionmarkformat #1}{}}%
-\renewcommand{\subsectionmark}[1]{\markright{\subsectionmarkformat #1}} %nur Titel ohne Nr.
+\renewcommand{\subsectionmark}[1]{\markright{\subsectionmarkformat #1}}
 \ihead{\rightmark}
 \ohead{\leftmark}
 \ofoot{\pagemark}
-
-\def\ltxmdfsetifoot$#1: #2 #3 #4-#5-#6 #7 #8${%
-  \ifoot{#2 #3 #4-#5-#6 #7 #8}
-}
-
-\ltxmdfsetifoot$Id: ltxmdf.cls 396 2012-05-20 09:53:26Z marco $
+\ifoot{{\ExplFileDate}\qquad SVN~version:~{\ExplFileVersion}\qquad{\ExplFileName}}
 
 
 
 %Tikz und Farbe
+%tikzlibrary needs special handling
+\ExplSyntaxOff
 \usetikzlibrary{calc,backgrounds,arrows,matrix}
+\ExplSyntaxOn
 \colorlet{ltxmdfblue}{blue!30!black}
 
 \lstset{keywordstyle=\bfseries}
@@ -125,33 +138,36 @@
      breakatwhitespace=true,
      morekeywords=[2]{@length},
      keywordstyle=[2]\color{red!50!black}\bfseries,
-     morekeywords={outerlinewidth,leftmargin,rightmargin,backgroundcolor,%
-                   outerlinecolor,innertopmargin,splittopskip,skipbelow,%
-                   skipabove,ntheorem,theorem,lemma,mdframed,linecolor,%
-                   frametitle,infobox,innerlinewidth,roundcorner,leftline,topline,%
-                   splitbottomskip,middlelinewidth,middlelinecolor,tikzsetting,%
-                   rightline,bottomline,innerrightmargin,style,linewidth,lem,section,%
-                   definedstyle,mdfapptodefinestyle,needspace,mdf@globalstyle@cnt,framemethod,%
-                   ExampleText,titregris,draw,gray,thick,fill,white,shading,exersicetitle,%
-                   exersicebackground,color,green,black,exercise,exercisepoints,%
-                   text,rectangle,rounded,corners,right,minimum,height,xshift,at,%
-                   exercisestyle,settings,frametitlefont,innerbottommargin,innerleftmargin,%
-                   frametitlerule,frametitlebelowskip,frametitleaboveskip,%
-                   frametitlebackgroundcolor,frametitlerulecolor,picins,figure,hidealllines,
-                   fontcolor,firstextra,secondextra,middleextra,singleextra,overlay,node},%
-     moretexcs={newmdtheoremenv,newmdenv,theoremstyle,mdfsetup,@length,%
-                   md@putbox@single,@tempboxa,mdf@,%
-                   mdf@linewidth,mdf@leftmargin@length,interruptlength,%
-                   setlength,newrobustcmd,overlaplines,appto,md@frame@leftline@singe,
-                   color,md@frame@leftline@single,mdf@innerbottommargin@length,%
-                   mdf@middlelinewidth@length,mdfboundingboxheight,%
-                   md@frame@rightline@single,mdfboundingboxwidth,%
-                   mdf@innerrightmargin@length,mdfdefinestyle,mdfapptodefinestyle,defcounter,%
-                   tikzstyle,pgfdeclarehorizontalshading,theexercise,mdf@@exercisepoints,%
-                   define@key,renewrobustcmd,mdfcreateextratikz,node,ifdefempty,%
-                   mdf@frametitlefont,dimexpr,mdframedtitleenv,ifstrempty,@undefined,%
-                   mdtheorem,surroundwithmdframed,@captype,@dblarg,@newcaption,newcaption,%
-                   mdflength,tikzset,path,p1,p2%
+     morekeywords={outerlinewidth,leftmargin,rightmargin,backgroundcolor,
+                   outerlinecolor,innertopmargin,splittopskip,skipbelow,
+                   skipabove,ntheorem,theorem,lemma,mdframed,linecolor,
+                   frametitle,infobox,innerlinewidth,roundcorner,leftline,
+                   topline,splitbottomskip,middlelinewidth,middlelinecolor,
+                   tikzsetting,rightline,bottomline,innerrightmargin,style,
+                   linewidth,lem,section,definedstyle,mdfapptodefinestyle,
+                   needspace,mdf@globalstyle@cnt,framemethod,ExampleText,
+                   titregris,draw,gray,thick,fill,white,shading,exersicetitle,
+                   exersicebackground,color,green,black,exercise,exercisepoints,
+                   text,rectangle,rounded,corners,right,minimum,height,xshift,
+                   at,exercisestyle,settings,frametitlefont,innerbottommargin,
+                   innerleftmargin,frametitlerule,frametitlebelowskip,
+                   frametitleaboveskip,frametitlebackgroundcolor,
+                   frametitlerulecolor,picins,figure,hidealllines,fontcolor,
+                   firstextra,secondextra,middleextra,singleextra,overlay,node},
+     moretexcs={newmdtheoremenv,newmdenv,theoremstyle,mdfsetup,@length,
+                   md@putbox@single,@tempboxa,mdf@,mdf@linewidth,
+                   mdf@leftmargin@length,interruptlength,setlength,newrobustcmd,
+                   overlaplines,appto,md@frame@leftline@singe,color,
+                   md@frame@leftline@single,mdf@innerbottommargin@length,
+                   mdf@middlelinewidth@length,mdfboundingboxheight,
+                   md@frame@rightline@single,mdfboundingboxwidth,
+                   mdf@innerrightmargin@length,mdfdefinestyle,
+                   mdfapptodefinestyle,defcounter,tikzstyle,
+                   pgfdeclarehorizontalshading,theexercise,mdf@@exercisepoints,
+                   define@key,renewrobustcmd,mdfcreateextratikz,node,ifdefempty,
+                   mdf@frametitlefont,dimexpr,mdframedtitleenv,ifstrempty,
+                   @undefined,mdtheorem,surroundwithmdframed,@captype,@dblarg,
+                   @newcaption,newcaption,mdflength,tikzset,path,p1,p2%
                    },%
 }
 
@@ -160,137 +176,199 @@
   {\lstset{style=lstltxmdf,#1}}%
   {}
 
-\lstMakeShortInline[basicstyle=\small\ttfamily\color{blue!60!black}]{|}
+
+%%Maketitle angepasst:
+\prop_new:N \l_ltxmdf_maketitleinformation_prop
+\cs_set:Npn \title #1
+ {
+  \prop_put:Nnn \l_ltxmdf_maketitleinformation_prop { title } { #1 }
+ }
+\cs_set:Npn \subtitle #1
+ {
+  \prop_put:Nnn \l_ltxmdf_maketitleinformation_prop { subtitle } { #1 }
+ }
+\cs_set:Npn \author #1
+ {
+  \prop_put:Nnn \l_ltxmdf_maketitleinformation_prop { author } { #1 }
+ }
+\cs_set:Npn \version #1
+ {
+  \prop_put:Nnn \l_ltxmdf_maketitleinformation_prop { version } { #1 }
+ }
+\cs_set:Npn \date #1
+ {
+  \prop_put:Nnn \l_ltxmdf_maketitleinformation_prop { date } { #1 }
+ }
+\cs_set:Npn \introduction #1
+ {
+  \prop_put:Nnn \l_ltxmdf_maketitleinformation_prop { introduction } { #1 }
+ }
+
+\def\maketitle{%
+ \clearpage
+ \thispagestyle{empty}
+ \group_begin:
+   \group_begin:
+    \pdfbookmark[1]{Title}{titlebook}
+    \parindent\c_zero_dim
+    \centering
+     \color{ltxmdfblue}\Large\bfseries\sffamily
+        \prop_get:Nn \l_ltxmdf_maketitleinformation_prop { title }
+     \par
+     \skip_vertical:n {.5\baselineskip}
+     \normalfont\large\normalcolor
+        \prop_get:Nn \l_ltxmdf_maketitleinformation_prop { subtitle }
+     \par\kern.5\baselineskip\null\quad
+        \prop_get:Nn \l_ltxmdf_maketitleinformation_prop { author }
+     \hfill
+        \prop_get:Nn \l_ltxmdf_maketitleinformation_prop { version }
+     \hfill
+        \prop_get:Nn \l_ltxmdf_maketitleinformation_prop { date }
+     \hfill\quad\null
+   \group_end:
+     \par
+     \skip_vertical:n {.5\baselineskip}
+  \begin{abstract}
+    \prop_get:Nn \l_ltxmdf_maketitleinformation_prop { introduction }
+  \end{abstract}
+     \par
+     \skip_vertical:n {.2\baselineskip}
+  \pdfbookmark[1]{\contentsname}{tocbook}
+  \tableofcontents
+ \group_end:
+}
 
 %table of contens anpassen:
 \renewcommand\tableofcontents{%
-  \setcounter{tocdepth}{\ltxmdf@tocdepth}%
+  \int_set_eq:NN \c@tocdepth \l_ltxmdf_tocdepth_int
+%\int_use:N \l_ltxmdf_tocdepth_int
+%\setcounter{tocdepth}{\l_ltxmdf_tocdepth_int}%
   \begin{multicols}{2}[\centering\textbf{\sffamily\Large\contentsname}]
         \@starttoc{toc}
   \end{multicols}
 }
 
-%%Maketitle angepasst:
-\def\title#1{\def\@title{#1}}
-\def\subtitle#1{\def\@subtitle{#1}}
-\def\author#1{\def\@author{#1}}
-\def\version#1{\def\@version{#1}}
-\def\date#1{\def\@date{#1}}
-\def\@@date$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6}
-\date{\@@date$Id: ltxmdf.cls 396 2012-05-20 09:53:26Z marco $}
-\let\mdfdateID\@@date
+
+%Modifkation of code
+\tl_gput_left:Nn \theCodelineNo { \color{gray} }
+\dim_set:Nn \MacroTopsep { 10pt }
+\tl_gput_right:Nn \MacroFont { \color{ltxmdfblue} }
 
 
-\long\def\introduction#1{\def\@introduction{#1}}
+%Anweisung zur Darstellung
 
-\def\maketitle{%
- \clearpage
- \thispagestyle{empty}
- \begingroup
-  \begingroup
-    \parindent\z@
-    \centering
-     \color{ltxmdfblue}\Large\bfseries\sffamily\@title
-     \par\kern.5\baselineskip
-     \normalfont\large\normalcolor\@subtitle
-     \par\kern.5\baselineskip
-     \null\quad\@author\hfill\@version\hfill\@date\quad\null
-  \endgroup
-     \par\kern.5\baselineskip
-  \begin{abstract}
-     \@introduction
-  \end{abstract}
-     \par\kern.2\baselineskip
-  \pdfbookmark[1]{\contentsname}{tocbook}
-  \tableofcontents
- \endgroup
+\NewDocumentCommand \Opt { m }
+ {
+  {\MacroFont #1}\xspace
+ }
+
+\NewDocumentCommand \Env { m }
+ {
+  {\MacroFont #1}\xspace
+ }
+
+\NewDocumentCommand \Cmd { m }
+ {
+  {\MacroFont\textbackslash #1}\xspace
+ }
+
+\NewDocumentCommand \Pack { m }
+ {
+  \texttt { #1 } \xspace
+ }
+
+\NewDocumentCommand \NOTE {}
+ {
+  \minisec{Note}
+ }
+
+\NewDocumentCommand \limitation { O{TikZ} }
+ {
+  \newline{\small~This~works~only~with~\Opt{framemethod=#1}.}
+ }
+
+
+\NewDocumentCommand \ExplOpt { o m }
+ {
+    \par
+    \skip_vertical:n { .2\baselineskip }
+    \noindent
+    \hbox_to_wd:nn { \c_zero_dim }
+                   {
+                     \skip_horizontal:n { -2em }
+                     \@bsphack
+                      \MacroFont #2
+                      \SpecialOptIndex{#2}
+                     \@esphack
+                    }
+    \hfill\null
+    \IfNoValueT { #1 }
+      {
+       \hbox:n { \small default=\ttfamily #1 }
+      }
+    \par
+    \skip_vertical:n { .5ex }
+    \noindent\ignorespaces
+ }
+
+\NewDocumentCommand \ExplEnv { o m }
+ {
+    \par
+    \skip_vertical:n { .2\baselineskip }
+    \noindent
+    \hbox_to_wd:nn { \c_zero_dim }
+                   {
+                     \skip_horizontal:n { -2em }
+                     \@bsphack
+                      \MacroFont #2
+                      \SpecialEnvIndex{#2}
+                     \@esphack
+                    }
+    \hfill\null
+    \IfNoValueT { #1 }
+      {
+       \hbox:n { \small default=\ttfamily #1 }
+      }
+    \par
+    \skip_vertical:n { .5ex }
+    \noindent\ignorespaces
+ }
+
+\NewDocumentCommand \ExplCmd { o m }
+ {
+    \par
+    \skip_vertical:n { .2\baselineskip }
+    \noindent
+    \hbox_to_wd:nn { \c_zero_dim }
+                   {
+                     \skip_horizontal:n { -2em }
+                     \@bsphack
+                      \MacroFont\textbackslash #2
+                      \SpecialUsageIndex{#2}
+                     \@esphack
+                    }
+    \hfill\null
+    \IfNoValueT { #1 }
+      {
+       \hbox:n { \small default=\ttfamily #1 }
+      }
+    \par
+    \skip_vertical:n { .5ex }
+    \noindent\ignorespaces
+ }
+
+
+\IndexPrologue{
+  \section*{Index}%
+  \markboth{Index}{Index}
+  The~index~only~collect~package~relevant~words.
 }
 
-%Own Appendix
-\def\ltxmdfappendix{%
- \clearpage
- %\newgeometry{left=5.5cm,}%
-} 
-%Modifkation of code
-\preto\theCodelineNo{\color{gray}}
-\setlength\MacroTopsep{10pt}
-\appto\MacroFont{\color{ltxmdfblue}}
 
-
-\DoNotIndex{\@captype,\@endparenv,\@endparpenalty,\@endpetrue,\@floatpenalty,\@footnotetext,\@ifnextchar,\@undefined,\@tempboxa} 
-\DoNotIndex{\@M,\@empty,\@height,\@mpfn,\@mpfootins,\@mpfootnotetext,\@nil,\@plus,\@width}
-
-\DoNotIndex{\@captype,\@endparenv,\@endparpenalty,\@endpetrue,\@floatpenalty}
-\DoNotIndex{\@footnotetext,\@ifnextchar,\@undefined,\@tempboxa} 
-\DoNotIndex{\@M,\@empty,\@height,\@mpfn,\@mpfootins,\@mpfootnotetext,\@nil,\@plus,\@width}
-\DoNotIndex{\@afterheading,\@afterindentfalse,\@firstoftwo,\@gobble,\@ifpackageloaded}
-\DoNotIndex{\@nobreaktrue,\@nobreakfalse,\@secondoftwo,\@tempa,\@tempdima}
-
-\DoNotIndex{\addpenalty,\addvspace,\advance,\afterassignment,\AfterEndEnvironment,\appto}
-
-\DoNotIndex{\baselineskip,\begin,\boolfalse,\begingroup,\box}
-\DoNotIndex{\BeforeBeginEnvironment,\bfseries,\bgroup,\boxmaxdepth}
-
-\DoNotIndex{\color@endgroup,\color@setgroup,\columnwidth,\csdef,\c@mpfootnote,\csname}
-\DoNotIndex{\clip,\color,\color@begingroup,\coordinate,\csappta,\csuse,\csxdef,\Currentoption}
-
-\DoNotIndex{\dimexpr,\DeclareBoolOption,\DeclareListParser,\def,\define@key,\dimen@,\dimen@i,\dp,\deflength}
-\DoNotIndex{\DeclareDefaultOption,\defcounter,\DisableKeyvaloption}
-
-\DoNotIndex{\eject,\end,\endtrivlist,\edef,\else,\endcsname,\endinput,\expandafter,\endgroup\egroup,\enlargethispage}
-
-\DoNotIndex{\fwd@reserved@a,\fwd@reserveda,\fi,\fill,\forcsvlist}
-
-\DoNotIndex{\gdef}
-
-\DoNotIndex{\hbox,\height,\hrule,\hsize,\hspace,\ht,\hb@xt@,\hss}
-
-\DoNotIndex{\if@minipage,\if@twocolumn,\if@twoside,\ifbool,\ifdim,\ifdimequal}
-\DoNotIndex{\ifdimgreater,\ifdimless,\iffwd@footnoteinside,\ifinner,\ifnum,\ifodd}
-\DoNotIndex{\ifblank,\ifboolexpr,\ifcase,\ifcsundef,\IfFileExists,\ifnumequal,\ifstrequal}
-\DoNotIndex{\iftoggle,\ifundef,\input,\kernel@ifnextchar,\ifvoid,\ifx,\item}
-
-\DoNotIndex{\kern}
-
-\DoNotIndex{\leftline,\let,\linewidth,\lrbox,\large,\letcs,\listadd,\llap,\lowercase}
-
-\DoNotIndex{\maxdimen,\medskipamount,\MessageBreak,\makebox}
-
-\DoNotIndex{\NeedsTeXFormat,\newcounter,\newlength,\newrobustcmd,\nobreak,\normalcolor,\number}
-\DoNotIndex{\newbool,\newcommand,\newenvironment,\newtheorem,\newtoggle,\node,\noindent}
-\DoNotIndex{\notblank,\notbool,\null,\newpsstyle}
-\DoNotIndex{\next}
-
-\DoNotIndex{\or}
-
-\DoNotIndex{\p@,\PackageInfo,\PackageWarning,\pagegoal,\pagetotal,\partopsep,\patchcmd,\penalty}
-\DoNotIndex{\ProcessKeyvalOptions,\ProvidesPackage,\providecommand,\path}
-\DoNotIndex{\protected@edef,\ProvidesFile,\psframe,\psline,\psset,\pst@number,\psxunit}
-\DoNotIndex{\par,\parfillskip,\parindent,\PassOptionsToPackage,\pgfmathsetlengthmacro}
-
-\DoNotIndex{\relax,\RequirePackage,\raggedright,\renewcommand,\rlap,\rput,\rule}
-
-\DoNotIndex{\setbox,\setkeys,\setlength,\SetupKeyvalOptions,\splitmaxdepth,\splittopskip,\stepcounter,\strutbox}
-\DoNotIndex{\setbool,\settoggle,\space,\string}
-
-\DoNotIndex{\textwidth,\the,\thempfn,\thempfootnote,\topsep,\trivlist,\tw@,\tikzset}
-
-\DoNotIndex{\unskip,\unvbox}
-
-\DoNotIndex{\value,\vbox,\vfill,\vsize,\vskip,\vsplit}
-
-\DoNotIndex{\width,\wd}
-
-\DoNotIndex{\xifinlist}
-
-\DoNotIndex{\z@,\z@skip,\zref@addprop,\zref@extract,\zref@label,\zref@newprop,\zref@refused,\ZREF@mainlist}
-
-\IndexPrologue{\section*{Index}%
-                 \markboth{Index}{Index}The index only collect package relevant words.}
-
-
+\ExplSyntaxOff
+\lstMakeShortInline[basicstyle=\small\ttfamily\color{blue!60!black}]{|}
 \def\macro#1{%
-     \MakePrivateLetters
+   \MakePrivateLetters
    \topsep\MacroTopsep \trivlist
    \edef\saved@macroname{#1}%
    \def\makelabel##1{\makebox[0pt][l]{\kern-2em ##1}}%
@@ -320,78 +398,100 @@
   \ignorespaces}
 
 
-
-%Anweisung zur Darstellung
-\newcommand*\Opt[1]{{\MacroFont #1}\xspace}
-\newcommand*\Env[1]{{\MacroFont #1}\xspace}
-\newcommand*\Cmd[1]{{\MacroFont\textbackslash  #1}\xspace}
-\newcommand*\Pack[1]{\texttt{#1}\xspace}
-
-\newcommand*\ExplCmd[2][]{%
-    \par\kern\baselineskip%
-    \noindent\makebox[0pt][l]{\kern-2em%
-                              \@bsphack
-                              \MacroFont\textbackslash #2%
-                              \SpecialUsageIndex{#2}%
-                              \@esphack
-                            }%
-    \hfill\mbox{%
-        \ifx\relax#1\relax
-           \space
-        \else
-         {\small default=\ttfamily #1}
-        \fi
-      }%
-    \par\kern.5ex\noindent\ignorespaces
-   }
-\newcommand*\ExplEnv[2][]{%
-    \par\kern\baselineskip%
-    \noindent\makebox[0pt][l]{\kern-2em%
-                              \@bsphack
-                              \MacroFont #2%
-                              \SpecialEnvIndex{#2}%
-                              \@esphack
-                            }%
-    \hfill\mbox{%
-        \ifx\relax#1\relax
-           \space
-        \else
-         {\small default=\ttfamily #1}
-        \fi
-      }%
-    \par\kern.5ex\noindent\ignorespaces
-   }
-
 \def\SpecialOptIndex#1{\@bsphack
     \index{#1\actualchar{\protect\ttfamily#1}
            (option)\encapchar usage}%
     \index{options:\levelchar#1\actualchar{\protect\ttfamily#1}\encapchar
            usage}\@esphack}
-\newcommand*\ExplOpt[2][]{%
-    \par\kern\baselineskip%
-    \noindent\makebox[0pt][l]{\kern-2em%
-                              \@bsphack
-                              \MacroFont #2%
-                              \SpecialOptIndex{#2}%
-                              \@esphack
-                            }%
-    \hfill\mbox{%
-        \ifx\relax#1\relax
-           \space%
-        \else
-         {\small default=\ttfamily #1}%
-        \fi%
-      }%
-    \par\kern.5ex\noindent\ignorespaces
-   }
-
-
-\newcommand\NOTE{\minisec{Note}}
-
-\newcommand\limitation[1][TikZ]{\newline{\small This works only with \Opt{framemethod=#1}.}}
-
-\endinput
+\ExplSyntaxOn
 
 
 
+%%NOT IN INDEX
+%@
+\DoNotIndex{\@captype,\@endparenv,\@endparpenalty,\@endpetrue,\@floatpenalty,
+            \@footnotetext,\@ifnextchar,\@undefined,\@tempboxa,\@M,\@empty,
+            \@height,\@mpfn,\@mpfootins,\@mpfootnotetext,\@nil,\@plus,\@width,
+            \@afterheading,\@afterindentfalse,\@firstoftwo,\@gobble,
+            \@ifpackageloaded,\@nobreaktrue,\@nobreakfalse,\@secondoftwo,
+            \@tempa,\@tempdima}
+%A
+\DoNotIndex{\addpenalty,\addvspace,\advance,\afterassignment,
+            \AfterEndEnvironment,\appto}
+%B
+\DoNotIndex{\baselineskip,\begin,\boolfalse,\begingroup,\box,
+            \BeforeBeginEnvironment,\bfseries,\bgroup,\boxmaxdepth}
+%C
+\DoNotIndex{\color@endgroup,\color@setgroup,\columnwidth,\csdef,\c@mpfootnote,
+            \csname,\clip,\color,\color@begingroup,\coordinate,\csappta,\csuse,
+            \csxdef,\Currentoption}
+%D
+\DoNotIndex{\dimexpr,\DeclareBoolOption,\DeclareListParser,\def,\define@key,
+            \dimen@,\dimen@i,\dp,\deflength,\DeclareDefaultOption,\defcounter,
+            \DisableKeyvaloption}
+%E
+\DoNotIndex{\eject,\end,\endtrivlist,\edef,\endcsname,\endinput
+            \expandafter,\endgroup,\egroup,\enlargethispage}
+%F
+\DoNotIndex{\fwd@reserved@a,\fwd@reserveda,\fill,\forcsvlist}
+%G
+\DoNotIndex{\gdef}
+%H
+\DoNotIndex{\hbox,\height,\hrule,\hsize,\hspace,\ht,\hb@xt@,\hss}
+%I
+\DoNotIndex{\if@minipage,\if@twocolumn,\if@twoside,\ifbool,\ifdim,\ifdimequal,
+            \ifdimgreater,\ifdimless,\iffwd@footnoteinside,\ifinner,\ifnum,
+            \ifodd,\ifblank,\ifboolexpr,\ifcase,\ifcsundef,\IfFileExists,
+            \ifnumequal,\ifstrequal,\iftoggle,\ifundef,\input,
+            \kernel@ifnextchar,\ifvoid,\ifx,\item}
+%J
+\DoNotIndex{}
+%K
+\DoNotIndex{\kern}
+%L
+\DoNotIndex{\leftline,\let,\linewidth,\lrbox,\large,\letcs,\listadd,\llap,
+            \lowercase}
+%M
+\DoNotIndex{\maxdimen,\medskipamount,\MessageBreak,\makebox}
+%N
+\DoNotIndex{\NeedsTeXFormat,\newcounter,\newlength,\newrobustcmd,\nobreak,
+            \normalcolor,\number,\newbool,\newcommand,\newenvironment,
+            \newtheorem,\newtoggle,\node,\noindent,\notblank,\notbool,\null,
+            \newpsstyle,\next}
+%O
+\DoNotIndex{\or}
+%P
+\DoNotIndex{\p@,\PackageInfo,\PackageWarning,\pagegoal,\pagetotal,\partopsep,
+            \patchcmd,\penalty,\ProcessKeyvalOptions,\ProvidesPackage,
+            \providecommand,\path,\protected@edef,\ProvidesFile,\psframe,
+            \psline,\psset,\pst@number,\psxunit,\par,\parfillskip,\parindent,
+            \PassOptionsToPackage,\pgfmathsetlengthmacro}
+%Q
+\DoNotIndex{}
+%R
+\DoNotIndex{\relax,\RequirePackage,\raggedright,\renewcommand,\rlap,\rput,\rule}
+%S
+\DoNotIndex{\setbox,\setkeys,\setlength,\SetupKeyvalOptions,\splitmaxdepth,
+            \splittopskip,\stepcounter,\strutbox,\setbool,\settoggle,\space,
+            \string}
+%T
+\DoNotIndex{\textwidth,\the,\thempfn,\thempfootnote,\topsep,\trivlist,\tw@,
+            \tikzset}
+%U
+\DoNotIndex{\unskip,\unvbox}
+%V
+\DoNotIndex{\value,\vbox,\vfill,\vsize,\vskip,\vsplit,\vspace,\version}
+%W
+\DoNotIndex{\width,\wd}
+%X
+\DoNotIndex{\xifinlist,\xdef,\x}
+%Y
+\DoNotIndex{\y}
+%Z
+\DoNotIndex{\z@,\z@skip,\zref@addprop,\zref@extract,\zref@label,\zref@newprop,
+            \zref@refused,\ZREF@mainlist}
+
+%%%%
+
+\tex_endinput:D
 
