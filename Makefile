@@ -1,6 +1,6 @@
 ################################################################
 ## Makefile for mdframed project folder
-## $Id: Makefile 416 2012-05-30 21:07:41Z marco $
+## $Id: Makefile 418 2012-05-30 22:10:59Z marco $
 ################################################################
 ## Definitions
 ################################################################
@@ -51,11 +51,11 @@ help:
 	NAME=`basename $< .tex` ;\
 	echo -e "" ;\
 	echo -e "\t$(WARN_COLOR)Typesetting $$NAME$(NO_COLOR)" ;\
-	pdflatex -draftmode -interaction=nonstopmode $< > /dev/null ;\
+	pdflatex --draftmode --interaction=nonstopmode $< > /dev/null ;\
 	if [ $$? = 0 ] ; then \
 	  echo -e "\t$(OK_COLOR)compilation in draftmode without errors$(NO_COLOR)" ;\
 	  echo -e "\t$(OK_COLOR)Run PDFLaTeX again on $$NAME.tex$(NO_COLOR)" ;\
-	  pdflatex -interaction=nonstopmode $< > /dev/null ;\
+	  pdflatex --interaction=nonstopmode $< > /dev/null ;\
 	else \
 	  echo -e "\t$(ERROR_COLOR)compilation in draftmode with errors$(NO_COLOR)" ;\
 	  exit 0;\
@@ -66,11 +66,11 @@ help:
 	NAME=`basename $< .tex` ;\
 	echo -e "" ;\
 	echo -e "\t$(WARN_COLOR)Typesetting $$NAME$(NO_COLOR)" ;\
-	xelatex -draftmode -interaction=nonstopmode $< > /dev/null ;\
+	xelatex --draftmode --interaction=nonstopmode $< > /dev/null ;\
 	if [ $$? = 0 ] ; then \
 	  echo -e "\t$(OK_COLOR)compilation in draftmode without errors$(NO_COLOR)" ;\
 	  echo -e "\t$(OK_COLOR)Run LaTeX again on $$NAME.tex$(NO_COLOR)" ;\
-	  xelatex -interaction=nonstopmode $< > /dev/null ;\
+	  xelatex --interaction=nonstopmode $< > /dev/null ;\
 	else \
 	  echo -e "\t$(ERROR_COLOR)compilation in draftmode with errors$(NO_COLOR)" ;\
 	  exit 0;\
@@ -96,7 +96,7 @@ help:
 docsty: $(PACKAGE).dtx
 	echo -e "" ;\
 	echo -e "\t$(WARN_COLOR)Typesetting $(PACKAGE).dtx$(NO_COLOR)" ;\
-	pdflatex -draftmode -interaction=nonstopmode $(PACKAGE).dtx > /dev/null ;\
+	pdflatex --draftmode --interaction=nonstopmode $(PACKAGE).dtx > /dev/null ;\
 	if [ $$? = 0 ] ; then \
 	  echo -e "\t$(OK_COLOR)compilation in draftmode without errors$(NO_COLOR)" ;\
 	  if [ -f $(PACKAGE).glo ] ; then \
