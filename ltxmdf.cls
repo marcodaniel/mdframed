@@ -9,13 +9,13 @@
 %% Either version 1.0 or, at your option, any later version.
 
 
-%%$Id: ltxmdf.cls 409 2012-05-26 14:24:03Z marco $
-%%$Rev: 409 $
+%%$Id: ltxmdf.cls 417 2012-05-30 22:08:01Z marco $
+%%$Rev: 417 $
 %%$Author: marco $
-%%$Date: 2012-05-26 16:24:03 +0200 (Sa, 26 Mai 2012) $
+%%$Date: 2012-05-31 00:08:01 +0200 (Do, 31 Mai 2012) $
 
 \RequirePackage{expl3}
-\GetIdInfo$Id: ltxmdf.cls 409 2012-05-26 14:24:03Z marco $
+\GetIdInfo$Id: ltxmdf.cls 417 2012-05-30 22:08:01Z marco $
           {documentation class for Marco Daniel}
 
 \ProvidesExplClass{\ExplFileName}
@@ -38,25 +38,25 @@
 \LoadClassWithOptions { scrartcl }
 
 \RequirePackage{ifxetex,ifluatex}
-\RequirePackage{selinput}
-\SelectInputMappings{
-  adieresis  = {ä} ,
-  germandbls = {ß} ,
-  Euro       = {€} ,
-}
 
 \RequirePackage{etoolbox}
 \RequirePackage[left=2.5cm,right=2.5cm,top=3cm,bottom=3cm]{geometry}
 
 \pdftex_if_engine:TF
  {
+  \RequirePackage{selinput}
+  \SelectInputMappings{
+    adieresis  = {ä} ,
+    germandbls = {ß} ,
+    Euro       = {€} ,
+  }
   \RequirePackage[T1]{fontenc}
   \RequirePackage[scaled=0.82]{beramono}
   \RequirePackage{microtype}
  }
  {
   \RequirePackage{fontspec}
-  \setmonofont[Mapping=tex-text]{Courier New}
+  \setmonofont[Mapping=tex-text]{DejaVu Sans}
  }
 
 \RequirePackage[french=quotes]{csquotes}
