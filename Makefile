@@ -66,19 +66,30 @@ help:
 	NAME=`basename $< .tex` ;\
 	echo -e "" ;\
 	echo -e "\t$(WARN_COLOR)Typesetting $$NAME$(NO_COLOR)" ;\
-	latex -draftmode -interaction=nonstopmode $< > /dev/null ;\
+	xelatex -draftmode -interaction=nonstopmode $< > /dev/null ;\
 	if [ $$? = 0 ] ; then \
 	  echo -e "\t$(OK_COLOR)compilation in draftmode without errors$(NO_COLOR)" ;\
 	  echo -e "\t$(OK_COLOR)Run LaTeX again on $$NAME.tex$(NO_COLOR)" ;\
-	  latex -interaction=nonstopmode $< > /dev/null ;\
-	  latex -interaction=nonstopmode $< > /dev/null ;\
-	  dvips -q $$NAME.dvi ;\
-	  ps2pdf $$NAME.ps ;\
+	  xelatex -interaction=nonstopmode $< > /dev/null ;\
 	else \
 	  echo -e "\t$(ERROR_COLOR)compilation in draftmode with errors$(NO_COLOR)" ;\
 	  exit 0;\
 	fi ;\
 	echo -e "\t$(OK_COLOR)Typesetting $$NAME done$(NO_COLOR)" ;\
+
+#	latex -draftmode -interaction=nonstopmode $< > /dev/null ;\
+#	if [ $$? = 0 ] ; then \
+#	  echo -e "\t$(OK_COLOR)compilation in draftmode without errors$(NO_COLOR)" ;\
+#	  echo -e "\t$(OK_COLOR)Run LaTeX again on $$NAME.tex$(NO_COLOR)" ;\
+#	  latex -interaction=nonstopmode $< > /dev/null ;\
+#	  latex -interaction=nonstopmode $< > /dev/null ;\
+#	  dvips -q $$NAME.dvi ;\
+#	  ps2pdf $$NAME.ps ;\
+#	else \
+#	  echo -e "\t$(ERROR_COLOR)compilation in draftmode with errors$(NO_COLOR)" ;\
+#	  exit 0;\
+#	fi ;\
+#	echo -e "\t$(OK_COLOR)Typesetting $$NAME done$(NO_COLOR)" ;\
 ################################################################
 ## Compilation
 ################################################################
