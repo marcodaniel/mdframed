@@ -1,6 +1,6 @@
 ################################################################
 ## Makefile for mdframed project folder
-## $Id: Makefile 399 2012-05-22 17:19:48Z marco $
+## $Id: Makefile 416 2012-05-30 21:07:41Z marco $
 ################################################################
 ## Definitions
 ################################################################
@@ -53,11 +53,11 @@ help:
 	echo -e "\t$(WARN_COLOR)Typesetting $$NAME$(NO_COLOR)" ;\
 	pdflatex -draftmode -interaction=nonstopmode $< > /dev/null ;\
 	if [ $$? = 0 ] ; then \
-	  echo -e "\t$(OK_COLOR)compilation in draftmode without erros$(NO_COLOR)" ;\
+	  echo -e "\t$(OK_COLOR)compilation in draftmode without errors$(NO_COLOR)" ;\
 	  echo -e "\t$(OK_COLOR)Run PDFLaTeX again on $$NAME.tex$(NO_COLOR)" ;\
 	  pdflatex -interaction=nonstopmode $< > /dev/null ;\
 	else \
-	  echo -e "\t$(ERROR_COLOR)compilation in draftmode with erros$(NO_COLOR)" ;\
+	  echo -e "\t$(ERROR_COLOR)compilation in draftmode with errors$(NO_COLOR)" ;\
 	  exit 0;\
 	fi ;\
 	echo -e "\t$(OK_COLOR)Typesetting $$NAME finished $(NO_COLOR)" ;\
@@ -68,13 +68,14 @@ help:
 	echo -e "\t$(WARN_COLOR)Typesetting $$NAME$(NO_COLOR)" ;\
 	latex -draftmode -interaction=nonstopmode $< > /dev/null ;\
 	if [ $$? = 0 ] ; then \
-	  echo -e "\t$(OK_COLOR)compilation in draftmode without erros$(NO_COLOR)" ;\
+	  echo -e "\t$(OK_COLOR)compilation in draftmode without errors$(NO_COLOR)" ;\
 	  echo -e "\t$(OK_COLOR)Run LaTeX again on $$NAME.tex$(NO_COLOR)" ;\
+	  latex -interaction=nonstopmode $< > /dev/null ;\
 	  latex -interaction=nonstopmode $< > /dev/null ;\
 	  dvips -q $$NAME.dvi ;\
 	  ps2pdf $$NAME.ps ;\
 	else \
-	  echo -e "\t$(ERROR_COLOR)compilation in draftmode with erros$(NO_COLOR)" ;\
+	  echo -e "\t$(ERROR_COLOR)compilation in draftmode with errors$(NO_COLOR)" ;\
 	  exit 0;\
 	fi ;\
 	echo -e "\t$(OK_COLOR)Typesetting $$NAME done$(NO_COLOR)" ;\
@@ -86,7 +87,7 @@ docsty: $(PACKAGE).dtx
 	echo -e "\t$(WARN_COLOR)Typesetting $(PACKAGE).dtx$(NO_COLOR)" ;\
 	pdflatex -draftmode -interaction=nonstopmode $(PACKAGE).dtx > /dev/null ;\
 	if [ $$? = 0 ] ; then \
-	  echo -e "\t$(OK_COLOR)compilation in draftmode without erros$(NO_COLOR)" ;\
+	  echo -e "\t$(OK_COLOR)compilation in draftmode without errors$(NO_COLOR)" ;\
 	  if [ -f $(PACKAGE).glo ] ; then \
 	   echo -e "\t$(WARN_COLOR)Typesetting $(PACKAGE).glo$(NO_COLOR)" ;\
 	   makeindex -q -t $(PACKAGE).glolog  -s gglo.ist -o $(PACKAGE).gls $(PACKAGE).glo ;\
@@ -107,14 +108,14 @@ docsty: $(PACKAGE).dtx
 	  fi ;\
 	  pdflatex $(PACKAGE).dtx > /dev/null ;\
 	  if [ $$? = 0 ] ; then \
-	     echo -e "\t$(OK_COLOR)Second pdflatex compilation without erros$(NO_COLOR)" ;\
+	     echo -e "\t$(OK_COLOR)Second pdflatex compilation without errors$(NO_COLOR)" ;\
 	  else \
-	     echo -e "\t$(ERROR_COLOR)Second pdflatex compilation with erros$(NO_COLOR)" ;\
+	     echo -e "\t$(ERROR_COLOR)Second pdflatex compilation with errors$(NO_COLOR)" ;\
 	     exit 0;\
 	  fi ;\
 	  pdflatex $(PACKAGE).dtx > /dev/null ;\
 	else \
-	  echo -e "\t$(ERROR_COLOR)compilation in draftmode with erros$(NO_COLOR)" ;\
+	  echo -e "\t$(ERROR_COLOR)compilation in draftmode with errors$(NO_COLOR)" ;\
 	  exit 0;\
 	fi ;\
 
@@ -198,7 +199,7 @@ usectanify:
 	     echo -e "\t$(OK_COLOR)ctanify without errors$(NO_COLOR)" ;\
 	     echo -e "" ;\
 	else \
-	  echo -e "\t$(ERROR_COLOR)ctanify with erros$(NO_COLOR)" ;\
+	  echo -e "\t$(ERROR_COLOR)ctanify with errors$(NO_COLOR)" ;\
 	  exit 0;\
 	fi ;\
 
