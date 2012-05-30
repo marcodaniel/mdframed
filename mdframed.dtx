@@ -213,12 +213,12 @@ Have fun!
 \fi
 %</internal>
 %<*driver>
-%%$Id: mdframed.dtx 414 2012-05-29 19:12:35Z marco $
+%%$Id: mdframed.dtx 419 2012-05-30 23:30:29Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,11pt,]{ltxmdf}
 \usepackage[framemethod=TikZ]{mdframed}
 
-\GetIdInfo$Id: mdframed.dtx 414 2012-05-29 19:12:35Z marco $
+\GetIdInfo$Id: mdframed.dtx 419 2012-05-30 23:30:29Z marco $
           {documentation of mdframed}
 
 \EnableCrossrefs
@@ -256,7 +256,7 @@ Have fun!
 % \author{\href{mailto:marco.daniel@mada-nada.de}{Marco Daniel}%
 %        \href{mailto:marco.daniel@mada-nada.de}{Elke Schubert}}
 % \version{\mdversion}
-% \GetIdInfo$Id: mdframed.dtx 414 2012-05-29 19:12:35Z marco $
+% \GetIdInfo$Id: mdframed.dtx 419 2012-05-30 23:30:29Z marco $
 %           {documentation of mdframed}
 % \date{\ExplFileDate}
 % \introduction{The standard methods for framing text (\Cmd{fbox}
@@ -769,8 +769,8 @@ Have fun!
 %      This option is not longer supported. Use \Opt{leftmargin}
 %      and \Opt{rightmargin} instead.
 % \ExplOpt[0pt]{leftmargin} 
-%      Sets the length of the left margin of the environment. This option has an
-%      effect only in singleside-mode or, in twoside-mode, if the option 
+%      Sets the length of the left margin of the environment. This option has
+%      an effect only in singleside-mode or, in twoside-mode, if the option 
 %      \Opt{usetwoside=false} has been given.  
 %      See also options \Opt{outermargin} and \Opt{innermargin}.
 % \ExplOpt[0\,pt]{rightmargin} 
@@ -1844,10 +1844,10 @@ Have fun!
 %
 % \subsection{The Explanation of mdframed.sty}
 %
-% %$Id: mdframed.dtx 414 2012-05-29 19:12:35Z marco $
-% %$Rev: 414 $
+% %$Id: mdframed.dtx 419 2012-05-30 23:30:29Z marco $
+% %$Rev: 419 $
 % %$Author: marco $
-% %$Date: 2012-05-29 21:12:35 +0200 (Di, 29 Mai 2012) $
+% %$Date: 2012-05-31 01:30:29 +0200 (Do, 31 Mai 2012) $
 % \begin{macro}{mdversion,mdframedpackagename,mdf@maindate@svn}
 % Set package information
 %    \begin{macrocode}
@@ -1860,7 +1860,7 @@ Have fun!
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{mdframed}%
-     [\mdf@maindate@svn$Id: mdframed.dtx 414 2012-05-29 19:12:35Z marco $%
+     [\mdf@maindate@svn$Id: mdframed.dtx 419 2012-05-30 23:30:29Z marco $%
       \mdversion: \mdframedpackagename]
 %    \end{macrocode}
 %
@@ -3661,7 +3661,7 @@ Have fun!
 %% Either version 1.0 or, at your option, any later version.
 %%
 %%
-%%$Id: mdframed.dtx 414 2012-05-29 19:12:35Z marco $
+%%$Id: mdframed.dtx 419 2012-05-30 23:30:29Z marco $
 %
 %    \end{macrocode}
 %
@@ -3671,7 +3671,7 @@ Have fun!
 \def\mdframedOpackagename{md-frame-0}
 \def\mdf@frameOdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-0.mdf}%
-    [\mdf@frameOdate@svn$Id: mdframed.dtx 414 2012-05-29 19:12:35Z marco $%
+    [\mdf@frameOdate@svn$Id: mdframed.dtx 419 2012-05-30 23:30:29Z marco $%
      \mdversion: \mdframedOpackagename]
 %    \end{macrocode}
 % \end{macro}
@@ -3722,6 +3722,221 @@ Have fun!
   
 %    \end{macrocode}
 % \end{macro}
+%
+%
+%
+% \begin{macro}{mdfsubtitle}
+% Definition of the command \Cmd{mdfsubtitle}. 
+%    \begin{macrocode}
+\newrobustcmd\mdfsubtitle[2][]%
+{%
+%    \end{macrocode}
+% Make everything local.
+%    \begin{macrocode}
+ \begingroup
+  \penalty-9995%set a breakpoint before the subtitle
+%     \end{macrocode}
+% Inside the title we don't need any \Cmd{parindent}. Next set the options of
+% the optional argument of \Cmd{mdfsubtitle}.
+%     \begin{macrocode}
+  \parindent\z@\relax%
+  \mdfsetup{#1}%only for subtitle options
+%      \end{macrocode}
+% Save the complete subtitle inside the save box \Cmd{z@}.
+%      \begin{marcocode}
+  \setbox\z@=\vbox{\mdf@subtitlefont{#2}\relax}%
+%      \end{macrocode}
+% Compute the width of the current line including the inner left margin and
+% inner right margin (using \Cmd{dimen@}. In the nest step the height and the
+% depth of the save box will be saved in \Cmd{dimen@i}.
+%      \begin{marcocode}
+  \dimen@=\linewidth\relax%
+   \advance\dimen@ by \mdf@innerleftmargin@length\relax%
+   \advance\dimen@ by \mdf@innerrightmargin@length\relax%
+  \dimen@i=\mdf@subtitleinneraboveskip@length\relax%
+   \advance\dimen@i by \ht\z@\relax%
+   \advance\dimen@i by \dp\z@\relax%
+%      \end{macrocode}
+% Test if rules should be drawn. otherwise set the line width to 0\,pt.
+%      \begin{macrocode}
+  \ifbool{mdf@subtitleaboveline}{}%
+         {\mdfsetup{subtitleabovelinewidth=\z@}}%
+  \ifbool{mdf@subtitlebelowline}{}%
+         {\mdfsetup{subtitlebelowlinewidth=\z@}}%
+%      \end{macrocode}
+% Start a new line with the given skip \Opt{subtitleaboveskip}.
+%      \begin{macrocode}
+  \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%
+  \vskip\mdf@subtitleaboveskip@length
+%      \end{macrocode}
+% Drawing the above line of the subtitle.
+%      \begin{macrocode}
+  \rlap%
+  {%
+    \hspace*{-\mdf@innerleftmargin@length}%
+    \begingroup%
+      \color{\mdf@subtitleabovelinecolor}%
+      \rule[-\mdf@subtitleabovelinewidth@length]
+           {\dimen@}{\mdf@subtitleabovelinewidth@length}%
+    \endgroup%
+  }%
+%      \end{macrocode}
+% space between rule above and subtitle
+%      \begin{macrocde}
+  \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%
+  \vskip\mdf@subtitleinneraboveskip@length
+%      \end{macrocode}
+% output of subtitle with a backround. Must think about the \Cmd{hspace}
+% combination.
+%      \begin{macrocde}
+  \vskip-\mdf@subtitleabovelinewidth@length
+  \leavevmode\rlap%
+  {%
+   \smash{%
+     \hspace*{-\mdf@innerleftmargin@length}%
+     \begingroup%
+       \color{\mdf@subtitlebackgroundcolor}%
+       \rule[\dimexpr-\dp\z@-\mdf@subtitleinnerbelowskip@length\relax]
+            {\dimen@}{\dimen@i}%
+     \endgroup%
+    }%
+  }%
+  \box\z@\relax%
+%      \end{macrocode}
+% Skip after subtitle
+%      \begin{macrocde}
+  \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%
+  \vskip\mdf@subtitleinnerbelowskip@length
+%      \end{macrocode}
+% Draw rule below of the subtitle.
+%      \begin{macrocde}
+  \rlap%
+  {%
+   \hspace*{-\mdf@innerleftmargin@length}%
+   \begingroup%
+     \color{\mdf@subtitlebelowlinecolor}%
+     \rule{\dimen@}{\mdf@subtitlebelowlinewidth@length}%
+   \color@endgroup
+  }%
+%      \end{macrocode}
+% Last skip and set a non breaking point.
+%      \begin{macrocde}
+  \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%
+  \vskip\mdf@subtitlebelowskip@length
+  \penalty 9995
+ \endgroup
+}
+
+%    \end{macrocode}
+% \end{macro}
+%
+%
+% \begin{macro}{mdfsubsubtitle}
+% Definition of the command \Cmd{mdfsubsubtitle}. 
+%    \begin{macrocode}
+\newrobustcmd\mdfsubsubtitle[2][]%
+{%
+%    \end{macrocode}
+% Make everything local.
+%    \begin{macrocode}
+ \begingroup
+  \penalty-9995%set a breakpoint before the subsubtitle
+%     \end{macrocode}
+% Inside the title we don't need any \Cmd{parindent}. Next set the options of
+% the optional argument of \Cmd{mdfsubsubtitle}.
+%     \begin{macrocode}
+  \parindent\z@\relax%
+  \mdfsetup{#1}%only for subsubtitle options
+%      \end{macrocode}
+% Save the complete subsubtitle inside the save box \Cmd{z@}.
+%      \begin{marcocode}
+  \setbox\z@=\vbox{\mdf@subsubtitlefont{#2}\relax}%
+%      \end{macrocode}
+% Compute the width of the current line including the inner left margin and
+% inner right margin (using \Cmd{dimen@}. In the nest step the height and the
+% depth of the save box will be saved in \Cmd{dimen@i}.
+%      \begin{marcocode}
+  \dimen@=\linewidth\relax%
+   \advance\dimen@ by \mdf@innerleftmargin@length\relax%
+   \advance\dimen@ by \mdf@innerrightmargin@length\relax%
+  \dimen@i=\mdf@subsubtitleinneraboveskip@length\relax%
+   \advance\dimen@i by \ht\z@\relax%
+   \advance\dimen@i by \dp\z@\relax%
+%      \end{macrocode}
+% Test if rules should be drawn. otherwise set the line width to 0\,pt.
+%      \begin{macrocode}
+  \ifbool{mdf@subsubtitleaboveline}{}%
+         {\mdfsetup{subsubtitleabovelinewidth=\z@}}%
+  \ifbool{mdf@subsubtitlebelowline}{}%
+         {\mdfsetup{subsubtitlebelowlinewidth=\z@}}%
+%      \end{macrocode}
+% Start a new line with the given skip \Opt{subsubtitleaboveskip}.
+%      \begin{macrocode}
+  \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%
+  \vskip\mdf@subsubtitleaboveskip@length
+%      \end{macrocode}
+% Drawing the above line of the subsubtitle.
+%      \begin{macrocode}
+  \rlap%
+  {%
+   \hspace*{-\mdf@innerleftmargin@length}%
+   \begingroup%
+     \color{\mdf@subsubtitleabovelinecolor}%
+     \rule[-\mdf@subsubtitleabovelinewidth@length]
+          {\dimen@}{\mdf@subsubtitleabovelinewidth@length}%
+   \endgroup%
+  }%
+%      \end{macrocode}
+% space between rule above and subsubtitle
+%      \begin{macrocde}
+  \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%
+  \vskip\mdf@subsubtitleinneraboveskip@length
+%      \end{macrocode}
+% output of subsubtitle with a backround. Must think about the \Cmd{hspace}
+% combination.
+%      \begin{macrocde}
+  \vskip-\mdf@subsubtitleabovelinewidth@length
+  \leavevmode\rlap%
+  {%
+   \hspace*{-\mdf@innerleftmargin@length}%
+   \smash{%
+    \begingroup%
+      \color{\mdf@subsubtitlebackgroundcolor}%
+       \rule[\dimexpr-\dp\z@-\mdf@subtitleinnerbelowskip@length\relax]
+            {\dimen@}{\dimen@i}%
+    \endgroup%
+   }%
+  }%
+  \box\z@\relax%
+%      \end{macrocode}
+% Skip after subsubtitle
+%      \begin{macrocde}
+  \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%
+  \vskip\mdf@subsubtitleinnerbelowskip@length
+%      \end{macrocode}
+% Draw rule below of the subsubtitle.
+%      \begin{macrocde}
+  \rlap%
+  {%
+   \hspace*{-\mdf@innerleftmargin@length}%
+   \begingroup%
+     \color{\mdf@subsubtitlebelowlinecolor}%
+     \rule{\dimen@}{\mdf@subsubtitlebelowlinewidth@length}%
+   \endgroup%
+  }%
+%      \end{macrocode}
+% Last skip and set a non breaking point.
+%      \begin{macrocde}
+  \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%
+  \vskip\mdf@subsubtitlebelowskip@length
+  \penalty 9995
+ \endgroup
+}
+
+%    \end{macrocode}
+% \end{macro}
+%
+%
 %
 % \begin{macro}{mdf@putbox@single,mdf@frame@background@single,^^A
 %               mdf@frame@topandbottomline@single,mdf@frame@leftline@single,^^A
@@ -4562,7 +4777,7 @@ Have fun!
 %% Either version 1.0 or, at your option, any later version.
 %%
 %%
-%%$Id: mdframed.dtx 414 2012-05-29 19:12:35Z marco $
+%%$Id: mdframed.dtx 419 2012-05-30 23:30:29Z marco $
 %
 %    \end{macrocode}
 % \changes{v1.1beta}{2011/12/16}{added lost semicolons}
@@ -4572,7 +4787,7 @@ Have fun!
 \def\mdframedIpackagename{md-frame-1}
 \def\mdf@frameIdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-1.mdf}%
-      [\mdf@frameIdate@svn$Id: mdframed.dtx 414 2012-05-29 19:12:35Z marco $ %
+      [\mdf@frameIdate@svn$Id: mdframed.dtx 419 2012-05-30 23:30:29Z marco $ %
        \mdversion: \mdframedIpackagename]
 %
 %    \end{macrocode}
@@ -4709,39 +4924,78 @@ Have fun!
 %
 %
 % \begin{macro}{mdfsubtitle}
-% Definition of the command \Cmd{mdfsubtitle}
+% Definition of the command \Cmd{mdfsubtitle}. Starting with the definition of
+% the tikz style for the rule above the subtitle.
 %    \begin{macrocode}%
 \tikzset{mdfsubtitleaboverule/.style={%
    draw=none,
    fill=\mdf@subtitleabovelinecolor,
   }%
 }
+%    \end{macrocode}
+% Definition of the default style of rule below the subtitle.
+%    \begin{macrocode}
 \tikzset{mdfsubtitlebelowrule/.style={%
    draw=none,
    fill=\mdf@subtitlebelowlinecolor,
   }%
 }
+%    \end{macrocode}
+% Definition of the default style of the background of the subtitle.
+%    \begin{macrocode}
 \tikzset{mdfsubtitlebackground/.style={%
    draw=\mdf@subtitlebackgroundcolor,
    fill=\mdf@subtitlebackgroundcolor,
   }%
 }
+%    \end{macrocode}
+% Definition of the command \Cmd{mdfsubtitle}. 
+%    \begin{macrocode}
 \newrobustcmd\mdfsubtitle[2][]%
 {%
+%    \end{macrocode}
+% Make everything local.
+%    \begin{macrocode}
  \begingroup
+  \penalty-9995%set a breakpoint before the subtitle
+%     \end{macrocode}
+% Inside the title we don't need any \Cmd{parindent}. Next set the options of
+% the optional argument of \Cmd{mdfsubtitle}.
+%     \begin{macrocode}
+  \parindent\z@\relax%
   \mdfsetup{#1}%only for subtitle options
-  \setbox\z@=\vbox{\mdf@subtitlefont#2\relax}%
-  \pgfmathsetlength{\dimen@}{\linewidth
-                             +\mdf@innerleftmargin@length
-                             +\mdf@innerrightmargin@length}%
-  \pgfmathsetlength{\dimen@i}{\ht\z@+\dp\z@+\mdf@subtitleinneraboveskip@length}%
+%      \end{macrocode}
+% Save the complete subtitle inside the save box \Cmd{z@}.
+%      \begin{marcocode}
+  \setbox\z@=\vbox{\mdf@subtitlefont{#2}\relax}%
+%      \end{macrocode}
+% Compute the width of the current line including the inner left margin and
+% inner right margin (using \Cmd{dimen@}. In the nest step the height and the
+% depth of the save box will be saved in \Cmd{dimen@i}.
+%      \begin{marcocode}
+  \pgfmathsetlength{\dimen@}%
+                   {%
+                    \linewidth%
+                    +\mdf@innerleftmargin@length%
+                    +\mdf@innerrightmargin@length%
+                   }%
+  \pgfmathsetlength{\dimen@i}%
+                   {\ht\z@+\dp\z@+\mdf@subtitleinneraboveskip@length}%
+%      \end{macrocode}
+% Test if rules should be drawn. otherwise set the line width to 0\,pt.
+%      \begin{macrocode}
   \ifbool{mdf@subtitleaboveline}{}%
          {\mdfsetup{subtitleabovelinewidth=\z@}}%
   \ifbool{mdf@subtitlebelowline}{}%
          {\mdfsetup{subtitlebelowlinewidth=\z@}}%
-  \parindent0pt
+%      \end{macrocode}
+% Start a new line with the given skip \Opt{subtitleaboveskip}.
+%      \begin{macrocode}
   \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%
   \vskip\mdf@subtitleaboveskip@length
+%      \end{macrocode}
+% Drawing the above line of the subtitle.
+%      \begin{macrocode}
   \rlap%
   {%
    \hspace*{-\mdf@innerleftmargin@length}%
@@ -4750,8 +5004,15 @@ Have fun!
                 rectangle (\dimen@,\mdf@subtitleabovelinewidth@length);
    \endgroup%
   }%
+%      \end{macrocode}
+% space between rule above and subtitle
+%      \begin{macrocde}
   \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%
   \vskip\mdf@subtitleinneraboveskip@length
+%      \end{macrocode}
+% output of subtitle with a backround. Must think about the \Cmd{hspace}
+% combination.
+%      \begin{macrocde}
   \hspace*{-\mdf@innerleftmargin@length}%
   \tikz[overlay]%
             \draw[mdfsubtitlebackground]
@@ -4759,8 +5020,14 @@ Have fun!
                  rectangle(\dimen@,\dimen@i);%
   \hspace*{+\mdf@innerleftmargin@length}%
   \box\z@\relax%
+%      \end{macrocode}
+% Skip after subtitle
+%      \begin{macrocde}
   \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%
   \vskip\mdf@subtitleinnerbelowskip@length
+%      \end{macrocode}
+% Draw rule below of the subtitle.
+%      \begin{macrocde}
   \rlap%
   {%
    \hspace*{-\mdf@innerleftmargin@length}%
@@ -4769,8 +5036,12 @@ Have fun!
                 rectangle (\dimen@,\mdf@subtitlebelowlinewidth@length);
    \endgroup%
   }%
+%      \end{macrocode}
+% Last skip and set a non breaking point.
+%      \begin{macrocde}
   \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%
   \vskip\mdf@subtitlebelowskip@length
+  \penalty 9995
  \endgroup
 }
 
@@ -4779,39 +5050,78 @@ Have fun!
 %
 %
 % \begin{macro}{mdfsubsubtitle}
-% Definition of the command \Cmd{mdfsubsubtitle}
+% Definition of the command \Cmd{mdfsubsubtitle}. Starting with the definition of
+% the tikz style for the rule above the subsubtitle.
 %    \begin{macrocode}%
 \tikzset{mdfsubsubtitleaboverule/.style={%
    draw=none,
    fill=\mdf@subsubtitleabovelinecolor,
   }%
 }
+%    \end{macrocode}
+% Definition of the default style of rule below the subsubtitle.
+%    \begin{macrocode}
 \tikzset{mdfsubsubtitlebelowrule/.style={%
    draw=none,
    fill=\mdf@subsubtitlebelowlinecolor,
   }%
 }
+%    \end{macrocode}
+% Definition of the default style of the background of the subsubtitle.
+%    \begin{macrocode}
 \tikzset{mdfsubsubtitlebackground/.style={%
    draw=\mdf@subsubtitlebackgroundcolor,
    fill=\mdf@subsubtitlebackgroundcolor,
   }%
 }
+%    \end{macrocode}
+% Definition of the command \Cmd{mdfsubsubtitle}. 
+%    \begin{macrocode}
 \newrobustcmd\mdfsubsubtitle[2][]%
 {%
+%    \end{macrocode}
+% Make everything local.
+%    \begin{macrocode}
  \begingroup
+  \penalty-9995%set a breakpoint before the subsubtitle
+%     \end{macrocode}
+% Inside the title we don't need any \Cmd{parindent}. Next set the options of
+% the optional argument of \Cmd{mdfsubsubtitle}.
+%     \begin{macrocode}
+  \parindent\z@\relax%
   \mdfsetup{#1}%only for subsubtitle options
-  \setbox\z@=\vbox{\mdf@subsubtitlefont#2\relax}%
-  \pgfmathsetlength{\dimen@}{\linewidth
-                             +\mdf@innerleftmargin@length
-                             +\mdf@innerrightmargin@length}%
-  \pgfmathsetlength{\dimen@i}{\ht\z@+\dp\z@+\mdf@subsubtitleinneraboveskip@length}%
+%      \end{macrocode}
+% Save the complete subsubtitle inside the save box \Cmd{z@}.
+%      \begin{marcocode}
+  \setbox\z@=\vbox{\mdf@subsubtitlefont{#2}\relax}%
+%      \end{macrocode}
+% Compute the width of the current line including the inner left margin and
+% inner right margin (using \Cmd{dimen@}. In the nest step the height and the
+% depth of the save box will be saved in \Cmd{dimen@i}.
+%      \begin{marcocode}
+  \pgfmathsetlength{\dimen@}%
+                   {%
+                    \linewidth%
+                    +\mdf@innerleftmargin@length%
+                    +\mdf@innerrightmargin@length%
+                   }%
+  \pgfmathsetlength{\dimen@i}%
+                   {\ht\z@+\dp\z@+\mdf@subsubtitleinneraboveskip@length}%
+%      \end{macrocode}
+% Test if rules should be drawn. otherwise set the line width to 0\,pt.
+%      \begin{macrocode}
   \ifbool{mdf@subsubtitleaboveline}{}%
          {\mdfsetup{subsubtitleabovelinewidth=\z@}}%
-  \ifbool{mdf@subtitlebelowline}{}%
+  \ifbool{mdf@subsubtitlebelowline}{}%
          {\mdfsetup{subsubtitlebelowlinewidth=\z@}}%
-  \parindent0pt
+%      \end{macrocode}
+% Start a new line with the given skip \Opt{subsubtitleaboveskip}.
+%      \begin{macrocode}
   \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%
   \vskip\mdf@subsubtitleaboveskip@length
+%      \end{macrocode}
+% Drawing the above line of the subsubtitle.
+%      \begin{macrocode}
   \rlap%
   {%
    \hspace*{-\mdf@innerleftmargin@length}%
@@ -4820,8 +5130,15 @@ Have fun!
                 rectangle (\dimen@,\mdf@subsubtitleabovelinewidth@length);
    \endgroup%
   }%
+%      \end{macrocode}
+% space between rule above and subsubtitle
+%      \begin{macrocde}
   \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%
   \vskip\mdf@subsubtitleinneraboveskip@length
+%      \end{macrocode}
+% output of subsubtitle with a backround. Must think about the \Cmd{hspace}
+% combination.
+%      \begin{macrocde}
   \hspace*{-\mdf@innerleftmargin@length}%
   \tikz[overlay]%
             \draw[mdfsubsubtitlebackground]
@@ -4829,8 +5146,14 @@ Have fun!
                  rectangle(\dimen@,\dimen@i);%
   \hspace*{+\mdf@innerleftmargin@length}%
   \box\z@\relax%
+%      \end{macrocode}
+% Skip after subsubtitle
+%      \begin{macrocde}
   \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%
   \vskip\mdf@subsubtitleinnerbelowskip@length
+%      \end{macrocode}
+% Draw rule below of the subsubtitle.
+%      \begin{macrocde}
   \rlap%
   {%
    \hspace*{-\mdf@innerleftmargin@length}%
@@ -4839,15 +5162,17 @@ Have fun!
                 rectangle (\dimen@,\mdf@subsubtitlebelowlinewidth@length);
    \endgroup%
   }%
+%      \end{macrocode}
+% Last skip and set a non breaking point.
+%      \begin{macrocde}
   \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%
   \vskip\mdf@subsubtitlebelowskip@length
+  \penalty 9995
  \endgroup
 }
 
-
 %    \end{macrocode}
 % \end{macro}
-%
 %
 %
 %
@@ -5722,7 +6047,7 @@ Have fun!
 %% Either version 1.0 or, at your option, any later version.
 %%
 %%
-%%$Id: mdframed.dtx 414 2012-05-29 19:12:35Z marco $
+%%$Id: mdframed.dtx 419 2012-05-30 23:30:29Z marco $
 %
 %    \end{macrocode}
 %
@@ -5732,7 +6057,7 @@ Have fun!
 \def\mdframedIIpackagename{md-frame-2}
 \def\mdf@frameIIdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-2.mdf}%
-      [\mdf@frameIIdate@svn$Id: mdframed.dtx 414 2012-05-29 19:12:35Z marco $ %
+      [\mdf@frameIIdate@svn$Id: mdframed.dtx 419 2012-05-30 23:30:29Z marco $ %
        \mdversion: \mdframedIIpackagename]
 %    \end{macrocode}
 % \end{macro}
@@ -6751,10 +7076,10 @@ Have fun!
 %
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 414 2012-05-29 19:12:35Z marco $
+%%$Id: mdframed.dtx 419 2012-05-30 23:30:29Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt]{ltxmdf}
-\GetIdInfo$Id: mdframed.dtx 414 2012-05-29 19:12:35Z marco $
+\GetIdInfo$Id: mdframed.dtx 419 2012-05-30 23:30:29Z marco $
           {documentation of mdframed}
 
 \usepackage{showexpl}
@@ -6978,10 +7303,10 @@ The example below is inspired by the following post on StackExchange
 %
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 414 2012-05-29 19:12:35Z marco $
+%%$Id: mdframed.dtx 419 2012-05-30 23:30:29Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt]{ltxmdf}
-\GetIdInfo$Id: mdframed.dtx 414 2012-05-29 19:12:35Z marco $
+\GetIdInfo$Id: mdframed.dtx 419 2012-05-30 23:30:29Z marco $
           {documentation of mdframed}
 
 
@@ -7190,10 +7515,10 @@ function of the independent variables alone.
 %
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 414 2012-05-29 19:12:35Z marco $
+%%$Id: mdframed.dtx 419 2012-05-30 23:30:29Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt]{ltxmdf}
-\GetIdInfo$Id: mdframed.dtx 414 2012-05-29 19:12:35Z marco $
+\GetIdInfo$Id: mdframed.dtx 419 2012-05-30 23:30:29Z marco $
           {documentation of mdframed}
 
 \lstDeleteShortInline{|}
@@ -7337,10 +7662,10 @@ function of the independent variables alone.
 
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 414 2012-05-29 19:12:35Z marco $
+%%$Id: mdframed.dtx 419 2012-05-30 23:30:29Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt,lipsum=true]{ltxmdf}
-\GetIdInfo$Id: mdframed.dtx 414 2012-05-29 19:12:35Z marco $
+\GetIdInfo$Id: mdframed.dtx 419 2012-05-30 23:30:29Z marco $
           {documentation of mdframed}
 
 
