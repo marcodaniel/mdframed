@@ -25,7 +25,12 @@ TEXMFLOCAL
 
 [DOWNLOAD-PAGE](https://github.com/marcodaniel/mdframed/downloads)
 
+
 ### Installation -- 2
+If you are using Linux you can simple run `make localinstall`. This will install
+the package `mdframed` in your local TEXMF-tree.
+
+### Installation -- 3
 The package provides
  * one `dtx` files,
  * one `Makefile` (compiling for Linux/Mac),
