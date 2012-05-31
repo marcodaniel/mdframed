@@ -9,13 +9,13 @@
 %% Either version 1.0 or, at your option, any later version.
 
 
-%%$Id: ltxmdf.cls 417 2012-05-30 22:08:01Z marco $
-%%$Rev: 417 $
+%%$Id: ltxmdf.cls 421 2012-05-31 15:51:38Z marco $
+%%$Rev: 421 $
 %%$Author: marco $
-%%$Date: 2012-05-31 00:08:01 +0200 (Do, 31 Mai 2012) $
+%%$Date: 2012-05-31 17:51:38 +0200 (Do, 31 Mai 2012) $
 
 \RequirePackage{expl3}
-\GetIdInfo$Id: ltxmdf.cls 417 2012-05-30 22:08:01Z marco $
+\GetIdInfo$Id: ltxmdf.cls 421 2012-05-31 15:51:38Z marco $
           {documentation class for Marco Daniel}
 
 \ProvidesExplClass{\ExplFileName}
@@ -302,7 +302,7 @@
                      \@esphack
                     }
     \hfill\null
-    \IfNoValueT { #1 }
+    \IfNoValueF { #1 }
       {
        \hbox:n { \small default=\ttfamily #1 }
       }
@@ -325,7 +325,7 @@
                      \@esphack
                     }
     \hfill\null
-    \IfNoValueT { #1 }
+    \IfNoValueF { #1 }
       {
        \hbox:n { \small default=\ttfamily #1 }
       }
@@ -348,7 +348,7 @@
                      \@esphack
                     }
     \hfill\null
-    \IfNoValueT { #1 }
+    \IfNoValueF { #1 }
       {
        \hbox:n { \small default=\ttfamily #1 }
       }
