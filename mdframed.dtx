@@ -213,12 +213,12 @@ Have fun!
 \fi
 %</internal>
 %<*driver>
-%%$Id: mdframed.dtx 419 2012-05-30 23:30:29Z marco $
+%%$Id: mdframed.dtx 422 2012-05-31 17:07:26Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,11pt,]{ltxmdf}
 \usepackage[framemethod=TikZ]{mdframed}
 
-\GetIdInfo$Id: mdframed.dtx 419 2012-05-30 23:30:29Z marco $
+\GetIdInfo$Id: mdframed.dtx 422 2012-05-31 17:07:26Z marco $
           {documentation of mdframed}
 
 \EnableCrossrefs
@@ -256,7 +256,7 @@ Have fun!
 % \author{\href{mailto:marco.daniel@mada-nada.de}{Marco Daniel}%
 %        \href{mailto:marco.daniel@mada-nada.de}{Elke Schubert}}
 % \version{\mdversion}
-% \GetIdInfo$Id: mdframed.dtx 419 2012-05-30 23:30:29Z marco $
+% \GetIdInfo$Id: mdframed.dtx 422 2012-05-31 17:07:26Z marco $
 %           {documentation of mdframed}
 % \date{\ExplFileDate}
 % \introduction{The standard methods for framing text (\Cmd{fbox}
@@ -1066,36 +1066,80 @@ Have fun!
 % \ExplCmd{mdfsubsubtitle}
 %     Set a title inside \Pack{mdframed} of the internal level 2.
 %
+% Both commands have the same syntax. They accept one optional and one 
+% mandatory argument. The optional argument sets the option of \Pack{mdframed}
+% whereby everything will be local. The second argument of subtitle also allows
+% paragraph breaking.
+%
+% \iffalse
+%<*example>
+% \fi
+\begin{tltxmdfexample}
+  \mdfsubtitle[<options>]{the subtitle}
+\end{tltxmdfexample}
+% \iffalse
+%</example>
+% \fi
+%
+%
 % \subsubsection{Options related to the title of level 1}
-% \ExplOpt{subtitleaboveline}
-% \ExplOpt{subtitlebelowline}
-% \ExplOpt{subtitlefont}
-% \ExplOpt{subtitlebackgroundcolor}
-% \ExplOpt{subtitleabovelinecolor}
-% \ExplOpt{subtitlebelowlinecolor}
-% \ExplOpt{subtitleabovelinewidth}
-% \ExplOpt{subtitlebelowlinewidth}
-% \ExplOpt{subtitleaboveskip}
-% \ExplOpt{subtitlebelowskip}
-% \ExplOpt{subtitleinneraboveskip}
-% \ExplOpt{subtitleinnerbelowskip}
+% \ExplOpt[false]{subtitleaboveline}
+%     Decide to draw a line above the subtile.
+% \ExplOpt[false]{subtitlebelowline}
+%     Decide to draw a line below the subtitle.
+% \ExplOpt[\string\normalfont\string\bfseries]{subtitlefont}
+%     Sets the font for subtitles.
+% \ExplOpt[white]{subtitlebackgroundcolor}
+%     Sets the background color of the subtitle between the above and below
+%     line.
+% \ExplOpt[black]{subtitleabovelinecolor}
+%     Sets the line color of the line above.
+% \ExplOpt[black]{subtitlebelowlinecolor}
+%     Sets the line color of the line below.
+% \ExplOpt[0.8\,pt]{subtitleabovelinewidth}
+%     Sets the line width of the line above.
+% \ExplOpt[0.6\,pt]{subtitlebelowlinewidth}
+%     Sets the line width of the line below.
+% \ExplOpt[\string\baselineskip]{subtitleaboveskip}
+%     Sets the skip before the subtitle line above will be drawn.
+% \ExplOpt[1.2\string\baselineskip]{subtitlebelowskip}
+%     Sets the skip after the subtitle line below is drawn.
+% \ExplOpt[0.5\string\baselineskip]{subtitleinneraboveskip}
+%     Sets the skip after the line above and the subtitle itself.
+% \ExplOpt[0.5\string\baselineskip]{subtitleinnerbelowskip}
+%     Sets the skip after the subtitle and the line below.
 %
 %
 %
 % \subsubsection{Options related to the title of level 2}
 %
-% \ExplOpt{subsubtitleaboveline}
-% \ExplOpt{subsubtitlebelowline}
-% \ExplOpt{subsubtitlefont}
-% \ExplOpt{subsubtitlebackgroundcolor}
-% \ExplOpt{subsubtitleabovelinecolor}
-% \ExplOpt{subsubtitlebelowlinecolor}
-% \ExplOpt{subsubtitleabovelinewidth}
-% \ExplOpt{subsubtitlebelowlinewidth}
-% \ExplOpt{subsubtitleaboveskip}
-% \ExplOpt{subsubtitlebelowskip}
-% \ExplOpt{subsubtitleinneraboveskip}
-% \ExplOpt{subsubtitleinnerbelowskip}
+% \ExplOpt[false]{subsubtitleaboveline}
+%     Decide to draw a line above the subsubtile.
+% \ExplOpt[false]{subtitlebelowline}
+%     Decide to draw a line below the subsubtitle.
+% \ExplOpt[\string\normalfont]{subsubtitlefont}
+%     Sets the font for subsubtitles.
+% \ExplOpt[white]{subsubtitlebackgroundcolor}
+%     Sets the background color of the subsubtitle between the above and below
+%     line.
+% \ExplOpt[black]{subsubtitleabovelinecolor}
+%     Sets the line color of the line above.
+% \ExplOpt[black]{subsubtitlebelowlinecolor}
+%     Sets the line color of the line below.
+% \ExplOpt[0.8\,pt]{subsubtitleabovelinewidth}
+%     Sets the line width of the line above.
+% \ExplOpt[0.6\,pt]{subsubtitlebelowlinewidth}
+%     Sets the line width of the line below.
+% \ExplOpt[\string\baselineskip]{subsubtitleaboveskip}
+%     Sets the skip before the subsubtitle line above will be drawn.
+% \ExplOpt[1.2\string\baselineskip]{subsubtitlebelowskip}
+%     Sets the skip after the subsubtitle line below is drawn.
+% \ExplOpt[0.5\string\baselineskip]{subsubtitleinneraboveskip}
+%     Sets the skip after the line above and the subsubtitle itself.
+% \ExplOpt[0.5\string\baselineskip]{subsubtitleinnerbelowskip}
+%     Sets the skip after the subsubtitle and the line below.
+%
+%
 %
 % \subsection{Theorems}
 % In this section is described which commands can help you to define 
@@ -1844,10 +1888,10 @@ Have fun!
 %
 % \subsection{The Explanation of mdframed.sty}
 %
-% %$Id: mdframed.dtx 419 2012-05-30 23:30:29Z marco $
-% %$Rev: 419 $
+% %$Id: mdframed.dtx 422 2012-05-31 17:07:26Z marco $
+% %$Rev: 422 $
 % %$Author: marco $
-% %$Date: 2012-05-31 01:30:29 +0200 (Do, 31 Mai 2012) $
+% %$Date: 2012-05-31 19:07:26 +0200 (Do, 31 Mai 2012) $
 % \begin{macro}{mdversion,mdframedpackagename,mdf@maindate@svn}
 % Set package information
 %    \begin{macrocode}
@@ -1860,7 +1904,7 @@ Have fun!
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{mdframed}%
-     [\mdf@maindate@svn$Id: mdframed.dtx 419 2012-05-30 23:30:29Z marco $%
+     [\mdf@maindate@svn$Id: mdframed.dtx 422 2012-05-31 17:07:26Z marco $%
       \mdversion: \mdframedpackagename]
 %    \end{macrocode}
 %
@@ -3661,7 +3705,7 @@ Have fun!
 %% Either version 1.0 or, at your option, any later version.
 %%
 %%
-%%$Id: mdframed.dtx 419 2012-05-30 23:30:29Z marco $
+%%$Id: mdframed.dtx 422 2012-05-31 17:07:26Z marco $
 %
 %    \end{macrocode}
 %
@@ -3671,7 +3715,7 @@ Have fun!
 \def\mdframedOpackagename{md-frame-0}
 \def\mdf@frameOdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-0.mdf}%
-    [\mdf@frameOdate@svn$Id: mdframed.dtx 419 2012-05-30 23:30:29Z marco $%
+    [\mdf@frameOdate@svn$Id: mdframed.dtx 422 2012-05-31 17:07:26Z marco $%
      \mdversion: \mdframedOpackagename]
 %    \end{macrocode}
 % \end{macro}
@@ -4777,7 +4821,7 @@ Have fun!
 %% Either version 1.0 or, at your option, any later version.
 %%
 %%
-%%$Id: mdframed.dtx 419 2012-05-30 23:30:29Z marco $
+%%$Id: mdframed.dtx 422 2012-05-31 17:07:26Z marco $
 %
 %    \end{macrocode}
 % \changes{v1.1beta}{2011/12/16}{added lost semicolons}
@@ -4787,7 +4831,7 @@ Have fun!
 \def\mdframedIpackagename{md-frame-1}
 \def\mdf@frameIdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-1.mdf}%
-      [\mdf@frameIdate@svn$Id: mdframed.dtx 419 2012-05-30 23:30:29Z marco $ %
+      [\mdf@frameIdate@svn$Id: mdframed.dtx 422 2012-05-31 17:07:26Z marco $ %
        \mdversion: \mdframedIpackagename]
 %
 %    \end{macrocode}
@@ -6047,7 +6091,7 @@ Have fun!
 %% Either version 1.0 or, at your option, any later version.
 %%
 %%
-%%$Id: mdframed.dtx 419 2012-05-30 23:30:29Z marco $
+%%$Id: mdframed.dtx 422 2012-05-31 17:07:26Z marco $
 %
 %    \end{macrocode}
 %
@@ -6057,7 +6101,7 @@ Have fun!
 \def\mdframedIIpackagename{md-frame-2}
 \def\mdf@frameIIdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-2.mdf}%
-      [\mdf@frameIIdate@svn$Id: mdframed.dtx 419 2012-05-30 23:30:29Z marco $ %
+      [\mdf@frameIIdate@svn$Id: mdframed.dtx 422 2012-05-31 17:07:26Z marco $ %
        \mdversion: \mdframedIIpackagename]
 %    \end{macrocode}
 % \end{macro}
@@ -7076,10 +7120,10 @@ Have fun!
 %
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 419 2012-05-30 23:30:29Z marco $
+%%$Id: mdframed.dtx 422 2012-05-31 17:07:26Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt]{ltxmdf}
-\GetIdInfo$Id: mdframed.dtx 419 2012-05-30 23:30:29Z marco $
+\GetIdInfo$Id: mdframed.dtx 422 2012-05-31 17:07:26Z marco $
           {documentation of mdframed}
 
 \usepackage{showexpl}
@@ -7303,10 +7347,10 @@ The example below is inspired by the following post on StackExchange
 %
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 419 2012-05-30 23:30:29Z marco $
+%%$Id: mdframed.dtx 422 2012-05-31 17:07:26Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt]{ltxmdf}
-\GetIdInfo$Id: mdframed.dtx 419 2012-05-30 23:30:29Z marco $
+\GetIdInfo$Id: mdframed.dtx 422 2012-05-31 17:07:26Z marco $
           {documentation of mdframed}
 
 
@@ -7515,10 +7559,10 @@ function of the independent variables alone.
 %
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 419 2012-05-30 23:30:29Z marco $
+%%$Id: mdframed.dtx 422 2012-05-31 17:07:26Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt]{ltxmdf}
-\GetIdInfo$Id: mdframed.dtx 419 2012-05-30 23:30:29Z marco $
+\GetIdInfo$Id: mdframed.dtx 422 2012-05-31 17:07:26Z marco $
           {documentation of mdframed}
 
 \lstDeleteShortInline{|}
@@ -7662,10 +7706,10 @@ function of the independent variables alone.
 
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 419 2012-05-30 23:30:29Z marco $
+%%$Id: mdframed.dtx 422 2012-05-31 17:07:26Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt,lipsum=true]{ltxmdf}
-\GetIdInfo$Id: mdframed.dtx 419 2012-05-30 23:30:29Z marco $
+\GetIdInfo$Id: mdframed.dtx 422 2012-05-31 17:07:26Z marco $
           {documentation of mdframed}
 
 
