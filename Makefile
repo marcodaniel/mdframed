@@ -1,6 +1,6 @@
 ################################################################
 ## Makefile for mdframed project folder
-## $Id: Makefile 418 2012-05-30 22:10:59Z marco $
+## $Id: Makefile 422 2012-05-31 17:07:26Z marco $
 ################################################################
 ## Definitions
 ################################################################
@@ -66,7 +66,7 @@ help:
 	NAME=`basename $< .tex` ;\
 	echo -e "" ;\
 	echo -e "\t$(WARN_COLOR)Typesetting $$NAME$(NO_COLOR)" ;\
-	xelatex --draftmode --interaction=nonstopmode $< > /dev/null ;\
+	xelatex --no-pdf --interaction=nonstopmode $< > /dev/null ;\
 	if [ $$? = 0 ] ; then \
 	  echo -e "\t$(OK_COLOR)compilation in draftmode without errors$(NO_COLOR)" ;\
 	  echo -e "\t$(OK_COLOR)Run LaTeX again on $$NAME.tex$(NO_COLOR)" ;\
