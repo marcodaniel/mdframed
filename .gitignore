@@ -1,0 +1,31 @@
+# .gitignore itself     #
+#########################
+# .gitignore
+
+
+# OS generated files    #
+#########################
+*.*~
+*~
+
+# source                #
+#########################
+.svn/
+*.mdf
+*.aux
+*.hd
+*.log
+*.out
+*.thm
+*.tar.gz
+*.jpg
+*.synctex.gz
+*.txt
+
+# package related files #
+#########################
+mdframed-example*
+md-test*
+mdframed.sty
+mdframed.pdf
+
