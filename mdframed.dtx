@@ -213,12 +213,12 @@ Have fun!
 \fi
 %</internal>
 %<*driver>
-%%$Id: mdframed.dtx 423 2012-05-31 21:27:10Z marco $
+%%$Id: mdframed.dtx 424 2012-06-01 10:13:24Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,11pt,]{ltxmdf}
 \usepackage[framemethod=TikZ]{mdframed}
 
-\GetIdInfo$Id: mdframed.dtx 423 2012-05-31 21:27:10Z marco $
+\GetIdInfo$Id: mdframed.dtx 424 2012-06-01 10:13:24Z marco $
           {documentation of mdframed}
 
 \EnableCrossrefs
@@ -256,7 +256,7 @@ Have fun!
 % \author{\href{mailto:marco.daniel@mada-nada.de}{Marco Daniel}%
 %        \href{mailto:marco.daniel@mada-nada.de}{Elke Schubert}}
 % \version{\mdversion}
-% \GetIdInfo$Id: mdframed.dtx 423 2012-05-31 21:27:10Z marco $
+% \GetIdInfo$Id: mdframed.dtx 424 2012-06-01 10:13:24Z marco $
 %           {documentation of mdframed}
 % \date{\ExplFileDate}
 % \introduction{The standard methods for framing text (\Cmd{fbox}
@@ -295,8 +295,8 @@ Have fun!
 % 
 % 
 % \newmdtheoremenv[outerlinewidth=2,leftmargin=40,rightmargin=40,%
-%   backgroundcolor=yellow,outerlinecolor=blue,innertopmargin=0pt,%
-%   splittopskip=\topskip,skipbelow=\baselineskip,%
+%   backgroundcolor=yellow,outerlinecolor=blue,innertopmargin=\topskip,%
+%   splittopskip=\topskip,skipbelow=\baselineskip,
 %   skipabove=\baselineskip,
 %   ntheorem,roundcorner=5pt]{theorem}{Theorem}[section]
 % 
@@ -316,7 +316,7 @@ Have fun!
 \begin{tltxmdfexample}
  \newmdtheoremenv[outerlinewidth=2,leftmargin=40,%
      rightmargin=40,backgroundcolor=yellow,%
-     outerlinecolor=blue,innertopmargin=0pt,%
+     outerlinecolor=blue,innertopmargin=\topskip,%
      splittopskip=\topskip,skipbelow=\baselineskip,%
      skipabove=\baselineskip,ntheorem]{theorem}%
      {Theorem}[section]
@@ -1888,10 +1888,10 @@ Have fun!
 %
 % \subsection{The Explanation of mdframed.sty}
 %
-% %$Id: mdframed.dtx 423 2012-05-31 21:27:10Z marco $
-% %$Rev: 423 $
+% %$Id: mdframed.dtx 424 2012-06-01 10:13:24Z marco $
+% %$Rev: 424 $
 % %$Author: marco $
-% %$Date: 2012-05-31 23:27:10 +0200 (Do, 31 Mai 2012) $
+% %$Date: 2012-06-01 12:13:24 +0200 (Fr, 01 Jun 2012) $
 % \begin{macro}{mdversion,mdframedpackagename,mdf@maindate@svn}
 % Set package information
 %    \begin{macrocode}
@@ -1904,7 +1904,7 @@ Have fun!
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{mdframed}%
-     [\mdf@maindate@svn$Id: mdframed.dtx 423 2012-05-31 21:27:10Z marco $%
+     [\mdf@maindate@svn$Id: mdframed.dtx 424 2012-06-01 10:13:24Z marco $%
       \mdversion: \mdframedpackagename]
 %    \end{macrocode}
 %
@@ -3705,7 +3705,7 @@ Have fun!
 %% Either version 1.0 or, at your option, any later version.
 %%
 %%
-%%$Id: mdframed.dtx 423 2012-05-31 21:27:10Z marco $
+%%$Id: mdframed.dtx 424 2012-06-01 10:13:24Z marco $
 %
 %    \end{macrocode}
 %
@@ -3715,7 +3715,7 @@ Have fun!
 \def\mdframedOpackagename{md-frame-0}
 \def\mdf@frameOdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-0.mdf}%
-    [\mdf@frameOdate@svn$Id: mdframed.dtx 423 2012-05-31 21:27:10Z marco $%
+    [\mdf@frameOdate@svn$Id: mdframed.dtx 424 2012-06-01 10:13:24Z marco $%
      \mdversion: \mdframedOpackagename]
 %    \end{macrocode}
 % \end{macro}
@@ -4819,7 +4819,7 @@ Have fun!
 %% Either version 1.0 or, at your option, any later version.
 %%
 %%
-%%$Id: mdframed.dtx 423 2012-05-31 21:27:10Z marco $
+%%$Id: mdframed.dtx 424 2012-06-01 10:13:24Z marco $
 %
 %    \end{macrocode}
 % \changes{v1.1beta}{2011/12/16}{added lost semicolons}
@@ -4829,7 +4829,7 @@ Have fun!
 \def\mdframedIpackagename{md-frame-1}
 \def\mdf@frameIdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-1.mdf}%
-      [\mdf@frameIdate@svn$Id: mdframed.dtx 423 2012-05-31 21:27:10Z marco $ %
+      [\mdf@frameIdate@svn$Id: mdframed.dtx 424 2012-06-01 10:13:24Z marco $ %
        \mdversion: \mdframedIpackagename]
 %
 %    \end{macrocode}
@@ -6085,7 +6085,7 @@ Have fun!
 %% Either version 1.0 or, at your option, any later version.
 %%
 %%
-%%$Id: mdframed.dtx 423 2012-05-31 21:27:10Z marco $
+%%$Id: mdframed.dtx 424 2012-06-01 10:13:24Z marco $
 %
 %    \end{macrocode}
 %
@@ -6095,7 +6095,7 @@ Have fun!
 \def\mdframedIIpackagename{md-frame-2}
 \def\mdf@frameIIdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-2.mdf}%
-      [\mdf@frameIIdate@svn$Id: mdframed.dtx 423 2012-05-31 21:27:10Z marco $ %
+      [\mdf@frameIIdate@svn$Id: mdframed.dtx 424 2012-06-01 10:13:24Z marco $ %
        \mdversion: \mdframedIIpackagename]
 %    \end{macrocode}
 % \end{macro}
@@ -7403,10 +7403,10 @@ Have fun!
 %
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 423 2012-05-31 21:27:10Z marco $
+%%$Id: mdframed.dtx 424 2012-06-01 10:13:24Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt]{ltxmdf}
-\GetIdInfo$Id: mdframed.dtx 423 2012-05-31 21:27:10Z marco $
+\GetIdInfo$Id: mdframed.dtx 424 2012-06-01 10:13:24Z marco $
           {documentation of mdframed}
 
 \usepackage{showexpl}
@@ -7630,10 +7630,10 @@ The example below is inspired by the following post on StackExchange
 %
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 423 2012-05-31 21:27:10Z marco $
+%%$Id: mdframed.dtx 424 2012-06-01 10:13:24Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt]{ltxmdf}
-\GetIdInfo$Id: mdframed.dtx 423 2012-05-31 21:27:10Z marco $
+\GetIdInfo$Id: mdframed.dtx 424 2012-06-01 10:13:24Z marco $
           {documentation of mdframed}
 
 
@@ -7842,10 +7842,10 @@ function of the independent variables alone.
 %
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 423 2012-05-31 21:27:10Z marco $
+%%$Id: mdframed.dtx 424 2012-06-01 10:13:24Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt]{ltxmdf}
-\GetIdInfo$Id: mdframed.dtx 423 2012-05-31 21:27:10Z marco $
+\GetIdInfo$Id: mdframed.dtx 424 2012-06-01 10:13:24Z marco $
           {documentation of mdframed}
 
 \lstDeleteShortInline{|}
@@ -7989,10 +7989,10 @@ function of the independent variables alone.
 
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 423 2012-05-31 21:27:10Z marco $
+%%$Id: mdframed.dtx 424 2012-06-01 10:13:24Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt,lipsum=true]{ltxmdf}
-\GetIdInfo$Id: mdframed.dtx 423 2012-05-31 21:27:10Z marco $
+\GetIdInfo$Id: mdframed.dtx 424 2012-06-01 10:13:24Z marco $
           {documentation of mdframed}
 
 
