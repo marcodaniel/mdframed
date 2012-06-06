@@ -1,6 +1,6 @@
 ################################################################
 ## Makefile for mdframed project folder
-## $Id: Makefile 422 2012-05-31 17:07:26Z marco $
+## $Id: Makefile 428 2012-06-06 12:30:18Z marco $
 ################################################################
 ## Definitions
 ################################################################
@@ -22,7 +22,7 @@ STYLE_IV  = md-frame-3
 EXAMPLLIST=  $(EXAMPLED) $(EXAMPLET) $(EXAMPLEP) $(EXAMPLESX) 
 FILELIST  =  $(PACKAGE) $(EXAMPLED) $(EXAMPLET) $(EXAMPLEP) $(EXAMPLESX)
 STYLELIST = $(STYLE_I) $(STYLE_II) $(STYLE_III) $(STYLE_IV)
-AUXFILES  = aux dtxe glo glolog gls hd ins idx idxlog ilg ind log out ps thm tmp toc 
+AUXFILES  = aux dtxe glo glolog gls hd ins idx idxlog ilg ind log out ps thm tmp toc xdv
 ################################################################
 ## Colordefinition
 ################################################################
@@ -47,7 +47,12 @@ help:
 ################################################################
 ## Compilation
 ################################################################
-%.pdf: %.tex
+$(EXAMPLED).pdf: $(EXAMPLED).tex
+$(EXAMPLET).pdf: $(EXAMPLET).tex
+$(EXAMPLEP).ps: $(EXAMPLEP).tex
+$(EXAMPLESX).pdf: $(EXAMPLESX).tex
+
+%.pdf:
 	NAME=`basename $< .tex` ;\
 	echo -e "" ;\
 	echo -e "\t$(WARN_COLOR)Typesetting $$NAME$(NO_COLOR)" ;\
@@ -62,14 +67,14 @@ help:
 	fi ;\
 	echo -e "\t$(OK_COLOR)Typesetting $$NAME finished $(NO_COLOR)" ;\
 
-%.ps: %.tex
+%.ps:
 	NAME=`basename $< .tex` ;\
 	echo -e "" ;\
 	echo -e "\t$(WARN_COLOR)Typesetting $$NAME$(NO_COLOR)" ;\
 	xelatex --no-pdf --interaction=nonstopmode $< > /dev/null ;\
 	if [ $$? = 0 ] ; then \
 	  echo -e "\t$(OK_COLOR)compilation in draftmode without errors$(NO_COLOR)" ;\
-	  echo -e "\t$(OK_COLOR)Run LaTeX again on $$NAME.tex$(NO_COLOR)" ;\
+	  echo -e "\t$(OK_COLOR)Run XeLaTeX again on $$NAME.tex$(NO_COLOR)" ;\
 	  xelatex --interaction=nonstopmode $< > /dev/null ;\
 	else \
 	  echo -e "\t$(ERROR_COLOR)compilation in draftmode with errors$(NO_COLOR)" ;\
@@ -130,12 +135,12 @@ docsty: $(PACKAGE).dtx
 	  exit 0;\
 	fi ;\
 
-examples: $(EXAMPLED).pdf $(EXAMPLET).pdf $(EXAMPLEP).ps $(EXAMPLESX).pdf
-
 exampled: $(EXAMPLED).pdf
 examplet: $(EXAMPLET).pdf
 examplep: $(EXAMPLEP).ps
 examplesx:$(EXAMPLESX).pdf
+
+examples: exampled examplet examplep examplesx
 
 clean:  
 	echo  "" ;\
@@ -176,7 +181,7 @@ makelocalinstall:
 	echo -e "\t$(OK_COLOR)Installation done$(NO_COLOR)" ;\
 
 ################################################################
-## maintaner tool
+## maintainer tool
 ################################################################
 changeversion:
 	@echo 
