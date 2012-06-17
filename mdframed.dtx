@@ -7671,12 +7671,12 @@ The example below is inspired by the following post on StackExchange
 \begin{document}
 \maketitle
 \section{Loading}
-In the preamble only the package \Pack{mdframed} width the option 
+In the preamble only the package \Pack{mdframed} width the option
 \Opt{framemethod=\Loadedframemethod} is loaded. All other modifications will be
 done by \Cmd{mdfdefinestyle} or \Cmd{mdfsetup}.
 
 {\large\color{red!50!black}
-\NOTE Every \Cmd{global} inside the examples is necessary to work with the 
+\NOTE Every \Cmd{global} inside the examples is necessary to work with the
 package \Pack{showexpl}.}
 
 \section{Examples}
@@ -7696,7 +7696,7 @@ function of the independent variables alone.
 }
 \end{tltxmdfexample}
 \clearpage
-\ExampleText{round corner}
+\Examplesec{round corner}
 \begin{LTXexample}
 \global\mdfdefinestyle{exampledefault}{%
      outerlinewidth=5pt,innerlinewidth=0pt,
@@ -7710,7 +7710,7 @@ function of the independent variables alone.
 \Examplesec{hidden line + frame title}
 \begin{LTXexample}
 \global\mdfapptodefinestyle{exampledefault}{%
- topline=false,leftline=false,}
+     topline=false,leftline=false,}
 \begin{mdframed}[style=exampledefault,frametitle={Inhomogeneous linear}]
 \ExampleText
 \end{mdframed}
@@ -7727,7 +7727,7 @@ function of the independent variables alone.
 \end{LTXexample}
 
 \Examplesec{Gimmick}
-\begin{LTXexample}
+\begin{LTXexample}[morekeywords={line,width,dash,dashed,pattern}]
 \mdfsetup{splitbottomskip=0.8cm,splittopskip=0cm,
           innerrightmargin=2cm,innertopmargin=1cm,%
           innerlinewidth=2pt,outerlinewidth=2pt,
@@ -7742,19 +7742,17 @@ function of the independent variables alone.
 \end{mdframed}
 \end{LTXexample}
 
+\clearpage
 \Examplesec{complex example with TikZ}
 
-\begin{tltxmdfexample}
+\begin{tltxmdfexample}[morekeywords={mdf,pgfinterruptboundingbox}]
 \tikzstyle{titregris} =
      [draw=gray, thick, fill=white, shading = exersicetitle, %
       text=gray, rectangle, rounded corners, right,minimum height=.7cm]
-
 \pgfdeclarehorizontalshading{exersicebackground}{100bp}
           {color(0bp)=(green!40); color(100bp)=(black!5)}
-
 \pgfdeclarehorizontalshading{exersicetitle}{100bp}
           {color(0bp)=(red!40);color(100bp)=(black!5)}
-
 \newcounter{exercise}
 \renewcommand*\theexercise{Exercise~n\arabic{exercise}}
 \makeatletter
@@ -7762,35 +7760,38 @@ function of the independent variables alone.
 \define@key{mdf}{exercisepoints}{%
     \def\mdf@@exercisepoints{#1}
 }
-\makeatother
-
 \mdfdefinestyle{exercisestyle}{%
-  outerlinewidth=1pt,innerlinewidth=0pt,
-  roundcorner=2pt,linecolor=gray,
-  tikzsetting={shading = exersicebackground},
+  middlelinewidth=1.2pt,roundcorner=5pt,linecolor=gray,
+  apptotikzsetting={\tikzset{mdfbackground/.append style ={%
+                       shading = exersicebackground}}},
   innertopmargin=1.2\baselineskip,
   skipabove={\dimexpr0.5\baselineskip+\topskip\relax},
   needspace=3\baselineskip,
   frametitlefont=\sffamily\bfseries,
   settings={\global\stepcounter{exercise}},
   singleextra={%
+      \begin{pgfinterruptboundingbox}%
         \node[titregris,xshift=1cm] at (P-|O) %
            {~\mdf@frametitlefont{\theexercise}~};
-      \ifdefempty{\mdf@@exercisepoints}%
-      {}%
-      {\node[titregris,left,xshift=-1cm] at (P)%
-        {~\mdf@frametitlefont{\mdf@@exercisepoints points}~};}%
+        \ifdefempty{\mdf@@exercisepoints}%
+        {}%
+        {\node[titregris,left,xshift=-1cm] at (P)%
+          {~\mdf@frametitlefont{\mdf@@exercisepoints points}~};}%
+      \end{pgfinterruptboundingbox}%
    },
   firstextra={%
+      \begin{pgfinterruptboundingbox}%
         \node[titregris,xshift=1cm] at (P-|O) %
            {~\mdf@frametitlefont{\theexercise}~};
-      \ifdefempty{\mdf@@exercisepoints}%
-      {}%
-      {\node[titregris,left,xshift=-1cm] at (P)%
-        {~\mdf@frametitlefont{\mdf@@exercisepoints points}~};}%
+        \ifdefempty{\mdf@@exercisepoints}%
+        {}%
+        {\node[titregris,left,xshift=-1cm] at (P)%
+          {~\mdf@frametitlefont{\mdf@@exercisepoints points}~};}%
+      \end{pgfinterruptboundingbox}%
    },
 }
-\begin{mdframed}[style=exercisestyle,]
+\makeatother
+\begin{mdframed}[style=exercisestyle]
 \ExampleText
 \end{mdframed}
 
@@ -7798,14 +7799,68 @@ function of the independent variables alone.
 \ExampleText
 \end{mdframed}
 \end{tltxmdfexample}
+
+\tikzstyle{titregris} =
+     [draw=gray, thick, fill=white, shading = exersicetitle, %
+      text=gray, rectangle, rounded corners, right,minimum height=.7cm]
+\pgfdeclarehorizontalshading{exersicebackground}{100bp}
+          {color(0bp)=(green!40); color(100bp)=(black!5)}
+\pgfdeclarehorizontalshading{exersicetitle}{100bp}
+          {color(0bp)=(red!40);color(100bp)=(black!5)}
+\newcounter{exercise}
+\renewcommand*\theexercise{Exercise~n\arabic{exercise}}
+\makeatletter
+\def\mdf@@exercisepoints{}%new mdframed key:
+\define@key{mdf}{exercisepoints}{%
+    \def\mdf@@exercisepoints{#1}
+}
+\mdfdefinestyle{exercisestyle}{%
+  middlelinewidth=1.2pt,roundcorner=5pt,linecolor=gray,
+  apptotikzsetting={\tikzset{mdfbackground/.append style ={%
+                       shading = exersicebackground}}},
+  innertopmargin=1.2\baselineskip,
+  skipabove={\dimexpr0.5\baselineskip+\topskip\relax},
+  needspace=3\baselineskip,
+  frametitlefont=\sffamily\bfseries,
+  settings={\global\stepcounter{exercise}},
+  singleextra={%
+      \begin{pgfinterruptboundingbox}%
+        \node[titregris,xshift=1cm] at (P-|O) %
+           {~\mdf@frametitlefont{\theexercise}~};
+        \ifdefempty{\mdf@@exercisepoints}%
+        {}%
+        {\node[titregris,left,xshift=-1cm] at (P)%
+          {~\mdf@frametitlefont{\mdf@@exercisepoints points}~};}%
+      \end{pgfinterruptboundingbox}%
+   },
+  firstextra={%
+      \begin{pgfinterruptboundingbox}%
+        \node[titregris,xshift=1cm] at (P-|O) %
+           {~\mdf@frametitlefont{\theexercise}~};
+        \ifdefempty{\mdf@@exercisepoints}%
+        {}%
+        {\node[titregris,left,xshift=-1cm] at (P)%
+          {~\mdf@frametitlefont{\mdf@@exercisepoints points}~};}%
+      \end{pgfinterruptboundingbox}%
+   },
+}
+\makeatother
+\begin{mdframed}[style=exercisestyle]
+\ExampleText
+\end{mdframed}
+
+\begin{mdframed}[style=exercisestyle,exercisepoints=10]
+\ExampleText
+\end{mdframed}
+
 \clearpage
 \Examplesec{Theorem environments}
-\begin{LTXexample}
+\begin{LTXexample}[morekeywords={theoremstyle,definition}]
 \mdfdefinestyle{theoremstyle}{%
-     linecolor=red,linewidth=2pt,%
+     linecolor=red,middlelinewidth=2pt,%
      frametitlerule=true,%
      apptotikzsetting={\tikzset{mdfframetitlebackground/.append style={%
-                         shade,left color=white, right color=blue!20}}},
+                          shade,left color=white, right color=blue!20}}},
      frametitlerulecolor=green!60,
      frametitlerulewidth=1pt,
      innertopmargin=\topskip,
