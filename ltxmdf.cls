@@ -153,7 +153,10 @@
                    innerleftmargin,frametitlerule,frametitlebelowskip,
                    frametitleaboveskip,frametitlebackgroundcolor,
                    frametitlerulecolor,picins,figure,hidealllines,fontcolor,
-                   firstextra,secondextra,middleextra,singleextra,overlay,node},
+                   firstextra,secondextra,middleextra,singleextra,overlay,node,
+                   pstricksappsetting,apptotikzsetting,frametitlerulewidth,
+                   userdefinedwidth,mdfbackground,append,mdfframetitlebackground,
+                   left,shade,align,exampledefault},
      moretexcs={newmdtheoremenv,newmdenv,theoremstyle,mdfsetup,@length,
                    md@putbox@single,@tempboxa,mdf@,mdf@linewidth,
                    mdf@leftmargin@length,interruptlength,setlength,newrobustcmd,
@@ -167,7 +170,8 @@
                    define@key,renewrobustcmd,mdfcreateextratikz,node,ifdefempty,
                    mdf@frametitlefont,dimexpr,mdframedtitleenv,ifstrempty,
                    @undefined,mdtheorem,surroundwithmdframed,@captype,@dblarg,
-                   @newcaption,newcaption,mdflength,tikzset,path,p1,p2%
+                   @newcaption,newcaption,mdflength,tikzset,path,p1,p2,
+                   IfFileExists,includegraphics%
                    },%
 }
 

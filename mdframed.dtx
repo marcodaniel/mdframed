@@ -4811,7 +4811,7 @@ Have fun!
 %\fi
 % \subsection{The Explanation of md-frame-1.mdf}
 %    \begin{macrocode}
-%% Style file for mdframed for package option `framemethod=default`
+%% Style file for mdframed for package option `framemethod=tikz`
 %% 
 %% This package may be distributed under the terms of the LaTeX Project
 %% Public License, as described in lppl.txt in the base LaTeX distribution.
@@ -6077,7 +6077,7 @@ Have fun!
 %\fi
 % \subsection{The Explanation of md-frame-2.mdf / md-frame-3.mdf}
 %    \begin{macrocode}
-%% Style file for mdframed for package option `framemethod=default`
+%% Style file for mdframed for package option `framemethod=pstricks`
 %% 
 %% This package may be distributed under the terms of the LaTeX Project
 %% Public License, as described in lppl.txt in the base LaTeX distribution.
@@ -7673,12 +7673,12 @@ The example below is inspired by the following post on StackExchange
 \begin{document}
 \maketitle
 \section{Loading}
-In the preamble only the package \Pack{mdframed} width the option 
+In the preamble only the package \Pack{mdframed} width the option
 \Opt{framemethod=\Loadedframemethod} is loaded. All other modifications will be
 done by \Cmd{mdfdefinestyle} or \Cmd{mdfsetup}.
 
 {\large\color{red!50!black}
-\NOTE Every \Cmd{global} inside the examples is necessary to work with the 
+\NOTE Every \Cmd{global} inside the examples is necessary to work with the
 package \Pack{showexpl}.}
 
 \section{Examples}
@@ -7698,7 +7698,7 @@ function of the independent variables alone.
 }
 \end{tltxmdfexample}
 \clearpage
-\ExampleText{round corner}
+\Examplesec{round corner}
 \begin{LTXexample}
 \global\mdfdefinestyle{exampledefault}{%
      outerlinewidth=5pt,innerlinewidth=0pt,
@@ -7712,7 +7712,7 @@ function of the independent variables alone.
 \Examplesec{hidden line + frame title}
 \begin{LTXexample}
 \global\mdfapptodefinestyle{exampledefault}{%
- topline=false,leftline=false,}
+     topline=false,leftline=false,}
 \begin{mdframed}[style=exampledefault,frametitle={Inhomogeneous linear}]
 \ExampleText
 \end{mdframed}
@@ -7729,7 +7729,7 @@ function of the independent variables alone.
 \end{LTXexample}
 
 \Examplesec{Gimmick}
-\begin{LTXexample}
+\begin{LTXexample}[morekeywords={line,width,dash,dashed,pattern}]
 \mdfsetup{splitbottomskip=0.8cm,splittopskip=0cm,
           innerrightmargin=2cm,innertopmargin=1cm,%
           innerlinewidth=2pt,outerlinewidth=2pt,
@@ -7744,19 +7744,17 @@ function of the independent variables alone.
 \end{mdframed}
 \end{LTXexample}
 
+\clearpage
 \Examplesec{complex example with TikZ}
 
-\begin{tltxmdfexample}
+\begin{tltxmdfexample}[morekeywords={mdf}]
 \tikzstyle{titregris} =
      [draw=gray, thick, fill=white, shading = exersicetitle, %
       text=gray, rectangle, rounded corners, right,minimum height=.7cm]
-
 \pgfdeclarehorizontalshading{exersicebackground}{100bp}
           {color(0bp)=(green!40); color(100bp)=(black!5)}
-
 \pgfdeclarehorizontalshading{exersicetitle}{100bp}
           {color(0bp)=(red!40);color(100bp)=(black!5)}
-
 \newcounter{exercise}
 \renewcommand*\theexercise{Exercise~n\arabic{exercise}}
 \makeatletter
@@ -7764,35 +7762,38 @@ function of the independent variables alone.
 \define@key{mdf}{exercisepoints}{%
     \def\mdf@@exercisepoints{#1}
 }
-\makeatother
-
 \mdfdefinestyle{exercisestyle}{%
-  outerlinewidth=1pt,innerlinewidth=0pt,
-  roundcorner=2pt,linecolor=gray,
-  tikzsetting={shading = exersicebackground},
+  outerlinewidth=1em,outerlinecolor=white,%
+  leftmargin=-1em,rightmargin=-1em,%
+  middlelinewidth=1.2pt,roundcorner=5pt,linecolor=gray,
+  apptotikzsetting={\tikzset{mdfbackground/.append style ={%
+                       shading = exersicebackground}}},
   innertopmargin=1.2\baselineskip,
   skipabove={\dimexpr0.5\baselineskip+\topskip\relax},
+  skipbelow={-1em},
   needspace=3\baselineskip,
   frametitlefont=\sffamily\bfseries,
   settings={\global\stepcounter{exercise}},
   singleextra={%
-        \node[titregris,xshift=1cm] at (P-|O) %
-           {~\mdf@frametitlefont{\theexercise}~};
+      \node[titregris,xshift=1cm] at (P-|O) %
+         {~\mdf@frametitlefont{\theexercise}~};
       \ifdefempty{\mdf@@exercisepoints}%
       {}%
       {\node[titregris,left,xshift=-1cm] at (P)%
         {~\mdf@frametitlefont{\mdf@@exercisepoints points}~};}%
    },
   firstextra={%
-        \node[titregris,xshift=1cm] at (P-|O) %
-           {~\mdf@frametitlefont{\theexercise}~};
+      \node[titregris,xshift=1cm] at (P-|O) %
+         {~\mdf@frametitlefont{\theexercise}~};
       \ifdefempty{\mdf@@exercisepoints}%
       {}%
       {\node[titregris,left,xshift=-1cm] at (P)%
         {~\mdf@frametitlefont{\mdf@@exercisepoints points}~};}%
    },
 }
-\begin{mdframed}[style=exercisestyle,]
+\makeatother
+
+\begin{mdframed}[style=exercisestyle]
 \ExampleText
 \end{mdframed}
 
@@ -7800,14 +7801,68 @@ function of the independent variables alone.
 \ExampleText
 \end{mdframed}
 \end{tltxmdfexample}
+
+\tikzstyle{titregris} =
+     [draw=gray, thick, fill=white, shading = exersicetitle, %
+      text=gray, rectangle, rounded corners, right,minimum height=.7cm]
+\pgfdeclarehorizontalshading{exersicebackground}{100bp}
+          {color(0bp)=(green!40); color(100bp)=(black!5)}
+\pgfdeclarehorizontalshading{exersicetitle}{100bp}
+          {color(0bp)=(red!40);color(100bp)=(black!5)}
+\newcounter{exercise}
+\renewcommand*\theexercise{Exercise~n\arabic{exercise}}
+\makeatletter
+\def\mdf@@exercisepoints{}%new mdframed key:
+\define@key{mdf}{exercisepoints}{%
+    \def\mdf@@exercisepoints{#1}
+}
+\mdfdefinestyle{exercisestyle}{%
+  outerlinewidth=1em,outerlinecolor=white,%
+  leftmargin=-1em,rightmargin=-1em,%
+  middlelinewidth=1.2pt,roundcorner=5pt,linecolor=gray,
+  apptotikzsetting={\tikzset{mdfbackground/.append style ={%
+                       shading = exersicebackground}}},
+  innertopmargin=1.2\baselineskip,
+  skipabove={\dimexpr0.5\baselineskip+\topskip\relax},
+  skipbelow={-1em},
+  needspace=3\baselineskip,
+  frametitlefont=\sffamily\bfseries,
+  settings={\global\stepcounter{exercise}},
+  singleextra={%
+      \node[titregris,xshift=1cm] at (P-|O) %
+         {~\mdf@frametitlefont{\theexercise}~};
+      \ifdefempty{\mdf@@exercisepoints}%
+      {}%
+      {\node[titregris,left,xshift=-1cm] at (P)%
+        {~\mdf@frametitlefont{\mdf@@exercisepoints points}~};}%
+   },
+  firstextra={%
+      \node[titregris,xshift=1cm] at (P-|O) %
+         {~\mdf@frametitlefont{\theexercise}~};
+      \ifdefempty{\mdf@@exercisepoints}%
+      {}%
+      {\node[titregris,left,xshift=-1cm] at (P)%
+        {~\mdf@frametitlefont{\mdf@@exercisepoints points}~};}%
+   },
+}
+\makeatother
+
+\begin{mdframed}[style=exercisestyle]
+\ExampleText
+\end{mdframed}
+
+\begin{mdframed}[style=exercisestyle,exercisepoints=10]
+\ExampleText
+\end{mdframed}
+
 \clearpage
 \Examplesec{Theorem environments}
-\begin{LTXexample}
+\begin{LTXexample}[morekeywords={theoremstyle,definition}]
 \mdfdefinestyle{theoremstyle}{%
-     linecolor=red,linewidth=2pt,%
+     linecolor=red,middlelinewidth=2pt,%
      frametitlerule=true,%
      apptotikzsetting={\tikzset{mdfframetitlebackground/.append style={%
-                         shade,left color=white, right color=blue!20}}},
+                          shade,left color=white, right color=blue!20}}},
      frametitlerulecolor=green!60,
      frametitlerulewidth=1pt,
      innertopmargin=\topskip,
@@ -7892,7 +7947,7 @@ done by \Cmd{mdfdefinestyle} or \Cmd{mdfsetup}.
 {\large\color{red!50!black}
 \NOTE Every \Cmd{global} inside the examples is necessary to work with the 
 package \Pack{showexpl}.}
-X
+
 \section{Examples}
 All examples have the following settings:
 
@@ -7923,7 +7978,8 @@ function of the independent variables alone.
 \end{LTXexample}
 
 \Examplesec{hidden line + frame title}
-\begin{LTXexample}
+\begin{LTXexample}[morekeywords={innerlinecolor,addtopsstyle,mdfouterlinestyle,
+                    linestyle}]
 \global\mdfapptodefinestyle{exampledefault}{%
  topline=false,rightline=false,bottomline=false,
  frametitlerule=true,innertopmargin=6pt,
@@ -7937,27 +7993,30 @@ function of the independent variables alone.
 
 \clearpage
 
-\Examplesec{Dash Lines}
+\Examplesec{Dash Lines}[morekeywords={pstrickssetting,linestyle,dashed}]
 \begin{LTXexample}
 \global\mdfdefinestyle{exampledefault}{%
-   pstrickssetting={linestyle=dashed,},linecolor=red,linewidth=5pt}
-\begin{mdframed}[style=exampledefault,]
+   pstrickssetting={linestyle=dashed,},linecolor=red,middlelinewidth=2pt}
+\begin{mdframed}[style=exampledefault]
 \ExampleText
 \end{mdframed}
 \end{LTXexample}
 
 \Examplesec{Double Lines}
-\begin{LTXexample}
+\begin{LTXexample}[morekeywords={addtopsstyle,mdfmiddlelinestyle,
+                    doubleline,doublesep}]
 \global\mdfdefinestyle{exampledefault}{%
-   pstrickssetting={doubleline=true,doublesep=6pt},
-   linecolor=red,linewidth=5pt,middlelinewidth=4pt}
-\begin{mdframed}[style=exampledefault,]
+  pstricksappsetting={\addtopsstyle{mdfmiddlelinestyle}{%
+                      doubleline=true,doublesep=6pt,linewidth=4pt}},%
+  linecolor=red,middlelinewidth=16pt}
+\begin{mdframed}[style=exampledefault]
 \ExampleText
 \end{mdframed}
 \end{LTXexample}
 
+\clearpage
 \Examplesec{Shadow frame}
-\begin{LTXexample}
+\begin{LTXexample}[morekeywords={shadow,shadowsize,myshadowbox}]
 \newmdenv[shadow=true,
           shadowsize=11pt,
           linewidth=8pt,
@@ -8079,14 +8138,14 @@ Here the solution which can be decorate as usual.
 
 With the new command \Cmd{surroundwithmdframed} you can use
 \begin{tltxmdfexample}[moretexcs={BeforeBeginEnvironment,AfterEndEnvironment},
-                       morekeywords={lstlisting}]
+                       morekeywords={listings}]
 \surroundwithmdframed{listings}
 \end{tltxmdfexample}
 
 \Examplesec{Package multicol}
 How I wrote in \enquote{Known Problems} you can't combine \Pack{multicol}  with
 \Pack{mdframed}. In a simple way without any breaks you can use:
-\begin{LTXexample}
+\begin{LTXexample}[morekeywords={multicols}]
 \begin{multicols}{2}
 \lipsum[1]
 \begin{mdframed}
@@ -8122,11 +8181,11 @@ How I wrote in \enquote{Known Problems} you can't combine \Pack{multicol}  with
 \clearpage
 \onecolumn
 \Examplesec{Working inside enumerate}
-\begin{LTXexample}
+\begin{LTXexample}[morekeywords={enumerate}]
 Text Text Text Text Text Text Text Text
 \begin{enumerate}
 \item in the following \ldots
-      \begin{mdframed}[linecolor=blue,linewidth=2]
+      \begin{mdframed}[linecolor=blue,middlelinewidth=2]
          \ExampleText
       \end{mdframed}
 \item \lipsum[2]
@@ -8169,7 +8228,11 @@ Text Text Text Text Text Text
 
 \clearpage
 \Examplesec{digression-environement inspired by Tobias Weh}
-\begin{lstlisting}
+\begin{lstlisting}[morekeywords={%
+                    font,anchor,let,in,arrow,round,cap,controls,coordinate,%
+                    excursus,head,arrows,calc,line,width,and,to,digressionarrows,%
+                    base,west},%
+                   moretexcs={usetikzlibrary}]
 \usetikzlibrary{calc,arrows}
 \tikzset{
    excursus arrow/.style={%
@@ -8275,7 +8338,7 @@ Text Text Text Text Text Text
 \end{mdframed}
 
 \Examplesec{Theorem style shading background}
-\begin{LTXexample}
+\begin{LTXexample}[morekeywords={top,bottom,Theorem,shadow,alternativtheorem}]
 %\usetikzlibrary{shadings,shadows}% loaded in the header
 \mdtheorem[%
  apptotikzsetting={\tikzset{mdfbackground/.append style =%
@@ -8284,7 +8347,7 @@ Text Text Text Text Text Text
                             mdfframetitlebackground/.append style =%
                                {top color=purple!40!white,
                                 bottom color=purple!80!black}
-                           }
+                           }%
                     },
   ,roundcorner=10pt,middlelinewidth=2pt,
   shadow=true,frametitlerule=true,frametitlerulewidth=4pt,
