@@ -4809,7 +4809,7 @@ Have fun!
 %\fi
 % \subsection{The Explanation of md-frame-1.mdf}
 %    \begin{macrocode}
-%% Style file for mdframed for package option `framemethod=default`
+%% Style file for mdframed for package option `framemethod=tikz`
 %% 
 %% This package may be distributed under the terms of the LaTeX Project
 %% Public License, as described in lppl.txt in the base LaTeX distribution.
@@ -6075,7 +6075,7 @@ Have fun!
 %\fi
 % \subsection{The Explanation of md-frame-2.mdf / md-frame-3.mdf}
 %    \begin{macrocode}
-%% Style file for mdframed for package option `framemethod=default`
+%% Style file for mdframed for package option `framemethod=pstricks`
 %% 
 %% This package may be distributed under the terms of the LaTeX Project
 %% Public License, as described in lppl.txt in the base LaTeX distribution.
@@ -7945,7 +7945,7 @@ done by \Cmd{mdfdefinestyle} or \Cmd{mdfsetup}.
 {\large\color{red!50!black}
 \NOTE Every \Cmd{global} inside the examples is necessary to work with the 
 package \Pack{showexpl}.}
-X
+
 \section{Examples}
 All examples have the following settings:
 
@@ -7976,7 +7976,8 @@ function of the independent variables alone.
 \end{LTXexample}
 
 \Examplesec{hidden line + frame title}
-\begin{LTXexample}
+\begin{LTXexample}[morekeywords={innerlinecolor,addtopsstyle,mdfouterlinestyle,
+                    linestyle}]
 \global\mdfapptodefinestyle{exampledefault}{%
  topline=false,rightline=false,bottomline=false,
  frametitlerule=true,innertopmargin=6pt,
@@ -7990,27 +7991,30 @@ function of the independent variables alone.
 
 \clearpage
 
-\Examplesec{Dash Lines}
+\Examplesec{Dash Lines}[morekeywords={pstrickssetting,linestyle,dashed}]
 \begin{LTXexample}
 \global\mdfdefinestyle{exampledefault}{%
-   pstrickssetting={linestyle=dashed,},linecolor=red,linewidth=5pt}
-\begin{mdframed}[style=exampledefault,]
+   pstrickssetting={linestyle=dashed,},linecolor=red,middlelinewidth=2pt}
+\begin{mdframed}[style=exampledefault]
 \ExampleText
 \end{mdframed}
 \end{LTXexample}
 
 \Examplesec{Double Lines}
-\begin{LTXexample}
+\begin{LTXexample}[morekeywords={addtopsstyle,mdfmiddlelinestyle,
+                    doubleline,doublesep}]
 \global\mdfdefinestyle{exampledefault}{%
-   pstrickssetting={doubleline=true,doublesep=6pt},
-   linecolor=red,linewidth=5pt,middlelinewidth=4pt}
-\begin{mdframed}[style=exampledefault,]
+  pstricksappsetting={\addtopsstyle{mdfmiddlelinestyle}{%
+                      doubleline=true,doublesep=6pt,linewidth=4pt}},%
+  linecolor=red,middlelinewidth=16pt}
+\begin{mdframed}[style=exampledefault]
 \ExampleText
 \end{mdframed}
 \end{LTXexample}
 
+\clearpage
 \Examplesec{Shadow frame}
-\begin{LTXexample}
+\begin{LTXexample}[morekeywords={shadow,shadowsize,myshadowbox}]
 \newmdenv[shadow=true,
           shadowsize=11pt,
           linewidth=8pt,
