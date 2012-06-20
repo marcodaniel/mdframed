@@ -213,12 +213,12 @@ Have fun!
 \fi
 %</internal>
 %<*driver>
-%%$Id: mdframed.dtx 426 2012-06-02 12:18:56Z marco $
+%%$Id: mdframed.dtx 430 2012-06-20 16:37:23Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,11pt,]{ltxmdf}
 \usepackage[framemethod=TikZ]{mdframed}
 
-\GetIdInfo$Id: mdframed.dtx 426 2012-06-02 12:18:56Z marco $
+\GetIdInfo$Id: mdframed.dtx 430 2012-06-20 16:37:23Z marco $
           {documentation of mdframed}
 
 \EnableCrossrefs
@@ -256,7 +256,7 @@ Have fun!
 % \author{\href{mailto:marco.daniel@mada-nada.de}{Marco Daniel}%
 %        \href{mailto:marco.daniel@mada-nada.de}{Elke Schubert}}
 % \version{\mdversion}
-% \GetIdInfo$Id: mdframed.dtx 426 2012-06-02 12:18:56Z marco $
+% \GetIdInfo$Id: mdframed.dtx 430 2012-06-20 16:37:23Z marco $
 %           {documentation of mdframed}
 % \date{\ExplFileDate}
 % \introduction{The standard methods for framing text (\Cmd{fbox}
@@ -1885,10 +1885,10 @@ Have fun!
 %
 % \subsection{The Explanation of mdframed.sty}
 %
-% %$Id: mdframed.dtx 426 2012-06-02 12:18:56Z marco $
-% %$Rev: 426 $
+% %$Id: mdframed.dtx 430 2012-06-20 16:37:23Z marco $
+% %$Rev: 430 $
 % %$Author: marco $
-% %$Date: 2012-06-02 14:18:56 +0200 (Sa, 02 Jun 2012) $
+% %$Date: 2012-06-20 18:37:23 +0200 (Mi, 20 Jun 2012) $
 % \begin{macro}{mdversion,mdframedpackagename,mdf@maindate@svn}
 % Set package information
 %    \begin{macrocode}
@@ -1901,7 +1901,7 @@ Have fun!
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{mdframed}%
-     [\mdf@maindate@svn$Id: mdframed.dtx 426 2012-06-02 12:18:56Z marco $%
+     [\mdf@maindate@svn$Id: mdframed.dtx 430 2012-06-20 16:37:23Z marco $%
       \mdversion: \mdframedpackagename]
 %    \end{macrocode}
 %
@@ -3499,7 +3499,8 @@ Have fun!
 %    \end{macrocode}
 % Test whether the splitted box fits the required dimension
 %    \begin{macrocode}
-     \ifdimgreater{\ht\mdf@splitbox@two+\dp\mdf@splitbox@two}{\dimen@}%
+     \ifdimgreater{\ht\mdf@splitbox@two+\dp\mdf@splitbox@two}%
+                  {\mdf@freevspace@length}%
        {%splitted wrong
         \mdf@PackageInfo{Box was splittet wrong^^M starting loop to iterate 
                          the splitting point\MessageBreak}%
@@ -3513,15 +3514,16 @@ Have fun!
               \mdf@freevspace@length\relax        
           \advance\dimen@i by -\p@\relax%     
           \advance\@tempcnta by \@ne\relax%
-%          \immediate\typeout{***mdframed \string\@tempcnta=\the\@tempcnta***}
-%          \immediate \typeout{***mdframed \string\dimen@i=\the\dimen@i***}
+%%          \immediate\typeout{***mdframed \string\@tempcnta=\the\@tempcnta***}
+%%          \immediate \typeout{***mdframed \string\dimen@i=\the\dimen@i***}
           \ifnum\@tempcnta>100
             \let\iterate\relax%
             \mdf@PackageWarning{correct box splittet fails^^M
                                 It seems you are using a non splittable
                                 contents\MessageBreak}%
           \fi
-          \setbox\mdf@splitbox@one=\vbox{\break\unvcopy\mdf@splitbox@save}%
+          \mdf@ignorevbadness%
+          \setbox\mdf@splitbox@one=\vbox{\unvcopy\mdf@splitbox@save}%
           \splitmaxdepth\z@ \splittopskip\mdf@splittopskip@length%
           \mdf@ignorevbadness%
           \setbox\mdf@splitbox@two\vsplit\mdf@splitbox@one to \dimen@i\relax%
@@ -3702,7 +3704,7 @@ Have fun!
 %% Either version 1.0 or, at your option, any later version.
 %%
 %%
-%%$Id: mdframed.dtx 426 2012-06-02 12:18:56Z marco $
+%%$Id: mdframed.dtx 430 2012-06-20 16:37:23Z marco $
 %
 %    \end{macrocode}
 %
@@ -3712,7 +3714,7 @@ Have fun!
 \def\mdframedOpackagename{md-frame-0}
 \def\mdf@frameOdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-0.mdf}%
-    [\mdf@frameOdate@svn$Id: mdframed.dtx 426 2012-06-02 12:18:56Z marco $%
+    [\mdf@frameOdate@svn$Id: mdframed.dtx 430 2012-06-20 16:37:23Z marco $%
      \mdversion: \mdframedOpackagename]
 %    \end{macrocode}
 % \end{macro}
@@ -4816,7 +4818,7 @@ Have fun!
 %% Either version 1.0 or, at your option, any later version.
 %%
 %%
-%%$Id: mdframed.dtx 426 2012-06-02 12:18:56Z marco $
+%%$Id: mdframed.dtx 430 2012-06-20 16:37:23Z marco $
 %
 %    \end{macrocode}
 % \changes{v1.1beta}{2011/12/16}{added lost semicolons}
@@ -4826,7 +4828,7 @@ Have fun!
 \def\mdframedIpackagename{md-frame-1}
 \def\mdf@frameIdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-1.mdf}%
-      [\mdf@frameIdate@svn$Id: mdframed.dtx 426 2012-06-02 12:18:56Z marco $ %
+      [\mdf@frameIdate@svn$Id: mdframed.dtx 430 2012-06-20 16:37:23Z marco $ %
        \mdversion: \mdframedIpackagename]
 %
 %    \end{macrocode}
@@ -6082,7 +6084,7 @@ Have fun!
 %% Either version 1.0 or, at your option, any later version.
 %%
 %%
-%%$Id: mdframed.dtx 426 2012-06-02 12:18:56Z marco $
+%%$Id: mdframed.dtx 430 2012-06-20 16:37:23Z marco $
 %
 %    \end{macrocode}
 %
@@ -6092,7 +6094,7 @@ Have fun!
 \def\mdframedIIpackagename{md-frame-2}
 \def\mdf@frameIIdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-2.mdf}%
-      [\mdf@frameIIdate@svn$Id: mdframed.dtx 426 2012-06-02 12:18:56Z marco $ %
+      [\mdf@frameIIdate@svn$Id: mdframed.dtx 430 2012-06-20 16:37:23Z marco $ %
        \mdversion: \mdframedIIpackagename]
 %    \end{macrocode}
 % \end{macro}
@@ -7400,10 +7402,10 @@ Have fun!
 %
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 426 2012-06-02 12:18:56Z marco $
+%%$Id: mdframed.dtx 430 2012-06-20 16:37:23Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt]{ltxmdf}
-\GetIdInfo$Id: mdframed.dtx 426 2012-06-02 12:18:56Z marco $
+\GetIdInfo$Id: mdframed.dtx 430 2012-06-20 16:37:23Z marco $
           {documentation of mdframed}
 
 \usepackage{showexpl}
@@ -7627,10 +7629,10 @@ The example below is inspired by the following post on StackExchange
 %
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 426 2012-06-02 12:18:56Z marco $
+%%$Id: mdframed.dtx 430 2012-06-20 16:37:23Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt]{ltxmdf}
-\GetIdInfo$Id: mdframed.dtx 426 2012-06-02 12:18:56Z marco $
+\GetIdInfo$Id: mdframed.dtx 430 2012-06-20 16:37:23Z marco $
           {documentation of mdframed}
 
 
@@ -7839,10 +7841,10 @@ function of the independent variables alone.
 %
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 426 2012-06-02 12:18:56Z marco $
+%%$Id: mdframed.dtx 430 2012-06-20 16:37:23Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt]{ltxmdf}
-\GetIdInfo$Id: mdframed.dtx 426 2012-06-02 12:18:56Z marco $
+\GetIdInfo$Id: mdframed.dtx 430 2012-06-20 16:37:23Z marco $
           {documentation of mdframed}
 
 \lstDeleteShortInline{|}
@@ -7986,10 +7988,10 @@ function of the independent variables alone.
 
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 426 2012-06-02 12:18:56Z marco $
+%%$Id: mdframed.dtx 430 2012-06-20 16:37:23Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt,lipsum=true]{ltxmdf}
-\GetIdInfo$Id: mdframed.dtx 426 2012-06-02 12:18:56Z marco $
+\GetIdInfo$Id: mdframed.dtx 430 2012-06-20 16:37:23Z marco $
           {documentation of mdframed}
 
 
