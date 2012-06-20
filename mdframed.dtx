@@ -7745,7 +7745,7 @@ function of the independent variables alone.
 \clearpage
 \Examplesec{complex example with TikZ}
 
-\begin{tltxmdfexample}[morekeywords={mdf,pgfinterruptboundingbox}]
+\begin{tltxmdfexample}[morekeywords={mdf}]
 \tikzstyle{titregris} =
      [draw=gray, thick, fill=white, shading = exersicetitle, %
       text=gray, rectangle, rounded corners, right,minimum height=.7cm]
@@ -7761,36 +7761,36 @@ function of the independent variables alone.
     \def\mdf@@exercisepoints{#1}
 }
 \mdfdefinestyle{exercisestyle}{%
+  outerlinewidth=1em,outerlinecolor=white,%
+  leftmargin=-1em,rightmargin=-1em,%
   middlelinewidth=1.2pt,roundcorner=5pt,linecolor=gray,
   apptotikzsetting={\tikzset{mdfbackground/.append style ={%
                        shading = exersicebackground}}},
   innertopmargin=1.2\baselineskip,
   skipabove={\dimexpr0.5\baselineskip+\topskip\relax},
+  skipbelow={-1em},
   needspace=3\baselineskip,
   frametitlefont=\sffamily\bfseries,
   settings={\global\stepcounter{exercise}},
   singleextra={%
-      \begin{pgfinterruptboundingbox}%
-        \node[titregris,xshift=1cm] at (P-|O) %
-           {~\mdf@frametitlefont{\theexercise}~};
-        \ifdefempty{\mdf@@exercisepoints}%
-        {}%
-        {\node[titregris,left,xshift=-1cm] at (P)%
-          {~\mdf@frametitlefont{\mdf@@exercisepoints points}~};}%
-      \end{pgfinterruptboundingbox}%
+      \node[titregris,xshift=1cm] at (P-|O) %
+         {~\mdf@frametitlefont{\theexercise}~};
+      \ifdefempty{\mdf@@exercisepoints}%
+      {}%
+      {\node[titregris,left,xshift=-1cm] at (P)%
+        {~\mdf@frametitlefont{\mdf@@exercisepoints points}~};}%
    },
   firstextra={%
-      \begin{pgfinterruptboundingbox}%
-        \node[titregris,xshift=1cm] at (P-|O) %
-           {~\mdf@frametitlefont{\theexercise}~};
-        \ifdefempty{\mdf@@exercisepoints}%
-        {}%
-        {\node[titregris,left,xshift=-1cm] at (P)%
-          {~\mdf@frametitlefont{\mdf@@exercisepoints points}~};}%
-      \end{pgfinterruptboundingbox}%
+      \node[titregris,xshift=1cm] at (P-|O) %
+         {~\mdf@frametitlefont{\theexercise}~};
+      \ifdefempty{\mdf@@exercisepoints}%
+      {}%
+      {\node[titregris,left,xshift=-1cm] at (P)%
+        {~\mdf@frametitlefont{\mdf@@exercisepoints points}~};}%
    },
 }
 \makeatother
+
 \begin{mdframed}[style=exercisestyle]
 \ExampleText
 \end{mdframed}
@@ -7815,36 +7815,36 @@ function of the independent variables alone.
     \def\mdf@@exercisepoints{#1}
 }
 \mdfdefinestyle{exercisestyle}{%
+  outerlinewidth=1em,outerlinecolor=white,%
+  leftmargin=-1em,rightmargin=-1em,%
   middlelinewidth=1.2pt,roundcorner=5pt,linecolor=gray,
   apptotikzsetting={\tikzset{mdfbackground/.append style ={%
                        shading = exersicebackground}}},
   innertopmargin=1.2\baselineskip,
   skipabove={\dimexpr0.5\baselineskip+\topskip\relax},
+  skipbelow={-1em},
   needspace=3\baselineskip,
   frametitlefont=\sffamily\bfseries,
   settings={\global\stepcounter{exercise}},
   singleextra={%
-      \begin{pgfinterruptboundingbox}%
-        \node[titregris,xshift=1cm] at (P-|O) %
-           {~\mdf@frametitlefont{\theexercise}~};
-        \ifdefempty{\mdf@@exercisepoints}%
-        {}%
-        {\node[titregris,left,xshift=-1cm] at (P)%
-          {~\mdf@frametitlefont{\mdf@@exercisepoints points}~};}%
-      \end{pgfinterruptboundingbox}%
+      \node[titregris,xshift=1cm] at (P-|O) %
+         {~\mdf@frametitlefont{\theexercise}~};
+      \ifdefempty{\mdf@@exercisepoints}%
+      {}%
+      {\node[titregris,left,xshift=-1cm] at (P)%
+        {~\mdf@frametitlefont{\mdf@@exercisepoints points}~};}%
    },
   firstextra={%
-      \begin{pgfinterruptboundingbox}%
-        \node[titregris,xshift=1cm] at (P-|O) %
-           {~\mdf@frametitlefont{\theexercise}~};
-        \ifdefempty{\mdf@@exercisepoints}%
-        {}%
-        {\node[titregris,left,xshift=-1cm] at (P)%
-          {~\mdf@frametitlefont{\mdf@@exercisepoints points}~};}%
-      \end{pgfinterruptboundingbox}%
+      \node[titregris,xshift=1cm] at (P-|O) %
+         {~\mdf@frametitlefont{\theexercise}~};
+      \ifdefempty{\mdf@@exercisepoints}%
+      {}%
+      {\node[titregris,left,xshift=-1cm] at (P)%
+        {~\mdf@frametitlefont{\mdf@@exercisepoints points}~};}%
    },
 }
 \makeatother
+
 \begin{mdframed}[style=exercisestyle]
 \ExampleText
 \end{mdframed}
