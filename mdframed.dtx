@@ -8132,14 +8132,14 @@ Here the solution which can be decorate as usual.
 
 With the new command \Cmd{surroundwithmdframed} you can use
 \begin{tltxmdfexample}[moretexcs={BeforeBeginEnvironment,AfterEndEnvironment},
-                       morekeywords={lstlisting}]
+                       morekeywords={listings}]
 \surroundwithmdframed{listings}
 \end{tltxmdfexample}
 
 \Examplesec{Package multicol}
 How I wrote in \enquote{Known Problems} you can't combine \Pack{multicol}  with
 \Pack{mdframed}. In a simple way without any breaks you can use:
-\begin{LTXexample}
+\begin{LTXexample}[morekeywords={multicols}]
 \begin{multicols}{2}
 \lipsum[1]
 \begin{mdframed}
@@ -8175,11 +8175,11 @@ How I wrote in \enquote{Known Problems} you can't combine \Pack{multicol}  with
 \clearpage
 \onecolumn
 \Examplesec{Working inside enumerate}
-\begin{LTXexample}
+\begin{LTXexample}[morekeywords={enumerate}]
 Text Text Text Text Text Text Text Text
 \begin{enumerate}
 \item in the following \ldots
-      \begin{mdframed}[linecolor=blue,linewidth=2]
+      \begin{mdframed}[linecolor=blue,middlelinewidth=2]
          \ExampleText
       \end{mdframed}
 \item \lipsum[2]
@@ -8222,7 +8222,11 @@ Text Text Text Text Text Text
 
 \clearpage
 \Examplesec{digression-environement inspired by Tobias Weh}
-\begin{lstlisting}
+\begin{lstlisting}[morekeywords={%
+                    font,anchor,let,in,arrow,round,cap,controls,coordinate,%
+                    excursus,head,arrows,calc,line,width,and,to,digressionarrows,%
+                    base,west},%
+                   moretexcs={usetikzlibrary}]
 \usetikzlibrary{calc,arrows}
 \tikzset{
    excursus arrow/.style={%
@@ -8328,7 +8332,7 @@ Text Text Text Text Text Text
 \end{mdframed}
 
 \Examplesec{Theorem style shading background}
-\begin{LTXexample}
+\begin{LTXexample}[morekeywords={top,bottom,Theorem,shadow,alternativtheorem}]
 %\usetikzlibrary{shadings,shadows}% loaded in the header
 \mdtheorem[%
  apptotikzsetting={\tikzset{mdfbackground/.append style =%
@@ -8337,7 +8341,7 @@ Text Text Text Text Text Text
                             mdfframetitlebackground/.append style =%
                                {top color=purple!40!white,
                                 bottom color=purple!80!black}
-                           }
+                           }%
                     },
   ,roundcorner=10pt,middlelinewidth=2pt,
   shadow=true,frametitlerule=true,frametitlerulewidth=4pt,
