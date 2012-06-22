@@ -9,13 +9,13 @@
 %% Either version 1.0 or, at your option, any later version.
 
 
-%%$Id: ltxmdf.cls 421 2012-05-31 15:51:38Z marco $
-%%$Rev: 421 $
+%%$Id: ltxmdf.cls 431 2012-06-20 16:40:42Z marco $
+%%$Rev: 431 $
 %%$Author: marco $
-%%$Date: 2012-05-31 17:51:38 +0200 (Do, 31 Mai 2012) $
+%%$Date: 2012-06-20 18:40:42 +0200 (Mi, 20 Jun 2012) $
 
 \RequirePackage{expl3}
-\GetIdInfo$Id: ltxmdf.cls 421 2012-05-31 15:51:38Z marco $
+\GetIdInfo$Id: ltxmdf.cls 431 2012-06-20 16:40:42Z marco $
           {documentation class for Marco Daniel}
 
 \ProvidesExplClass{\ExplFileName}
