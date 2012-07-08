@@ -36,6 +36,7 @@
 \ProcessKeysOptions { ltxmdf }
 
 \LoadClassWithOptions { scrartcl }
+\cs_set_eq:NN \c_keys_code_root_tl \c__keys_code_root_tl
 
 \RequirePackage{ifxetex,ifluatex}
 
@@ -496,6 +497,7 @@
             \zref@refused,\ZREF@mainlist}
 
 %%%%
+
 
 \tex_endinput:D
 
