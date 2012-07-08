@@ -3348,7 +3348,7 @@ Have fun!
                        mdframed fixed it\MessageBreak}%
       \setbox\mdf@splitbox@two=\vbox%
                    {%
-                    \hrule \@height\z@ \@width\wd\mdf@splitbox@one\relax
+                    \hrule \@height\z@ \@width\mdfboundingboxwidth\relax
                     \unvcopy\mdf@splitbox@two%
                    }%
     \fi%
@@ -3553,6 +3553,14 @@ Have fun!
 % Output of the middle frame
 %    \begin{macrocode}
      \else
+% Test if first splitted frame doesn't have the original with.
+%    \begin{macrocode}
+      \setbox\mdf@splitbox@two=\vbox%
+                   {%
+                    \hrule \@height\z@ \@width\mdfboundingboxwidth\relax
+                    \unvcopy\mdf@splitbox@two%
+                   }%
+%    \end{macrocode}
         \begingroup\mdf@@setzref\mdf@putbox@middle\endgroup%
           \hrule \@height\z@ \@width\hsize%
           \vfill\eject%
