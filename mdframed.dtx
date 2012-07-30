@@ -2508,7 +2508,7 @@ Have fun!
 {%
  \newrobustcmd\mdf@patchamsthm{%
    \let\mdf@deferred@thm@head\deferred@thm@head
-   \patchcmd{\deferred@thm@head}{\indent}{}%
+   \pretocmd{\deferred@thm@head}{\@inlabelfalse}%
       {\mdf@PackageInfo{mdframed detected package amsthm ^^J
                         changed the theoerem header of amsthm\MessageBreak}%
       }{%
