@@ -2241,6 +2241,7 @@ Have fun!
     {subtitlebelowline==false},
     {subsubtitleaboveline==false},
     {subsubtitlebelowline==false},
+    {draft==false},
 }
 %%special boolflag hidealllines:
 \newbool{mdf@hidealllines}%
@@ -2913,6 +2914,15 @@ Have fun!
    \let\width\z@%
    \let\height\z@%
    \mdf@checkntheorem%
+%    \end{macrocode}
+% Draft mode
+%    \begin{macrocode}
+   \ifbool{mdf@draft}%
+     {%
+      \ifdimgreater{\overfullrule}{0pt}{}{\setlength\overfullrule{5pt}}%
+     }{}%
+%    \end{macrocode}
+%    \begin{macrocode}
    \mdf@styledefinition%
    \mdf@footnoteinput%
    \color{\mdf@fontcolor}%
@@ -4855,6 +4865,7 @@ Have fun!
 %Allgemeine Einstellungen fuer tikz
 \def\mdf@tikz@settings{%
 %
+  \mdf@testdraftmode%
   \tikzset{mdfbox/.style={anchor=south west,%
                           inner sep=0pt,%
                           outer sep=0pt,%
@@ -4937,6 +4948,57 @@ Have fun!
 %    \end{macrocode}
 % \end{macro}
 %
+%
+%
+% \begin{macro}{mdf@testdraftmode}
+% draftmode test
+%    \begin{macrocode}
+\newrobustcmd*\mdf@testdraftmode{%
+ \ifbool{mdf@draft}%
+   {%
+     \renewrobustcmd*\mdf@tikzbox@tfl[1]{%three or four borders
+       \path(0,0)rectangle(\mdfboundingboxwidth,\mdfboundingboxheight);%
+       \begin{scope}[mdfcorners]%
+          \clip[preaction=mdfouterline]%
+               [postaction=mdfbackground]%
+               [postaction=mdfinnerline]##1;%
+       \end{scope}%
+       \path[mdfmiddleline,mdfcorners]##1;
+     }%
+     \renewrobustcmd*\mdf@tikzbox@otl[2]{%one or two borders
+       \path(0,0)rectangle(\mdfboundingboxwidth,\mdfboundingboxheight);%
+       \begin{scope}
+         \path[mdfouterline,mdfcorners]##1;%
+         \clip[postaction=mdfbackground]##2;%
+         \path[mdfinnerline,mdfcorners]##1;%
+       \end{scope}%
+       \path[mdfmiddleline,mdfcorners]##1;%
+     }%
+   }{%
+    \ifdimgreater{\overfullrule}{0pt}{%
+     \renewrobustcmd*\mdf@tikzbox@tfl[1]{%three or four borders
+       \path(0,0)rectangle(\mdfboundingboxwidth,\mdfboundingboxheight);%
+       \begin{scope}[mdfcorners]%
+          \clip[preaction=mdfouterline]%
+               [postaction=mdfbackground]%
+               [postaction=mdfinnerline]##1;%
+       \end{scope}%
+       \path[mdfmiddleline,mdfcorners]##1;
+     }%
+     \renewrobustcmd*\mdf@tikzbox@otl[2]{%one or two borders
+       \path(0,0)rectangle(\mdfboundingboxwidth,\mdfboundingboxheight);%
+       \begin{scope}
+         \path[mdfouterline,mdfcorners]##1;%
+         \clip[postaction=mdfbackground]##2;%
+         \path[mdfinnerline,mdfcorners]##1;%
+       \end{scope}%
+       \path[mdfmiddleline,mdfcorners]##1;%
+     }%
+    }{}%
+   }%
+}
+%    \end{macrocode}
+% \end{macro}
 %
 %
 % \begin{macro}{mdf@put@frametitlerule}
