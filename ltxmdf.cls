@@ -108,7 +108,9 @@
 \ihead{\rightmark}
 \ohead{\leftmark}
 \ofoot{\pagemark}
-\ifoot{{\ExplFileDate}\qquad SVN~version:~{\ExplFileVersion}\qquad{\ExplFileName}}
+\providecommand\mdfmaindate{2012/09/20}
+\providecommand\mdfrevision{1}
+\ifoot{{\mdfmaindate}\qquad revision:~{\mdfrevision}\qquad{\jobname}}
 
 
 
