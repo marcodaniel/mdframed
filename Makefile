@@ -41,6 +41,8 @@ help:
 	@echo -e "\tmake examples\t\t--\tcompiles all example files"
 	@echo -e "\tmake clean\t\t--\tremove all helpfiles created by mdframed"
 	@echo -e "\tmake changeversion\t--\tmaintaner tool to change the version"
+	@echo -e "\tmake changerevision\t--\tmaintaner tool to change the revision"
+	@echo -e "\tmake changedate\t--\tmaintaner tool to change the date"
 	@echo -e "\tmake localinstall\t--\tinstall the package in TEXMFHOME"
 	@echo -e "$(WARN_COLOR)End help$(NO_COLOR)"
 
