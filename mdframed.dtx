@@ -213,13 +213,10 @@ Have fun!
 \fi
 %</internal>
 %<*driver>
-%%$Id: mdframed.dtx 436 2012-06-23 09:49:13Z marco $
+
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,11pt,]{ltxmdf}
 \usepackage[framemethod=TikZ]{mdframed}
-
-\GetIdInfo$Id: mdframed.dtx 436 2012-06-23 09:49:13Z marco $
-          {documentation of mdframed}
 
 \EnableCrossrefs
 \CodelineIndex
@@ -256,9 +253,7 @@ Have fun!
 % \author{\href{mailto:marco.daniel@mada-nada.de}{Marco Daniel}%
 %        \href{mailto:marco.daniel@mada-nada.de}{Elke Schubert}}
 % \version{\mdversion}
-% \GetIdInfo$Id: mdframed.dtx 436 2012-06-23 09:49:13Z marco $
-%           {documentation of mdframed}
-% \date{\ExplFileDate}
+% \date{\mdfmaindate}
 % \introduction{The standard methods for framing text (\Cmd{fbox}
 %              or \Cmd{fcolorbox}) require you to handle page breaks
 %              by hand, meaning that you have to split the \Cmd{fbox}
@@ -891,6 +886,18 @@ Have fun!
 %      \href{http://tex.stackexchange.com/questions/47584/how-to-make-^^A
 %            mdframed-ignore-descenders-in-last-line}^^A
 %           {How to make mdframed ignore descenders in last line}
+%
+%
+%
+% \ExplOpt[false]{draft}
+%      Activate the draft mode for the package. This option is useful for 
+%      \Opt{framemethod=tikz} which clips the contents related to the surrounded
+%      frame. The options is motivated by the question 
+%      \href{http://tex.stackexchange.com/questions/73059/^^A
+%             mdframedtikz-to-display-overfullrule}^^A
+%           {mdframed+tikz to display overfullrule}
+%      at \href{http://tex.stackexchange.com/}{tex.stackexchange}.
+%
 %
 % \ExplOpt[false]{shadow}
 %      Draw a shadow. The shadow doesn't influence the bounding box so the 
@@ -1885,23 +1892,20 @@ Have fun!
 %
 % \subsection{The Explanation of mdframed.sty}
 %
-% %$Id: mdframed.dtx 436 2012-06-23 09:49:13Z marco $
-% %$Rev: 436 $
-% %$Author: marco $
-% %$Date: 2012-06-23 11:49:13 +0200 (Sa, 23 Jun 2012) $
-% \begin{macro}{mdversion,mdframedpackagename,mdf@maindate@svn}
+% \begin{macro}{mdversion,mdframedpackagename,mdfmaindate}
 % Set package information
 %    \begin{macrocode}
-\def\mdversion{1.6c}
+\def\mdversion{1.6d}
 \def\mdframedpackagename{mdframed}
-\def\mdf@maindate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
+\def\mdfmaindate{2012/09/20}
+\def\mdfrevision{158}% Done by github: git rev-list HEAD | wc -l
 %    \end{macrocode}
 % \end{macro}
 %
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{mdframed}%
-     [\mdf@maindate@svn$Id: mdframed.dtx 436 2012-06-23 09:49:13Z marco $%
+     [\mdfmaindate\ %
       \mdversion: \mdframedpackagename]
 %    \end{macrocode}
 %
@@ -3728,18 +3732,14 @@ Have fun!
 %% Public License, as described in lppl.txt in the base LaTeX distribution.
 %% Either version 1.0 or, at your option, any later version.
 %%
-%%
-%%$Id: mdframed.dtx 436 2012-06-23 09:49:13Z marco $
-%
 %    \end{macrocode}
 %
-% \begin{macro}{mdframedOpackagename,mdf@frameOdate@svn}
+% \begin{macro}{mdframedOpackagename}
 % local settings
 %    \begin{macrocode}
 \def\mdframedOpackagename{md-frame-0}
-\def\mdf@frameOdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-0.mdf}%
-    [\mdf@frameOdate@svn$Id: mdframed.dtx 436 2012-06-23 09:49:13Z marco $%
+    [\mdfmaindate\ %
      \mdversion: \mdframedOpackagename]
 %    \end{macrocode}
 % \end{macro}
@@ -4842,18 +4842,15 @@ Have fun!
 %% Public License, as described in lppl.txt in the base LaTeX distribution.
 %% Either version 1.0 or, at your option, any later version.
 %%
-%%
-%%$Id: mdframed.dtx 436 2012-06-23 09:49:13Z marco $
 %
 %    \end{macrocode}
 % \changes{v1.1beta}{2011/12/16}{added lost semicolons}
-% \begin{macro}{mdframedIpackagename,mdf@frameIdate@svn}
+% \begin{macro}{mdframedIpackagename}
 % local settings
 %    \begin{macrocode}
 \def\mdframedIpackagename{md-frame-1}
-\def\mdf@frameIdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-1.mdf}%
-      [\mdf@frameIdate@svn$Id: mdframed.dtx 436 2012-06-23 09:49:13Z marco $ %
+      [\mdfmaindate\ %
        \mdversion: \mdframedIpackagename]
 %
 %    \end{macrocode}
@@ -6160,18 +6157,15 @@ Have fun!
 %% Public License, as described in lppl.txt in the base LaTeX distribution.
 %% Either version 1.0 or, at your option, any later version.
 %%
-%%
-%%$Id: mdframed.dtx 436 2012-06-23 09:49:13Z marco $
 %
 %    \end{macrocode}
 %
-% \begin{macro}{mdframedIIpackagename,mdf@frameIIdate@svn}
+% \begin{macro}{mdframedIIpackagename}
 % local settings
 %    \begin{macrocode}
 \def\mdframedIIpackagename{md-frame-2}
-\def\mdf@frameIIdate@svn$#1: #2 #3 #4-#5-#6 #7 #8${#4/#5/#6\space }
 \ProvidesFile{md-frame-2.mdf}%
-      [\mdf@frameIIdate@svn$Id: mdframed.dtx 436 2012-06-23 09:49:13Z marco $ %
+      [\mdfmaindate\ %
        \mdversion: \mdframedIIpackagename]
 %    \end{macrocode}
 % \end{macro}
@@ -7479,11 +7473,9 @@ Have fun!
 %
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 436 2012-06-23 09:49:13Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt]{ltxmdf}
-\GetIdInfo$Id: mdframed.dtx 436 2012-06-23 09:49:13Z marco $
-          {documentation of mdframed}
+
 
 \usepackage{showexpl}
 \lstset{style=lstltxmdf,explpreset={pos=b,rframe={}},}
@@ -7494,7 +7486,7 @@ Have fun!
 \title{The \Pack{mdframed} package}
 \subtitle{Examples for \Opt{framemethod=\Loadedframemethod}}
 \author{\href{mailto:marco.daniel@mada-nada.de}{Marco Daniel}}
-\date{\ExplFileDate}
+\date{\mdfmaindate}
 \version{\mdversion}
 \introduction{In this document I collect various examples for 
               \Opt{framemethod=\Loadedframemethod}.
@@ -7711,12 +7703,8 @@ The example below is inspired by the following post on StackExchange
 %
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 436 2012-06-23 09:49:13Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt]{ltxmdf}
-\GetIdInfo$Id: mdframed.dtx 436 2012-06-23 09:49:13Z marco $
-          {documentation of mdframed}
-
 
 \usepackage{showexpl}
 \lstset{style=lstltxmdf,explpreset={pos=b,rframe={}},}
@@ -7727,7 +7715,7 @@ The example below is inspired by the following post on StackExchange
 \title{The \Pack{mdframed} package}
 \subtitle{Examples for \Opt{framemethod=\Loadedframemethod}}
 \author{\href{mailto:marco.daniel@mada-nada.de}{Marco Daniel}}
-\date{\ExplFileDate}
+\date{\mdfmaindate}
 \version{\mdversion}
 \introduction{In this document I collect various examples for
               \Opt{framemethod=\Loadedframemethod}.
@@ -7978,11 +7966,8 @@ function of the independent variables alone.
 %
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 436 2012-06-23 09:49:13Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt]{ltxmdf}
-\GetIdInfo$Id: mdframed.dtx 436 2012-06-23 09:49:13Z marco $
-          {documentation of mdframed}
 
 \lstDeleteShortInline{|}
 \newcommand\Loadedframemethod{PSTricks}
@@ -7994,7 +7979,7 @@ function of the independent variables alone.
 \title{The \Pack{mdframed} package}
 \subtitle{Examples for \Opt{framemethod=\Loadedframemethod}}
 \author{\href{mailto:marco.daniel@mada-nada.de}{Marco Daniel}}
-\date{\ExplFileDate}
+\date{\mdfmaindate}
 \version{\mdversion}
 \introduction{In this document I collect various examples for 
               \Opt{framemethod=\Loadedframemethod}.
@@ -8129,12 +8114,8 @@ function of the independent variables alone.
 
 %    \begin{macrocode}
 %Documenation of the package mdframed
-%%$Id: mdframed.dtx 436 2012-06-23 09:49:13Z marco $
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,english,11pt,lipsum=true]{ltxmdf}
-\GetIdInfo$Id: mdframed.dtx 436 2012-06-23 09:49:13Z marco $
-          {documentation of mdframed}
-
 
 \usepackage{showexpl}
 \lstset{style=lstltxmdf,explpreset={pos=b,rframe={}},}
@@ -8146,7 +8127,7 @@ function of the independent variables alone.
 \title{The \Pack{mdframed} package}
 \subtitle{Examples for \Opt{framemethod=\Loadedframemethod}}
 \author{\href{mailto:marco.daniel@mada-nada.de}{Marco Daniel}}
-\date{\ExplFileDate}
+\date{\mdfmaindate}
 \version{\mdversion}
 \introduction{In this document I collect various examples for 
               \Opt{framemethod=\Loadedframemethod}.
