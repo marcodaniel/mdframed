@@ -212,6 +212,7 @@ changedate:
 	 echo -e "$(OK_COLOR)Datum geändert zu $$REPLY$(NO_COLOR)"
 	@echo
 
+change: changeversion changerevision changedate
 
 usectanify:
 	echo  "" ;\
