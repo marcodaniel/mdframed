@@ -192,6 +192,25 @@ changeversion:
 	 echo -e "$(OK_COLOR)Version geändert zu $$REPLY$(NO_COLOR)"
 	@echo
 
+changerevision:
+	@echo 
+	@echo -e "$(OK_COLOR)Aktuell wird die folgende Revision verwendet"
+	@sed '/\\def\\mdfrevision/!d' $(PACKAGE).dtx 
+	@echo -e "$(WARN_COLOR)"
+	@REPLY=`git rev-list HEAD | wc -l` &&  sed -rie "s/(\\\\def\\\\mdfrevision\{).*(})/\1$$REPLY\2/" $(PACKAGE).dtx&&\
+	 echo -e "$(OK_COLOR)Revision geändert zu $$REPLY$(NO_COLOR)"
+	@echo
+
+changedate:
+	@echo 
+	@echo -e "$(OK_COLOR)Aktuell wird die folgendes Datum verwendet"
+	@sed '/\\def\\mdfmaindate/!d' $(PACKAGE).dtx 
+	@echo -e "$(WARN_COLOR)"
+	@REPLY=`date +"%Y\/%m\/%d"` &&  sed -rie "s/(\\\\def\\\\mdfmaindate\{).*(})/\1$$REPLY\2/" $(PACKAGE).dtx&&\
+	 echo -e "$(OK_COLOR)Datum geändert zu $$REPLY$(NO_COLOR)"
+	@echo
+
+
 usectanify:
 	echo  "" ;\
 	echo -e "\t$(ERROR_COLOR)Start ctanify$(NO_COLOR)" ;\
