@@ -1902,10 +1902,10 @@ Have fun!
 % \begin{macro}{mdversion,mdframedpackagename,mdfmaindate}
 % Set package information
 %    \begin{macrocode}
-\def\mdversion{1.6d}
+\def\mdversion{1.7}
 \def\mdframedpackagename{mdframed}
-\def\mdfmaindate{2012/09/21}
-\def\mdfrevision{162}% Done by github: git rev-list HEAD | wc -l
+\def\mdfmaindate{2012/11/24}
+\def\mdfrevision{     164}% Done by github: git rev-list HEAD | wc -l
 %    \end{macrocode}
 % \end{macro}
 %
@@ -4869,7 +4869,7 @@ Have fun!
 %Allgemeine Einstellungen fuer tikz
 \def\mdf@tikz@settings{%
 %
-  \mdf@testdraftmode%
+%%  \mdf@testdraftmode%
   \tikzset{mdfbox/.style={anchor=south west,%
                           inner sep=0pt,%
                           outer sep=0pt,%
@@ -4957,50 +4957,50 @@ Have fun!
 % \begin{macro}{mdf@testdraftmode}
 % draftmode test
 %    \begin{macrocode}
-\newrobustcmd*\mdf@testdraftmode{%
- \ifbool{mdf@draft}%
-   {%
-     \renewrobustcmd*\mdf@tikzbox@tfl[1]{%three or four borders
-       \path(0,0)rectangle(\mdfboundingboxwidth,\mdfboundingboxheight);%
-       \begin{scope}[mdfcorners]%
-          \clip[preaction=mdfouterline]%
-               [postaction=mdfbackground]%
-               [postaction=mdfinnerline]##1;%
-       \end{scope}%
-       \path[mdfmiddleline,mdfcorners]##1;
-     }%
-     \renewrobustcmd*\mdf@tikzbox@otl[2]{%one or two borders
-       \path(0,0)rectangle(\mdfboundingboxwidth,\mdfboundingboxheight);%
-       \begin{scope}
-         \path[mdfouterline,mdfcorners]##1;%
-         \clip[postaction=mdfbackground]##2;%
-         \path[mdfinnerline,mdfcorners]##1;%
-       \end{scope}%
-       \path[mdfmiddleline,mdfcorners]##1;%
-     }%
-   }{%
-    \ifdimgreater{\overfullrule}{0pt}{%
-     \renewrobustcmd*\mdf@tikzbox@tfl[1]{%three or four borders
-       \path(0,0)rectangle(\mdfboundingboxwidth,\mdfboundingboxheight);%
-       \begin{scope}[mdfcorners]%
-          \clip[preaction=mdfouterline]%
-               [postaction=mdfbackground]%
-               [postaction=mdfinnerline]##1;%
-       \end{scope}%
-       \path[mdfmiddleline,mdfcorners]##1;
-     }%
-     \renewrobustcmd*\mdf@tikzbox@otl[2]{%one or two borders
-       \path(0,0)rectangle(\mdfboundingboxwidth,\mdfboundingboxheight);%
-       \begin{scope}
-         \path[mdfouterline,mdfcorners]##1;%
-         \clip[postaction=mdfbackground]##2;%
-         \path[mdfinnerline,mdfcorners]##1;%
-       \end{scope}%
-       \path[mdfmiddleline,mdfcorners]##1;%
-     }%
-    }{}%
-   }%
-}
+%%\newrobustcmd*\mdf@testdraftmode{%
+%% \ifbool{mdf@draft}%
+%%   {%
+%%     \renewrobustcmd*\mdf@tikzbox@tfl[1]{%three or four borders
+%%       \path(0,0)rectangle(\mdfboundingboxwidth,\mdfboundingboxheight);%
+%%       \begin{scope}[mdfcorners]%
+%%          \clip[preaction=mdfouterline]%
+%%               [postaction=mdfbackground]%
+%%               [postaction=mdfinnerline]##1;%
+%%       \end{scope}%
+%%       \path[mdfmiddleline,mdfcorners]##1;
+%%     }%
+%%     \renewrobustcmd*\mdf@tikzbox@otl[2]{%one or two borders
+%%       \path(0,0)rectangle(\mdfboundingboxwidth,\mdfboundingboxheight);%
+%%       \begin{scope}
+%%         \path[mdfouterline,mdfcorners]##1;%
+%%         \clip[postaction=mdfbackground]##2;%
+%%         \path[mdfinnerline,mdfcorners]##1;%
+%%       \end{scope}%
+%%       \path[mdfmiddleline,mdfcorners]##1;%
+%%     }%
+%%   }{%
+%%    \ifdimgreater{\overfullrule}{0pt}{%
+%%     \renewrobustcmd*\mdf@tikzbox@tfl[1]{%three or four borders
+%%       \path(0,0)rectangle(\mdfboundingboxwidth,\mdfboundingboxheight);%
+%%       \begin{scope}[mdfcorners]%
+%%          \clip[preaction=mdfouterline]%
+%%               [postaction=mdfbackground]%
+%%               [postaction=mdfinnerline]##1;%
+%%       \end{scope}%
+%%       \path[mdfmiddleline,mdfcorners]##1;
+%%     }%
+%%     \renewrobustcmd*\mdf@tikzbox@otl[2]{%one or two borders
+%%       \path(0,0)rectangle(\mdfboundingboxwidth,\mdfboundingboxheight);%
+%%       \begin{scope}
+%%         \path[mdfouterline,mdfcorners]##1;%
+%%         \clip[postaction=mdfbackground]##2;%
+%%         \path[mdfinnerline,mdfcorners]##1;%
+%%       \end{scope}%
+%%       \path[mdfmiddleline,mdfcorners]##1;%
+%%     }%
+%%    }{}%
+%%   }%
+%%}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -5375,6 +5375,7 @@ Have fun!
       \ifbool{mdf@shadow}
          {\path[mdfshadow,mdfcorners](O) rectangle (P);}{}%
 %
+     \begin{scope}
      \begin{scope}[use as bounding box]
       \mdf@test@ltrb{\mdf@tikzbox@tfl{(O)--(O|-P)--(P)--(P|-O)--cycle}}{}%
 %
@@ -5419,6 +5420,7 @@ Have fun!
 %
         %Frametitlebackground
           \drawbrackgroundframetitle@single
+     \end{scope}
 %
       \node[mdfbox]at(\mdf@Ax,\mdf@Ay){\box\mdf@splitbox@one};%output
      \end{scope}
@@ -5613,6 +5615,7 @@ Have fun!
       \coordinate(P)at(\mdf@Px,\mdf@Py);%
       \ifbool{mdf@shadow}
        {\path[mdfshadow] (O) -- (O|-P) to[mdfcorners] (P) -- (P|-O) -- (O);}{}%
+     \begin{scope}
      \begin{scope}[use as bounding box]
 %%%%%%%%%%%%
     \ifbool{mdf@everyline}{%
@@ -5686,6 +5689,7 @@ Have fun!
     }
 %%%%%%%%%%%%
       \drawbrackgroundframetitle@first
+     \end{scope}
       \node[mdfbox]at(\mdf@Ax,\mdf@Ay){\box\mdf@splitbox@two};%
      \end{scope}
      %HIER KOMMT EIN WEITERES MAKRO
@@ -5853,6 +5857,7 @@ Have fun!
       \coordinate(P)at(\mdf@Px,\mdf@Py);%
       \ifbool{mdf@shadow}
          {\path[mdfshadow](O) rectangle (P);}{}%
+     \begin{scope}
      \begin{scope}[use as bounding box]
 %%%%%%%%%%%%
     \ifbool{mdf@everyline}{%
@@ -5904,6 +5909,7 @@ Have fun!
     }
 %%%%%%%%
       \drawbrackgroundframetitle@middle
+     \end{scope}
       \node[mdfbox]at(\mdf@Ax,\mdf@Ay){\box\mdf@splitbox@two};%
      \end{scope}
      \mdf@middleextra
@@ -6056,6 +6062,7 @@ Have fun!
            \path[mdfshadow]  (O|-P) to[mdfcorners] (O) 
                                     to[mdfcorners] (P|-O) -- (P) -- (O|-P);%
          }{}%
+     \begin{scope}
      \begin{scope}[use as bounding box]
 %%%%%%%%%%%%
     \ifbool{mdf@everyline}{%
@@ -6129,6 +6136,7 @@ Have fun!
                       {}%
     }%
       \drawbrackgroundframetitle@second
+     \end{scope}
       \node[mdfbox] at (\mdf@Ax,\mdf@Ay){\box\mdf@splitbox@one};%
      \end{scope}
       \mdf@secondextra

@@ -23,6 +23,8 @@ EXAMPLLIST=  $(EXAMPLED) $(EXAMPLET) $(EXAMPLEP) $(EXAMPLESX)
 FILELIST  =  $(PACKAGE) $(EXAMPLED) $(EXAMPLET) $(EXAMPLEP) $(EXAMPLESX)
 STYLELIST = $(STYLE_I) $(STYLE_II) $(STYLE_III) $(STYLE_IV)
 AUXFILES  = aux dtxe glo glolog gls hd ins idx idxlog ilg ind log out ps thm tmp toc xdv
+
+
 ################################################################
 ## Colordefinition
 ################################################################
@@ -190,7 +192,7 @@ changeversion:
 	@echo -e "$(OK_COLOR)Aktuell wird die folgende Version verwendet"
 	@sed '/\\def\\mdversion/!d' $(PACKAGE).sty 
 	@echo -e "$(WARN_COLOR)"
-	@read -p "Bitte neue Version eingeben: " REPLY &&  sed -rie "s/(\\\\def\\\\mdversion\{).*(})/\1$$REPLY\2/" $(PACKAGE).dtx&&\
+	@read -p "Bitte neue Version eingeben: " REPLY &&  sed -Eie "s/(\\\\def\\\\mdversion\{).*(})/\1$$REPLY\2/" $(PACKAGE).dtx&&\
 	 echo -e "$(OK_COLOR)Version geändert zu $$REPLY$(NO_COLOR)"
 	@echo
 
@@ -199,7 +201,7 @@ changerevision:
 	@echo -e "$(OK_COLOR)Aktuell wird die folgende Revision verwendet"
 	@sed '/\\def\\mdfrevision/!d' $(PACKAGE).dtx 
 	@echo -e "$(WARN_COLOR)"
-	@REPLY=`git rev-list HEAD | wc -l` &&  sed -rie "s/(\\\\def\\\\mdfrevision\{).*(})/\1$$REPLY\2/" $(PACKAGE).dtx&&\
+	@REPLY=`git rev-list HEAD | wc -l` &&  sed -Eie "s/(\\\\def\\\\mdfrevision\{).*(})/\1$$REPLY\2/" $(PACKAGE).dtx&&\
 	 echo -e "$(OK_COLOR)Revision geändert zu $$REPLY$(NO_COLOR)"
 	@echo
 
@@ -208,7 +210,7 @@ changedate:
 	@echo -e "$(OK_COLOR)Aktuell wird die folgendes Datum verwendet"
 	@sed '/\\def\\mdfmaindate/!d' $(PACKAGE).dtx 
 	@echo -e "$(WARN_COLOR)"
-	@REPLY=`date +"%Y\/%m\/%d"` &&  sed -rie "s/(\\\\def\\\\mdfmaindate\{).*(})/\1$$REPLY\2/" $(PACKAGE).dtx&&\
+	@REPLY=`date +"%Y\/%m\/%d"` &&  sed -Eie "s/(\\\\def\\\\mdfmaindate\{).*(})/\1$$REPLY\2/" $(PACKAGE).dtx&&\
 	 echo -e "$(OK_COLOR)Datum geändert zu $$REPLY$(NO_COLOR)"
 	@echo
 
