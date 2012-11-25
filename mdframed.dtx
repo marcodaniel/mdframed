@@ -2910,6 +2910,21 @@ Have fun!
 %    \end{macrocode}
 % \end{macro}
 %
+%
+%
+%
+% \begin{macro}{mdf@envdepth}
+% Setting up a counter for the depth of the environment. Nesting of two
+% \Env{mdframed} environments isn't recommended but I am trying to support
+% the basic rules. 
+%    \begin{macrocode}
+\newcount\mdf@envdepth \mdf@envdepth=0
+\@definecounter{mdf@env@i}
+\@definecounter{mdf@env@ii}
+%    \end{macrocode}
+% \end{macro}
+%
+%
 % \begin{macro}{mdframed}
 % The user environement.
 %    \begin{macrocode}
@@ -2933,6 +2948,13 @@ Have fun!
      {%
       \ifdimgreater{\overfullrule}{0pt}{}{\setlength\overfullrule{5pt}}%
      }{}%
+%    \end{macrocode}
+% Nesting environments and provide an extra counter.
+%    \begin{macrocode}
+   \ifnum\mdf@envdepth >\tw@\@toodeep\else
+    \advance\mdf@envdepth\@ne
+    \edef\mdf@depthctr{mdf@env@\romannumeral\the\mdf@envdepth}%
+   \fi
 %    \end{macrocode}
 %    \begin{macrocode}
    \mdf@styledefinition%
@@ -5509,8 +5531,8 @@ Have fun!
                              -0.5\mdf@middlelinewidth@length%
                              +\mdf@frametitlebelowskip@length
                              +\mdf@splitbottomskip@length
-                             +\mdf@splittopskip@length
-                             +\dp\strutbox%
+%%                             +\mdf@splittopskip@length
+                             -\dp\strutbox%
                             }%
           }%
         }%
