@@ -1,0 +1,37 @@
+\contentsline {section}{\numberline {1}Motivation}{1}{section.1}
+\contentsline {section}{\numberline {2}Syntax}{2}{section.2}
+\contentsline {section}{\numberline {3}The frames}{3}{section.3}
+\contentsline {section}{\numberline {4}Commands}{3}{section.4}
+\contentsline {section}{\numberline {5}Options}{4}{section.5}
+\contentsline {subsection}{\numberline {5.1}Global Options}{4}{subsection.5.1}
+\contentsline {subsection}{\numberline {5.2}Global and Local Options}{5}{subsection.5.2}
+\contentsline {subsubsection}{\numberline {5.2.1}Options with lengths}{5}{subsubsection.5.2.1}
+\contentsline {subsubsection}{\numberline {5.2.2}Colored Options}{7}{subsubsection.5.2.2}
+\contentsline {subsubsection}{\numberline {5.2.3}General options}{8}{subsubsection.5.2.3}
+\contentsline {subsection}{\numberline {5.3}Hidden Lines}{10}{subsection.5.3}
+\contentsline {subsection}{\numberline {5.4}Frametitle}{10}{subsection.5.4}
+\contentsline {subsection}{\numberline {5.5}Title commands inside the environment}{11}{subsection.5.5}
+\contentsline {subsubsection}{\numberline {5.5.1}Options related to the title of level 1}{12}{subsubsection.5.5.1}
+\contentsline {subsubsection}{\numberline {5.5.2}Options related to the title of level 2}{12}{subsubsection.5.5.2}
+\contentsline {subsection}{\numberline {5.6}Theorems}{13}{subsection.5.6}
+\contentsline {subsection}{\numberline {5.7}Footnotes}{14}{subsection.5.7}
+\contentsline {section}{\numberline {6}Examples}{14}{section.6}
+\contentsline {section}{\numberline {7}Errors, Warnings and Messages}{15}{section.7}
+\contentsline {section}{\numberline {8}Known Problems}{16}{section.8}
+\contentsline {section}{\numberline {9}ToDo}{16}{section.9}
+\contentsline {section}{\numberline {10}Acknowledgements}{17}{section.10}
+\contentsline {section}{\numberline {A}More information}{18}{appendix.A}
+\setcounter {tocdepth}{-4}
+\contentsline {subsection}{\numberline {A.1}How does \Pack {mdframed} work?}{18}{subsection.A.1}
+\contentsline {subsection}{\numberline {A.2}The Framecommands}{18}{subsection.A.2}
+\contentsline {subsection}{\numberline {A.3}Revision history}{20}{subsection.A.3}
+\contentsline {section}{\numberline {B}Implementation}{22}{appendix.B}
+\contentsline {subsection}{\numberline {B.1}The Explanation of mdframed.sty}{22}{subsection.B.1}
+\contentsline {subsection}{\numberline {B.2}The Explanation of md-frame-0.mdf}{52}{subsection.B.2}
+\contentsline {subsection}{\numberline {B.3}The Explanation of md-frame-1.mdf}{71}{subsection.B.3}
+\contentsline {subsection}{\numberline {B.4}The Explanation of md-frame-2.mdf / md-frame-3.mdf}{94}{subsection.B.4}
+\contentsline {section}{\numberline {C}The file mdframed-example-default}{116}{appendix.C}
+\contentsline {section}{\numberline {D}The file mdframed-example-tikz}{120}{appendix.D}
+\contentsline {section}{\numberline {E}The file mdframed-example-pstricks}{125}{appendix.E}
+\contentsline {section}{\numberline {F}The file mdframed-example-texsx}{127}{appendix.F}
+\contentsline {section}{\numberline {G}Index}{134}{appendix.G}

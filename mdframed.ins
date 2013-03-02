@@ -1,0 +1,99 @@
+\input docstrip.tex
+\keepsilent
+\askforoverwritefalse
+\preamble
+----------------------------------------------------------------
+Working with the command fbox or fcolorbox, one has to
+handle page breaks by hand. The present package defines the
+environment mdframed which automatically deals with page breaks.
+
+Author's name: Marco Daniel and Elke Schubert (!new)
+License type: lppl
+
+==================================================
+========Is based on the idea of framed.sty========
+==================================================
+===== Currently the package has a beta-Status ====
+==================================================
+ WITH THANKS TO (alphabetically):
+ ROLF NIEPRASCHK
+ HEIKO OBERDIEK
+ HERBERT VOSS
+
+ Copyright (c) 2010 Marco Daniel
+
+ This package may be distributed under the terms of the LaTeX Project
+ Public License, as described in lppl.txt in the base LaTeX distribution.
+ Either version 1.0 or, at your option, any later version.
+
+=================================================
+ Erstellung eines Rahmens, der am Seitenende keine
+ horizontale Linie einfuegt
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+      _______________
+      |    page 1   |
+      |    Text     |
+      |  __Text__   |
+      |  | Text |   |
+     P A G E B R E A K
+      |  | Text |   |
+      |  |_Text_|   |
+      |    Text     |
+      |____page 2___|
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+==================================================
+
+\endpreamble
+\postamble
+
+================================================================
+Copyright (C) 2012 by Marco Daniel
+
+This work may be distributed and/or modified under the
+conditions of the LaTeX Project Public License (LPPL), either
+version 1.3c of this license or (at your option) any later
+version.  The latest version of this license is in the file:
+
+http://www.latex-project.org/lppl.txt
+
+This work is "maintained" (as per LPPL maintenance status) by
+Marco Daniel.
+
+Have fun!
+
+================================================================
+\endpostamble
+\usedir{tex/latex/mdframed}
+\generate{\file{mdframed.sty}{\from{mdframed.dtx}{package}}}
+\nopreamble\nopostamble\usedir{tex/latex/mdframed}
+\generate{\file{md-frame-0.mdf}{\from{mdframed.dtx}{mdframedefault}}}
+\nopreamble\nopostamble\usedir{tex/latex/mdframed}
+\generate{\file{md-frame-1.mdf}{\from{mdframed.dtx}{mdframetikz}}}
+\nopreamble\nopostamble\usedir{tex/latex/mdframed}
+\generate{\file{md-frame-2.mdf}{\from{mdframed.dtx}{mdframepstricks}}}
+\nopreamble\nopostamble\usedir{tex/latex/mdframed}
+\generate{\file{md-frame-3.mdf}{\from{mdframed.dtx}{mdframepstricks}}}
+\Msg{*********************************************************}
+\Msg{*}
+\Msg{* To finish the installation you have to move the}
+\Msg{* following file into a directory searched by TeX:}
+\Msg{*}
+\Msg{* \space\space documentation.sty}
+\Msg{*}
+\Msg{* To produce the documentation run the file mdframed.dtx}
+\Msg{* once through LaTeX. Then, run}
+\Msg{*}
+\Msg{* \space\space makeindex -s gglo.ist -o mdframed.gls mdframed.glo}
+\Msg{* \space\space makeindex -s gind.ist mdframed.idx}
+\Msg{*}
+\Msg{* through makeIndex to produce the glossary.}
+\Msg{* Finally, run PdfLaTeX once again.}
+\Msg{*}
+\Msg{* To create the examples run (pdf)latex on the tex-files.}
+\Msg{*}
+\Msg{* That's all!}
+\Msg{*}
+\Msg{* Happy TeXing!}
+\Msg{*********************************************************}
+\endbatchfile
