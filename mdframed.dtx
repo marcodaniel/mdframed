@@ -2556,11 +2556,11 @@ Have fun!
 }
 \let\endmdf@trivlist\endtrivlist
 \patchcmd\endmdf@trivlist\@endparenv\mdf@endparenv{%
-  \immediate\typeout{^^J****** mdframed patching \string\endmdf@trivlist}%
-  \immediate\typeout{^^J****** -- success******^^J}%
+  \wlog{^^J****** mdframed patching \string\endmdf@trivlist}%
+  \wlog{^^J****** -- success******^^J}%
   }{%
-  \immediate\typeout{^^J****** mdframed patching \string\endmdf@trivlist}%
-  \immediate\typeout{^^J****** -- failed******^^J}%
+  \wlog{^^J****** mdframed patching \string\endmdf@trivlist}%
+  \wlog{^^J****** -- failed******^^J}%
 }
 \def\mdf@endparenv{%
   \addpenalty\@endparpenalty\addvspace\mdf@skipbelow@length\@endpetrue}
@@ -3356,8 +3356,8 @@ Have fun!
         \ifdim\dimexpr\ht\mdf@splitbox@two+\dp\mdf@splitbox@two\relax>\dimen@ 
           \advance\dimen@i by -\p@\relax     
           \advance\@tempcnta by \@ne\relax
-%%          \immediate\typeout{***mdframed \string\@tempcnta=\the\@tempcnta***}
-%%          \immediate \typeout{***mdframed \string\dimen@i=\the\dimen@i***}
+%%          \wlog{***mdframed \string\@tempcnta=\the\@tempcnta***}
+%%          \wlog{***mdframed \string\dimen@i=\the\dimen@i***}
           \mdf@ignorevbadness%          
           \setbox\mdf@splitbox@one=\vbox{\unvcopy\mdf@splitbox@save}%
           \splitmaxdepth\z@ \splittopskip\mdf@splittopskip@length%
@@ -3570,8 +3570,8 @@ Have fun!
               \mdf@freevspace@length\relax        
           \advance\dimen@i by -\p@\relax%     
           \advance\@tempcnta by \@ne\relax%
-%%          \immediate\typeout{***mdframed \string\@tempcnta=\the\@tempcnta***}
-%%          \immediate \typeout{***mdframed \string\dimen@i=\the\dimen@i***}
+%%          \wlog{***mdframed \string\@tempcnta=\the\@tempcnta***}
+%%          \wlog{***mdframed \string\dimen@i=\the\dimen@i***}
           \ifnum\@tempcnta>100
             \let\iterate\relax%
             \mdf@PackageWarning{correct box splittet fails^^J
