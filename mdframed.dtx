@@ -2253,6 +2253,7 @@ Have fun!
     {subsubtitleaboveline==false},
     {subsubtitlebelowline==false},
     {draft==false},
+    {suppressfirstparskip==false},
 }
 %%special boolflag hidealllines:
 \newbool{mdf@hidealllines}%
@@ -2968,6 +2969,12 @@ Have fun!
 % Special command to allow extra user definitions by the option \Opt{settings}.
 %    \begin{macrocode}
    \mdf@settings%
+%    \end{macrocode}
+% \Cmd{parskip} is added to the first skip. Here the first skip will be removed from 
+% the length \Opt{innertopmargin}. See 
+% \url{http://tex.stackexchange.com/questions/100570/why-is-parskip-half-messing-up-the-spacing-in-mdframed}
+%    \begin{macrocode}
+   \ifbool{mdf@suppressfirstparskip}{\addtolength{\mdf@innertopmargin@length}{-\parskip}}{}%
 %    \end{macrocode}
 % Start save box and save the whole contens in the box \Cmd{mdf@splitbox@one}
 %    \begin{macrocode}
