@@ -113,7 +113,6 @@
 \ifoot{{\mdfmaindate}\qquad revision:~{\mdfrevision}\qquad{\jobname}}
 
 
-
 %Tikz und Farbe
 %tikzlibrary needs special handling
 \ExplSyntaxOff
@@ -128,10 +127,10 @@
      basicstyle=\small,%
      xleftmargin=20pt,%
      xrightmargin=20pt,%
-     frame=single,%
+     frame=none,%
      rulecolor=\color{ltxmdfblue},%
      framesep=5pt,%
-     framerule=1pt,%
+     framerule=1.2pt,%
      texcsstyle=*\color{red!50!black}\bfseries,
      moretexcs=intertext,
      keywordstyle=\color{blue!60!black}\bfseries,%
@@ -174,7 +173,7 @@
                    mdf@frametitlefont,dimexpr,mdframedtitleenv,ifstrempty,
                    @undefined,mdtheorem,surroundwithmdframed,@captype,@dblarg,
                    @newcaption,newcaption,mdflength,tikzset,path,p1,p2,
-                   IfFileExists,includegraphics%
+                   IfFileExists,includegraphics,mdfsubtitle,%
                    },%
 }
 
@@ -182,7 +181,6 @@
 \lstnewenvironment{tltxmdfexample}[1][]
   {\lstset{style=lstltxmdf,#1}}%
   {}
-
 
 %%Maketitle angepasst:
 \prop_new:N \l_ltxmdf_maketitleinformation_prop

@@ -218,6 +218,15 @@ Have fun!
 \documentclass[parskip=false,11pt,]{ltxmdf}
 \usepackage[framemethod=TikZ]{mdframed}
 
+\surroundwithmdframed[middlelinecolor=ltxmdfblue,middlelinewidth=1pt,%
+                      roundcorner=10pt,innertopmargin=0pt,%
+                      leftmargin=1cm,rightmargin=1cm,%
+                      innerleftmargin=-15pt,innerrightmargin=-15pt,%
+                      ignorelastdescenders,%
+                      settings={\lstset{resetmargins}},%
+                      skipbelow=\topskip,skipabove=\topskip,
+                      innerbottommargin=0pt,backgroundcolor=gray!10]{tltxmdfexample}
+
 \EnableCrossrefs
 \CodelineIndex
 %%\RecordChanges
@@ -288,12 +297,19 @@ Have fun!
 % package \Pack{mdframed} allows you to create environments with breakable 
 % frames. I think an example is the best way to demonstrate its properties.
 % 
-% 
-% \newmdtheoremenv[outerlinewidth=2,leftmargin=40,rightmargin=40,%
-%   backgroundcolor=yellow,outerlinecolor=blue,innertopmargin=\topskip,%
-%   splittopskip=\topskip,skipbelow=\baselineskip,
-%   skipabove=\baselineskip,
-%   ntheorem,roundcorner=5pt]{theorem}{Theorem}[section]
+% \newmdtheoremenv[%
+%    outerlinewidth  = 2             ,%
+%    roundcorner     = 10pt          ,%
+%    leftmargin      = 40            ,%
+%    rightmargin     = 40            ,%
+%    backgroundcolor = yellow        ,%
+%    outerlinecolor  = blue          ,% 
+%    innertopmargin  = \topskip      ,%
+%    splittopskip    = \topskip      ,%
+%    ntheorem        = true          ,% 
+%    skipabove       = \baselineskip ,%
+%    skipbelow       = \baselineskip]
+%   {theorem}{Theorem}[section]
 % 
 % \begin{theorem}[Pythagorean theorem]
 %  In any right triangle, the area of the square whose side is the hypotenuse 
@@ -308,13 +324,19 @@ Have fun!
 % \iffalse
 %<*example>
 % \fi
-\begin{tltxmdfexample}
- \newmdtheoremenv[outerlinewidth=2,leftmargin=40,%
-     rightmargin=40,backgroundcolor=yellow,%
-     outerlinecolor=blue,innertopmargin=\topskip,%
-     splittopskip=\topskip,skipbelow=\baselineskip,%
-     skipabove=\baselineskip,ntheorem]{theorem}%
-     {Theorem}[section]
+\begin{tltxmdfexample}[columns=fixed,fontadjust=false]
+ \newmdtheoremenv[%
+    outerlinewidth  = 2             ,%
+    leftmargin      = 40            ,%
+    rightmargin     = 40            ,%
+    backgroundcolor = yellow        ,%
+    outerlinecolor  = blue          ,% 
+    innertopmargin  = \topskip      ,%
+    splittopskip    = \topskip      ,%
+    ntheorem        = true          ,% 
+    skipabove       = \baselineskip ,%
+    skipbelow       = \baselineskip]
+   {theorem}{Theorem}[section]
  \begin{theorem}[Pythagorean theorem]
  ...
  \end{theorem}
@@ -434,7 +456,7 @@ Have fun!
 % \end{tikzpicture}
 % \hfill\null
 % 
-% \vspace{2\baselineskip}
+% \vspace{3\baselineskip}
 % 
 %  \null\hfill
 % \begin{tikzpicture}[baseline=(current bounding box.north)]
@@ -466,7 +488,7 @@ Have fun!
 % 	\end{scope}
 % 	\MiddleLinien[line width=2mm,draw=red!20,use as bounding box]
 % 	\node[anchor=south,font=\bfseries,text width=4cm,align=center] 
-%        at (24mm,25mm) {Middle box -- middle part of the output};
+%        at (24mm,20mm) {Middle box -- middle part of the output};
 % \end{tikzpicture}
 % \hfill\null
 % 
@@ -528,21 +550,23 @@ Have fun!
 %<*example>
 % \fi
 \begin{tltxmdfexample}
-  Some Text \hspace{\mdflength{innerleftmargin}} Some Text
-
+  The distance is \hspace{\mdflength{innerleftmargin}} 
   \the\mdflength{innerleftmargin}
 \end{tltxmdfexample}
 % \iffalse
 %</example>
 % \fi
-%  
+% The result will be:
+% \begin{center}
+%  The distance is \hspace{\mdflength{innerleftmargin}} \the\mdflength{innerleftmargin}
+% \end{center}
 %
 % 
 % \ExplCmd{mdfsetup}To set the options 
 % you can use the optional argument of \Cmd{usepackage} or
 % you can use the command \Cmd{mdfsetup} which is not limited to the preamble.
 % Inside a group the settings work only local.\par
-% \textbf{\color{red!70!black}At this point I want to recommend the using of
+% \textbf{\color{red!70!black}At this point I want to recommend the usage of
 % the command \Cmd{mdfsetup} instead of setting package option via the optional
 % argument of \Cmd{usepackage}. So you are avoiding breaking of non robust 
 % commands.}^^A
@@ -550,7 +574,9 @@ Have fun!
 % \href{https://groups.google.com/group/de.comp.text.tex/^^A
 %       browse_thread/thread/15c5ad290490d426?hl=de}^^A
 %       {kvoptions-Declaration von Optionen schl\"agt fehl}}
-% 
+% The sole exception is the option \Opt{framemethod} which must given as an optional 
+% argument of \Cmd{usepackage}.
+%
 % \ExplCmd{mdfdefinestyle} 
 %      \Cmd{mdfdefinestyle} allows the user to define different styles and use
 %      as an option of \Pack{mdframed} via \Opt{style}. The option \Opt{style} 
@@ -1175,8 +1201,7 @@ Have fun!
 % \fi
 \begin{tltxmdfexample}
  \theoremstyle{<some style>}
- \newmdtheoremenv[linecolor=blue]{lemma}%
-                 {Lemma}[section]
+ \newmdtheoremenv[linecolor=blue]{lemma}{Lemma}[section]
  ... 
  \begin{lemma}[Some title]
    foo   foo   foo   foo   foo   foo
@@ -1459,6 +1484,7 @@ Have fun!
 % \fi 
 %  \item \Pack{mdframed} can't handle the option \Opt{allowframebreaks} of the
 %         class \Pack{beamer}.
+% \item A nested \Env{mdframed} environment can't be splitted. 
 % \end{enumerate}
 % 
 % 
@@ -1666,6 +1692,16 @@ Have fun!
 % \subsection{Revision history}\label{rev}
 % \raggedright
 %
+%
+% \minisec{Version 1.8 submitted 09 Mar 2013}
+% \begin{itemize*}
+%  \item fixed bugs (e.g. related to \Cmd{parskip} of KOMA)
+%  \item allow margin notes with \Opt{framemethod=tikz}
+%  \item fixed some typos
+% \end{itemize*}
+%
+%
+% \footnotesize
 % \minisec{Version 1.6d submitted 21 Sep 2012}
 % \begin{itemize*}
 %  \item fixed bugs
@@ -1721,8 +1757,7 @@ Have fun!
 %  \item added option \Opt{everyline} to draw a top and bottom line at 
 %        splitted frames
 % \end{itemize*}
-%
-% \footnotesize 
+% 
 % \minisec{Version 1.4 submitted 4 Mar 2012}
 % \begin{itemize*}
 %  \item fixed bug in combination with \Cmd{marginpar} (Thanks Juan Carlos 
@@ -1904,7 +1939,7 @@ Have fun!
 %    \begin{macrocode}
 \def\mdversion{1.8}
 \def\mdframedpackagename{mdframed}
-\def\mdfmaindate{2013/03/03}
+\def\mdfmaindate{2013/03/09}
 \def\mdfrevision{     172}% Done by github: git rev-list HEAD | wc -l
 %    \end{macrocode}
 % \end{macro}
