@@ -1693,6 +1693,12 @@ Have fun!
 % \raggedright
 %
 %
+% \minisec{Version 1.8X submitted XX Mar 2013}
+% \begin{itemize*}
+%  \item added \Cmd{topskip=0pt} to remove unwanted space after \Cmd{newpage} or \Cmd{clearpage}
+% \end{itemize*}
+%
+% \footnotesize
 % \minisec{Version 1.8 submitted 09 Mar 2013}
 % \begin{itemize*}
 %  \item fixed bugs (e.g. related to \Cmd{parskip} of KOMA)
@@ -1700,8 +1706,6 @@ Have fun!
 %  \item fixed some typos
 % \end{itemize*}
 %
-%
-% \footnotesize
 % \minisec{Version 1.6d submitted 21 Sep 2012}
 % \begin{itemize*}
 %  \item fixed bugs
@@ -2576,6 +2580,12 @@ Have fun!
 \def\mdf@trivlist#1{%
   \edef\x{\topsep=\the\topsep\relax\partopsep=\the\partopsep\relax\parsep=\the\parsep\relax}
   \setlength{\topsep}{#1}%
+%    \end{macrocode}
+% Added \Cmd{topskip} to remove first skip after \Cmd{newpage} or \Cmd{clearpage}
+%    \begin{macrocode}
+  \topskip\z@
+%    \end{macrocode}  
+%    \begin{macrocode}
   \partopsep\z@%
   \parsep\z@%
   \@nmbrlistfalse%
