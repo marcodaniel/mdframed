@@ -2976,6 +2976,13 @@ Have fun!
 %    \begin{macrocode}
 \newenvironment{mdframed}[1][]{%
 %    \end{macrocode}
+% remove previous skip so that mdframed can to it
+%    \begin{macrocode}
+ \begingroup%
+  \parskip\z@\relax%
+  \@@par\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%%
+ \endgroup%
+%    \end{macrocode}
 % Make everything local
 %    \begin{macrocode}
 \color@begingroup%
@@ -2983,7 +2990,19 @@ Have fun!
 % Set all options
 %    \begin{macrocode}
    \mdfsetup{userdefinedwidth=\linewidth,#1}%
+%    \end{macrocode}
+% \Cmd{parskip} is added to the first skip. Here the first skip will be removed from 
+% the length \Opt{innertopmargin}. See 
+% \url{http://tex.stackexchange.com/questions/100570/why-is-parskip-half-messing-up-the-spacing-in-mdframed}
+%    \begin{macrocode}
+   \ifbool{mdf@suppressfirstparskip}{\addtolength{\mdf@innertopmargin@length}{-\parskip}}{}%
+%    \end{macrocode}
+%  Trying to set \Cmd{parskip=0pt} and using the orignal definition only in the save box
+%    \begin{macrocode}
    \mdf@twoside@checklength%
+   \edef\mdf@par@local{\parskip=\the\parskip\relax\parindent=\the\parindent\relax}%
+   \parskip\z@
+   \parindent\z@
    \let\width\z@%
    \let\height\z@%
    \mdf@checkntheorem%
@@ -3015,15 +3034,10 @@ Have fun!
 %    \begin{macrocode}
    \mdf@settings%
 %    \end{macrocode}
-% \Cmd{parskip} is added to the first skip. Here the first skip will be removed from 
-% the length \Opt{innertopmargin}. See 
-% \url{http://tex.stackexchange.com/questions/100570/why-is-parskip-half-messing-up-the-spacing-in-mdframed}
-%    \begin{macrocode}
-   \ifbool{mdf@suppressfirstparskip}{\addtolength{\mdf@innertopmargin@length}{-\parskip}}{}%
-%    \end{macrocode}
 % Start save box and save the whole contens in the box \Cmd{mdf@splitbox@one}
 %    \begin{macrocode}
    \mdf@lrbox{\mdf@splitbox@one}%
+   \mdf@par@local%New feature to restore parskip/parindent local in save box
   }%
   {%
 %    \end{macrocode}
