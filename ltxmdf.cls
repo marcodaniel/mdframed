@@ -181,7 +181,9 @@
 \lstnewenvironment{tltxmdfexample}[1][]
   {\lstset{style=lstltxmdf,#1}}%
   {}
-
+\lstnewenvironment{exltxmdfexample}[1][]
+  {\lstset{style=lstltxmdf,#1}}%
+  {}
 %%Maketitle angepasst:
 \prop_new:N \l_ltxmdf_maketitleinformation_prop
 \cs_set:Npn \title #1
