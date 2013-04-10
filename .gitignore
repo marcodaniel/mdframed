@@ -31,3 +31,9 @@ mdframed.pdf
 
 
 .DS_Store
+
+*.toc
+
+*.ins
+
+*.ind
