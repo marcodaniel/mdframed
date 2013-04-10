@@ -2301,7 +2301,10 @@ Have fun!
  \ifbool{mdf@hidealllines}{%
    \kvsetkeys{mdf}{leftline=false,topline=false,%
                    rightline=false,bottomline=false}%
- }{}%
+ }{%
+   \kvsetkeys{mdf}{leftline=true,topline=true,%
+                   rightline=true,bottomline=true}%
+ }%
 }
 %    \end{macrocode}
 % \end{macro}
@@ -2984,6 +2987,10 @@ Have fun!
 %    \begin{macrocode}
 \newenvironment{mdframed}[1][]{%
 %    \end{macrocode}
+% Test \Cmd{@afterheading}
+%    \begin{macrocode}
+%%
+%    \end{macrocode}
 % remove previous skip so that mdframed can to it
 %    \begin{macrocode}
  \begingroup%
@@ -2993,7 +3000,7 @@ Have fun!
 %    \end{macrocode}
 % Make everything local
 %    \begin{macrocode}
-\color@begingroup%
+ \color@begingroup%
 %    \end{macrocode}
 % Set all options
 %    \begin{macrocode}
@@ -3050,7 +3057,7 @@ Have fun!
       \unskip\unskip\setbox0=\lastbox
       \vspace*{\dimexpr\ht\strutbox-\baselineskip\relax}%
      }{}%
-    \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%%
+   \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%%
 %    \end{macrocode}
 % End save box in relation to footnotes
 %    \begin{macrocode}
@@ -3074,7 +3081,7 @@ Have fun!
 % End group and set the command \Cmd{@doendpe} to behave like 
 % \Cmd{end\{center\}}
 %    \begin{macrocode}
-\color@endgroup\@doendpe%
+ \color@endgroup\@doendpe%
 }
 
 %    \end{macrocode}
