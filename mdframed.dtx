@@ -3075,12 +3075,14 @@ Have fun!
         }%
     \fi%
     \mdf@reserveda%
+    \aftergroup%
     \endmdf@trivlist%
 %    \end{macrocode}
 % End group and set the command \Cmd{@doendpe} to behave like 
 % \Cmd{end\{center\}}
 %    \begin{macrocode}
- \color@endgroup\@doendpe%
+ \color@endgroup%
+%% \@doendpe%
 }
 
 %    \end{macrocode}
