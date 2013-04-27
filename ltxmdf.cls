@@ -59,7 +59,7 @@
   \RequirePackage{fontspec}
   \setmonofont[Mapping=tex-text]{DejaVu Sans}
  }
-
+\ExplSyntaxOff
 \RequirePackage[french=quotes]{csquotes}
 \RequirePackage{xspace}
 \begingroup
@@ -69,14 +69,15 @@
 \xspaceaddexceptions{\xspace@check@icr}
 \RequirePackage{multicol}\columnseprule0.4pt
 \RequirePackage{scrpage2}
-\RequirePackage{listings}
 \RequirePackage[inline]{enumitem}
 \RequirePackage{amsmath}
+\RequirePackage{listings}
 \RequirePackage[amsmath]{ntheorem}
 \RequirePackage{array,booktabs}
 \RequirePackage{xcolor,tikz}
 \RequirePackage{graphicx}
 \RequirePackage[numbered]{hypdoc}
+\ExplSyntaxOn
 %set columns of index
 \c@IndexColumns = 2
 
@@ -112,78 +113,6 @@
 \providecommand\mdfrevision{1}
 \ifoot{{\mdfmaindate}\qquad revision:~{\mdfrevision}\qquad{\jobname}}
 
-
-%Tikz und Farbe
-%tikzlibrary needs special handling
-\ExplSyntaxOff
-\usetikzlibrary{calc,backgrounds,arrows,matrix}
-\ExplSyntaxOn
-\colorlet{ltxmdfblue}{blue!30!black}
-
-\lstset{keywordstyle=\bfseries}
-\lstdefinestyle{lstltxmdf}{%
-     basicstyle=\small\ttfamily,
-     language={[LaTeX]TeX},
-     basicstyle=\small,%
-     xleftmargin=20pt,%
-     xrightmargin=20pt,%
-     frame=none,%
-     rulecolor=\color{ltxmdfblue},%
-     framesep=5pt,%
-     framerule=1.2pt,%
-     texcsstyle=*\color{red!50!black}\bfseries,
-     moretexcs=intertext,
-     keywordstyle=\color{blue!60!black}\bfseries,%
-     columns=fullflexible,%
-     fontadjust=true,%
-     basewidth=0.65em,%
-     breakatwhitespace=true,
-     morekeywords=[2]{@length},
-     keywordstyle=[2]\color{red!50!black}\bfseries,
-     morekeywords={outerlinewidth,leftmargin,rightmargin,backgroundcolor,
-                   outerlinecolor,innertopmargin,splittopskip,skipbelow,
-                   skipabove,ntheorem,theorem,lemma,mdframed,linecolor,
-                   frametitle,infobox,innerlinewidth,roundcorner,leftline,
-                   topline,splitbottomskip,middlelinewidth,middlelinecolor,
-                   tikzsetting,rightline,bottomline,innerrightmargin,style,
-                   linewidth,lem,section,definedstyle,mdfapptodefinestyle,
-                   needspace,mdf@globalstyle@cnt,framemethod,ExampleText,
-                   titregris,draw,gray,thick,fill,white,shading,exersicetitle,
-                   exersicebackground,color,green,black,exercise,exercisepoints,
-                   text,rectangle,rounded,corners,right,minimum,height,xshift,
-                   at,exercisestyle,settings,frametitlefont,innerbottommargin,
-                   innerleftmargin,frametitlerule,frametitlebelowskip,
-                   frametitleaboveskip,frametitlebackgroundcolor,
-                   frametitlerulecolor,picins,figure,hidealllines,fontcolor,
-                   firstextra,secondextra,middleextra,singleextra,overlay,node,
-                   pstricksappsetting,apptotikzsetting,frametitlerulewidth,
-                   userdefinedwidth,mdfbackground,append,mdfframetitlebackground,
-                   left,shade,align,exampledefault},
-     moretexcs={newmdtheoremenv,newmdenv,theoremstyle,mdfsetup,@length,
-                   md@putbox@single,@tempboxa,mdf@,mdf@linewidth,
-                   mdf@leftmargin@length,interruptlength,setlength,newrobustcmd,
-                   overlaplines,appto,md@frame@leftline@singe,color,
-                   md@frame@leftline@single,mdf@innerbottommargin@length,
-                   mdf@middlelinewidth@length,mdfboundingboxheight,
-                   md@frame@rightline@single,mdfboundingboxwidth,
-                   mdf@innerrightmargin@length,mdfdefinestyle,
-                   mdfapptodefinestyle,defcounter,tikzstyle,
-                   pgfdeclarehorizontalshading,theexercise,mdf@@exercisepoints,
-                   define@key,renewrobustcmd,mdfcreateextratikz,node,ifdefempty,
-                   mdf@frametitlefont,dimexpr,mdframedtitleenv,ifstrempty,
-                   @undefined,mdtheorem,surroundwithmdframed,@captype,@dblarg,
-                   @newcaption,newcaption,mdflength,tikzset,path,p1,p2,
-                   IfFileExists,includegraphics,mdfsubtitle,%
-                   },%
-}
-
-
-\lstnewenvironment{tltxmdfexample}[1][]
-  {\lstset{style=lstltxmdf,#1}}%
-  {}
-\lstnewenvironment{exltxmdfexample}[1][]
-  {\lstset{style=lstltxmdf,#1}}%
-  {}
 %%Maketitle angepasst:
 \prop_new:N \l_ltxmdf_maketitleinformation_prop
 \cs_set:Npn \title #1
@@ -373,6 +302,109 @@
 
 
 \ExplSyntaxOff
+%Tikz und Farbe
+%tikzlibrary needs special handling
+
+
+
+\usetikzlibrary{calc,backgrounds,arrows,matrix}
+
+\colorlet{ltxmdfblue}{blue!30!black}
+
+
+\lst@RequireAspects{writefile}
+
+\lstset{keywordstyle=\bfseries}
+\lstdefinestyle{lstltxmdf}{%
+     basicstyle=\small\ttfamily,
+     language={[LaTeX]TeX},
+     basicstyle=\small,%
+     xleftmargin=20pt,%
+     xrightmargin=20pt,%
+     frame=none,%
+     rulecolor=\color{ltxmdfblue},%
+     framesep=5pt,%
+     framerule=1.2pt,%
+     texcsstyle=*\color{red!50!black}\bfseries,
+     moretexcs=intertext,
+     keywordstyle=\color{blue!60!black}\bfseries,%
+     columns=fullflexible,%
+     fontadjust=true,%
+     basewidth=0.65em,%
+     breakatwhitespace=true,
+     morekeywords=[2]{@length},
+     keywordstyle=[2]\color{red!50!black}\bfseries,
+     morekeywords={outerlinewidth,leftmargin,rightmargin,backgroundcolor,
+                   outerlinecolor,innertopmargin,splittopskip,skipbelow,
+                   skipabove,ntheorem,theorem,lemma,mdframed,linecolor,
+                   frametitle,infobox,innerlinewidth,roundcorner,leftline,
+                   topline,splitbottomskip,middlelinewidth,middlelinecolor,
+                   tikzsetting,rightline,bottomline,innerrightmargin,style,
+                   linewidth,lem,section,definedstyle,mdfapptodefinestyle,
+                   needspace,mdf@globalstyle@cnt,framemethod,ExampleText,
+                   titregris,draw,gray,thick,fill,white,shading,exersicetitle,
+                   exersicebackground,color,green,black,exercise,exercisepoints,
+                   text,rectangle,rounded,corners,right,minimum,height,xshift,
+                   at,exercisestyle,settings,frametitlefont,innerbottommargin,
+                   innerleftmargin,frametitlerule,frametitlebelowskip,
+                   frametitleaboveskip,frametitlebackgroundcolor,
+                   frametitlerulecolor,picins,figure,hidealllines,fontcolor,
+                   firstextra,secondextra,middleextra,singleextra,overlay,node,
+                   pstricksappsetting,apptotikzsetting,frametitlerulewidth,
+                   userdefinedwidth,mdfbackground,append,mdfframetitlebackground,
+                   left,shade,align,exampledefault},
+     moretexcs={newmdtheoremenv,newmdenv,theoremstyle,mdfsetup,@length,
+                   md@putbox@single,@tempboxa,mdf@,mdf@linewidth,
+                   mdf@leftmargin@length,interruptlength,setlength,newrobustcmd,
+                   overlaplines,appto,md@frame@leftline@singe,color,
+                   md@frame@leftline@single,mdf@innerbottommargin@length,
+                   mdf@middlelinewidth@length,mdfboundingboxheight,
+                   md@frame@rightline@single,mdfboundingboxwidth,
+                   mdf@innerrightmargin@length,mdfdefinestyle,
+                   mdfapptodefinestyle,defcounter,tikzstyle,
+                   pgfdeclarehorizontalshading,theexercise,mdf@@exercisepoints,
+                   define@key,renewrobustcmd,mdfcreateextratikz,node,ifdefempty,
+                   mdf@frametitlefont,dimexpr,mdframedtitleenv,ifstrempty,
+                   @undefined,mdtheorem,surroundwithmdframed,@captype,@dblarg,
+                   @newcaption,newcaption,mdflength,tikzset,path,p1,p2,
+                   IfFileExists,includegraphics,mdfsubtitle,lipsum,kant,%
+                   Examplesec,%
+                   },%
+}
+
+
+\lstnewenvironment{tltxmdfexample}[1][]
+  {\lstset{style=lstltxmdf,#1}}%
+  {}
+
+\def\mdf@sampleInput#1{%
+    \MakePercentComment\catcode`\^^M=10\relax%
+    {\setkeys{lst}{SelectCharTable=\lst@ReplaceInput{\^\^I}%
+                                  {\lst@ProcessTabulator}}%
+     \leavevmode \input{#1}}\MakePercentIgnore}
+\def\highlightinputenv{flushleft}
+\lstnewenvironment{tltxmdfexample*}[1][]%
+  {%
+   \begingroup%
+   \lstset{style=lstltxmdf,#1}%
+   \setbox\@tempboxa\hbox\bgroup
+   \lst@BeginWriteFile{\jobname.tmp}%
+  }%
+  {
+   \lst@EndWriteFile\egroup%
+   \begin{\highlightinputenv}
+   \lstinputlisting{\jobname.tmp}%
+   \end{\highlightinputenv}
+   \mdf@sampleInput{\jobname.tmp}%
+   \endgroup%
+  }
+
+
+\lstnewenvironment{exltxmdfexample}[1][]
+  {\lstset{style=lstltxmdf,#1}}%
+  {}
+
+
 \lstMakeShortInline[basicstyle=\small\ttfamily\color{blue!60!black}]{|}
 \def\macro#1{%
    \MakePrivateLetters
@@ -410,7 +442,6 @@
            (option)\encapchar usage}%
     \index{options:\levelchar#1\actualchar{\protect\ttfamily#1}\encapchar
            usage}\@esphack}
-\ExplSyntaxOn
 
 
 
@@ -500,6 +531,6 @@
 
 %%%%
 
-
-\tex_endinput:D
+\endinput
+%\tex_endinput:D
 
