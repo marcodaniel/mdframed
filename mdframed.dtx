@@ -309,9 +309,7 @@ Have fun!
 %    innertopmargin  = \topskip      ,%
 %    splittopskip    = \topskip      ,%
 %    ntheorem        = true          ,% 
-%    skipabove       = \baselineskip ,%
-%    skipbelow       = \baselineskip]
-%   {theorem}{Theorem}[section]
+%   ]{theorem}{Theorem}[section]
 % 
 % \begin{theorem}[Pythagorean theorem]
 %  In any right triangle, the area of the square whose side is the hypotenuse 
@@ -336,9 +334,7 @@ Have fun!
     innertopmargin  = \topskip      ,%
     splittopskip    = \topskip      ,%
     ntheorem        = true          ,% 
-    skipabove       = \baselineskip ,%
-    skipbelow       = \baselineskip]
-   {theorem}{Theorem}[section]
+  ]{theorem}{Theorem}[section]
  \begin{theorem}[Pythagorean theorem]
  ...
  \end{theorem}
@@ -350,20 +346,16 @@ Have fun!
 % 
 % \section{Syntax}\label{sec:syntax}
 % 
-% \minisec{Loadings \Pack{mdframed}}
+% \minisec{Required packages by \Pack{mdframed}}
 % The package itself loads the packages 
-%  \begin{itemize}
-%   \item \Pack{kvoptions},
-%   \item \Pack{xparse} (new),
-%   \item \Pack{etoolbox} and
-%   \item \Pack{color}.
-%  \end{itemize}
-% Depending on the options \Pack{mdframed} will load
-%  \begin{itemize}
-%   \item \Pack{xcolor},
-%   \item \Pack{tikz} or
-%   \item \Pack{pstricks}.
-%  \end{itemize}
+%  \begin{center}
+%   \Pack{kvoptions}\qquad\Pack{xparse}\qquad\Pack{etoolbox}
+%   \quad\Pack{color}.
+%  \end{center}
+% Depending on the option \Opt{framemthod} \Pack{mdframed} will load
+%  \begin{center}
+%   \Pack{xcolor}\qquad\Pack{tikz}\qquad\Pack{pstricks}.
+%  \end{center}
 % 
 % Load the package as usual:
 % \iffalse
@@ -405,7 +397,7 @@ Have fun!
 % If you are using \Pack{mdframed} inside \Pack{twoside}-mode you can set
 % the option \Opt{innermargin} and \Opt{outermargin} (see section %
 % \ref{optlength}). The length will be ignored if you use the option 
-% \Opt{usetwoside}.
+% \Opt{usetwoside=false}.
 % 
 % 
 % %%%%%%%%%%%%%%%%%%%%%%%
@@ -414,8 +406,8 @@ Have fun!
 % Normally you can say \Pack{mdframed} draws only some lines. 
 % To allow page breaks the following designs are supported. 
 % If you load the package with \Opt{framemethod=default} you 
-% can only draw a single line. Inside the gray box the text
-% will be printed.
+% can only draw a single line. Inside the gray boxes of the images below 
+% the text will be printed.
 % \newcommand\Punkt[2][below]{%
 % 	\node[label=#1:#2] at (#2){\tikz\fill(0,0)circle(0.05);};}
 % \newcommand\Single[1][]{\path[#1] (O)--(O|-P)--(P)--(P|-O)--cycle;}
@@ -501,7 +493,8 @@ Have fun!
 % The following commands should countenance your by the handling with 
 % \Pack{mdframed}.
 % 
-% \ExplCmd{newmdenv} The command has the following syntax:
+% \ExplCmd{newmdenv[options]\{env-name\}} The command allows the definition of a new environment
+% which is surrounded by \Env{mdframed}. The command has the following syntax:
 % \iffalse
 %<*example>
 % \fi
@@ -511,29 +504,29 @@ Have fun!
 % \iffalse
 %</example>
 % \fi
-% In this way you can simply use:
+% In this way you can say:
 % \iffalse
 %<*example>
 % \fi
 \begin{tltxmdfexample}
   \newmdenv[linecolor=red,frametitle=Infobox]{infobox}
-  ...
+
   \begin{infobox}[backgroundcolor=yellow]
-   foo   foo   foo   foo   foo   foo 
+   Some Infos\ldots
   \end{infobox}
 \end{tltxmdfexample}
 % \iffalse
 %</example>
 % \fi
-% \ExplCmd{renewmdenv} 
+% \ExplCmd{renewmdenv[options]\{env-name\}} 
 %      By using this command you can redefine environments which are created by
 %      \Cmd{newmdenv}.
 % 
-% \ExplCmd{surroundwithmdframed} 
+% \ExplCmd{surroundwithmdframed[options]\{environment\}} 
 %      Sometimes you have predefined environments. This commands allows you to 
-%      set an \Env{environment} surround this predefined environment. To set a 
-%      \Env{mdframed} around the environment \Env{verbatim} you can simple say 
-%      without changing the original name.
+%      surround an predefined \Env{environment} with \Env{mdframed} without
+%      changing the original name. To set a \Env{mdframed} around the
+%       environment \Env{verbatim} you can simple say.
 % \iffalse
 %<*example>
 % \fi
@@ -545,9 +538,9 @@ Have fun!
 % \fi
 %
 % 
-% \ExplCmd{mdflength} 
+% \ExplCmd{mdflength\{options\}} 
 %     If you want to work with length defined by \Pack{mdframed} (for example
-%     \Opt{innerleftmargin}) you can now simple use the command \Cmd{mdflength}.
+%     \Opt{innerleftmargin}) you can use the command \Cmd{mdflength}.
 % \iffalse
 %<*example>
 % \fi
@@ -564,7 +557,7 @@ Have fun!
 % \end{center}
 %
 % 
-% \ExplCmd{mdfsetup}To set the options 
+% \ExplCmd{mdfsetup\{options\}}To set the options 
 % you can use the optional argument of \Cmd{usepackage} or
 % you can use the command \Cmd{mdfsetup} which is not limited to the preamble.
 % Inside a group the settings work only local.\par
@@ -579,19 +572,17 @@ Have fun!
 % The sole exception is the option \Opt{framemethod} which must given as an optional 
 % argument of \Cmd{usepackage}.
 %
-% \ExplCmd{mdfdefinestyle} 
-%      \Cmd{mdfdefinestyle} allows the user to define different styles and use
-%      as an option of \Pack{mdframed} via \Opt{style}. The option \Opt{style} 
-%      is explained in section \ref{genopt}.
+% \ExplCmd{mdfdefinestyle\{options\}} 
+%      \Cmd{mdfdefinestyle} allows the user to define different styles which can
+%      be used as an option of \Pack{mdframed} via \Opt{style}. The option
+%     \Opt{style} is explained in section \ref{genopt}.
 % 
 % Here a small example:
 % \iffalse
 %<*example>
 % \fi
 \begin{tltxmdfexample}[morekeywords={mystyle}]
- \mdfdefinestyle{mystyle}{leftmargin=0pt,%
-                          linecolor=blue}
- ....
+ \mdfdefinestyle{mystyle}{leftmargin=1cm,linecolor=blue}
  \begin{mdframed}[style=mystyle]
   foo
  \end{mdframed}
@@ -600,8 +591,8 @@ Have fun!
 %</example>
 % \fi
 % 
-% \ExplCmd{mdfapptodefinestyle} 
-%      This commands allows to expand a defined style.\footnote{Thanks
+% \ExplCmd{mdfapptodefinestyle\{options\}} 
+%      This commands add options to a defined style.\footnote{Thanks
 %       to Martin Scharrer and Enrico Gregorio:\newline
 %      \href{http://tex.stackexchange.com/questions/34684/argument-of-setkeys}
 %           {http://tex.stackexchange.com/questions/34684/argument-of-setkeys}}
@@ -946,7 +937,7 @@ Have fun!
 %      to put the options of \Opt{pstrickssetting} in brackets.
 %      \limitation[PSTricks]
 % \ExplOpt[\{\}]{pstricksappsetting}
-%      \Pack{mdframed} works with defined style for the different elements. By 
+%      \Pack{mdframed} works with defined styles for the different elements. By 
 %      using \Cmd{addtopsstyle} in combination with this option 
 %      you can expand the definition. The predefined styles are
 %      \begin{itemize}
@@ -1143,6 +1134,40 @@ Have fun!
 %     Sets the skip after the line above and the subtitle itself.
 % \ExplOpt[0.5\string\baselineskip]{subtitleinnerbelowskip}
 %     Sets the skip after the subtitle and the line below.
+%
+% Here an example to demonstrate the behaviour:
+%
+% \newmdenv[%
+%  roundcorner=5pt,
+%  subtitlebelowline=true,subtitleaboveline=true,
+%  subtitlebackgroundcolor=yellow,
+%  backgroundcolor=blue!20!white,
+%  ]{subtitleenv}
+% \begin{subtitleenv}
+%   Some Text \ldots
+%   \mdfsubtitle{Notes}
+%   Some Text \ldots
+% \end{subtitleenv}
+%
+% \iffalse
+%<*example>
+% \fi
+\begin{tltxmdfexample}
+  \newmdenv[%
+   roundcorner=5pt,
+   subtitlebelowline=true,subtitleaboveline=true,
+   subtitlebackgroundcolor=yellow,
+   backgroundcolor=blue!20!white
+   ]{subtitleenv}
+  \begin{subtitleenv}
+  Some Text \ldots
+  \mdfsubtitle{Notes}
+  Some Text \ldots
+  \end{subtitleenv}
+\end{tltxmdfexample}
+% \iffalse
+%</example>
+% \fi
 %
 %
 %
@@ -2165,22 +2190,26 @@ Have fun!
      \or\mdf@LoadFile@IfExist{pst-node}%=3
   \fi%
 }
+\define@key{mdf}{tikz}{\setkeys{mdf}{framemthod=tikz}}
+\define@key{mdf}{TikZ}{\setkeys{mdf}{framemthod=tikz}}
+\define@key{mdf}{pstricks}{\setkeys{mdf}{framemthod=pstricks}}
+\define@key{mdf}{PSTricks}{\setkeys{mdf}{framemthod=pstricks}}
 %    \end{macrocode}
 %
 % \begin{macro}{mdf@do@lengthoption}
 % Here the declaration of all length options.
 %    \begin{macrocode}
 \mdf@dolist{\mdf@do@lengthoption}{%
-   {skipabove==\z@},%
-   {skipbelow==\z@},%
+   {skipabove==\topsep},%
+   {skipbelow==\topsep},%
    {leftmargin==\z@},%
    {rightmargin==\z@},%
    {innerleftmargin==10pt},%
    {innerrightmargin==10pt},%
    {innertopmargin==0.4\baselineskip},%
    {innerbottommargin==0.4\baselineskip},%
-   {splittopskip==\z@},%
-   {splitbottomskip==\z@},%
+   {splittopskip==\topskip},%
+   {splitbottomskip==\baselineskip},%
    {outermargin==\z@},%
    {innermargin==\z@},%
    {linewidth==0.4pt},%
@@ -2224,7 +2253,7 @@ Have fun!
     {frametitle=={}},%
     {defaultunit==pt},%
     {linecolor==black},%
-    {backgroundcolor==white},%
+    {backgroundcolor==gray},%
     {fontcolor==black},%
     {frametitlefontcolor==black},%
     {innerlinecolor==\mdf@linecolor},%
@@ -3078,7 +3107,7 @@ Have fun!
         }%
     \fi%
     \mdf@reserveda%
-    \aftergroup%
+    %\aftergroup%
     \endmdf@trivlist%
 %    \end{macrocode}
 % End group and set the command \Cmd{@doendpe} to behave like 
