@@ -2014,7 +2014,16 @@ Have fun!
 %    \begin{macrocode}
 \SetupKeyvalOptions{family=mdf,prefix=mdf@}
 %    \end{macrocode}
-
+%
+% \begin{macro}{mdf@definestyle@defaultoptions}
+% Save all keys in a macro which can be used by \Opt{style} or
+% as an option
+%    \begin{macrocode}
+\def\mdf@definestyle@defaultoptions{}%
+%    \end{macrocode}
+% \end{macro}
+%
+%
 % \begin{macro}{mdf@iflength,mdf@iflength@check,mdf@iflength@check}
 % Command which checks the input of length options. If the length option is
 % only a number the |defaultunit| will be used. Syntax: 
@@ -2083,6 +2092,7 @@ Have fun!
 \def\mdf@lengthoption@doubledo#1==#2\@nil{%
    \mdf@option@length{#1}{#2}%
    \mdf@define@key@length{#1}%
+   \gappto\mdf@definestyle@defaultoptions{#1=#2,}%
 }
 %    \end{macrocode}
 % \end{macro}
@@ -2099,6 +2109,7 @@ Have fun!
    \define@key{mdf}{#1}{%
       \csdef{mdf@#1}{##1}%
    }%
+   \gappto\mdf@definestyle@defaultoptions{#1=#2,}%
 }
 %    \end{macrocode}
 % \end{macro}
@@ -2115,6 +2126,7 @@ Have fun!
    \define@key{mdf}{#1}[#2]{%
       \setbool{mdf@#1}{##1}%
    }%
+   \gappto\mdf@definestyle@defaultoptions{#1=#2,}%
 }
 %    \end{macrocode}
 % \end{macro}
@@ -2336,6 +2348,7 @@ Have fun!
                    rightline=true,bottomline=true}%
  }%
 }
+\appto\mdf@definestyle@defaultoptions{hidealllines=false,}%
 %    \end{macrocode}
 % \end{macro}
 %
@@ -2454,6 +2467,10 @@ Have fun!
    }%
    {\expandafter\expandafter\expandafter\mdfsetup\expandafter%
     \expandafter\expandafter{\csname mdf@definestyle@#1\endcsname}}%
+}%
+\DeclareVoidOption{default}{%
+   \expandafter\expandafter\expandafter\mdfsetup\expandafter%
+    \expandafter\expandafter{\csname mdf@definestyle@defaultoptions\endcsname}%
 }%
 %    \end{macrocode}
 % \end{macro}
@@ -3949,7 +3966,7 @@ Have fun!
 %      \end{macrocode}
 % Save the complete subtitle inside the save box \Cmd{z@}.
 %      \begin{marcocode}
-  \setbox\z@=\vbox{\mdf@subtitlefont{#2}\relax}%
+  \setbox\z@=\vbox{\mdf@frametitlealignment\mdf@subtitlefont{#2}\relax}%
 %      \end{macrocode}
 % Compute the width of the current line including the inner left margin and
 % inner right margin (using \Cmd{dimen@}. In the nest step the height and the
@@ -4054,7 +4071,7 @@ Have fun!
 %      \end{macrocode}
 % Save the complete subsubtitle inside the save box \Cmd{z@}.
 %      \begin{marcocode}
-  \setbox\z@=\vbox{\mdf@subsubtitlefont{#2}\relax}%
+  \setbox\z@=\vbox{\mdf@frametitlealignment\mdf@subsubtitlefont{#2}\relax}%
 %      \end{macrocode}
 % Compute the width of the current line including the inner left margin and
 % inner right margin (using \Cmd{dimen@}. In the nest step the height and the
@@ -5219,7 +5236,7 @@ Have fun!
 %      \end{macrocode}
 % Save the complete subtitle inside the save box \Cmd{z@}.
 %      \begin{marcocode}
-  \setbox\z@=\vbox{\mdf@subtitlefont{#2}\relax}%
+  \setbox\z@=\vbox{\mdf@frametitlealignment\mdf@subtitlefont{#2}\relax}%
 %      \end{macrocode}
 % Compute the width of the current line including the inner left margin and
 % inner right margin (using \Cmd{dimen@}. In the nest step the height and the
@@ -5291,8 +5308,8 @@ Have fun!
 %      \begin{macrocde}
   \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%
   \vskip\mdf@subtitlebelowskip@length
-  \penalty 9995
- \endgroup
+  \endgroup
+ \@afterheading
 }
 
 %    \end{macrocode}
@@ -5343,7 +5360,7 @@ Have fun!
 %      \end{macrocode}
 % Save the complete subsubtitle inside the save box \Cmd{z@}.
 %      \begin{marcocode}
-  \setbox\z@=\vbox{\mdf@subsubtitlefont{#2}\relax}%
+  \setbox\z@=\vbox{\mdf@frametitlealignment\mdf@subsubtitlefont{#2}\relax}%
 %      \end{macrocode}
 % Compute the width of the current line including the inner left margin and
 % inner right margin (using \Cmd{dimen@}. In the nest step the height and the
@@ -5415,8 +5432,8 @@ Have fun!
 %      \begin{macrocde}
   \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%
   \vskip\mdf@subsubtitlebelowskip@length
-  \penalty 9995
  \endgroup
+  \@afterheading
 }
 
 %    \end{macrocode}
@@ -6538,7 +6555,7 @@ Have fun!
 %      \end{macrocode}
 % Save the complete subtitle inside the save box \Cmd{z@}.
 %      \begin{marcocode}
-  \setbox\z@=\vbox{\mdf@subtitlefont{#2}\relax}%
+  \setbox\z@=\vbox{\mdf@frametitlealignment\mdf@subtitlefont{#2}\relax}%
 %      \end{macrocode}
 % Compute the width of the current line including the inner left margin and
 % inner right margin (using \Cmd{dimen@}. In the nest step the height and the
@@ -6676,7 +6693,7 @@ Have fun!
 %      \end{macrocode}
 % Save the complete subsubtitle inside the save box \Cmd{z@}.
 %      \begin{marcocode}
-  \setbox\z@=\vbox{\mdf@subsubtitlefont{#2}\relax}%
+  \setbox\z@=\vbox{\mdf@frametitlealignment\mdf@subsubtitlefont{#2}\relax}%
 %      \end{macrocode}
 % Compute the width of the current line including the inner left margin and
 % inner right margin (using \Cmd{dimen@}. In the nest step the height and the
