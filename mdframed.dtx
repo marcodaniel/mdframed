@@ -106,7 +106,7 @@ License type: lppl
  HEIKO OBERDIEK
  HERBERT VOSS
 
- Copyright (c) 2010 Marco Daniel
+ Copyright (c) 2010-2013 Marco Daniel
 
  This package may be distributed under the terms of the LaTeX Project
  Public License, as described in lppl.txt in the base LaTeX distribution.
@@ -2193,25 +2193,14 @@ Have fun!
 % Start declaration of options
 %    \begin{macrocode}
 \newcounter{mdf@globalstyle@cnt}
-\defcounter{mdf@globalstyle@cnt}{0}
-\newcommand*\mdfglobal@style{0}
+\defcounter{mdf@globalstyle@cnt}{-99}
 %    \end{macrocode}
 % Only provide to be backward compatible
 %    \begin{macrocode}
 \define@key{mdf}{style}{%
   \mdf@PackageWarning{package option style is depreciated^^J
+                      at this point and will be ignored^^J
                       use framemethod instead\MessageBreak}%
-  \renewcommand*\mdfglobal@style{#1}%
-  \defcounter{mdf@globalstyle@cnt}{#1}%
-  \ifcase\value{mdf@globalstyle@cnt}\relax
-     \or\mdf@LoadFile@IfExist{tikz}%=1
-     \or\mdf@LoadFile@IfExist{pstricks-add}%=2
-     \or\defcounter{mdf@globalstyle@cnt}{2}%=3
-        \mdf@LoadFile@IfExist{pst-node}%
-     \or\mdf@LoadFile@IfExist{pst-node}%=4
-  \else%%>4
-     \mdf@PackageWarning{Unknown global style \value{mdf@globalstyle@cnt}}%
-  \fi%
 }
 %    \end{macrocode}
 %
@@ -2234,22 +2223,35 @@ Have fun!
   \xifinlist{\mdf@tempa}{\mdf@framemethod@i}%
     {\def\mdf@@framemethod{default}\defcounter{mdf@globalstyle@cnt}{0}}%
     {\xifinlist{\mdf@tempa}{\mdf@framemethod@ii}%
-       {\def\mdf@@framemethod{tikz}\defcounter{mdf@globalstyle@cnt}{1}}%
+       {\def\mdf@@framemethod{tikz}\defcounter{mdf@globalstyle@cnt}{1}\mdf@LoadFile@IfExist{tikz}}%
        {\xifinlist{\mdf@tempa}{\mdf@framemethod@iii}%
-          {\def\mdf@@framemethod{pstricks}\defcounter{mdf@globalstyle@cnt}{2}}%
+          {\def\mdf@@framemethod{pstricks}\defcounter{mdf@globalstyle@cnt}{2}\mdf@LoadFile@IfExist{pst-node}}%
           {\mdf@LoadFile@IfExist{#1}}%
        }%
     }%
   \ifcase\value{mdf@globalstyle@cnt}\relax%
-     \or\mdf@LoadFile@IfExist{tikz}%=1
-     \or\mdf@LoadFile@IfExist{pst-node}%=2
-     \or\mdf@LoadFile@IfExist{pst-node}%=3
+    \input{md-frame-0.mdf}%
+   \or\input{md-frame-1.mdf}%
+   \or\input{md-frame-2.mdf}%
+   \or\input{md-frame-3.mdf}%
+   \else%
+    \IfFileExists{md-frame-\value{mdf@globalstyle@cnt}.mdf}%
+    {\input{md-frame-\value{mdf@globalstyle@cnt}.mdf}}%
+    {%
+     \input{md-frame-0.mdf}%
+     \mdf@PackageWarning{The style number \value{mdf@globalstyle@cnt}
+                         does not exist^^J
+                         mdframed ues instead style=0 \mdframedpackagename}%
+    }%
   \fi%
 }
-\define@key{mdf}{tikz}{\setkeys{mdf}{framemthod=tikz}}
-\define@key{mdf}{TikZ}{\setkeys{mdf}{framemthod=tikz}}
-\define@key{mdf}{pstricks}{\setkeys{mdf}{framemthod=pstricks}}
-\define@key{mdf}{PSTricks}{\setkeys{mdf}{framemthod=pstricks}}
+
+
+\DeclareVoidOption{tikz}{\setkeys{mdf}{framemethod=tikz}}
+\DeclareVoidOption{TikZ}{\setkeys{mdf}{framemethod=tikz}}
+\DeclareVoidOption{pstricks}{\setkeys{mdf}{framemethod=pstricks}}
+\DeclareVoidOption{PSTricks}{\setkeys{mdf}{framemethod=pstricks}}
+
 %    \end{macrocode}
 %
 % \begin{macro}{mdf@do@lengthoption}
@@ -2264,8 +2266,8 @@ Have fun!
    {innerrightmargin==10pt},%
    {innertopmargin==0.4\baselineskip},%
    {innerbottommargin==0.4\baselineskip},%
-   {splittopskip==\topskip},%
-   {splitbottomskip==\baselineskip},%
+   {splittopskip==10pt},%
+   {splitbottomskip==10pt},%
    {outermargin==\z@},%
    {innermargin==\z@},%
    {linewidth==0.4pt},%
@@ -2307,6 +2309,7 @@ Have fun!
 %    \begin{macrocode}
 \mdf@dolist{\mdf@do@stringoption}{%
     {frametitle=={}},%
+    {firstframetitle=={}},%
     {defaultunit==pt},%
     {linecolor==black},%
     {backgroundcolor==white},%
@@ -2489,6 +2492,9 @@ Have fun!
 \DeclareDefaultOption{%
    \mdf@PackageError{Unknown Option '\CurrentOption' for mdframed}}
 \ProcessKeyvalOptions*\relax
+\ifnum\c@mdf@globalstyle@cnt<0
+  \kvsetkeys{mdf}{framemethod=default,}
+\fi
 %    \end{macrocode}
 %
 % \begin{macro}{mdfsetup}
@@ -2554,6 +2560,7 @@ Have fun!
 \newsavebox\mdf@splitbox@one
 \newsavebox\mdf@splitbox@two
 \newsavebox\mdf@splitbox@save
+
 \newlength\mdfsplitboxwidth
 \newlength\mdfsplitboxtotalwidth
 \newlength\mdfsplitboxheight
@@ -2586,7 +2593,8 @@ Have fun!
 \newtoggle{mdf@notfirstframetitle}%
 \togglefalse{mdf@notfirstframetitle}%
 
-
+\newcounter{mdf@countframes}
+\setcounter{mdf@countframes}{0}
 % Command to expand the tikz code. (see md-frame-1.mdf)
 \newrobustcmd\mdfcreateextratikz{}
 
@@ -2658,9 +2666,10 @@ Have fun!
 % The package \Pack{amsthm} provides a not compatible starting of theorem. So I
 % have to change the header of amsthm.
 %    \begin{macrocode}
+\AtBeginDocument{%
 \@ifpackageloaded{amsthm}%
-{%
- \newrobustcmd\mdf@patchamsthm{%
+ {%
+  \newrobustcmd\mdf@patchamsthm{%
    \let\mdf@deferred@thm@head\deferred@thm@head
    \pretocmd{\deferred@thm@head}{\@inlabelfalse}%
       {\mdf@PackageInfo{mdframed detected package amsthm ^^J
@@ -2671,7 +2680,8 @@ Have fun!
                          failed\MessageBreak}%
        }%
      }%
-}{\let\mdf@patchamsthm\relax}%
+ }{\let\mdf@patchamsthm\relax}%
+}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -2797,6 +2807,24 @@ Have fun!
    {\renewrobustcmd*\mdf@thm@caption{\thm@thmcaption}}{}%
  }
 %    \end{macrocode}
+%
+%
+% \begin{macro}{mdf@checkntheorem}
+% Command which checks only |ntheorem|. Later I will support also
+% |thmtools|.
+%    \begin{macrocode}
+\newrobustcmd*\mdf@checkntheorem{%
+  \ifbool{mdf@ntheorem}%
+    {\ifundef{\theorempreskipamount}%
+          {\mdf@PackageWarning{You have not loaded ntheorem yet}}%
+          {\setlength{\theorempreskipamount}{\z@}%
+           \setlength{\theorempostskipamount}{\z@}%
+    }%
+  }{}%
+}
+%    \end{macrocode}
+% \end{macro}
+%
 % Defining a complete new theorem set by \Pack{mdframed}
 %    \begin{macrocode}
 \DeclareDocumentCommand{\mdtheorem}{ O{} m o m o }%
@@ -2895,30 +2923,19 @@ Have fun!
 % \textcolor{red}{\bfseries Need a better documenation and must be improved!!!}
 %    \begin{macrocode}
 \newrobustcmd\mdfframedtitleenv[1]{%
-    \mdf@lrbox{\mdf@frametitlebox}%
+  \mdf@lrbox{\mdf@frametitlebox}%
      \mdf@frametitlealignment%
-       \leavevmode\color{\mdf@frametitlefontcolor}%
-           \normalfont\mdf@frametitlefont{#1}
-%    \end{macrocode}
-% Trying to ignore last descenders of the environment.
-%    \begin{macrocode}
-       \ifbool{mdf@ignorelastdescenders}%
-         {%
-          \par\strut\par
-          \unskip\unskip\setbox0=\lastbox
-          \vspace*{\dimexpr\ht\strutbox-\baselineskip\relax}%
-         }{}%
-    \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%%
-%    \end{macrocode}
-%
-%    \begin{macrocode}
-    \endmdf@lrbox\relax%
-   \mdf@ignorevbadness%
-   \setbox\mdf@frametitlebox=\vbox{\unvbox\mdf@frametitlebox}%
-   \mdfframetitleboxwidth=\wd\mdf@frametitlebox\relax%
-   \mdfframetitleboxheight=\ht\mdf@frametitlebox\relax%
-   \mdfframetitleboxdepth=\dp\mdf@frametitlebox\relax%
-   \mdfframetitleboxtotalheight=\dimexpr
+     \leavevmode\color{\mdf@frametitlefontcolor}%
+     \normalfont\mdf@frametitlefont{#1}
+     \mdf@@ignorelastdescenders
+     \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%%
+  \endmdf@lrbox\relax%
+  \mdf@ignorevbadness%
+  \setbox\mdf@frametitlebox=\vbox{\unvbox\mdf@frametitlebox}%
+  \mdfframetitleboxwidth=\wd\mdf@frametitlebox\relax%
+  \mdfframetitleboxheight=\ht\mdf@frametitlebox\relax%
+  \mdfframetitleboxdepth=\dp\mdf@frametitlebox\relax%
+  \mdfframetitleboxtotalheight=\dimexpr
                                   \ht\mdf@frametitlebox
                                   +\dp\mdf@frametitlebox%
                                   +\mdf@frametitleaboveskip@length
@@ -2926,15 +2943,11 @@ Have fun!
                                 \relax%
 }
 
-\newrobustcmd*\mdf@@frametitle{%
-    \mdfframedtitleenv{\mdf@frametitle}%
-}
-
-\newrobustcmd*\mdf@@frametitle@use{%
-   \parskip\z@\relax%
-   \parindent\z@\relax%
+\newrobustcmd\mdf@@frametitle@use{%
    \mdf@ignorevbadness%
    \setbox\mdf@splitbox@one=\vbox{%
+       \parskip\z@\relax%
+       \parindent\z@\relax%
        \offinterlineskip\relax%
        \unvcopy\mdf@frametitlebox\relax%
        \mdf@@frametitlerule\relax%
@@ -2943,22 +2956,6 @@ Have fun!
    \mdf@ignorevbadness%
    \setbox\mdf@splitbox@one=\vbox{\unvbox\mdf@splitbox@one}%
    \mdfsetup{innertopmargin=\mdf@frametitleaboveskip@length}%
-}
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{mdf@checkntheorem}
-% Command which checks only |ntheorem|. Later I will support also
-% |thmtools|.
-%    \begin{macrocode}
-\newrobustcmd*\mdf@checkntheorem{%
-  \ifbool{mdf@ntheorem}%
-    {\ifundef{\theorempreskipamount}%
-          {\mdf@PackageWarning{You have not loaded ntheorem yet}}%
-          {\setlength{\theorempreskipamount}{\z@}%
-           \setlength{\theorempostskipamount}{\z@}%
-    }%
-  }{}%
 }
 %    \end{macrocode}
 % \end{macro}
@@ -2987,29 +2984,6 @@ Have fun!
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{mdf@load@style}
-% Load the method to draw the frame and set style definition.
-%    \begin{macrocode}
-\newrobustcmd*\mdf@load@style{%
-\ifcase\value{mdf@globalstyle@cnt}\relax%
-    \input{md-frame-0.mdf}%
- \or\input{md-frame-1.mdf}%
- \or\input{md-frame-2.mdf}%
- \or\input{md-frame-3.mdf}%
- \else%
-    \IfFileExists{md-frame-\value{mdf@globalstyle@cnt}.mdf}%
-    {\input{md-frame-\value{mdf@globalstyle@cnt}.mdf}}%
-    {%
-     \input{md-frame-0.mdf}%
-     \mdf@PackageWarning{The style number \value{mdf@globalstyle@cnt}
-                         does not exist^^J
-                         mdframed ues instead style=0 \mdframedpackagename}%
-    }%
-\fi%
-}%
-\mdf@load@style
-%    \end{macrocode}
-% \end{macro}
 %
 % \begin{macro}{mdf@styledefinition}
 % The default frame method needs special handling.
@@ -3074,32 +3048,10 @@ Have fun!
 % \end{macro}
 %
 %
-% \begin{macro}{mdframed}
-% The user environement.
+% \begin{macro}{mdf@preenvsetting}
+% Collect all definitions at the beginning of \Env{mdframed}
 %    \begin{macrocode}
-\newenvironment{mdframed}[1][]{%
-%    \end{macrocode}
-% Test \Cmd{@afterheading}
-%    \begin{macrocode}
-%%
-%    \end{macrocode}
-% remove previous skip so that mdframed can to it
-%    \begin{macrocode}
-%% \begingroup%
-%%  \parskip\z@\relax%
-%%  \@@par\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%%
-%% \endgroup%
-%    \end{macrocode}
-% Make everything local
-%    \begin{macrocode}
- \color@begingroup%
-%    \end{macrocode}
-% Set all options
-%    \begin{macrocode}
-   \mdfsetup{userdefinedwidth=\linewidth,#1}%
-%    \end{macrocode}
-%  Trying to set \Cmd{parskip=0pt} and using the orignal definition only in the save box
-%    \begin{macrocode}
+\newrobustcmd*\mdf@preenvsetting{%
    \mdf@twoside@checklength%
    \edef\mdf@par@local{\parskip=\the\parskip\relax\parindent=\the\parindent\relax}%
    \parskip\z@
@@ -3107,75 +3059,71 @@ Have fun!
    \let\width\z@%
    \let\height\z@%
    \mdf@checkntheorem%
-%    \end{macrocode}
-% Draft mode
-%    \begin{macrocode}
-   \ifbool{mdf@draft}%
-     {%
-      \ifdimgreater{\overfullrule}{0pt}{}{\setlength\overfullrule{5pt}}%
-     }{}%
-%    \end{macrocode}
-% Nesting environments and provide an extra counter.
-%    \begin{macrocode}
-   \ifnum\mdf@envdepth >\tw@\@toodeep\else
+   \ifbool{mdf@draft}{\ifdimgreater{\overfullrule}{0pt}{}{\setlength\overfullrule{5pt}}}{}%
+   \ifnum\mdf@envdepth >\tw@\@toodeep\else% Nesting environments and provide an extra counter.
     \advance\mdf@envdepth\@ne
     \edef\mdf@depthctr{mdf@env@\romannumeral\the\mdf@envdepth}%
    \fi
-%    \end{macrocode}
-%    \begin{macrocode}
    \mdf@styledefinition%
    \mdf@footnoteinput%
    \color{\mdf@fontcolor}%
    \mdf@font%
-   \ifvmode\nointerlineskip\fi%
-   \mdf@trivlist{\mdf@skipabove@length}%%
-   \ifdefempty{\mdf@frametitle}{}{\mdf@@frametitle}%
+}
 %    \end{macrocode}
-% Special command to allow extra user definitions by the option \Opt{settings}.
+% \end{macro}
+%
+% \begin{macro}{mdf@@ignorelastdescenders}
+% Collect all definitions at the beginning of \Env{mdframed}
 %    \begin{macrocode}
-   \mdf@settings%
-%    \end{macrocode}
-% Start save box and save the whole contens in the box \Cmd{mdf@splitbox@one}
-%    \begin{macrocode}
-   \mdf@lrbox{\mdf@splitbox@one}%
-  }%
-  {%
-%    \end{macrocode}
-% Trying to ignore last descenders of the environment.
-%    \begin{macrocode}
+\newrobustcmd*\mdf@@ignorelastdescenders{%
    \ifbool{mdf@ignorelastdescenders}%
      {%
       \par\strut\par
       \unskip\unskip\setbox0=\lastbox
       \vspace*{\dimexpr\ht\strutbox-\baselineskip\relax}%
      }{}%
-   \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%%
+}
 %    \end{macrocode}
-% End save box in relation to footnotes
+% \end{macro}
+%
+%
+%
+% \begin{macro}{mdframed}
+% The user environement.
 %    \begin{macrocode}
-    \ifmdf@footnoteinside%
+\newenvironment{mdframed}[1][]{%
+ \color@begingroup%
+   \mdfsetup{userdefinedwidth=\linewidth,#1}%
+   \mdf@preenvsetting%
+   \ifdefempty{\mdf@firstframetitle}{}%
+           {\let\mdf@frametitlesave\mdf@frametitle%
+            \let\mdf@frametitle\mdf@firstframetitle%
+           }%
+   \ifvmode\nointerlineskip\fi%
+   \mdf@trivlist{\mdf@skipabove@length}%%
+   \mdf@settings%
+   \mdf@lrbox{\mdf@splitbox@one}%
+  }%
+  {%
+   \mdf@@ignorelastdescenders
+   \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%%
+   \ifmdf@footnoteinside%
       \def\mdf@reserveda{%
         \mdf@footnoteoutput%
         \endmdf@lrbox%
-        \ifdefempty{\mdf@frametitle}{}{\mdf@@frametitle@use}%
+        \ifdefempty{\mdf@frametitle}{}{\mdfframedtitleenv{\mdf@frametitle}\mdf@@frametitle@use}%
         \detected@mdf@put@frame}%
-    \else%
+   \else%
       \def\mdf@reserveda{%
         \endmdf@lrbox%
-        \ifdefempty{\mdf@frametitle}{}{\mdf@@frametitle@use}%
+        \ifdefempty{\mdf@frametitle}{}{\mdfframedtitleenv{\mdf@frametitle}\mdf@@frametitle@use}%
         \detected@mdf@put@frame%
         \mdf@footnoteoutput%
         }%
-    \fi%
-    \mdf@reserveda%
-    %\aftergroup%
-    \endmdf@trivlist%
-%    \end{macrocode}
-% End group and set the command \Cmd{@doendpe} to behave like 
-% \Cmd{end\{center\}}
-%    \begin{macrocode}
+   \fi%
+   \mdf@reserveda%
+  \aftergroup\endmdf@trivlist%
  \color@endgroup%
-%% \@doendpe%
 }
 
 %    \end{macrocode}
@@ -3280,8 +3228,6 @@ Have fun!
         \advance\mdf@horizontalspaceofbox by \mdf@middlelinewidth@length\relax%
         \advance\mdf@horizontalspaceofbox by \mdf@outerlinewidth@length\relax% 
        }{}%
-    \ifdimless{\mdf@horizontalspaceofbox}{3cm}%
-      {\mdf@PackageWarning{You have only a width of 3cm}}{}%
     \hsize=\mdf@horizontalspaceofbox%
 }
 %    \end{macrocode}
@@ -3905,7 +3851,7 @@ Have fun!
 %
 %
 %    \begin{macrocode}
-\DisableKeyvalOption[action=warning,package=mdframed]{mdf}{framemethod}%
+% % %\DisableKeyvalOption[action=warning,package=mdframed]{mdf}{framemethod}%
 \DisableKeyvalOption[action=warning,package=mdframed]{mdf}{xcolor}%
 
  \endinput
