@@ -654,7 +654,51 @@ Have fun!
 % The options listed below can be set globally or locally and they are not
 % limited to the preamble.
 % I tried to define self explained names.
+%
+% \ExplOpt{default \mbox{and} style=defaultoptions}
+% This is sets the default options defined by \Pack{mdframed}. 
+%
+% Here a small example:
+% \iffalse
+%<*example>
+% \fi
+\begin{tltxmdfexample}[morekeywords={mystyle}]
+ \mdfsetup{%
+   middlelinecolor=red,
+   middlelinewidth=2pt,
+   backgroundcolor=red!10,
+   roundcorner=10pt}
+ \begin{mdframed}
+  Text\par Text
+ \end{mdframed}
+
+ \begin{mdframed}[default]
+  Text\par Text
+ \end{mdframed}
+\end{tltxmdfexample}
+% \iffalse
+%</example>
+% \fi
 % 
+%
+% \begingroup
+%  \mdfsetup{%
+%   middlelinecolor=red,
+%   middlelinewidth=2pt,
+%   backgroundcolor=red!10,
+%   roundcorner=10pt}
+% \begin{mdframed}
+%  Text\par Text
+% \end{mdframed}
+%
+% \begin{mdframed}[default]
+%  Text\par Text
+% \end{mdframed}
+% \endgroup
+%
+%
+%
+%
 % \subsubsection{Options with lengths}\label{optlength}
 % 
 % In figure \eqref{fig:laengen} you can see the adjustable lengths 
@@ -2265,7 +2309,7 @@ Have fun!
     {frametitle=={}},%
     {defaultunit==pt},%
     {linecolor==black},%
-    {backgroundcolor==gray},%
+    {backgroundcolor==white},%
     {fontcolor==black},%
     {frametitlefontcolor==black},%
     {innerlinecolor==\mdf@linecolor},%
