@@ -2924,10 +2924,11 @@ Have fun!
 %    \begin{macrocode}
 \newrobustcmd\mdfframedtitleenv[1]{%
   \mdf@lrbox{\mdf@frametitlebox}%
+     \parindent\z@\parskip\z@%
      \mdf@frametitlealignment%
      \leavevmode\color{\mdf@frametitlefontcolor}%
-     \normalfont\mdf@frametitlefont{#1}
-     \mdf@@ignorelastdescenders
+     \normalfont\mdf@frametitlefont{#1}%
+     \mdf@@ignorelastdescenders%
      \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%%
   \endmdf@lrbox\relax%
   \mdf@ignorevbadness%
