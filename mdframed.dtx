@@ -2223,9 +2223,11 @@ Have fun!
   \xifinlist{\mdf@tempa}{\mdf@framemethod@i}%
     {\def\mdf@@framemethod{default}\defcounter{mdf@globalstyle@cnt}{0}}%
     {\xifinlist{\mdf@tempa}{\mdf@framemethod@ii}%
-       {\def\mdf@@framemethod{tikz}\defcounter{mdf@globalstyle@cnt}{1}\mdf@LoadFile@IfExist{tikz}}%
+       {\def\mdf@@framemethod{tikz}%
+        \defcounter{mdf@globalstyle@cnt}{1}\mdf@LoadFile@IfExist{tikz}}%
        {\xifinlist{\mdf@tempa}{\mdf@framemethod@iii}%
-          {\def\mdf@@framemethod{pstricks}\defcounter{mdf@globalstyle@cnt}{2}\mdf@LoadFile@IfExist{pst-node}}%
+          {\def\mdf@@framemethod{pstricks}%
+           \defcounter{mdf@globalstyle@cnt}{2}\mdf@LoadFile@IfExist{pst-node}}%
           {\mdf@LoadFile@IfExist{#1}}%
        }%
     }%
@@ -2610,9 +2612,11 @@ Have fun!
 
 \newtoggle{mdf@notfirstframetitle}%
 \togglefalse{mdf@notfirstframetitle}%
+\newtoggle{mdflastframe}
+\togglefalse{mdflastframe}%
 
-\newcounter{mdf@countframes}
-\setcounter{mdf@countframes}{0}
+\newcounter{mdfcountframes}
+\setcounter{mdfcountframes}{0}
 % Command to expand the tikz code. (see md-frame-1.mdf)
 \newrobustcmd\mdfcreateextratikz{}
 
@@ -2649,9 +2653,11 @@ Have fun!
 %%  \sloppy%
      \let\\\@normalcr%
 %    \end{macrocode}
-% \Cmd{parskip} is added to the first skip. Here the first skip will be removed from 
+% \Cmd{parskip} is added to the first skip. Here the first skip
+% will be removed from 
 % the length \Opt{innertopmargin}. See 
-% \url{http://tex.stackexchange.com/questions/100570/why-is-parskip-half-messing-up-the-spacing-in-mdframed}
+% \url{http://tex.stackexchange.com/questions/100570/
+%      why-is-parskip-half-messing-up-the-spacing-in-mdframed}
 %    \begin{macrocode}
      \mdf@par@local%New feature to restore parskip/parindent local in save box
      \ifbool{mdf@suppressfirstparskip}{\vspace*{-\parskip}}{}%
@@ -3769,10 +3775,13 @@ Have fun!
 %    \end{macrocode}
 % Output of the last frame
 %    \begin{macrocode}
+      \begingroup
+      \toggletrue{mdflastframe}
       \mdf@beforebreak%
       \begingroup\mdf@@setzref\mdf@putbox@second\endgroup%
       \hrule \@height\z@ \@width\hsize%
       \mdf@afterbreak%
+      \endgroup
       \let\mdf@reserved@a\relax%
      }%
   \mdf@reserved@a%
