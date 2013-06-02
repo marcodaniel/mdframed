@@ -2040,7 +2040,7 @@ Have fun!
                            but needed by \mdframedpackagename\MessageBreak
                            see documentation fo further information
                            }%
-       }
+       }%
 }
 %    \end{macrocode}
 % \end{macro}
@@ -2310,6 +2310,8 @@ Have fun!
 \mdf@dolist{\mdf@do@stringoption}{%
     {frametitle=={}},%
     {firstframetitle=={}},%
+    {framefoot=={}},%
+    {lastframefoot=={}},%
     {defaultunit==pt},%
     {linecolor==black},%
     {backgroundcolor==white},%
@@ -2337,6 +2339,8 @@ Have fun!
     {firstextra=={}},
     {middleextra=={}},
     {secondextra=={}},
+    {beforebreak=={}},
+    {afterbreak=={}},
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% %
 % %%subtitle / subsubtitle added 29.05.12%% %
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% %
@@ -2402,6 +2406,9 @@ Have fun!
 % \begin{macro}{mdf@do@alignoption}
 % Here the declaration of all align options.
 %    \begin{macrocode}
+%USELESS
+%USELESS
+%USELESS
 \mdf@dolist{\mdf@do@alignoption}{%
     {left==\mdf@leftmargin@length==\z@},%
     {center==\fill==\fill},%
@@ -2409,6 +2416,9 @@ Have fun!
     {outer==\fill==\mdf@rightmargin@length},%not supported yet
     {outer==\mdf@leftmargin@length==\fill},%not supported yet
 }
+%USELESS
+%USELESS
+%USELESS
 %    \end{macrocode}
 % \end{macro}
 %
@@ -2416,6 +2426,9 @@ Have fun!
 %               mdf@makeboxalign@right,mdf@makeboxalign@right}
 % Set the alignment.
 %    \begin{macrocode}
+%USELESS
+%USELESS
+%USELESS
 \newcommand*\mdf@align{}%
 \newcommand*\mdf@makeboxalign@left{\null\hspace*{\mdf@leftmargin@length}}%
 \newcommand*\mdf@makeboxalign@right{}%
@@ -2429,6 +2442,9 @@ Have fun!
        \def\mdf@makeboxalign@right{\csuse{mdf@align@#1@right}}%
    }%
 }
+%USELESS
+%USELESS
+%USELESS
 %    \end{macrocode}
 % \end{macro}
 %
@@ -2590,6 +2606,8 @@ Have fun!
 \newlength\mdf@horizontalwidthofbox@length
 \newlength\mdf@verticalmarginwhole@length
 
+\newlength\mdf@horizontalspaceofbox
+
 \newtoggle{mdf@notfirstframetitle}%
 \togglefalse{mdf@notfirstframetitle}%
 
@@ -2690,12 +2708,17 @@ Have fun!
 % Modification of the default |\trivlist| and |\endtrivlist|.
 %    \begin{macrocode}
 \def\mdf@trivlist#1{%
-  \edef\mdf@temp{\topsep=\the\topsep\relax\partopsep=\the\partopsep\relax\parsep=\the\parsep\relax}
+  \edef\mdf@temp{%
+    \topsep=\the\topsep\relax%
+    \partopsep=\the\partopsep\relax%
+    \parsep=\the\parsep\relax%
+  }%
   \setlength{\topsep}{#1}%
 %    \end{macrocode}
-% Added \Cmd{topskip} to remove first skip after \Cmd{newpage} or \Cmd{clearpage}
+% Added \Cmd{topskip} to remove first skip after \Cmd{newpage} or%
+% \Cmd{clearpage}
 %    \begin{macrocode}
-  \topskip\z@
+  \topskip\z@%
 %    \end{macrocode}  
 %    \begin{macrocode}
   \partopsep\z@%
@@ -2783,7 +2806,7 @@ Have fun!
   \expandafter\let\csname #2\endcsname\relax%
   \expandafter\let\csname end#2\endcsname\relax%
   \newmdenv[#1]{#2}%
-  }%
+}%
 %    \end{macrocode}
 %  Definitions of the standard Theoerems surrounded by \Pack{mdframed}.
 %    \begin{macrocode}
@@ -2942,6 +2965,9 @@ Have fun!
                                   +\mdf@frametitleaboveskip@length
                                   +\mdf@frametitlebelowskip@length
                                 \relax%
+  \setbox\mdf@frametitlebox=%prevent frametitle to expand glue
+     \vbox to \dimexpr\mdfframetitleboxheight+\mdfframetitleboxdepth\relax%
+      {\unvbox\mdf@frametitlebox}%
 }
 
 \newrobustcmd\mdf@@frametitle@use{%
@@ -2967,6 +2993,7 @@ Have fun!
 \newrobustcmd*\mdf@footnoterule{%
     \kern0\p@%
     \hrule \@width 1in \kern 2.6\p@}
+    
 \newrobustcmd*\mdf@footnoteoutput{%
      \ifvoid\@mpfootins\else%
           \nobreak%
@@ -2976,6 +3003,7 @@ Have fun!
           \unvbox\@mpfootins%
      \fi%
 }
+
 \newrobustcmd*\mdf@footnoteinput{%
    \def\@mpfn{mpfootnote}%
    \def\thempfn{\thempfootnote}%
@@ -3054,14 +3082,18 @@ Have fun!
 %    \begin{macrocode}
 \newrobustcmd*\mdf@preenvsetting{%
    \mdf@twoside@checklength%
-   \edef\mdf@par@local{\parskip=\the\parskip\relax\parindent=\the\parindent\relax}%
+   \edef\mdf@par@local{%
+      \parskip=\the\parskip\relax%
+      \parindent=\the\parindent\relax}%
    \parskip\z@
    \parindent\z@
    \let\width\z@%
    \let\height\z@%
    \mdf@checkntheorem%
-   \ifbool{mdf@draft}{\ifdimgreater{\overfullrule}{0pt}{}{\setlength\overfullrule{5pt}}}{}%
-   \ifnum\mdf@envdepth >\tw@\@toodeep\else% Nesting environments and provide an extra counter.
+   \ifbool{mdf@draft}{%
+       \ifdimgreater{\overfullrule}{0pt}{}{\setlength\overfullrule{5pt}}}{}%
+   %% Nested environments and provide an extra counter.
+   \ifnum\mdf@envdepth >\tw@\@toodeep\else%
     \advance\mdf@envdepth\@ne
     \edef\mdf@depthctr{mdf@env@\romannumeral\the\mdf@envdepth}%
    \fi
@@ -3112,12 +3144,14 @@ Have fun!
       \def\mdf@reserveda{%
         \mdf@footnoteoutput%
         \endmdf@lrbox%
-        \ifdefempty{\mdf@frametitle}{}{\mdfframedtitleenv{\mdf@frametitle}\mdf@@frametitle@use}%
+        \ifdefempty{\mdf@frametitle}{}%
+            {\mdfframedtitleenv{\mdf@frametitle}\mdf@@frametitle@use}%
         \detected@mdf@put@frame}%
    \else%
       \def\mdf@reserveda{%
         \endmdf@lrbox%
-        \ifdefempty{\mdf@frametitle}{}{\mdfframedtitleenv{\mdf@frametitle}\mdf@@frametitle@use}%
+        \ifdefempty{\mdf@frametitle}{}%
+            {\mdfframedtitleenv{\mdf@frametitle}\mdf@@frametitle@use}%
         \detected@mdf@put@frame%
         \mdf@footnoteoutput%
         }%
@@ -3199,36 +3233,41 @@ Have fun!
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{mdf@advancelength@horizontalmargin@add,
+% \begin{macro}{mdf@advancelength@sub,mdf@advancelength@add
 %               mdf@horizontalspaceofbox,mdf@horizontalmargin@equation}
-% Command used for loop
+% Command used for loop calculation
 %    \begin{macrocode}
-\newrobustcmd*\mdf@advancelength@horizontalmargin@sub[1]{%
-  \advance\mdf@horizontalspaceofbox by -\csname mdf@#1@length\endcsname\relax%
+\newrobustcmd*\mdf@advancelength@sub[2]{%
+  \advance #1 by -\csname mdf@#2@length\endcsname\relax%
 }
+\newrobustcmd*\mdf@advancelength@add[2]{%
+  \advance #1 by \csname mdf@#2@length\endcsname\relax%
+}
+
 %    \end{macrocode}
+% \end{macro}
+%
+%
+% \begin{macro}{mdf@horizontalmargin@equation}
 % Compute the width of the box
 %    \begin{macrocode}
-\newlength\mdf@horizontalspaceofbox
 \newrobustcmd*\mdf@horizontalmargin@equation{%
     \setlength{\mdf@horizontalspaceofbox}{\mdf@userdefinedwidth@length}%
-    \mdf@dolist{\mdf@advancelength@horizontalmargin@sub}{%
+    \mdf@dolist{\mdf@advancelength@sub{\mdf@horizontalspaceofbox}}{%
              leftmargin,outerlinewidth,middlelinewidth,%
              innerlinewidth,innerleftmargin,innerrightmargin,%
              innerlinewidth,middlelinewidth,outerlinewidth,%
              rightmargin}%
     \notbool{mdf@leftline}%
-       {%
-        \advance\mdf@horizontalspaceofbox by \mdf@innerlinewidth@length\relax%
-        \advance\mdf@horizontalspaceofbox by \mdf@middlelinewidth@length\relax%
-        \advance\mdf@horizontalspaceofbox by \mdf@outerlinewidth@length\relax%
-       }{}%      
+     {%
+      \mdf@dolist{\mdf@advancelength@add{\mdf@horizontalspaceofbox}}%
+        {innerlinewidth,middlelinewidth,outerlinewidth}%
+     }{}% 
     \notbool{mdf@rightline}%
-       {%
-        \advance\mdf@horizontalspaceofbox by \mdf@innerlinewidth@length\relax%
-        \advance\mdf@horizontalspaceofbox by \mdf@middlelinewidth@length\relax%
-        \advance\mdf@horizontalspaceofbox by \mdf@outerlinewidth@length\relax% 
-       }{}%
+     {%
+      \mdf@dolist{\mdf@advancelength@add{\mdf@horizontalspaceofbox}}%
+        {innerlinewidth,middlelinewidth,outerlinewidth}%
+     }{}%    
     \hsize=\mdf@horizontalspaceofbox%
 }
 %    \end{macrocode}
@@ -3240,41 +3279,14 @@ Have fun!
 \newrobustcmd*\mdf@keeplines@single{%
   \notbool{mdf@topline}%
      {%
-      \advance\mdf@verticalmarginwhole@length %
-               by -\mdf@innerlinewidth@length\relax%
-      \advance\mdf@verticalmarginwhole@length %
-               by -\mdf@middlelinewidth@length\relax%
-      \advance\mdf@verticalmarginwhole@length %
-               by -\mdf@outerlinewidth@length\relax%
+      \mdf@dolist{\mdf@advancelength@sub{\mdf@verticalmarginwhole@length}}%
+        {innerlinewidth,middlelinewidth,outerlinewidth}%
      }{}%
   \notbool{mdf@bottomline}%
      {%
-      \advance\mdf@verticalmarginwhole@length %
-               by -\mdf@innerlinewidth@length\relax%
-      \advance\mdf@verticalmarginwhole@length %
-               by -\mdf@middlelinewidth@length\relax%
-      \advance\mdf@verticalmarginwhole@length %
-               by -\mdf@outerlinewidth@length\relax%
+      \mdf@dolist{\mdf@advancelength@sub{\mdf@verticalmarginwhole@length}}%
+        {innerlinewidth,middlelinewidth,outerlinewidth}%
      }{}%
-}
-%    \end{macrocode}
-% \end{macro}
-%
-%
-% \begin{macro}{mdf@advancelength@verticalmarginwhole,
-%               mdf@advancelength@freevspace@sub,
-%               mdf@advancelength@freevspace@add}
-% Loop macros to calculate the height. Used by |\mdf@dolist|.
-%    \begin{macrocode}
-\newrobustcmd*\mdf@advancelength@verticalmarginwhole[1]{%
-  \advance\mdf@verticalmarginwhole@length %
-           by \csname mdf@#1@length\endcsname\relax%
-}
-\newrobustcmd*\mdf@advancelength@freevspace@sub[1]{%
-  \advance\dimen@ by -\csname mdf@#1@length\endcsname\relax%
-}
-\newrobustcmd*\mdf@advancelength@freevspace@add[1]{%
-  \advance\dimen@ by \csname mdf@#1@length\endcsname\relax%
 }
 %    \end{macrocode}
 % \end{macro}
@@ -3283,7 +3295,7 @@ Have fun!
 % \begin{macro}{mdf@reset}
 % Reset changes
 %    \begin{macrocode}
-\protected@edef\mdf@reset{\boxmaxdepth\the\boxmaxdepth 
+\protected@edef\mdf@reset{\boxmaxdepth\the\boxmaxdepth% 
                           \splittopskip\the\splittopskip}%
 %    \end{macrocode}
 % \end{macro}
@@ -3292,21 +3304,19 @@ Have fun!
 % Output of |mdframed| inside a non breakable environement.
 %    \begin{macrocode}
 \newrobustcmd*\mdf@put@frame@standalone{\relax%
-   \ifvoid\mdf@splitbox@one\relax
+   \ifvoid\mdf@splitbox@one\relax%
       \mdf@PackageWarning{The environment is empty\MessageBreak}%
-      \let\mdf@reserved@a\relax%
-   \else
+   \else%
       %Hier berechnung Box-Inhalt+Rahmen oben und unten
       \setlength{\mdf@verticalmarginwhole@length}%
                  {\dimexpr\ht\mdf@splitbox@one+\dp\mdf@splitbox@one\relax}%
-      \mdf@dolist{\mdf@advancelength@verticalmarginwhole}{%
+      \mdf@dolist{\mdf@advancelength@add{\mdf@verticalmarginwhole@length}}{%
                   outerlinewidth,middlelinewidth,innerlinewidth,%
                   innertopmargin,innerbottommargin,innerlinewidth,%
                   middlelinewidth,outerlinewidth}%
       \mdf@keeplines@single%
-      \def\mdf@reserved@a{\mdf@putbox@single}%
-   \fi
-   \mdf@reserved@a%
+      \begingroup\mdf@@setzref\mdf@putbox@single\endgroup%
+   \fi%
 }
 %    \end{macrocode}
 % \end{macro}
@@ -3326,31 +3336,31 @@ Have fun!
   \mdf@PackageInfoSpace{\the\mdf@freevspace@length before the 
                         beginning of \MessageBreak
                         the environment ending on input line \MessageBreak}%
-  \ifdimless{\mdf@freevspace@length}{2\baselineskip}
+  \ifdimless{\mdf@freevspace@length}{2\baselineskip}%
     {%
-     \mdf@PackageInfo{Not enough space on this page}
+     \mdf@PackageInfo{Not enough space on this page}%
      \vfill\eject%
      \def\mdf@reserved@a{\mdf@put@frame}%
     }{%
       %Hier berechnung Box-Inhalt+Rahmen oben und unten
       \setlength{\mdf@verticalmarginwhole@length}%
                 {\dimexpr\ht\mdf@splitbox@one+\dp\mdf@splitbox@one\relax}%
-      \mdf@dolist{\mdf@advancelength@verticalmarginwhole}%
+      \mdf@dolist{\mdf@advancelength@add{\mdf@verticalmarginwhole@length}}%
                  {%
                   outerlinewidth,middlelinewidth,innerlinewidth,%
                   innertopmargin,innerbottommargin,%
                   innerlinewidth,middlelinewidth,outerlinewidth}%
       \mdf@keeplines@single%
       \ifdimless{\mdf@verticalmarginwhole@length}{\mdf@freevspace@length}%
-         {%passt auf Seite%
+         {%enough space / no break
           \begingroup\mdf@@setzref\mdf@putbox@single\endgroup%Output no break
           \let\mdf@reserved@a\relax%
          }%
          {%
-          \def\mdf@reserved@a{\mdf@put@frame@i}%passt nicht auf Seite
-         }
+          \def\mdf@reserved@a{\mdf@put@frame@i}%need to split
+         }%
     }%
-\fi
+\fi%
 \mdf@reserved@a%
 }
 %    \end{macrocode}
@@ -3370,9 +3380,8 @@ Have fun!
 %    \begin{macrocode}
  \dimen@=\the\mdf@freevspace@length\relax%
  \dimen@i=\mdf@innertopmargin@length\relax%
- \advance\dimen@i by \mdf@innerlinewidth@length\relax%
- \advance\dimen@i by \mdf@middlelinewidth@length\relax%
- \advance\dimen@i by \mdf@outerlinewidth@length\relax%
+ \mdf@dolist{\mdf@advancelength@add{\dimen@i}}%
+   {innerlinewidth,middlelinewidth,outerlinewidth}%
  \advance\dimen@i by 2\baselineskip\relax%
  \ifdimless{\dimen@}{\dimen@i}%
 %    \end{macrocode}
@@ -3390,7 +3399,7 @@ Have fun!
 % compute the needed vertical space of the first frame. Subtract the dimension
 % of the bottom frame
 %    \begin{macrocode}
-    \mdf@dolist{\mdf@advancelength@freevspace@sub}{%calculate with \dimen@
+    \mdf@dolist{\mdf@advancelength@sub{\dimen@}}{%calculate with \dimen@
               outerlinewidth,middlelinewidth,innerlinewidth,%
               innertopmargin,splitbottomskip}%
 %    \end{macrocode}
@@ -3400,9 +3409,8 @@ Have fun!
       {%
        \ifbool{mdf@bottomline}%
           {%
-           \advance\dimen@ by -\mdf@innerlinewidth@length%
-           \advance\dimen@ by -\mdf@middlelinewidth@length%
-           \advance\dimen@ by -\mdf@outerlinewidth@length%
+           \mdf@dolist{\mdf@advancelength@sub{\dimen@}}%
+             {innerlinewidth,middlelinewidth,outerlinewidth}%
           }{}%
       }{}%
 %    \end{macrocode}
@@ -3410,9 +3418,8 @@ Have fun!
 %    \begin{macrocode}
     \notbool{mdf@topline}%
        {%
-        \advance\dimen@ by \mdf@innerlinewidth@length%
-        \advance\dimen@ by \mdf@middlelinewidth@length%
-        \advance\dimen@ by \mdf@outerlinewidth@length%
+           \mdf@dolist{\mdf@advancelength@add{\dimen@}}%
+             {innerlinewidth,middlelinewidth,outerlinewidth}%
        }{}%
 %    \end{macrocode}
 % Add a length of 0.8\Cmd{pageshrink}. I don't know whether it's needed! 
@@ -3530,8 +3537,10 @@ Have fun!
 %    \end{macrocode}
 % Output of the first frame
 %    \begin{macrocode}
+          \mdf@beforebreak%
           \begingroup\mdf@@setzref\mdf@putbox@first\endgroup%
           \hrule \@height\z@ \@width\hsize%
+          \mdf@afterbreak%
           \vfill\eject%
           \def\mdf@reserved@a{\mdf@put@frame@ii}%
 %    \end{macrocode}
@@ -3578,7 +3587,10 @@ Have fun!
 %    \begin{macrocode}
        \setbox\mdf@splitbox@one\vbox%
           {%
-           \vbox to \mdf@frametitleaboveskip@length{}
+           \parskip\z@\relax%
+           \parindent\z@\relax%
+%           \offinterlineskip\relax%
+           \vskip\mdf@frametitleaboveskip@length%
            \unvcopy\mdf@frametitlebox\relax%
            \mdf@@frametitlerule\relax%
            \unvbox\mdf@splitbox@one\relax%
@@ -3593,9 +3605,9 @@ Have fun!
 % Assume no middle box -- add bottom length to the natural height of the 
 % contents
 %    \begin{macrocode}
-  \mdf@dolist{\mdf@advancelength@freevspace@add}%
+  \mdf@dolist{\mdf@advancelength@add{\dimen@}}%
         {%used \dimen@
-         innerbottommargin,innerlinewidth,middlelinewidth,outerlinewidth,%
+         innerbottommargin,innerlinewidth,middlelinewidth,outerlinewidth%
         }%
 %    \end{macrocode}
 % add top length of lines if \Opt{everyline} is set to \Opt{true}
@@ -3604,9 +3616,8 @@ Have fun!
     {%
      \ifbool{mdf@topline}%
       {%
-       \advance\dimen@ by \mdf@innerlinewidth@length\relax%
-       \advance\dimen@ by \mdf@middlelinewidth@length\relax%
-       \advance\dimen@ by \mdf@outerlinewidth@length\relax%
+       \mdf@dolist{\mdf@advancelength@add{\dimen@}}%
+         {innerlinewidth,middlelinewidth,outerlinewidth}%
       }{}%
     }{}%
 %    \end{macrocode}
@@ -3614,10 +3625,8 @@ Have fun!
 %    \begin{macrocode}
    \notbool{mdf@bottomline}%
      {%
-      \advance\dimen@ by -\mdf@innerlinewidth@length\relax%
-      \advance\dimen@ by -\mdf@middlelinewidth@length\relax%
-      \advance\dimen@ by -\mdf@outerlinewidth@length\relax%
-      \relax%
+       \mdf@dolist{\mdf@advancelength@sub{\dimen@}}%
+         {innerlinewidth,middlelinewidth,outerlinewidth}%
      }{}%
 %    \end{macrocode}
 % Test whether the complete height of the frame fits on the current page
@@ -3634,16 +3643,13 @@ Have fun!
        {%
         \ifbool{mdf@topline}%
           {%
-          \advance\mdf@freevspace@length by -\mdf@innerlinewidth@length\relax%
-          \advance\mdf@freevspace@length by -\mdf@middlelinewidth@length\relax%
-          \advance\mdf@freevspace@length by -\mdf@outerlinewidth@length\relax%
+           \mdf@dolist{\mdf@advancelength@sub{\mdf@freevspace@length}}%
+             {innerlinewidth,middlelinewidth,outerlinewidth}%
           }{}%
         \ifbool{mdf@bottomline}%
           {%
-          \advance\mdf@freevspace@length by -\mdf@innerlinewidth@length\relax%
-          \advance\mdf@freevspace@length by -\mdf@middlelinewidth@length\relax%
-          \advance\mdf@freevspace@length by -\mdf@outerlinewidth@length\relax%
-          \relax
+           \mdf@dolist{\mdf@advancelength@sub{\mdf@freevspace@length}}%
+             {innerlinewidth,middlelinewidth,outerlinewidth}%
           }{}%
        }{}%
 %    \end{macrocode}
@@ -3722,8 +3728,10 @@ Have fun!
 %    \end{macrocode}
 %
 %    \begin{macrocode}
+        \mdf@beforebreak%
         \begingroup\mdf@@setzref\mdf@putbox@middle\endgroup%
           \hrule \@height\z@ \@width\hsize%
+        \mdf@afterbreak%  
           \vfill\eject%
           \def\mdf@reserved@a{\mdf@put@frame@ii}%
         \fi
@@ -3761,8 +3769,10 @@ Have fun!
 %    \end{macrocode}
 % Output of the last frame
 %    \begin{macrocode}
+      \mdf@beforebreak%
       \begingroup\mdf@@setzref\mdf@putbox@second\endgroup%
       \hrule \@height\z@ \@width\hsize%
+      \mdf@afterbreak%
       \let\mdf@reserved@a\relax%
      }%
   \mdf@reserved@a%
