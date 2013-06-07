@@ -35,3 +35,7 @@ md-test*
 *.ins
 
 *.ind
+
+mdframed.idx
+
+mdframed.idxlog

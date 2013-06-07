@@ -1,3 +1,30 @@
+%% %% \subsubsection{Options related to the title of level 2}
+%% %%
+%% %% \ExplOpt[false]{subsubtitleaboveline}
+%% %%     Decide to draw a line above the subsubtile.
+%% %% \ExplOpt[false]{subtitlebelowline}
+%% %%     Decide to draw a line below the subsubtitle.
+%% %% \ExplOpt[\string\normalfont]{subsubtitlefont}
+%% %%     Sets the font for subsubtitles.
+%% %% \ExplOpt[white]{subsubtitlebackgroundcolor}
+%% %%     Sets the background color of the subsubtitle between the above and
+%% %%     below line.
+%% %% \ExplOpt[black]{subsubtitleabovelinecolor}
+%% %%     Sets the line color of the line above.
+%% %% \ExplOpt[black]{subsubtitlebelowlinecolor}
+%% %%     Sets the line color of the line below.
+%% %% \ExplOpt[0.8\,pt]{subsubtitleabovelinewidth}
+%% %%     Sets the line width of the line above.
+%% %% \ExplOpt[0.6\,pt]{subsubtitlebelowlinewidth}
+%% %%     Sets the line width of the line below.
+%% %% \ExplOpt[\string\baselineskip]{subsubtitleaboveskip}
+%% %%     Sets the skip before the subsubtitle line above will be drawn.
+%% %% \ExplOpt[1.2\string\baselineskip]{subsubtitlebelowskip}
+%% %%     Sets the skip after the subsubtitle line below is drawn.
+%% %% \ExplOpt[0.5\string\baselineskip]{subsubtitleinneraboveskip}
+%% %%     Sets the skip after the line above and the subsubtitle itself.
+%% %% \ExplOpt[0.5\string\baselineskip]{subsubtitleinnerbelowskip}
+%% %%     Sets the skip after the subsubtitle and the line below.
 %% Style file for mdframed for package option `framemethod=default`
 %%
 %% This package may be distributed under the terms of the LaTeX Project

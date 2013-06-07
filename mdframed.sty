@@ -48,6 +48,33 @@
 %% >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 %% ==================================================
 %% 
+%% %% \subsubsection{Options related to the title of level 2}
+%% %%
+%% %% \ExplOpt[false]{subsubtitleaboveline}
+%% %%     Decide to draw a line above the subsubtile.
+%% %% \ExplOpt[false]{subtitlebelowline}
+%% %%     Decide to draw a line below the subsubtitle.
+%% %% \ExplOpt[\string\normalfont]{subsubtitlefont}
+%% %%     Sets the font for subsubtitles.
+%% %% \ExplOpt[white]{subsubtitlebackgroundcolor}
+%% %%     Sets the background color of the subsubtitle between the above and
+%% %%     below line.
+%% %% \ExplOpt[black]{subsubtitleabovelinecolor}
+%% %%     Sets the line color of the line above.
+%% %% \ExplOpt[black]{subsubtitlebelowlinecolor}
+%% %%     Sets the line color of the line below.
+%% %% \ExplOpt[0.8\,pt]{subsubtitleabovelinewidth}
+%% %%     Sets the line width of the line above.
+%% %% \ExplOpt[0.6\,pt]{subsubtitlebelowlinewidth}
+%% %%     Sets the line width of the line below.
+%% %% \ExplOpt[\string\baselineskip]{subsubtitleaboveskip}
+%% %%     Sets the skip before the subsubtitle line above will be drawn.
+%% %% \ExplOpt[1.2\string\baselineskip]{subsubtitlebelowskip}
+%% %%     Sets the skip after the subsubtitle line below is drawn.
+%% %% \ExplOpt[0.5\string\baselineskip]{subsubtitleinneraboveskip}
+%% %%     Sets the skip after the line above and the subsubtitle itself.
+%% %% \ExplOpt[0.5\string\baselineskip]{subsubtitleinnerbelowskip}
+%% %%     Sets the skip after the subsubtitle and the line below.
 \def\mdversion{1.9}
 \def\mdframedpackagename{mdframed}
 \def\mdfmaindate{2013/04/27}
@@ -261,8 +288,12 @@
     {firstextra=={}},
     {middleextra=={}},
     {secondextra=={}},
+    {beforesingleframe=={}},
+    {aftersingleframe=={}},
     {beforebreak=={}},
     {afterbreak=={}},
+    {beforelastframe=={}},
+    {afterlastframe=={}},
     {subtitlefont==\normalfont\bfseries},%
     {subsubtitlefont==\normalfont},%
     {subtitlebackgroundcolor==white},%
@@ -389,6 +420,18 @@
    \expandafter\expandafter\expandafter\mdfsetup\expandafter%
     \expandafter\expandafter{\csname mdf@definestyle@defaultoptions\endcsname}%
 }%
+
+\ifnum\c@mdf@globalstyle@cnt>0
+ \define@key{mdf}{linewidth}{%
+    \def\@tempa{#1}
+    \mdf@iflength{\@tempa}%
+     {\csxdef{mdfl@linewidth}{\the\mdf@templength}}%
+     {\csxdef{mdfl@linewidth}{\the\mdf@templength}}%
+     \setlength{\csname mdf@middlelinewidth@length\endcsname}%
+       {\csname mdfl@linewidth\endcsname}%
+ }%
+\fi
+
 \let\mdf@PackageNoInfo\@gobble
 \newrobustcmd*\mdf@ifstrequal@expand{%
 \expandafter\ifstrequal\expandafter{\mdf@printheight}%
@@ -445,6 +488,11 @@
 \newlength\mdf@verticalmarginwhole@length
 
 \newlength\mdf@horizontalspaceofbox
+
+\newbool{mdfsingleframe}\boolfalse{mdfsingleframe}
+\newbool{mdffirstframe}\boolfalse{mdffirstframe}
+\newbool{mdfmiddleframe}\boolfalse{mdfmiddleframe}
+\newbool{mdflastframe}\boolfalse{mdflastframe}
 
 \newtoggle{mdf@notfirstframetitle}%
 \togglefalse{mdf@notfirstframetitle}%
@@ -955,7 +1003,13 @@
                   innertopmargin,innerbottommargin,innerlinewidth,%
                   middlelinewidth,outerlinewidth,extratopheight}%
       \mdf@keeplines@single%
-      \begingroup\mdf@@setzref\mdf@putbox@single\endgroup%
+      \begingroup%
+        \mdf@@setzref%
+        \booltrue{mdfsingleframe}%
+        \mdf@beforesingleframe%
+        \mdf@putbox@single%
+        \mdf@aftersingleframe%
+      \endgroup%Output no break
    \fi%
 }
 \def\mdf@put@frame{\relax%
@@ -986,7 +1040,13 @@
       \mdf@keeplines@single%
       \ifdimless{\mdf@verticalmarginwhole@length}{\mdf@freevspace@length}%
          {%enough space / no break
-          \begingroup\mdf@@setzref\mdf@putbox@single\endgroup%Output no break
+          \begingroup%
+            \mdf@@setzref%
+            \booltrue{mdfsingleframe}%
+            \mdf@beforesingleframe%
+            \mdf@putbox@single%
+            \mdf@aftersingleframe%
+          \endgroup%Output no break
           \let\mdf@reserved@a\relax%
          }%
          {%
@@ -1106,10 +1166,14 @@
            \def\mdf@reserved@a{\mdf@put@frame}%
           }%
           {%
-          \mdf@beforebreak%
-          \begingroup\mdf@@setzref\mdf@putbox@first\endgroup%
+          \begingroup
+            \mdf@@setzref%
+            \mdf@beforebreak%
+            \booltrue{mdffirstframe}%
+            \mdf@putbox@first%
+            \mdf@afterbreak%
+          \endgroup%
           \hrule \@height\z@ \@width\hsize%
-          \mdf@afterbreak%
           \vfill\eject%
           \def\mdf@reserved@a{\mdf@put@frame@ii}%
           }%
@@ -1224,10 +1288,14 @@
                     \hrule \@height\z@ \@width\mdfboundingboxwidth\relax
                     \unvcopy\mdf@splitbox@two%
                    }%
-        \mdf@beforebreak%
-        \begingroup\mdf@@setzref\mdf@putbox@middle\endgroup%
+        \begingroup
+          \mdf@@setzref
+          \booltrue{mdfmiddleframe}%
+          \mdf@beforebreak%
+          \mdf@putbox@middle
+          \mdf@afterbreak%
+        \endgroup%
           \hrule \@height\z@ \@width\hsize%
-        \mdf@afterbreak%
           \vfill\eject%
           \def\mdf@reserved@a{\mdf@put@frame@ii}%
         \fi
@@ -1259,7 +1327,13 @@
       \begingroup
       \toggletrue{mdflastframe}
       \mdf@beforebreak%
-      \begingroup\mdf@@setzref\mdf@putbox@second\endgroup%
+      \begingroup%
+        \mdf@@setzref%
+        \booltrue{mdflastframe}%
+        \mdf@beforelastframe%
+        \mdf@putbox@second
+        \mdf@afterlastframe%
+      \endgroup%
       \hrule \@height\z@ \@width\hsize%
       \mdf@afterbreak%
       \endgroup
