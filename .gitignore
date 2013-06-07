@@ -11,7 +11,6 @@
 # source                #
 #########################
 .svn/
-*.mdf
 *.aux
 *.hd
 *.log
@@ -26,8 +25,7 @@
 #########################
 mdframed-example*
 md-test*
-mdframed.sty
-mdframed.pdf
+
 
 
 .DS_Store
