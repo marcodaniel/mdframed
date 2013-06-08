@@ -216,8 +216,9 @@ Have fun!
 
 \setcounter{errorcontextlines}{999}
 \documentclass[parskip=false,11pt,tocdepth=3]{ltxmdf}
+\usepackage{pdfpages}
 \usepackage[framemethod=TikZ]{mdframed}
-
+\usetikzlibrary{shadows}
 \surroundwithmdframed[middlelinecolor=ltxmdfblue,middlelinewidth=1pt,%
                       roundcorner=10pt,innertopmargin=0pt,%
                       leftmargin=1cm,rightmargin=1cm,%
@@ -490,6 +491,7 @@ Have fun!
 %\end{center} 
 % %%%%%%%%%%%%%%%%%%%%%%%
 % \section{Commands}\label{sec:cmds}
+%
 % The following commands should countenance your by the handling with 
 % \Pack{mdframed}.
 % 
@@ -572,11 +574,26 @@ Have fun!
 % The sole exception is the option \Opt{framemethod} which must given as an optional 
 % argument of \Cmd{usepackage}.
 %
-% \ExplCmd{mdfdefinestyle\{options\}} 
-%      \Cmd{mdfdefinestyle} allows the user to define different styles which can
-%      be used as an option of \Pack{mdframed} via \Opt{style}. The option
-%     \Opt{style} is explained in section \ref{genopt}.
 % 
+% 
+% 
+% \section{Defining your own style}
+% In the next section all options are introduced. However instead of
+% passing them global or as an optional argument of the environment
+% you can define your own styles. The method is as follows
+% \ExplCmd{mdfdefinestyle\{style name\}\{options\}} 
+%   \Cmd{mdfdefinestyle} allows the user to define different styles which can
+%   be used as an option of \Pack{mdframed} via \Opt{style}. 
+% \ExplCmd{mdfapptodefinestyle\{style name\}\{options\}} 
+%      This commands add options to a defined style.\footnote{Thanks
+%       to Martin Scharrer and Enrico Gregorio:\newline
+%      \href{http://tex.stackexchange.com/questions/34684/argument-of-setkeys}
+%           {http://tex.stackexchange.com/questions/34684/argument-of-setkeys}}
+% \ExplOpt{style} 
+%      If you define a special style with \Cmd{mdfdefinestyle} you can use
+%      the key \Opt{style} to load the style. \Pack{mdframed} has
+%      no predefined styles yet.
+%
 % Here a small example:
 % \iffalse
 %<*example>
@@ -590,13 +607,6 @@ Have fun!
 % \iffalse
 %</example>
 % \fi
-% 
-% \ExplCmd{mdfapptodefinestyle\{style name\}\{options\}} 
-%      This commands add options to a defined style.\footnote{Thanks
-%       to Martin Scharrer and Enrico Gregorio:\newline
-%      \href{http://tex.stackexchange.com/questions/34684/argument-of-setkeys}
-%           {http://tex.stackexchange.com/questions/34684/argument-of-setkeys}}
-% 
 % 
 % 
 % %%%%%%%%%%%%%%%%%%%%%%%
@@ -641,23 +651,22 @@ Have fun!
 %  \bottomrule
 % \end{tabular}
 % \end{table}
-% 
+% If you are lazy you can also work with the following short forms:
+% \Opt{tikz}, \Opt{TikZ}, \Opt{pstricks}, \Opt{PSTricks} or \Opt{ps}. Of
+% course for the default method exists no key. 
+%
 % \minisec{FYI}
 % It is independently whether the \texttt{method} is 
 % written with no, one or more capital letter.
 % 
-% \minisec{Note}
-% The manipulation of the frames depends on the option \Opt{framemethod}.
-% For further information see below.
-% 
-% \subsection{Global and Local Options}
-% The options listed below can be set globally or locally and they are not
-% limited to the preamble.
-% I tried to define self explained names.
+% All other options listed below can be set globally or locally and they are not
+% limited to the preamble. I was trying to define self explained names.
 %
-% \ExplOpt{default}
-% \ExplOpt{style=defaultoptions}
-% This is sets the default options defined by \Pack{mdframed}. 
+% \subsection{Restoring the settings}
+% Sometimes it's useful to remove all done settings. Every default value 
+% is saved in a style wich can be called by the option \Opt{default} or 
+% a more suitable
+% name \Opt{style=defaultoptions}. Both do the same.
 %
 % Here a small example:
 % \iffalse
@@ -681,9 +690,10 @@ Have fun!
 %</example>
 % \fi
 % 
-%
-% \begingroup
-%  \mdfsetup{%
+% \begin{mdframed}[%
+% backgroundcolor=yellow!70!brown,linewidth=1.5pt,
+% roundcorner=8pt,linecolor=brown!70!black,innerleftmargin=10pt]
+%  \mdfsetup{default,
 %   middlelinecolor=red,
 %   middlelinewidth=2pt,
 %   backgroundcolor=red!10,
@@ -695,20 +705,14 @@ Have fun!
 % \begin{mdframed}[default]
 %  Text\par Text
 % \end{mdframed}
-% \endgroup
+% \end{mdframed}
 %
 %
 %
-%
-% \subsubsection{Options with lengths}\label{optlength}
+% \subsection{Options with lengths}\label{optlength}
 % 
 % In figure \eqref{fig:laengen} you can see the adjustable lengths 
-% (compare also figure \eqref{fig:basicframes}) which will be described below. 
-% All lengths accept two kinds of input. The first one is a length (e.g. 2pt) 
-% and the second one is a number (e.g. 2) which will be multiplied by 
-% \Opt{1 defaultunit}. The figure shows three different colored frames. 
-% 
-% \ExplOpt[pt]{defaultunit} see the sentence above.
+% (compare also figure \eqref{fig:basicframes}).
 % 
 % \begin{center}
 % \begin{tikzpicture}[scale=0.9]
@@ -820,32 +824,31 @@ Have fun!
 %  \label{fig:laengen}
 % \end{center}
 % 
-% \ExplOpt[0\,pt]{skipabove} 
-%      Sets an additional skip above the frame.
-% \ExplOpt[0\,pt]{skipbelow} 
-%      Sets an additional skip below the frame.
-% \ExplOpt[]{margin} 
-%      This option is not longer supported. Use \Opt{leftmargin}
-%      and \Opt{rightmargin} instead.
-% \ExplOpt[0pt]{leftmargin} 
-%      Sets the length of the left margin of the environment. This option has
-%      an effect only in singleside-mode or, in twoside-mode, if the option 
-%      \Opt{usetwoside=false} has been given.  
-%      See also options \Opt{outermargin} and \Opt{innermargin}.
-% \ExplOpt[0\,pt]{rightmargin} 
-%      Sets the length of the right margin of the environment. This option has 
-%      an effect only in singleside-mode or, in twoside-mode, if the option 
-%      \Opt{usetwoside=false} has been given.  
-%      See also options \Opt{outermargin} and \Opt{innermargin}.
-% \ExplOpt[10\,pt]{innerleftmargin} 
-%      Sets the length of the inner left margin of the environment.
-% \ExplOpt[10\,pt]{innerrightmargin} 
-%      Sets the length of the inner right margin of the environment.
-% \ExplOpt[.4\textbackslash baselineskip]{innertopmargin} 
-%      Sets the length of the inner top margin of the environment.
-% \ExplOpt[.4\textbackslash baselineskip]{innerbottommargin} 
-%      Sets the length of the inner bottom margin of the environment.
+% \ExplOpt[pt]{defaultunit}
+% All lengths accept two kinds of input. The first one is a length (e.g. 2pt) 
+% and the second one is a number (e.g. 2) which will be multiplied by 
+% \Opt{1 defaultunit}. To get a better overview, all length options with their
+% default value are listet in a table. I think the names are self explained 
+% so that don't describe it anymore. Although special hints and length are 
+% described below
+%
 % 
+% The first table lists the length for the geometry of the frame.
+% \begin{center}
+% \def\arraystretch{1.4}
+% \begin{tabular}{@{}%
+% 	  >{\Opt\bgroup}l<{\egroup}@{${}={}$}>{\ttfamily}l%
+%   @{\qquad}
+% 	  >{\Opt\bgroup}l<{\egroup}@{${}={}$}>{\ttfamily}l%
+% 	  @{}}
+%    \hline
+% 	  skipabove       & 0pt  & skipbelow         & 0pt  \\
+% 	  leftmargin      & 0pt  & rightmargin       & 0pt  \\
+% 	  innerleftmargin & 10pt & innerrightmargin  & 10pt \\
+% 	  innertopmargin  & 5pt  & innerbottommargin & 5pt  \\
+%    \hline
+% \end{tabular}
+% \end{center}
 % Before the next options are introduced here an example where the described
 % length are used.
 % \iffalse
@@ -863,73 +866,71 @@ Have fun!
 % \iffalse
 %</example>
 % \fi
-% \mdfdefinestyle{mdfexample1}{leftmargin=1cm,rightmargin=2cm,%
+% \begin{mdframed}[%
+% backgroundcolor=yellow!70!brown,linewidth=1.5pt,
+% roundcorner=8pt,linecolor=brown!70!black,innerleftmargin=10pt]
+% \mdfdefinestyle{mdfexample1}{default,leftmargin=1cm,rightmargin=2cm,%
 %   innerleftmargin=2cm,innerrightmargin=1cm,roundcorner=10pt}
 % \begin{mdframed}[style=mdfexample1]
 %   In any right triangle, the area of the square whose side is the hypotenuse 
 %   is equal to the sum of the areas of the squares whose sides are the two
 %   legs.
 % \end{mdframed}
+% \end{mdframed}
 %
 %
+% The next table lists the options to manipulate the lines of \Env{mdframed}. 
+% If you are working with \Opt{framemethod=default} you have only one line
+% for framing.
+% \begin{center}
+% \def\arraystretch{1.4}
+% \begin{tabular}{@{}%
+% 	>{\Opt\bgroup}l<{\egroup}@{${}={}$}>{\ttfamily}l%
+%   @{\qquad}
+% 	>{\Opt\bgroup}l<{\egroup}@{${}={}$}>{\ttfamily}l%
+%   @{\qquad}
+% 	>{\Opt\bgroup}l<{\egroup}@{${}={}$}>{\ttfamily}l%
+% 	@{}}
+%     \hline
+% 	     linewidth       & 0.4pt  & innerlinewidth & 0pt  &
+% 	     middlelinewidth & 0.4pt \\
+% 	     outerlinewidth  & 0pt    & roundcorner     & 0pt &   
+%        \multicolumn{2}{c}{}    \\
+%      \hline
+% \end{tabular}
+% \end{center}
+% If you are working width \Opt{framemethod=tikz} or \Opt{framemethod=pstricks}
+% the option \Opt{linewidth} is an alias for the option \Opt{middlelinewidth}.
+% 
+% 
+% \subsection{Colored Options}
+% Now we want to bring some color on your frames. The limitation is equal
+% the the length options. For \Opt{framemethod=default} you have only one
+% line.
+% \begin{center}
+% \def\arraystretch{1.4}
+% \begin{tabular}{@{}%
+% 	>{\Opt\bgroup}l<{\egroup}@{${}={}$}>{\ttfamily}l%
+%   @{\qquad}
+% 	>{\Opt\bgroup}l<{\egroup}@{${}={}$}>{\ttfamily}l%
+% 	@{}}
+%     \hline
+% 	     linecolor       & black  & innerlinecolor  & black  \\
+% 	     middlelinecolor & black  & outerlinecolor  & black  \\
+%        backgroundcolor & white  & fontcolor       & black  \\
+%      \hline
+% \end{tabular}
+% \end{center}
+% 
+% \ExplOpt[\{\}]{font} 
+% Although it's no really a color options you can also specify the font 
+% of the contents. Therefor the option \Opt{font} can be used. 
 %
-% \paragraph*{The following lengths are not shown in figure
-%             \eqref{fig:laengen}.}
-% 
-% Of course you have some more length which can be manipulate. 
-% \ExplOpt[\textbackslash linewidth]{userdefinedwidth} 
-%      Sets the width of the whole \Pack{mdframed} environment. 
-%      The width represent the width including the line width and
-%      the inner margins. The outer margins will be ignored.
-% \ExplOpt[0\,pt]{outermargin} 
-%      Sets the length of the outer margin. This option is only available
-%      in \texttt{twoside}-mode.
-% \ExplOpt[0\,pt]{innermargin} 
-%      Sets the length of the inner margin. This option is only available
-%      in \texttt{twoside}-mode.
-% \ExplOpt[0\,pt]{splittopskip} 
-%      Sets the length of the skip above the split part of the environment.
-% \ExplOpt[0\,pt]{splitbottomskip} 
-%      Sets the length of the skip below the split part of the environment.
-% \ExplOpt[0.4\,pt]{linewidth} 
-%      Sets the width of the line around the environment.
-%      \limitation[\Opt{default}]
-% \ExplOpt[0\,pt]{roundcorner} 
-%      Sets the size of the radius of the corners of the frames.
-%      \limitation[TikZ or PSTricks]
-% \ExplOpt[0\,pt]{innerlinewidth} 
-%      Sets the width of the inner line around the environment.
-%      \limitation[TikZ or PSTricks]
-% \ExplOpt[0\,pt]{outerlinewidth} 
-%      Sets the width of the outer line around the environment.
-%      \limitation[TikZ or PSTricks]
-% \ExplOpt[0.4\,pt]{middlelinewidth} 
-%      Sets the width of the middle line around the environment.
-%      \limitation[TikZ or PSTricks]
-% 
-% \subsubsection{Colored Options}
-% Now we want to bring some color on your frames.
-% \ExplOpt[black]{linecolor} 
-%      Sets the color of the line around the environment.
-% \ExplOpt[white]{backgroundcolor} 
-%      Sets the color of the background of the environment.
-% \ExplOpt[black]{fontcolor} 
-%      Sets the color of the contents of the environment.
-% \ExplOpt[linecolor]{innerlinecolor} 
-%      Sets the color of the inner line around the environment.
-%      \limitation[TikZ or PSTricks]
-% \ExplOpt[linecolor]{middlelinecolor} 
-%      Sets the color of the middle line around the environment. 
-%      \limitation[TikZ or PSTricks]
-% \ExplOpt[linecolor]{outerlinecolor} 
-%      Sets the color of the outer line around the environment.
-%      \limitation[TikZ or PSTricks]
-% 
-% Ok after we have some length and some color we can improve our example.
+% Ok after we have some lengths and some colors we can improve our example.
 % \iffalse
 %<*example>
 % \fi
-\begin{tltxmdfexample}[morekeywords={mystyle}]
+\begin{tltxmdfexample}[morekeywords={example1}]
  \mdfapptodefinestyle{example1}{backgroundcolor=brown!20,%
     linecolor=red!40!black,linewidth=4pt}
  \begin{mdframed}[style=mdfexample1]
@@ -941,295 +942,135 @@ Have fun!
 % \iffalse
 %</example>
 % \fi
-% \mdfapptodefinestyle{mdfexample1}{backgroundcolor=brown!20,%
-%   linecolor=red!40!black, linewidth=4pt}
+% \begin{mdframed}[%
+% backgroundcolor=yellow!70!brown,linewidth=1.5pt,
+% roundcorner=8pt,linecolor=brown!70!black,innerleftmargin=10pt]
+% \mdfdefinestyle{mdfexample1}{default,leftmargin=1cm,rightmargin=2cm,%
+%   innerleftmargin=2cm,innerrightmargin=1cm,roundcorner=10pt,%
+%   backgroundcolor=brown!20,linecolor=red!40!black, linewidth=4pt}
 % \begin{mdframed}[style=mdfexample1]
 %   In any right triangle, the area of the square whose side is the hypotenuse 
 %   is equal to the sum of the areas of the squares whose sides are the two
 %   legs.
 % \end{mdframed}
-%
-% \subsubsection{General options}\label{genopt}
-% 
-% 
-% \ExplOpt[false]{everyline} 
-%      Allows to draw a bottom and a top line at splitted frames.
-% \ExplOpt[\{\}]{font} 
-%      Sets the font of the environment.
-% \ExplOpt[false]{ntheorem} 
-%      Before setting this boolean key, you have to load
-%      the package \Pack{ntheorem}. With this option you set the
-%      values \Cmd{theorempreskipamount} and
-%      \Cmd{theorempostskipamount} to 0\,pt.
-% \ExplOpt[false]{nobreak} 
-%      Sometimes it is useful to prevent a frame from splitting.
-%      The \Opt{nobreak} option is used for this purpose. 
-%      If you activate this option you can enable it by
-%      setting \Opt{nobreak=false}.
-% \ExplOpt[true]{usetwoside}
-%      If you set the twoside option you can work with \Opt{outermargin}.
-%      This option disable this and you work with 
-%      \Opt{leftmargin} and \Opt{rightmargin}.
-% \ExplOpt[0\,pt]{needspace} 
-%      Sometimes it is useful to set a minimum height before a 
-%      frame should be splitted. For such cases you can use \Opt{needspace}.
-%      The option requires a length which sets the minimum height before
-%      a frame will be splitted.
-% \ExplOpt{style} 
-%      If you define a special style with \Cmd{mdfdefinestyle} you can use
-%      the key \Opt{style} to load the style. \Pack{mdframed} has
-%      no predefined styles yet.
-% \ExplOpt[none]{settings} 
-%      This option allows the user to commit some macros. An example is shown
-%      in the example files.
-% \ExplOpt[left]{align} 
-%      Sometimes it is useful to align the environment itself. 
-%      For this you have the option \Opt{align} which can be set to the 
-%      following strings: 
-%      \begin{itemize}
-%       \item \Opt{left},
-%       \item \Opt{right} and
-%       \item \Opt{center}.
-%      \end{itemize}
-%      The alignments \Opt{left} or \Opt{right} depend on the given lengths
-%      \Opt{leftmargin} and \Opt{rightmargin}. Later I will present an example
-%      to demonstrate my bad English explanation.
-%
-% \ExplOpt[false]{ignorelastdescenders} 
-%      Try to ignore the last descenders of the environment \Env{mdframed}. The
-%      complete idea was inspired by Tobias Weh and the solution was provided
-%      by Stefan Lemke. See 
-%      \href{http://tex.stackexchange.com/questions/47584/how-to-make-^^A
-%            mdframed-ignore-descenders-in-last-line}^^A
-%           {How to make mdframed ignore descenders in last line}
+% \end{mdframed}
 %
 %
 %
-% \ExplOpt[false]{draft}
-%      Activate the draft mode for the package. This option is useful for 
-%      \Opt{framemethod=tikz} which clips the contents related to the surrounded
-%      frame. The options is motivated by the question 
-%      \href{http://tex.stackexchange.com/questions/73059/^^A
-%             mdframedtikz-to-display-overfullrule}^^A
-%           {mdframed+tikz to display overfullrule}
-%      at \href{http://tex.stackexchange.com/}{tex.stackexchange}.
-%
-%
-% \ExplOpt[false]{shadow}
-%      Draw a shadow. The shadow doesn't influence the bounding box so the 
-%      shadow can be drawn in the margin without any overfull box.
-%      Note if you are using the TikZ you must load the library.
-%      \Pack{mdframed} doesn't do the job to avoid double loading of a library.
-%
+% \subsection{Shadows}\label{sec:shadow}
+% Another possibility to highlight a frame can be a shadow. The package
+% \Pack{mdframed} supports some elementary options to add a shadow. For
+% \Opt{framemethod=tikz} the library \Pack{shadows} is needed which must be
+% loaded by the user by \verb+\usetikzlibrary{shadows}+.
 % \ExplOpt[8\,pt]{shadowsize}
-%      Specify the size of the shadow.
 % \ExplOpt[black!50]{shadowcolor}
-%      Specify the color of the shadow.
-%      
-% \subsubsection{PSTricks options}\label{pstricksopt}
-% \mbox{}
-% \ExplOpt[\{\}]{pstrickssetting}
-%      With this key you can pass several options to \Cmd{psset}. 
-%      For example if you want all lines dashed you will have to set 
-%      \Opt{pstrickssetting=\{linestyle=dashed\}}. It is very important
-%      to put the options of \Opt{pstrickssetting} in brackets.
-%      \limitation[PSTricks]
-% \ExplOpt[\{\}]{pstricksappsetting}
-%      \Pack{mdframed} works with defined styles for the different elements. By 
-%      using \Cmd{addtopsstyle} in combination with this option 
-%      you can expand the definition. The predefined styles are
-%      \begin{itemize}
-%       \item \Opt{mdfbackgroundstyle}
-%       \item \Opt{mdfframetitlebackgroundstyle}
-%       \item \Opt{mdfouterlinestyle}
-%       \item \Opt{mdfinnerlinestyle}
-%       \item \Opt{mdfmiddlelinestyle}
-%      \end{itemize}
-%       \textbf{Before you change one please have a look at the file
-%               \texttt{md-frame-2.mdf} to see the settings.}
-%        \limitation[PSTricks]
-%
-% \subsubsection{TikZ options}\label{tikzopt}
-% \mbox{}
-% \ExplOpt[\{\}]{tikzsetting}
-%      With this key you can pass several options to \Cmd{tikzset}. 
-%      Some examples are listed in the next section. It is very important
-%      to put the options of \Opt{tikzsetting} in brackets.
-%      \limitation
-% \ExplOpt[\{\}]{apptotikzsetting}
-%      With this key you can add several options to \Opt{tikzsetting}.
-%      This key based on the idea of manipulation of predefined keys
-%      of \Pack{mdframed}. The package \Pack{mdframed} defines via 
-%      \Cmd{tikzset} the following keys to draw frames.
-%      \begin{itemize}
-%       \item \Cmd{tikzset\{mdfbox/.style\}}
-%       \item \Cmd{tikzset\{mdfcorners/.style\}}
-%       \item \Cmd{tikzset\{mdfbackground/.style\}}
-%       \item \Cmd{tikzset\{mdfinnerline/.style\}}
-%       \item \Cmd{tikzset\{mdfouterline/.style\}}
-%       \item \Cmd{tikzset\{mdfmiddleline/.style\}}
-%       \item \Cmd{tikzset\{mdfframetitlerule/.style\}}
-%       \item \Cmd{tikzset\{mdfframetitlebackground/.style\}}
-%       \item \Cmd{tikzset\{mdfshadow/.style\}}
-%      \end{itemize}
-%      \textbf{Before you change one please have a look at the
-%              file \texttt{md-frame-1.mdf} to see the settings.}
-%      \limitation
-%
-%
-% \subsection{Hooks and Bools}\label{hooksandbools}
-% The following options and bool flags can be used by the any user. Of course
-% some needs more experience than other.
-% \ExplOpt[\{\}]{singleextra}
-%      With this key you can put extra material to the drawing environment of 
-%      \Pack{mdframed} only for a non splitted frame. 
-%      \limitation[TikZ and PSTricks]
-% \ExplOpt[\{\}]{firstextra}
-%      With this key you can put extra material to the drawing environment of 
-%      \Pack{mdframed} only for the first part of the splitted frame. 
-%      \limitation[TikZ and PSTricks]
-% \ExplOpt[\{\}]{middleextra}
-%      With this key you can put extra material to the drawing environment of 
-%      \Pack{mdframed} only for the middle part of the splitted frame. 
-%      \limitation[TikZ and PSTricks]
-% \ExplOpt[\{\}]{secondextra}
-%      With this key you can put extra material to the drawing environment of 
-%      \Pack{mdframed} only for the second part of the splitted frame. 
-%      \limitation[TikZ and PSTricks]
-%
-%
-% After you can add material to any part of the frame you can also detect which 
-% part of the frame is drawn. Therefor the bool flags are defined which can be 
-% test by \Cmd{ifbool\{boolflag\}}. All flags are set to true before the output
-% of the content occurs.
-% \ExplOpt[false]{mdfsingleframe}
-% This bool is only true for a non splitting frame.
-% \ExplOpt[false]{mdffirstframe}
-% This bool is only for the first part of the frame true.
-% \ExplOpt[false]{mdfmiddleframe}
-% see above.
-% \ExplOpt[false]{mdflastframe}
-% see above.
-%
-% For the advanced users there are also some other hooks which can be used
-% to manipulate the output:
-% \ExplOpt[\{\}]{beforesingleframe}
-% Every given code to this option is executed before a single frame is 
-% is printed.
-% \ExplOpt[\{\}]{aftersingleframe}
-% Every given code to this option is executed after a single frame is 
-% is printed.
-% \ExplOpt[\{\}]{beforebreak}
-% The value of this option is only executed at breakable frames. Related to 
-% the introduction the first and middle frame can be manipulated.
-% \ExplOpt[\{\}]{afterbreak}
-% The value of this option is only executed at breakable frames. Related to 
-% the introduction the first and middle frame can be manipulated.
-% \ExplOpt[\{\}]{beforelastframe}
-% The option is executed only for the last frame of a splitted frame. 
-% \ExplOpt[\{\}]{afterlastframe} 
-% The option is executed only for the last frame of a splitted frame. 
-%
-% \subsection{complexe example -- Matlab Terminal}
-% The following example was inspiered by a question on TeX.SX. 
-% \definecolor{DarkBlue}{rgb}{.11,.23,.60}
-% \mdfdefinestyle{commandline}%
-% {leftmargin=5pt, rightmargin=10pt,innerleftmargin=15pt,
-%  middlelinecolor=DarkBlue,
-%  middlelinewidth=2pt,
-%  frametitlerule=false,
-%  backgroundcolor=black!10!white,
-%  frametitle={Command Window},
-%  frametitlefont={\normalfont\sffamily\color{white}\hspace{-1em}},
-%  frametitlebackgroundcolor=DarkBlue,
-%  singleextra={\draw[black!20,line width=12pt] 
-%       ($(O)+(7pt,1pt)$) --
-%       ($(O|-P)+(7pt,-\mdfframetitleboxtotalheight)-(0,1pt)$);
-%       \node[inner sep=0pt,color=black]at ($(O)+(7pt,9pt)$)%
-%       {$\scriptstyle f\!x$}; },
-%  nobreak,
-% }
-% 
-% \lstnewenvironment{script} {%
-%   \lstset{language=Matlab,basicstyle=\tiny\ttfamily,breaklines=true,%
-%           aboveskip=0pt,belowskip=0pt}}{}
-% \surroundwithmdframed[style=commandline]{script}
-% \begin{script}
-% >> help sin
-%  sin    Sine of argument in radians.
-%     sin(X) is the sine of the elements of X.
-% 
-%     See also asin, sind.
-% 
-%     Overloaded methods:
-%        sdpvar/sin
-%        codistributed/sin
-%        gpuArray/sin
-% 
-%     Reference page in Help browser
-%        doc sin
-% 
-% >> 
-% \end{script}
-%
-% The code for this result is:
+% If a shadow is used depends on the option \Opt{shadow} which can be either
+% \texttt{true} or \texttt{false}. The option shadows enables two new options
+% \Opt{shadowsize} and \Opt{shadowcolor}. 
 % \iffalse
 %<*example>
 % \fi
-\begin{tltxmdfexample}[moretexcs={lstnewenvironment,definecolor,lstset}]
- \definecolor{DarkBlue}{rgb}{.11,.23,.60}
- \mdfdefinestyle{commandline}%
- {leftmargin=5pt, rightmargin=10pt,innerleftmargin=15pt,
-  middlelinecolor=DarkBlue,
-  middlelinewidth=2pt,
-  frametitlerule=false,
-  backgroundcolor=black!10!white,
-  frametitle={Command Window},
-  frametitlefont={\normalfont\sffamily\color{white}\hspace{-1em}},
-  frametitlebackgroundcolor=DarkBlue,
-  singleextra={\draw[black!20,line width=12pt] 
-       ($(O)+(7pt,1pt)$) --
-       ($(O|-P)+(7pt,-\mdfframetitleboxtotalheight)-(0,1pt)$);
-       \node[inner sep=0pt,color=black]at ($(O)+(7pt,9pt)$)%
-       {$\scriptstyle f\!x$}; },
-  nobreak,
- }
- 
- \lstnewenvironment{script} {%
-   \lstset{language=Matlab,basicstyle=\tiny\ttfamily,breaklines=true,%
-           aboveskip=0pt,belowskip=0pt}}{}
- \surroundwithmdframed[style=commandline]{script}
- \begin{script}
- >> help sin
-  sin    Sine of argument in radians.
-     sin(X) is the sine of the elements of X.
- 
-     See also asin, sind.
- 
-     Overloaded methods:
-        sdpvar/sin
-        codistributed/sin
-        gpuArray/sin
- 
-     Reference page in Help browser
-        doc sin
- 
- >> 
- \end{script}
+\begin{tltxmdfexample}[morekeywords={example1}]
+ \begin{mdframed}[backgroundcolor=gray!40,shadow=true,roundcorner=8pt]
+   In any right triangle, the area of the square whose side is the hypotenuse 
+   is equal to the sum of the areas of the squares whose sides are the two
+   legs.
+ \end{mdframed}
 \end{tltxmdfexample}
 % \iffalse
 %</example>
 % \fi
+% \begin{mdframed}[backgroundcolor=gray!40!white,shadow=true,roundcorner=8pt]
+%   In any right triangle, the area of the square whose side is the hypotenuse 
+%   is equal to the sum of the areas of the squares whose sides are the two
+%   legs.
+% \end{mdframed}
 %
-% 
+%
 % \subsection{Hidden Lines}
-% \ExplOpt[true]{topline} Draws a line at the top.
-% \ExplOpt[true]{bottomline} Draws a line at the bottom.
-% \ExplOpt[true]{leftline} Draws a line on the left.
-% \ExplOpt[true]{rightline} Draws a line on the right.
+% The default behaoiur of the output was shown in a previous picture. 
+% \Pack{mdframed} offers the possibility to print only requested lines. If
+% you don't want any right line you can say \Opt{rightline=false}. The 
+% table below listed all keys to this topic and shows their default setting.
+% \begin{center}
+% \def\arraystretch{1.4}
+% \begin{tabular}{@{}%
+% 	>{\Opt\bgroup}l<{\egroup}@{${}={}$}>{\ttfamily}l%
+%   @{\qquad}
+% 	>{\Opt\bgroup}l<{\egroup}@{${}={}$}>{\ttfamily}l%
+% 	@{}}
+%     \hline
+% 	     topline  & true  & rightline  & true  \\
+% 	     leftline & true  & bottomline & true  \\
+%      \hline
+% \end{tabular}
+% \end{center}
 % \ExplOpt[false]{hidealllines} 
-%      With this option you can decide whether all lines should be drawn or 
-%      not.
+% If you want to disable all lines you can use the short from
+% \Opt{hidealllines}.
+%
+%
+% \subsubsection{Working in twoside-mode}
+% 
+% Many books are written in \texttt{twoside} mode. In those cases it's 
+% better to set the margins related to the site. Instead of the 
+% explained options \Opt{leftmargin} and \Opt{rightmargin} you can work with the
+% options \Opt{outermargin} and \Opt{innermargin}. Of course if you working
+% in \texttt{oneside} mode the options have no effect. If you don't want to
+% work with \Opt{outermargin} and \Opt{innermargin} whether the document is
+% done in \texttt{twoside} mode you can disable the behaviour by the option
+% \Opt{usetwoside}. Allowed values for this key are \texttt{true} or
+% \texttt{false}.
+% 
+%
+% \subsection{Footnotes}
+% Inside the environment you can use the command \Cmd{footnote} as usual.
+% \Pack{mdframed} uses the syntax of environment \Pack{minipage} with
+% the same counter.
+% 
+% Every footnote text will be collected inside a box and will be displayed
+% at the end of the environment \Pack{mdframed}. 
+% 
+% \ExplOpt[\mbox{} \Cmd{bigskipamount}]{footnotedistance} 
+%      The length is the distance between the end of the environment
+%      \Pack{mdframed} and the displaying of the \Cmd{footnoterule}.
+% \ExplOpt[true]{footnoteinside} 
+%      The position of the footnotes can be changed with the option 
+%      \Opt{footnoteinside}. The footnotes will be displayed at the end 
+%      of the environment but you can decide whether the output is inside 
+%      \Pack{mdframed} or after.
+% 
+% \minisec{Note}
+% The output of the footnotes with the option \Opt{footnoteinside=false}
+% are not in a splitted frame. I think it isn't useful because the first line
+% of a new page shouldn't be a footnote.
+%
+%
+%
+%
+%\subsubsection{page breaks}
+% The package \Pack{mdframed} splits its content if neccessary. In figure
+% \ref{fig:basicframes} the default style for splitting is presented. However
+% there a sevaral situations where no page preak should occur. 
+% \ExplOpt[false]{nobreak} 
+% For this case you can use the option \Opt{nobreak} which is either
+% \texttt{true} or \texttt{false}. As you can see in figure 
+% \ref{fig:basicframes} the different elements have different ways of drawing.
+% E.g. the middle part of \Pack{mdframed} has only a left and a right line.
+% 
+% \ExplOpt[false]{everyline} 
+% If you want that all parts of \Pack{mdframed} get a whole frame you can work
+% with the option \Opt{everyline}. Then all parts are displayed as a single
+% frame.
+%
+% In a previous section the options \Opt{innertopmargin} and 
+% \Opt{innerbottommaring} were introduced. However if a page break occurs
+% you have two new length options which influence the space at the breaking
+% point.
+% \ExplOpt[0\,pt]{splittopskip} 
+%   Sets the length of the skip above the split part of the environment.
+% \ExplOpt[0\,pt]{splitbottomskip} 
+%   Sets the length of the skip below the split part of the environment.
 % 
 % \subsection{Frametitle}
 % In this section all relevant options of the frame title will be presented.
@@ -1401,39 +1242,156 @@ Have fun!
 % \fi
 %
 %
+%     
+% \subsection{General options}\label{genopt}
+% Some options can't be classified. Such options are listed in this section. 
+% \ExplOpt[false]{ntheorem} 
+%      Before setting this boolean key, you have to load
+%      the package \Pack{ntheorem}. With this option you set the
+%      values \Cmd{theorempreskipamount} and
+%      \Cmd{theorempostskipamount} to 0\,pt to avoid extra vertical skip.
+% \ExplOpt[0\,pt]{needspace} 
+%      Sometimes it is useful to set a minimum height before a 
+%      frame should be splitted. For such cases you can use \Opt{needspace}.
+%      The option requires a length which sets the minimum height before
+%      a frame will be splitted.
+% \ExplOpt[false]{ignorelastdescenders} 
+%      Try to ignore the last descenders of the environment \Env{mdframed}. The
+%      complete idea was inspired by Tobias Weh and the solution was provided
+%      by Stefan Lemke. See 
+%      \href{http://tex.stackexchange.com/questions/47584/how-to-make-^^A
+%            mdframed-ignore-descenders-in-last-line}^^A
+%           {How to make mdframed ignore descenders in last line}
+% Of course you have some more length which can be manipulate. 
+% \ExplOpt[\textbackslash linewidth]{userdefinedwidth} 
+%      Sets the width of the whole \Pack{mdframed} environment. 
+%      The width represent the width including the line width and
+%      the inner margins. The outer margins will be ignored.
 %
-% \iffalse
-%% %% \subsubsection{Options related to the title of level 2}
-%% %%
-%% %% \ExplOpt[false]{subsubtitleaboveline}
-%% %%     Decide to draw a line above the subsubtile.
-%% %% \ExplOpt[false]{subtitlebelowline}
-%% %%     Decide to draw a line below the subsubtitle.
-%% %% \ExplOpt[\string\normalfont]{subsubtitlefont}
-%% %%     Sets the font for subsubtitles.
-%% %% \ExplOpt[white]{subsubtitlebackgroundcolor}
-%% %%     Sets the background color of the subsubtitle between the above and 
-%% %%     below line.
-%% %% \ExplOpt[black]{subsubtitleabovelinecolor}
-%% %%     Sets the line color of the line above.
-%% %% \ExplOpt[black]{subsubtitlebelowlinecolor}
-%% %%     Sets the line color of the line below.
-%% %% \ExplOpt[0.8\,pt]{subsubtitleabovelinewidth}
-%% %%     Sets the line width of the line above.
-%% %% \ExplOpt[0.6\,pt]{subsubtitlebelowlinewidth}
-%% %%     Sets the line width of the line below.
-%% %% \ExplOpt[\string\baselineskip]{subsubtitleaboveskip}
-%% %%     Sets the skip before the subsubtitle line above will be drawn.
-%% %% \ExplOpt[1.2\string\baselineskip]{subsubtitlebelowskip}
-%% %%     Sets the skip after the subsubtitle line below is drawn.
-%% %% \ExplOpt[0.5\string\baselineskip]{subsubtitleinneraboveskip}
-%% %%     Sets the skip after the line above and the subsubtitle itself.
-%% %% \ExplOpt[0.5\string\baselineskip]{subsubtitleinnerbelowskip}
-%% %%     Sets the skip after the subsubtitle and the line below.
-% \fi
+% \ExplOpt[left]{align} 
+%      Sometimes it is useful to align the environment itself. 
+%      For this you have the option \Opt{align} which can be set to the 
+%      following strings: 
+%      \begin{itemize}
+%       \item \Opt{left},
+%       \item \Opt{right} and
+%       \item \Opt{center}.
+%      \end{itemize}
+%      The alignments \Opt{left} or \Opt{right} depend on the given lengths
+%      \Opt{leftmargin} and \Opt{rightmargin}. Later I will present an example
+%      to demonstrate my bad English explanation.
+%
+% Be aware of using this option please. 
 %
 %
-% \subsection{Theorems}
+% \subsection{TikZ options}\label{tikzopt}
+% \mbox{}
+% \ExplOpt[\{\}]{tikzsetting}
+%      With this key you can pass several options to \Cmd{tikzset}. 
+%      Some examples are listed in the next section. It is very important
+%      to put the options of \Opt{tikzsetting} in brackets.
+% \ExplOpt[\{\}]{apptotikzsetting}
+%      With this key you can add several options to \Opt{tikzsetting}.
+%      This key based on the idea of manipulation of predefined keys
+%      of \Pack{mdframed}. The package \Pack{mdframed} defines via 
+%      \Cmd{tikzset} the following keys to draw frames.
+%      \begin{itemize}
+%       \item \Cmd{tikzset\{mdfbox/.style\}}
+%       \item \Cmd{tikzset\{mdfcorners/.style\}}
+%       \item \Cmd{tikzset\{mdfbackground/.style\}}
+%       \item \Cmd{tikzset\{mdfinnerline/.style\}}
+%       \item \Cmd{tikzset\{mdfouterline/.style\}}
+%       \item \Cmd{tikzset\{mdfmiddleline/.style\}}
+%       \item \Cmd{tikzset\{mdfframetitlerule/.style\}}
+%       \item \Cmd{tikzset\{mdfframetitlebackground/.style\}}
+%       \item \Cmd{tikzset\{mdfshadow/.style\}}
+%      \end{itemize}
+%      \textbf{Before you change one please have a look at the
+%              file \texttt{md-frame-1.mdf} to see the settings.}
+%
+%
+% \subsection{PSTricks options}\label{pstricksopt}
+% \mbox{}
+% \ExplOpt[\{\}]{pstrickssetting}
+%      With this key you can pass several options to \Cmd{psset}. 
+%      For example if you want all lines dashed you will have to set 
+%      \Opt{pstrickssetting=\{linestyle=dashed\}}. It is very important
+%      to put the options of \Opt{pstrickssetting} in brackets.
+% \ExplOpt[\{\}]{pstricksappsetting}
+%      \Pack{mdframed} works with defined styles for the different elements. By 
+%      using \Cmd{addtopsstyle} in combination with this option 
+%      you can expand the definition. The predefined styles are
+%      \begin{itemize}
+%       \item \Opt{mdfbackgroundstyle}
+%       \item \Opt{mdfframetitlebackgroundstyle}
+%       \item \Opt{mdfouterlinestyle}
+%       \item \Opt{mdfinnerlinestyle}
+%       \item \Opt{mdfmiddlelinestyle}
+%      \end{itemize}
+%       \textbf{Before you change one please have a look at the file
+%               \texttt{md-frame-2.mdf} to see the settings.}
+%
+%
+% \section{Hooks and Bools}\label{hooksandbools}
+% The following options and bool flags can be used by the any user. Of course
+% some needs more experience than other.
+
+% \ExplOpt[\{\}]{settings} 
+% This option allows the user to commit some macros at the beginning of 
+% \Pack{mdframed}. The given material is executed before the savebox starts.
+% \ExplOpt[\{\}]{singleextra}
+%      With this key you can put extra material to the drawing environment of 
+%      \Pack{mdframed} only for a non splitted frame. 
+%      \limitation[TikZ and PSTricks]
+% \ExplOpt[\{\}]{firstextra}
+%      With this key you can put extra material to the drawing environment of 
+%      \Pack{mdframed} only for the first part of the splitted frame. 
+%      \limitation[TikZ and PSTricks]
+% \ExplOpt[\{\}]{middleextra}
+%      With this key you can put extra material to the drawing environment of 
+%      \Pack{mdframed} only for the middle part of the splitted frame. 
+%      \limitation[TikZ and PSTricks]
+% \ExplOpt[\{\}]{secondextra}
+%      With this key you can put extra material to the drawing environment of 
+%      \Pack{mdframed} only for the second part of the splitted frame. 
+%      \limitation[TikZ and PSTricks]
+%
+%
+% After you can add material to any part of the frame you can also detect which 
+% part of the frame is drawn. Therefor the bool flags are defined which can be 
+% test by \Cmd{ifbool\{boolflag\}}. All flags are set to true before the output
+% of the content occurs.
+% \ExplOpt[false]{mdfsingleframe}
+% This bool is only true for a non splitting frame.
+% \ExplOpt[false]{mdffirstframe}
+% This bool is only for the first part of the frame true.
+% \ExplOpt[false]{mdfmiddleframe}
+% see above.
+% \ExplOpt[false]{mdflastframe}
+% see above.
+%
+% For the advanced users there are also some other hooks which can be used
+% to manipulate the output:
+% \ExplOpt[\{\}]{beforesingleframe}
+% Every given code to this option is executed before a single frame is 
+% is printed.
+% \ExplOpt[\{\}]{aftersingleframe}
+% Every given code to this option is executed after a single frame is 
+% is printed.
+% \ExplOpt[\{\}]{beforebreak}
+% The value of this option is only executed at breakable frames. Related to 
+% the introduction the first and middle frame can be manipulated.
+% \ExplOpt[\{\}]{afterbreak}
+% The value of this option is only executed at breakable frames. Related to 
+% the introduction the first and middle frame can be manipulated.
+% \ExplOpt[\{\}]{beforelastframe}
+% The option is executed only for the last frame of a splitted frame. 
+% \ExplOpt[\{\}]{afterlastframe} 
+% The option is executed only for the last frame of a splitted frame. 
+%
+%
+%
+% \section{Theorems}
 % In this section is described which commands can help you to define 
 % theorem environments with \Pack{mdframed}.
 % 
@@ -1524,32 +1482,107 @@ Have fun!
 %      Sets the space after \Opt{theoremseparator}.
 %
 % Examples can be found in the attached files.
-%     
-% \subsection{Footnotes}
-% Inside the environment you can use the command \Cmd{footnote} as usual.
-% \Pack{mdframed} uses the syntax of environment \Pack{minipage} with
-% the same counter.
+%
+%
+%
+%
+% \section{complexe example -- Matlab Terminal}
+% The following example was inspiered by a question on TeX.SX. 
+% \definecolor{DarkBlue}{rgb}{.11,.23,.60}
+% \mdfdefinestyle{commandline}%
+% {leftmargin=5pt, rightmargin=10pt,innerleftmargin=15pt,
+%  middlelinecolor=DarkBlue,
+%  middlelinewidth=2pt,
+%  frametitlerule=false,
+%  backgroundcolor=black!10!white,
+%  frametitle={Command Window},
+%  frametitlefont={\normalfont\sffamily\color{white}\hspace{-1em}},
+%  frametitlebackgroundcolor=DarkBlue,
+%  singleextra={\draw[black!20,line width=12pt] 
+%       ($(O)+(7pt,1pt)$) --
+%       ($(O|-P)+(7pt,-\mdfframetitleboxtotalheight)-(0,1pt)$);
+%       \node[inner sep=0pt,color=black]at ($(O)+(7pt,9pt)$)%
+%       {$\scriptstyle f\!x$}; },
+%  nobreak=true,
+% }
 % 
-% Every footnote text will be collected inside a box and will be displayed
-% at the end of the environment \Pack{mdframed}. 
+% \lstnewenvironment{script} {%
+%   \lstset{language=Matlab,basicstyle=\tiny\ttfamily,breaklines=true,%
+%           aboveskip=0pt,belowskip=0pt}}{}
+% \surroundwithmdframed[style=commandline]{script}
+% \begin{script}
+% >> help sin
+%  sin    Sine of argument in radians.
+%     sin(X) is the sine of the elements of X.
 % 
-% \ExplOpt[\mbox{} \Cmd{bigskipamount}]{footnotedistance} 
-%      The length is the distance between the end of the environment
-%      \Pack{mdframed} and the displaying of the \Cmd{footnoterule}.
-% \ExplOpt[true]{footnoteinside} 
-%      The position of the footnotes can be changed with the option 
-%      \Opt{footnoteinside}. The footnotes will be displayed at the end 
-%      of the environment but you can decide whether the output is inside 
-%      \Pack{mdframed} or after.
+%     See also asin, sind.
 % 
-% \minisec{Note}
-% The output of the footnotes with the option \Opt{footnoteinside=false}
-% are not in a splitted frame. I think it isn't useful because the first line
-% of a new page shouldn't be a footnote.
+%     Overloaded methods:
+%        sdpvar/sin
+%        codistributed/sin
+%        gpuArray/sin
+% 
+%     Reference page in Help browser
+%        doc sin
+% 
+% >> 
+% \end{script}
+%
+% The code for this result is:
+% \iffalse
+%<*example>
+% \fi
+\begin{tltxmdfexample}[moretexcs={lstnewenvironment,definecolor,lstset}]
+ \definecolor{DarkBlue}{rgb}{.11,.23,.60}
+ \mdfdefinestyle{commandline}%
+ {leftmargin=5pt, rightmargin=10pt,innerleftmargin=15pt,
+  middlelinecolor=DarkBlue,
+  middlelinewidth=2pt,
+  frametitlerule=false,
+  backgroundcolor=black!10!white,
+  frametitle={Command Window},
+  frametitlefont={\normalfont\sffamily\color{white}\hspace{-1em}},
+  frametitlebackgroundcolor=DarkBlue,
+  singleextra={\draw[black!20,line width=12pt] 
+       ($(O)+(7pt,1pt)$) --
+       ($(O|-P)+(7pt,-\mdfframetitleboxtotalheight)-(0,1pt)$);
+       \node[inner sep=0pt,color=black]at ($(O)+(7pt,9pt)$)%
+       {$\scriptstyle f\!x$}; },
+  nobreak,
+ }
+ 
+ \lstnewenvironment{script} {%
+   \lstset{language=Matlab,basicstyle=\tiny\ttfamily,breaklines=true,%
+           aboveskip=0pt,belowskip=0pt}}{}
+ \surroundwithmdframed[style=commandline]{script}
+ \begin{script}
+ >> help sin
+  sin    Sine of argument in radians.
+     sin(X) is the sine of the elements of X.
+ 
+     See also asin, sind.
+ 
+     Overloaded methods:
+        sdpvar/sin
+        codistributed/sin
+        gpuArray/sin
+ 
+     Reference page in Help browser
+        doc sin
+ 
+ >> 
+ \end{script}
+\end{tltxmdfexample}
+% \iffalse
+%</example>
+% \fi
+%
+% 
+% 
 % 
 % \section{Examples}
 % 
-% I outsource the examples in four files to limit the documentation. The files 
+% I outsource the examples in four files documentation. The files 
 % are
 % \begin{description}[style=nextline]
 % \item[\texttt{mdframed-example-default}] 
@@ -1571,6 +1604,16 @@ Have fun!
 % \href{http://prezi.com/zc355i9tcsgz/talk-kts-2012-mdframed/}^^A
 %      {kts 2012 mdframed}.
 % 
+%
+% \IfFileExists{mdframed-example-default.pdf}%
+%   {\includepdf[pages=-]{mdframed-example-default.pdf}}{}
+% \IfFileExists{mdframed-example-tikz.pdf}%
+%   {\includepdf[pages=-]{mdframed-example-tikz.pdf}}{}
+% \IfFileExists{mdframed-example-texsx.pdf}%
+%   {\includepdf[pages=-]{mdframed-example-texsx.pdf}}{}
+% \IfFileExists{mdframed-example-pstricks.pdf}%
+%   {\includepdf[pages=-]{mdframed-example-pstricks.pdf}}{}
+%
 % \section{Errors, Warnings and Messages}
 % 
 % The package \Pack{mdframed} provides different errors, warnings and
@@ -1946,6 +1989,7 @@ Have fun!
 % In this way you can use the option \Opt{framemethod} to
 % load the file by setting \Opt{framemethod=X}.
 % 
+%\iffalse
 % \clearpage
 % 
 % \subsection{Revision history}\label{rev}
@@ -2179,16 +2223,22 @@ Have fun!
 %
 % \clearpage
 %
+%
+%
+%
+%
 % \section{Implementation}\label{implementation}
 %
 % And finally, here's how it all works\ldots
 %
+%\fi
 %\StopEventually{^^A
-%  %%\clearpage
-%  %%\PrintChanges^^A
-%  \clearpage
-%  \PrintIndex^^A
+%  ^^A\clearpage
+%  ^^A\PrintChanges^^A
+%  ^^A\clearpage
+%  ^^A\PrintIndex^^A
 %}
+%
 %\iffalse
 %    \begin{macrocode}
 %<*package>
@@ -2282,24 +2332,32 @@ Have fun!
 %
 %
 % \begin{macro}{mdf@dolist}
-%  Loop used by \Pack{mdframed}.
+%  Loop used by \Pack{mdframed}. I can handle comma separated list. The command
+% \Cmd{DeclareListParser} is provided by `etoolbox`.
 %    \begin{macrocode}
 \DeclareListParser*{\mdf@dolist}{,}
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{mdf@option@length,mdf@define@key@length}
-% Command to define a new length width a default value. 
-%| \mdf@option@length{<name of length>}{<Defaultwert>}|
+% \begin{macro}{mdf@do@lengthoption}
+% We need lots of length options. So the declaration is simplified. 
 %    \begin{macrocode}
+% \mdf@dolist{\mdf@do@lengthoption}{{option name ==default value},...}%
+% resulst to the length \mdf@<option name>@length
+\def\mdf@do@lengthoption#1{%
+  \mdf@lengthoption@doubledo#1\@nil%
+}
+\def\mdf@lengthoption@doubledo#1==#2\@nil{%
+   \mdf@option@length{#1}{#2}%
+   \mdf@define@key@length{#1}%
+   \gappto\mdf@definestyle@defaultoptions{#1=#2,}%
+}
+
 \newrobustcmd*{\mdf@option@length}[2]{%
  \expandafter\newlength\csname mdf@#1@length\endcsname%
  \expandafter\setlength\csname mdf@#1@length\endcsname{#2}%
  }
-%    \end{macrocode}
-%  Command to create a new length option.
-%  |\mdf@define@key@length{<name of length option>}|
-%    \begin{macrocode}
+
 \newrobustcmd*{\mdf@define@key@length}[1]{%
    \define@key{mdf}{#1}{%
       \def\@tempa{##1}
@@ -2309,30 +2367,18 @@ Have fun!
        \setlength{\csname mdf@#1@length\endcsname}{\csname mdfl@#1\endcsname}%
    }%
 }
+
+
 %    \end{macrocode}
 % \end{macro}
 %
 %
-% \begin{macro}{mdf@do@lengthoption,mdf@lengthoption@doubledo}
-% The loop of |\mdf@dolist| expected one argument. So I have to define a 
-% command to allow a loop with two arguments. The separation for the input is 
-% |==|.
+% \begin{macro}{mdf@do@stringoption}
+%  We need lots of string options which are saved in a macro.%
+%  So the declaration is simplified. 
 %    \begin{macrocode}
-\def\mdf@do@lengthoption#1{%
-  \mdf@lengthoption@doubledo#1\@nil%
-}
-\def\mdf@lengthoption@doubledo#1==#2\@nil{%
-   \mdf@option@length{#1}{#2}%
-   \mdf@define@key@length{#1}%
-   \gappto\mdf@definestyle@defaultoptions{#1=#2,}%
-}
-%    \end{macrocode}
-% \end{macro}
-%
-%
-% \begin{macro}{mdf@do@stringoption,mdf@stringoption@doubledo}
-% Same as |\mdf@do@lengthoption| and |\mdf@lengthoption@doubledo|.
-%    \begin{macrocode}
+% \mdf@dolist{\mdf@do@stringoption}{{option name ==default value},...}%
+% resulst to the macro \mdf@<option name> 
 \def\mdf@do@stringoption#1{%
    \mdf@stringoption@doubledo#1\@nil%
 }
@@ -2347,9 +2393,11 @@ Have fun!
 % \end{macro}
 %
 %
-% \begin{macro}{mdf@do@booloption,mdf@booloption@doubledo}
-% Same as |\mdf@do@lengthoption| and |\mdf@lengthoption@doubledo|.
+% \begin{macro}{mdf@do@booloption}
+%  We need lots of bool options. So the declaration is simplified. 
 %    \begin{macrocode}
+% \mdf@dolist{\mdf@do@booloption}{{option name ==default value},...}%
+% resulst to the bool flag \mdf@<option name> 
 \def\mdf@do@booloption#1{%
    \mdf@booloption@doubledo#1\@nil%
 }
@@ -2364,37 +2412,18 @@ Have fun!
 % \end{macro}
 %
 %
-% \begin{macro}{mdf@do@alignoption,mdf@alignoption@tripledo}
-% Same as |\mdf@do@lengthoption| and |\mdf@lengthoption@doubledo|. Here
-% three arguments are required.
-%    \begin{macrocode}
-\def\mdf@do@alignoption#1{%
-   \mdf@alignoption@tripledo#1\@nil%
-}
-\def\mdf@alignoption@tripledo#1==#2==#3\@nil{%
-   \csdef{mdf@align@#1@left}{\null\hspace*{#2}}%
-   \csdef{mdf@align@#1@right}{\hspace*{#3}\null}%
-}
-%    \end{macrocode}
-% \end{macro}
-%
 % Start declaration of options
 %    \begin{macrocode}
 \newcounter{mdf@globalstyle@cnt}
 \defcounter{mdf@globalstyle@cnt}{-99}
-%    \end{macrocode}
+
 % Only provide to be backward compatible
-%    \begin{macrocode}
 \define@key{mdf}{style}{%
   \mdf@PackageWarning{package option style is depreciated^^J
                       at this point and will be ignored^^J
                       use framemethod instead\MessageBreak}%
 }
-%    \end{macrocode}
-%
-% \begin{macro}{mdf@framemethod}
-%  Definining the global option \Opt{framemethod}.
-%    \begin{macrocode}
+
 \providecommand*\mdf@framemethod{}
 \def\mdf@framemethod@i{}%
 \def\mdf@framemethod@ii{}%
@@ -2435,10 +2464,9 @@ Have fun!
     }%
   \fi%
 }
-
-
 \DeclareVoidOption{tikz}{\setkeys{mdf}{framemethod=tikz}}
 \DeclareVoidOption{TikZ}{\setkeys{mdf}{framemethod=tikz}}
+\DeclareVoidOption{ps}{\setkeys{mdf}{framemethod=pstricks}}
 \DeclareVoidOption{pstricks}{\setkeys{mdf}{framemethod=pstricks}}
 \DeclareVoidOption{PSTricks}{\setkeys{mdf}{framemethod=pstricks}}
 
@@ -2474,9 +2502,6 @@ Have fun!
    {frametitlerightmargin==10pt},%
    {shadowsize==8pt},%
    {extratopheight==\z@},%
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% %
-% %%subtitle / subsubtitle added 29.05.12%% %
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% %
    {subtitleabovelinewidth==.8pt},%
    {subtitlebelowlinewidth==.6pt},%
    {subtitleaboveskip==\baselineskip},%
@@ -2484,6 +2509,7 @@ Have fun!
    {subtitleinneraboveskip==.5\baselineskip},%
    {subtitleinnerbelowskip==.5\baselineskip},%
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% NOT IMPLEMENTED
    {subsubtitleabovelinewidth==.8pt},%
    {subsubtitlebelowlinewidth==.6pt},%
    {subsubtitleaboveskip==\baselineskip},%
@@ -2571,9 +2597,6 @@ Have fun!
     {shadow==false},%
     {everyline==false},%
     {ignorelastdescenders==false},%
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% %
-% %%subtitle / subsubtitle added 29.05.12%% %
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% %
     {subtitleaboveline==false},
     {subtitlebelowline==false},
     {subsubtitleaboveline==false},
@@ -2603,6 +2626,14 @@ Have fun!
 %USELESS
 %USELESS
 %USELESS
+% This part must be worked over.
+\def\mdf@do@alignoption#1{%
+   \mdf@alignoption@tripledo#1\@nil%
+}
+\def\mdf@alignoption@tripledo#1==#2==#3\@nil{%
+   \csdef{mdf@align@#1@left}{\null\hspace*{#2}}%
+   \csdef{mdf@align@#1@right}{\hspace*{#3}\null}%
+}
 \mdf@dolist{\mdf@do@alignoption}{%
     {left==\mdf@leftmargin@length==\z@},%
     {center==\fill==\fill},%
@@ -2610,19 +2641,6 @@ Have fun!
     {outer==\fill==\mdf@rightmargin@length},%not supported yet
     {outer==\mdf@leftmargin@length==\fill},%not supported yet
 }
-%USELESS
-%USELESS
-%USELESS
-%    \end{macrocode}
-% \end{macro}
-%
-% \begin{macro}{mdf@align,mdf@makeboxalign@left,
-%               mdf@makeboxalign@right,mdf@makeboxalign@right}
-% Set the alignment.
-%    \begin{macrocode}
-%USELESS
-%USELESS
-%USELESS
 \newcommand*\mdf@align{}%
 \newcommand*\mdf@makeboxalign@left{\null\hspace*{\mdf@leftmargin@length}}%
 \newcommand*\mdf@makeboxalign@right{}%
@@ -2804,20 +2822,15 @@ Have fun!
 \newlength\mdffootnoteboxheight
 \newlength\mdffootnoteboxdepth
 \newlength\mdffootnoteboxtotalheight
-
 \newlength\mdftotallinewidth
-
 \newlength\mdfboundingboxwidth
 \newlength\mdfboundingboxtotalwidth
-
 \newlength\mdfboundingboxheight
 \newlength\mdfboundingboxdepth
 \newlength\mdfboundingboxtotalheight
-
 \newlength\mdf@freevspace@length
 \newlength\mdf@horizontalwidthofbox@length
 \newlength\mdf@verticalmarginwhole@length
-
 \newlength\mdf@horizontalspaceofbox
 
 \newbool{mdfsingleframe}\boolfalse{mdfsingleframe}
@@ -2825,30 +2838,22 @@ Have fun!
 \newbool{mdfmiddleframe}\boolfalse{mdfmiddleframe}
 \newbool{mdflastframe}\boolfalse{mdflastframe}
 
-\newtoggle{mdf@notfirstframetitle}%
-\togglefalse{mdf@notfirstframetitle}%
-\newtoggle{mdflastframe}
-\togglefalse{mdflastframe}%
+\newtoggle{mdf@notfirstframetitle}\togglefalse{mdf@notfirstframetitle}%
+\newtoggle{mdflastframe}\togglefalse{mdflastframe}
 
-\newcounter{mdfcountframes}
-\setcounter{mdfcountframes}{0}
+\newcounter{mdfcountframes}\setcounter{mdfcountframes}{0}
 % Command to expand the tikz code. (see md-frame-1.mdf)
 \newrobustcmd\mdfcreateextratikz{}
 
 %    \end{macrocode}
 % \end{macro}
 %
-% \changes{v1.6}{2012/05/11}{Changes the complete definition of
-% \protect\Cmd{mdf@lrbox} to fix problem with \protect\Env{itemize}}
+%
 % \begin{macro}{mdf@lrbox,endmdf@lrbox}
 % Modification of the default |\lrbox| and |\endlrbox|
 %    \begin{macrocode}
 \def\mdf@lrbox#1{%
-%%patch to work with amsthm
-  \mdf@patchamsthm
-%%%end patch
- \edef\mdf@restoreparams{%
-   \parindent=\the\parindent\relax \parskip=\the\parskip\relax}%
+  \mdf@patchamsthm%patch amsthm
  \setbox#1\vbox\bgroup%
    \color@begingroup%
      \mdf@horizontalmargin@equation%
@@ -2867,36 +2872,23 @@ Have fun!
      \baselineskip\normalbaselineskip%
 %%  \sloppy%
      \let\\\@normalcr%
-%    \end{macrocode}
-% \Cmd{parskip} is added to the first skip. Here the first skip
-% will be removed from 
-% the length \Opt{innertopmargin}. See 
-% \url{http://tex.stackexchange.com/questions/100570/
-%      why-is-parskip-half-messing-up-the-spacing-in-mdframed}
-%    \begin{macrocode}
      \mdf@par@local%New feature to restore parskip/parindent local in save box
      \ifbool{mdf@suppressfirstparskip}{\vspace*{-\parskip}}{}%
-%    \end{macrocode}
-%    \begin{macrocode}
      \@afterindentfalse%
-    %% \@afterheading%
+    %\@afterheading%
 }
-
 \def\endmdf@lrbox{\color@endgroup\egroup}
-
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{mdf@ignorevbadness,mdf@restorevbadness}
+% \begin{macro}{mdf@ignorevbadness}
 % Avoiding warnings during the splitting process by \Cmd{vsplit}.
-% see \href{http://tex.stackexchange.com/questions/38496/how-to-avoid-^^A
-%           underfull-vbox-in-combination-with-vsplit/38499#38499}^^A
-%          {How to avoid underfull vbox in combination with \Cmd{vsplit}?}
 %    \begin{macrocode}
 \newrobustcmd*\mdf@ignorevbadness{%
    \edef\mdf@currentvbadness{\the\vbadness}%
    \vbadness=\@M%
    \afterassignment\mdf@restorevbadness}
+
 \newrobustcmd*\mdf@restorevbadness{\vbadness=\mdf@currentvbadness\relax}
 %    \end{macrocode}
 % \end{macro}
@@ -2905,6 +2897,7 @@ Have fun!
 % The package \Pack{amsthm} provides a not compatible starting of theorem. So I
 % have to change the header of amsthm.
 %    \begin{macrocode}
+\let\mdf@patchamsthm\relax
 \AtBeginDocument{%
 \@ifpackageloaded{amsthm}%
  {%
@@ -2919,7 +2912,7 @@ Have fun!
                          failed\MessageBreak}%
        }%
      }%
- }{\let\mdf@patchamsthm\relax}%
+ }{}%
 }
 %    \end{macrocode}
 % \end{macro}
@@ -2935,13 +2928,7 @@ Have fun!
     \parsep=\the\parsep\relax%
   }%
   \setlength{\topsep}{#1}%
-%    \end{macrocode}
-% Added \Cmd{topskip} to remove first skip after \Cmd{newpage} or%
-% \Cmd{clearpage}
-%    \begin{macrocode}
   \topskip\z@%
-%    \end{macrocode}  
-%    \begin{macrocode}
   \partopsep\z@%
   \parsep\z@%
   \@nmbrlistfalse%
@@ -2952,9 +2939,6 @@ Have fun!
   \let\@itemlabel\@empty%
   \def\makelabel##1{##1}%
   \item\relax\mdf@temp\relax%
-%%  \leavevmode\hrule \@height\z@ \@width\linewidth\relax%
-%%  \item\mbox{}\relax% second version
-%%  \item\relax\mdf@temp% first Version
 }
 \let\endmdf@trivlist\endtrivlist
 \patchcmd\endmdf@trivlist\@endparenv\mdf@endparenv{%
@@ -2966,7 +2950,6 @@ Have fun!
 }
 \def\mdf@endparenv{%
   \addpenalty\@endparpenalty\addvspace\mdf@skipbelow@length\@endpetrue}
-
 %    \end{macrocode}
 % \end{macro}
 %
@@ -3432,15 +3415,11 @@ Have fun!
 % \end{macro}
 %
 % \begin{macro}{mdf@freepagevspace}
+% The following lines are added by an inspiration of the great package 
+% \Pack{multicol}.
 %    \begin{macrocode}
 \newrobustcmd*\mdf@freepagevspace{%
-%    \end{macrocode}
-%  The following lines are added by an inspiration of the great package
-%  \Pack{multicol}.
-%    \begin{macrocode}
      \bgroup\@nobreakfalse\addpenalty\z@\egroup%added 29.5.12
-%    \end{macrocode}
-%    \begin{macrocode}
      \penalty\@M\relax\vskip 2\baselineskip\relax%
      \penalty9999\relax\vskip -2\baselineskip\relax%
      \penalty9999%
@@ -3454,8 +3433,7 @@ Have fun!
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{mdf@advancelength@sub,mdf@advancelength@add
-%               mdf@horizontalspaceofbox,mdf@horizontalmargin@equation}
+% \begin{macro}{mdf@advancelength@sub,mdf@advancelength@add}
 % Command used for loop calculation
 %    \begin{macrocode}
 \newrobustcmd*\mdf@advancelength@sub[2]{%
@@ -3464,7 +3442,6 @@ Have fun!
 \newrobustcmd*\mdf@advancelength@add[2]{%
   \advance #1 by \csname mdf@#2@length\endcsname\relax%
 }
-
 %    \end{macrocode}
 % \end{macro}
 %
@@ -3603,103 +3580,55 @@ Have fun!
 % Output of the first splitted box.
 %    \begin{macrocode}
 \def\mdf@put@frame@i{%Box must be splitted
-%    \end{macrocode}
-% Compute the vertical free space of the current page
-%    \begin{macrocode}
  \mdf@freepagevspace%gives \mdf@freevspace@length
-%    \end{macrocode}
-% Compute whether the width of the lines plus 2 \Cmd{baselineskips} can
-% only be set on the current page.
-%    \begin{macrocode}
+% minimum 2 lines for one page:
  \dimen@=\the\mdf@freevspace@length\relax%
  \dimen@i=\mdf@innertopmargin@length\relax%
  \mdf@dolist{\mdf@advancelength@add{\dimen@i}}%
    {innerlinewidth,middlelinewidth,outerlinewidth}%
  \advance\dimen@i by 2\baselineskip\relax%
  \ifdimless{\dimen@}{\dimen@i}%
-%    \end{macrocode}
-% force a page / column break and restart printing of the environment
-%    \begin{macrocode}
    {\hrule \@height\z@ \@width\hsize%
-    \vfill\eject%
+    \vfill\eject%no room for two lines
     \def\mdf@reserved@a{\mdf@put@frame}%
    }%
-%    \end{macrocode}
-% The page has enough space.
-%    \begin{macrocode}
-   {%
-%    \end{macrocode}
-% compute the needed vertical space of the first frame. Subtract the dimension
-% of the bottom frame
-%    \begin{macrocode}
+   {%enough space for first part
     \mdf@dolist{\mdf@advancelength@sub{\dimen@}}{%calculate with \dimen@
-              outerlinewidth,middlelinewidth,innerlinewidth,%
-              innertopmargin,splitbottomskip}%
-%    \end{macrocode}
-% Reduce vertical space if option \Opt{everyline} is set to \Opt{true}
-%    \begin{macrocode}
-    \ifbool{mdf@everyline}%
-      {%
-       \ifbool{mdf@bottomline}%
-          {%
-           \mdf@dolist{\mdf@advancelength@sub{\dimen@}}%
-             {innerlinewidth,middlelinewidth,outerlinewidth}%
-          }{}%
+      outerlinewidth,middlelinewidth,innerlinewidth,%width of top rule
+      innertopmargin,splitbottomskip}%width of length
+    \ifboolexpr{ bool {mdf@everyline} and bool {mdf@bottomline} }%
+      {%need space for bottomline
+       \mdf@dolist{\mdf@advancelength@sub{\dimen@}}%
+         {innerlinewidth,middlelinewidth,outerlinewidth}%
       }{}%
-%    \end{macrocode}
-% Add vertical space if option \Opt{topline} is set to \Opt{false} 
-%    \begin{macrocode}
-    \notbool{mdf@topline}%
+    \notbool{mdf@topline}%no top line
        {%
            \mdf@dolist{\mdf@advancelength@add{\dimen@}}%
              {innerlinewidth,middlelinewidth,outerlinewidth}%
        }{}%
-%    \end{macrocode}
-% Add a length of 0.8\Cmd{pageshrink}. I don't know whether it's needed! 
-%    \begin{macrocode}
     \advance\dimen@.8\pageshrink
-%    \end{macrocode}
-% Test whether the contents has enough space and the last frame will be empty
-%    \begin{macrocode}
     \ifdimless{\ht\mdf@splitbox@one+\dp\mdf@splitbox@one}{\dimen@}%
        {\mdf@PackageWarning{You got a bad break\MessageBreak
                             because the last box will be empty\MessageBreak
-                           you have to change it manually\MessageBreak
-                           by changing the text, the space\MessageBreak
-                           or something else}%
+                            you have to change it manually\MessageBreak
+                            by changing the text, the space\MessageBreak
+                            or something else}%
         \advance\dimen@ by -1.8\baselineskip\relax%needed????????????????????
        }{}%
-%    \end{macrocode}
-% \begin{itemize}
-%   \item save the orginal contents in a new save box,
-%   \item set the dimension for splitting
-%   \item ignore bad boxes and split
-% \end{itemize}
-%    \begin{macrocode}
-    \setbox\mdf@splitbox@save=\vbox{\unvcopy\mdf@splitbox@one}%
+    \setbox\mdf@splitbox@save=\vbox{\unvcopy\mdf@splitbox@one}%save original
     \splitmaxdepth\z@ \splittopskip\mdf@splittopskip@length%
     \mdf@ignorevbadness%
-    \setbox\mdf@splitbox@two\vsplit\mdf@splitbox@one to \dimen@
+    \setbox\mdf@splitbox@two\vsplit\mdf@splitbox@one to \dimen@\relax%
     \setbox\mdf@splitbox@two\vbox{\unvbox\mdf@splitbox@two}%
     \setbox\mdf@splitbox@one\vbox{\unvbox\mdf@splitbox@one}%
-%    \end{macrocode}
-% Test whether the splitted box fits the required dimension
-%    \begin{macrocode}
     \ifdimgreater{\ht\mdf@splitbox@two+\dp\mdf@splitbox@two}{\dimen@}%
       {%splitted wrong
        \mdf@PackageInfo{Box was splittet wrong^^J
                         starting loop to iterate 
                         the splitting point\MessageBreak}%
-%    \end{macrocode}
-% restore save box \Cmd{mdf@splitbox@one} by the save one
-% \Cmd{mdf@splitbox@save}
-%    \begin{macrocode}
        \setbox\mdf@splitbox@one=\vbox{\unvcopy\mdf@splitbox@save}%
-%    \end{macrocode}
-% Start loop until splitting fits -- break after 100 attempts 
-%    \begin{macrocode}
-       \dimen@i=\dimen@%\relax
-       \@tempcnta=\z@\relax
+       \dimen@i=\dimen@\relax%
+       \@tempcnta=\z@\relax%
        \loop
         \ifdim\dimexpr\ht\mdf@splitbox@two+\dp\mdf@splitbox@two\relax>\dimen@ 
           \advance\dimen@i by -\p@\relax     
@@ -3724,9 +3653,6 @@ Have fun!
           \fi
        \repeat%
       }{}%
-%    \end{macrocode}
-% Test if the last frame is empty
-%    \begin{macrocode}
     \ifvoid\mdf@splitbox@one\relax%
       \mdf@PackageWarning{You got a bad break because the splittet box 
                           is empty^^J
@@ -3738,9 +3664,8 @@ Have fun!
       \enlargethispage{\baselineskip}%
       \def\mdf@reserved@a{\mdf@put@frame}%
     \fi%
-%    \end{macrocode}
-% Test if first splitted frame doesn't have the original with.
-%    \begin{macrocode}
+   % Test if first splitted frame doesn't have the original with.
+   % occurs with math
     \ifdim\wd\mdf@splitbox@two=\wd\mdf@splitbox@one\relax
     \else%
       \mdf@PackageInfo{You first box width is to small^^J
@@ -3751,38 +3676,32 @@ Have fun!
                     \unvcopy\mdf@splitbox@two%
                    }%
     \fi%
-%    \end{macrocode}
-% Test if the first frame is empty
-%    \begin{macrocode}
     \ifvoid\mdf@splitbox@two\relax%
-        {\hrule \@height\f@size pt \@width\z@%
+        {%
+         \hrule \@height\f@size pt \@width\z@%
          \hrule \@height\z@ \@width\hsize}%
          \setbox\mdf@splitbox@one=\vbox{\unvcopy\mdf@splitbox@save}%
-         \def\mdf@reserved@a{\mdf@put@frame}%
+         \def\mdf@reserved@a{\mdf@put@frame%
+        }%
      \else%
         \ifdimequal{\ht\mdf@splitbox@two}{0pt}%
-          {\hrule \@height\z@ \@width\hsize%
+          {%
+           \hrule \@height\z@ \@width\hsize%
            \vfill\eject%
            \setbox\mdf@splitbox@one=\vbox{\unvcopy\mdf@splitbox@save}%
            \def\mdf@reserved@a{\mdf@put@frame}%
           }%
           {%
-%    \end{macrocode}
-% Output of the first frame
-%    \begin{macrocode}
-          \begingroup
-            \mdf@@setzref%
-            \mdf@beforebreak%
-            \booltrue{mdffirstframe}%
-            \mdf@putbox@first%
-            \mdf@afterbreak%
-          \endgroup%
-          \hrule \@height\z@ \@width\hsize%
-          \vfill\eject%
-          \def\mdf@reserved@a{\mdf@put@frame@ii}%
-%    \end{macrocode}
-% 
-%    \begin{macrocode}
+           \begingroup
+             \mdf@@setzref%
+             \mdf@beforebreak%
+             \booltrue{mdffirstframe}%
+             \mdf@putbox@first%
+             \mdf@afterbreak%
+           \endgroup%
+           \hrule \@height\z@ \@width\hsize%
+           \vfill\eject%
+           \def\mdf@reserved@a{\mdf@put@frame@ii}%
           }%
      \fi%
    }%
@@ -3796,32 +3715,15 @@ Have fun!
 % Output of the middle and last box.
 %    \begin{macrocode}
 \def\mdf@put@frame@ii{%
-%    \end{macrocode}
-% After splitting the vertical free space is \Cmd{vsize} so you can set it
-% directly.
-%    \begin{macrocode}
   \setlength{\mdf@freevspace@length}{\vsize}%
-%    \end{macrocode}
-% \textcolor{red}{\bfseries repeating frame title must be improved}
-%    \begin{macrocode}
     \ifbool{mdf@repeatframetitle}%
-      {%
-%    \end{macrocode}
-% Remember that the first title was printed
-%    \begin{macrocode}
+      {%repeating title -- more robust using hooks.
        \toggletrue{mdf@notfirstframetitle}%
-%    \end{macrocode}
-% remove the vertical skip added by option \Opt{splittopskip} to connect the
-% boxes
-%    \begin{macrocode}
        \splitmaxdepth\z@ \splittopskip\z@%
        \setbox\mdf@splitbox@one=\vbox{\break\unvbox\mdf@splitbox@one}%
        \mdf@ignorevbadness%
        \setbox0=\vsplit\mdf@splitbox@one to \z@\relax%
        \setbox\mdf@splitbox@one=\vbox{\unvbox\mdf@splitbox@one}
-%    \end{macrocode}
-% combine frame title with the contents of mdframed
-%    \begin{macrocode}
        \setbox\mdf@splitbox@one\vbox%
           {%
            \parskip\z@\relax%
@@ -3834,49 +3736,24 @@ Have fun!
           }%
        \setbox\mdf@splitbox@one=\vbox{\unvbox\mdf@splitbox@one}%
       }{}%
-%    \end{macrocode}
-% \Cmd{dimen@} is equal to the natural height of the rest
-%    \begin{macrocode}
   \setlength{\dimen@}{\dimexpr\ht\mdf@splitbox@one+\dp\mdf@splitbox@one\relax}%
-%    \end{macrocode}
-% Assume no middle box -- add bottom length to the natural height of the 
-% contents
-%    \begin{macrocode}
   \mdf@dolist{\mdf@advancelength@add{\dimen@}}%
-        {%used \dimen@
-         innerbottommargin,innerlinewidth,middlelinewidth,outerlinewidth%
-        }%
-%    \end{macrocode}
-% add top length of lines if \Opt{everyline} is set to \Opt{true}
-%    \begin{macrocode}
-  \ifbool{mdf@everyline}%
+        {innerbottommargin,innerlinewidth,middlelinewidth,outerlinewidth}%
+  \ifboolexpr { bool {mdf@everyline} and bool {mdf@topline} }
     {%
-     \ifbool{mdf@topline}%
-      {%
-       \mdf@dolist{\mdf@advancelength@add{\dimen@}}%
-         {innerlinewidth,middlelinewidth,outerlinewidth}%
-      }{}%
+     \mdf@dolist{\mdf@advancelength@add{\dimen@}}%
+        {innerlinewidth,middlelinewidth,outerlinewidth}%
     }{}%
-%    \end{macrocode}
-% remove length of bottom if \Opt{bottomline} is set to \Opt{false}
-%    \begin{macrocode}
-   \notbool{mdf@bottomline}%
+   \notbool{mdf@bottomline}%remove bottom if neccessary
      {%
        \mdf@dolist{\mdf@advancelength@sub{\dimen@}}%
          {innerlinewidth,middlelinewidth,outerlinewidth}%
      }{}%
-%    \end{macrocode}
 % Test whether the complete height of the frame fits on the current page
-%    \begin{macrocode}
    \ifdimgreater{\dimen@}{\mdf@freevspace@length}%
     {%have a middle box
-%    \end{macrocode}
-% Use \Cmd{mdf@freevspace@length} to compute the splitting dimension. The 
-% conditionals \Opt{everyline}, \Opt{topline} and \Opt{bottomline} work
-% like the test above.
-%    \begin{macrocode}
      \advance\mdf@freevspace@length by -\mdf@splitbottomskip@length\relax%
-     \ifbool{mdf@everyline}%
+     \ifbool{mdf@everyline}%regard top and bottom if everyline is used
        {%
         \ifbool{mdf@topline}%
           {%
@@ -3889,31 +3766,18 @@ Have fun!
              {innerlinewidth,middlelinewidth,outerlinewidth}%
           }{}%
        }{}%
-%    \end{macrocode}
-% \begin{itemize}
-%   \item save the orginal contents in a new save box,
-%   \item set the dimension for splitting
-%   \item ignore bad boxes and split
-% \end{itemize}
-%    \begin{macrocode}
      \setbox\mdf@splitbox@save=\vbox{\unvcopy\mdf@splitbox@one}%
      \splitmaxdepth\z@ \splittopskip\mdf@splittopskip@length%
      \mdf@ignorevbadness%
      \setbox\mdf@splitbox@two\vsplit\mdf@splitbox@one to \mdf@freevspace@length
      \setbox\mdf@splitbox@two\vbox{\unvbox\mdf@splitbox@two}
      \setbox\mdf@splitbox@one\vbox{\unvbox\mdf@splitbox@one}
-%    \end{macrocode}
-% Test whether the splitted box fits the required dimension
-%    \begin{macrocode}
      \ifdimgreater{\ht\mdf@splitbox@two+\dp\mdf@splitbox@two}%
                   {\mdf@freevspace@length}%
        {%splitted wrong
         \mdf@PackageInfo{Box was splittet wrong^^J
                          starting loop to iterate 
                          the splitting point\MessageBreak}%
-%    \end{macrocode}
-% Start loop until splitting fits -- break after 100 attempts 
-%    \begin{macrocode}
         \dimen@i=\mdf@freevspace@length%\relax
         \@tempcnta=\z@\relax
         \loop
@@ -3921,8 +3785,6 @@ Have fun!
               \mdf@freevspace@length\relax        
           \advance\dimen@i by -\p@\relax%     
           \advance\@tempcnta by \@ne\relax%
-%%          \wlog{***mdframed \string\@tempcnta=\the\@tempcnta***}
-%%          \wlog{***mdframed \string\dimen@i=\the\dimen@i***}
           \ifnum\@tempcnta>100
             \let\iterate\relax%
             \mdf@PackageWarning{correct box splittet fails^^J
@@ -3938,9 +3800,6 @@ Have fun!
           \setbox\mdf@splitbox@one\vbox{\unvbox\mdf@splitbox@one}%
         \repeat%
        }{}%
-%    \end{macrocode}
-% Test whether last frame is empty
-%    \begin{macrocode}
      \ifvoid\mdf@splitbox@one\relax%
         \mdf@PackageWarning{You got a bad break because the splittet box is 
                             empty^^J
@@ -3951,20 +3810,12 @@ Have fun!
         \setbox\mdf@splitbox@one=\vbox{\unvcopy\mdf@splitbox@save}%
         \enlargethispage{\baselineskip}%
         \def\mdf@reserved@a{\mdf@put@frame@ii}%
-%    \end{macrocode}
-% Output of the middle frame
-%    \begin{macrocode}
      \else
-% Test if first splitted frame doesn't have the original with.
-%    \begin{macrocode}
       \setbox\mdf@splitbox@two=\vbox%
                    {%
                     \hrule \@height\z@ \@width\mdfboundingboxwidth\relax
                     \unvcopy\mdf@splitbox@two%
                    }%
-%    \end{macrocode}
-%
-%    \begin{macrocode}
         \begingroup
           \mdf@@setzref
           \booltrue{mdfmiddleframe}%
@@ -3977,9 +3828,6 @@ Have fun!
           \def\mdf@reserved@a{\mdf@put@frame@ii}%
         \fi
      }%End middle box case
-%    \end{macrocode}
-% Starting output of last frame
-%    \begin{macrocode}
      {%start last box case
       \ifvoid\mdf@splitbox@one
            \mdf@PackageWarning{You got a bad break\MessageBreak
@@ -3991,9 +3839,6 @@ Have fun!
                    \hrule \@height\z@ \@width\mdfboundingboxwidth
                   }%
       \fi%
-%    \end{macrocode}
-% \Cmd{ifvoid} isn't enough -- need to test the height
-%    \begin{macrocode}
       \ifdimless{\ht\mdf@splitbox@one}{1sp}%
          {%
           \mdf@PackageWarning{You got a bad break\MessageBreak
@@ -4007,9 +3852,6 @@ Have fun!
                   \hrule \@height\z@ \@width\mdfboundingboxwidth
                  }%
          }{}%
-%    \end{macrocode}
-% Output of the last frame
-%    \begin{macrocode}
       \begingroup
       \toggletrue{mdflastframe}
       \mdf@beforebreak%
@@ -4046,11 +3888,11 @@ Have fun!
 %%%%   |           |
 %%%%   |___________|
 %%%%         b
-%%Zusammenhaenge abfragen:
+%all lines
 \newrobustcmd*\mdf@test@ltrb{%
     \ifboolexpr{ (bool {mdf@topline}) and (bool {mdf@bottomline})
                  and (bool {mdf@leftline}) and (bool {mdf@rightline})}}
-%3-set
+%three lines
 \newrobustcmd*\mdf@test@ltr{%
     \ifboolexpr{ (bool {mdf@topline}) and not (bool {mdf@bottomline})
                  and (bool {mdf@leftline}) and (bool {mdf@rightline})}}
@@ -4063,7 +3905,7 @@ Have fun!
 \newrobustcmd*\mdf@test@lrb{%
     \ifboolexpr{ not (bool {mdf@topline}) and (bool {mdf@bottomline})
                  and (bool {mdf@leftline}) and (bool {mdf@rightline})}}
-%2-set
+%two lines
 \newrobustcmd*\mdf@test@lb{%
     \ifboolexpr{ not (bool {mdf@topline}) and (bool {mdf@bottomline})
                  and (bool {mdf@leftline}) and not (bool {mdf@rightline})}}
@@ -4082,7 +3924,7 @@ Have fun!
 \newrobustcmd*\mdf@test@tb{%
     \ifboolexpr{ (bool {mdf@topline}) and (bool {mdf@bottomline})
                  and not (bool {mdf@leftline}) and not (bool {mdf@rightline})}}
-%Einzellinien
+%single lines
 \newrobustcmd*\mdf@test@l{%
     \ifboolexpr{ not (bool {mdf@topline}) and not (bool {mdf@bottomline})
                  and (bool {mdf@leftline}) and not (bool {mdf@rightline})}}
@@ -4095,7 +3937,7 @@ Have fun!
 \newrobustcmd*\mdf@test@b{%
     \ifboolexpr{ not (bool {mdf@topline}) and (bool {mdf@bottomline})
                  and not (bool {mdf@leftline}) and not (bool {mdf@rightline})}}
-%keine Linien
+%no lines
 \newrobustcmd*\mdf@test@noline{%
     \ifboolexpr{ not (bool {mdf@topline}) and not (bool {mdf@bottomline})
                  and not (bool {mdf@leftline}) and not (bool {mdf@rightline})}}
