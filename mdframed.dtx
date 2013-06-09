@@ -215,7 +215,7 @@ Have fun!
 %<*driver>
 
 \setcounter{errorcontextlines}{999}
-\documentclass[parskip=false,11pt,tocdepth=3]{ltxmdf}
+\documentclass[parskip=false,11pt,tocdepth=2]{ltxmdf}
 \usepackage{pdfpages}
 \usepackage[framemethod=TikZ]{mdframed}
 \usetikzlibrary{shadows}
@@ -305,8 +305,8 @@ Have fun!
 %    roundcorner     = 10pt          ,%
 %    leftmargin      = 40            ,%
 %    rightmargin     = 40            ,%
-%    backgroundcolor = yellow        ,%
-%    outerlinecolor  = blue          ,% 
+%    backgroundcolor = yellow!40     ,%
+%    outerlinecolor  = blue!70!black ,% 
 %    innertopmargin  = \topskip      ,%
 %    splittopskip    = \topskip      ,%
 %    ntheorem        = true          ,% 
@@ -328,14 +328,15 @@ Have fun!
 \begin{tltxmdfexample}[columns=fixed,fontadjust=false]
  \newmdtheoremenv[%
     outerlinewidth  = 2             ,%
+    roundcorner     = 10pt          ,%
     leftmargin      = 40            ,%
     rightmargin     = 40            ,%
-    backgroundcolor = yellow        ,%
-    outerlinecolor  = blue          ,% 
+    backgroundcolor = yellow!40     ,%
+    outerlinecolor  = blue!70!black ,% 
     innertopmargin  = \topskip      ,%
     splittopskip    = \topskip      ,%
     ntheorem        = true          ,% 
-  ]{theorem}{Theorem}[section]
+   ]{theorem}{Theorem}[section]
  \begin{theorem}[Pythagorean theorem]
  ...
  \end{theorem}
@@ -394,11 +395,6 @@ Have fun!
 % an environment \Pack{mdframed} will use the option \Opt{nobreak} 
 % automatically. 
 % 
-% \minisec{Twoside-mode}
-% If you are using \Pack{mdframed} inside \Pack{twoside}-mode you can set
-% the option \Opt{innermargin} and \Opt{outermargin} (see section %
-% \ref{optlength}). The length will be ignored if you use the option 
-% \Opt{usetwoside=false}.
 % 
 % 
 % %%%%%%%%%%%%%%%%%%%%%%%
@@ -637,10 +633,9 @@ Have fun!
 % \end{enumerate}
 % The option \Opt{framemethod} requires a string. Allowed combinations are
 % listed in the following table.
-% \begin{table}[!ht]
-% \centering
+% \begin{center}
 % \renewcommand*\arraystretch{1.3}
-% \caption{Allowed keys for \Opt{framemethod}}
+% \captionof{table}{Allowed keys for \Opt{framemethod}}
 % \begin{tabular}{@{}>{\small\bfseries}l>{\small\ttfamily}l@{}}
 %  \toprule
 %   \multicolumn{1}{@{}l}{\textbf{Method}} & \multicolumn{1}{l}{Allowed keys}\\
@@ -650,7 +645,8 @@ Have fun!
 %   \Pack{PSTricks} & pstricks, ps, postscript, 2   \\
 %  \bottomrule
 % \end{tabular}
-% \end{table}
+% \end{center}
+%
 % If you are lazy you can also work with the following short forms:
 % \Opt{tikz}, \Opt{TikZ}, \Opt{pstricks}, \Opt{PSTricks} or \Opt{ps}. Of
 % course for the default method exists no key. 
@@ -1010,7 +1006,7 @@ Have fun!
 % \Opt{hidealllines}.
 %
 %
-% \subsubsection{Working in twoside-mode}
+% \subsection{Working in twoside-mode}
 % 
 % Many books are written in \texttt{twoside} mode. In those cases it's 
 % better to set the margins related to the site. Instead of the 
@@ -1048,7 +1044,7 @@ Have fun!
 %
 %
 %
-%\subsubsection{page breaks}
+%\subsection{Page breaks}
 % The package \Pack{mdframed} splits its content if neccessary. In figure
 % \ref{fig:basicframes} the default style for splitting is presented. However
 % there a sevaral situations where no page preak should occur. 
@@ -2902,7 +2898,7 @@ Have fun!
 \@ifpackageloaded{amsthm}%
  {%
   \newrobustcmd\mdf@patchamsthm{%
-   \let\mdf@deferred@thm@head\deferred@thm@head
+   \let\mdf@deferred@thm@head\deferred@thm@head%
    \pretocmd{\deferred@thm@head}{\@inlabelfalse}%
       {\mdf@PackageInfo{mdframed detected package amsthm ^^J
                         changed the theorem header of amsthm\MessageBreak}%
@@ -3241,15 +3237,15 @@ Have fun!
 \newrobustcmd*\detected@mdf@put@frame{%
   \ifmdf@nobreak%Option nobreak=true?
      \def\mdf@reserved@a{\mdf@put@frame@standalone}%
-  \else
+  \else%
      \def\mdf@reserved@a{\mdf@put@frame}%
-     \ifx\@captype\@undefined
+     \ifx\@captype\@undefined%
          \def\mdf@reserved@a{\mdf@put@frame}%
-     \else
+     \else%
          \mdf@PackageInfo{mdframed inside float  ^^J
                           mdframed uses option nobreak \mdframedpackagename}%
          \def\mdf@reserved@a{\mdf@put@frame@standalone}% 
-     \fi
+     \fi%
      \if@minipage%
            \mdf@PackageInfo{mdframed inside minipage  ^^J
                            mdframed uses option nobreak \mdframedpackagename}%
@@ -3289,8 +3285,8 @@ Have fun!
    \edef\mdf@par@local{%
       \parskip=\the\parskip\relax%
       \parindent=\the\parindent\relax}%
-   \parskip\z@
-   \parindent\z@
+   \parskip\z@%
+   \parindent\z@%
    \let\width\z@%
    \let\height\z@%
    \mdf@checkntheorem%
@@ -3315,7 +3311,7 @@ Have fun!
 \newrobustcmd*\mdf@@ignorelastdescenders{%
    \ifbool{mdf@ignorelastdescenders}%
      {%
-      \par\strut\par
+      \par\strut\par%
       \unskip\unskip\setbox0=\lastbox
       \vspace*{\dimexpr\ht\strutbox-\baselineskip\relax}%
      }{}%
@@ -3342,7 +3338,7 @@ Have fun!
    \mdf@lrbox{\mdf@splitbox@one}%
   }%
   {%
-   \mdf@@ignorelastdescenders
+   \mdf@@ignorelastdescenders%
    \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%%
    \ifmdf@footnoteinside%
       \def\mdf@reserveda{%
@@ -3376,7 +3372,7 @@ Have fun!
 \newtoggle{md:checktwoside}
 \settoggle{md:checktwoside}{false}
 \newrobustcmd*\mdf@twoside@checklength{%
- \if@twoside
+ \if@twoside%
    \ifbool{mdf@usetwoside}%
       {\mdf@PackageInfo{mdframed works in twoside mode}%
        \settoggle{md:checktwoside}{true}%
@@ -3394,7 +3390,7 @@ Have fun!
 \zref@newprop*{mdf@pagevalue}[0]{\number\value{page}}
 \zref@addprop{\ZREF@mainlist}{mdf@pagevalue}
 \newrobustcmd*\mdf@zref@label{%
-   \stepcounter{mdf@zref@counter}
+   \stepcounter{mdf@zref@counter}%
    \zref@label{mdf@pagelabel-\number\value{mdf@zref@counter}}%
 }
 \newrobustcmd*\if@mdf@pageodd{%
@@ -3606,7 +3602,7 @@ Have fun!
            \mdf@dolist{\mdf@advancelength@add{\dimen@}}%
              {innerlinewidth,middlelinewidth,outerlinewidth}%
        }{}%
-    \advance\dimen@.8\pageshrink
+    \advance\dimen@.8\pageshrink%
     \ifdimless{\ht\mdf@splitbox@one+\dp\mdf@splitbox@one}{\dimen@}%
        {\mdf@PackageWarning{You got a bad break\MessageBreak
                             because the last box will be empty\MessageBreak
@@ -3631,8 +3627,8 @@ Have fun!
        \@tempcnta=\z@\relax%
        \loop
         \ifdim\dimexpr\ht\mdf@splitbox@two+\dp\mdf@splitbox@two\relax>\dimen@ 
-          \advance\dimen@i by -\p@\relax     
-          \advance\@tempcnta by \@ne\relax
+          \advance\dimen@i by -\p@\relax%
+          \advance\@tempcnta by \@ne\relax%
 %%          \wlog{***mdframed \string\@tempcnta=\the\@tempcnta***}
 %%          \wlog{***mdframed \string\dimen@i=\the\dimen@i***}
           \mdf@ignorevbadness%          
@@ -3643,10 +3639,10 @@ Have fun!
           \setbox\mdf@splitbox@two\vbox{\unvbox\mdf@splitbox@two}%
           \setbox\mdf@splitbox@one\vbox{\unvbox\mdf@splitbox@one}%
           \ifnum\@tempcnta>100
-            \let\iterate\relax
+            \let\iterate\relax%
             \mdf@PackageWarning{correct box splittet fails^^J
                                 It seems you are using a non splittable
-                                contents\MessageBreak}
+                                contents\MessageBreak}%
             \setbox\mdf@splitbox@one=\vbox{\unvcopy\mdf@splitbox@save}%
             \setbox\mdf@splitbox@two=\vbox{}%
             \def\mdf@reserved@a{\mdf@put@frame}%
@@ -3672,7 +3668,7 @@ Have fun!
                        mdframed fixed it\MessageBreak}%
       \setbox\mdf@splitbox@two=\vbox%
                    {%
-                    \hrule \@height\z@ \@width\mdfboundingboxwidth\relax
+                    \hrule \@height\z@ \@width\mdfboundingboxwidth\relax%
                     \unvcopy\mdf@splitbox@two%
                    }%
     \fi%
@@ -3692,7 +3688,7 @@ Have fun!
            \def\mdf@reserved@a{\mdf@put@frame}%
           }%
           {%
-           \begingroup
+           \begingroup%
              \mdf@@setzref%
              \mdf@beforebreak%
              \booltrue{mdffirstframe}%
@@ -3723,7 +3719,7 @@ Have fun!
        \setbox\mdf@splitbox@one=\vbox{\break\unvbox\mdf@splitbox@one}%
        \mdf@ignorevbadness%
        \setbox0=\vsplit\mdf@splitbox@one to \z@\relax%
-       \setbox\mdf@splitbox@one=\vbox{\unvbox\mdf@splitbox@one}
+       \setbox\mdf@splitbox@one=\vbox{\unvbox\mdf@splitbox@one}%
        \setbox\mdf@splitbox@one\vbox%
           {%
            \parskip\z@\relax%
@@ -3739,7 +3735,7 @@ Have fun!
   \setlength{\dimen@}{\dimexpr\ht\mdf@splitbox@one+\dp\mdf@splitbox@one\relax}%
   \mdf@dolist{\mdf@advancelength@add{\dimen@}}%
         {innerbottommargin,innerlinewidth,middlelinewidth,outerlinewidth}%
-  \ifboolexpr { bool {mdf@everyline} and bool {mdf@topline} }
+  \ifboolexpr { bool {mdf@everyline} and bool {mdf@topline} }%
     {%
      \mdf@dolist{\mdf@advancelength@add{\dimen@}}%
         {innerlinewidth,middlelinewidth,outerlinewidth}%
@@ -3769,9 +3765,9 @@ Have fun!
      \setbox\mdf@splitbox@save=\vbox{\unvcopy\mdf@splitbox@one}%
      \splitmaxdepth\z@ \splittopskip\mdf@splittopskip@length%
      \mdf@ignorevbadness%
-     \setbox\mdf@splitbox@two\vsplit\mdf@splitbox@one to \mdf@freevspace@length
-     \setbox\mdf@splitbox@two\vbox{\unvbox\mdf@splitbox@two}
-     \setbox\mdf@splitbox@one\vbox{\unvbox\mdf@splitbox@one}
+     \setbox\mdf@splitbox@two\vsplit\mdf@splitbox@one to \mdf@freevspace@length%
+     \setbox\mdf@splitbox@two\vbox{\unvbox\mdf@splitbox@two}%
+     \setbox\mdf@splitbox@one\vbox{\unvbox\mdf@splitbox@one}%
      \ifdimgreater{\ht\mdf@splitbox@two+\dp\mdf@splitbox@two}%
                   {\mdf@freevspace@length}%
        {%splitted wrong
@@ -3813,14 +3809,14 @@ Have fun!
      \else
       \setbox\mdf@splitbox@two=\vbox%
                    {%
-                    \hrule \@height\z@ \@width\mdfboundingboxwidth\relax
+                    \hrule \@height\z@ \@width\mdfboundingboxwidth\relax%
                     \unvcopy\mdf@splitbox@two%
                    }%
-        \begingroup
-          \mdf@@setzref
+        \begingroup%
+          \mdf@@setzref%
           \booltrue{mdfmiddleframe}%
           \mdf@beforebreak%
-          \mdf@putbox@middle
+          \mdf@putbox@middle%
           \mdf@afterbreak%
         \endgroup%
           \hrule \@height\z@ \@width\hsize%  
@@ -3852,19 +3848,19 @@ Have fun!
                   \hrule \@height\z@ \@width\mdfboundingboxwidth
                  }%
          }{}%
-      \begingroup
-      \toggletrue{mdflastframe}
+      \begingroup%
+      \toggletrue{mdflastframe}%
       \mdf@beforebreak%
       \begingroup%
         \mdf@@setzref%
         \booltrue{mdflastframe}%
         \mdf@beforelastframe%
-        \mdf@putbox@second
+        \mdf@putbox@second%
         \mdf@afterlastframe%
       \endgroup%
       \hrule \@height\z@ \@width\hsize%
       \mdf@afterbreak%
-      \endgroup
+      \endgroup%
       \let\mdf@reserved@a\relax%
      }%
   \mdf@reserved@a%
@@ -5152,7 +5148,7 @@ Have fun!
                                fill=\mdf@shadowcolor,
                                every shadow }}}% 
 %
-  \mdf@tikzset@local
+  \mdf@tikzset@local%
   \tikzset{mdfmiddleline/.style={}}%
 % nur wenn middlelinewidth>0 wird mittlere Linie gezeichnet
   \ifdimgreater{\mdf@middlelinewidth@length}{\z@}
@@ -5247,7 +5243,7 @@ Have fun!
  %%width
  \setlength\mdfboundingboxwidth{\wd\mdf@splitbox@one}%
  \mdf@dolist{\mdf@advancelength@add{\mdfboundingboxwidth}}%
-   {innerleftmargin,innerrightmargin}
+   {innerleftmargin,innerrightmargin}%
  \ifbool{mdf@leftline}{%
    \mdf@dolist{\mdf@advancelength@add{\mdfboundingboxwidth}}%
       {innerlinewidth,middlelinewidth,outerlinewidth}}{}%

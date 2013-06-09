@@ -47,7 +47,7 @@
                                shadow yshift=-\mdf@shadowsize@length+2pt,
                                fill=\mdf@shadowcolor,
                                every shadow }}}%
-  \mdf@tikzset@local
+  \mdf@tikzset@local%
   \tikzset{mdfmiddleline/.style={}}%
   \ifdimgreater{\mdf@middlelinewidth@length}{\z@}
     {\tikzset{mdfmiddleline/.append style={%
@@ -117,7 +117,7 @@
  %%width
  \setlength\mdfboundingboxwidth{\wd\mdf@splitbox@one}%
  \mdf@dolist{\mdf@advancelength@add{\mdfboundingboxwidth}}%
-   {innerleftmargin,innerrightmargin}
+   {innerleftmargin,innerrightmargin}%
  \ifbool{mdf@leftline}{%
    \mdf@dolist{\mdf@advancelength@add{\mdfboundingboxwidth}}%
       {innerlinewidth,middlelinewidth,outerlinewidth}}{}%
