@@ -159,85 +159,50 @@
       \par\unskip\vskip\mdf@innertopmargin@length%
     }%
 }%
+\def\mdf@drawsubtitleaboveline{%
+ \rlap{%
+  \hspace*{-\mdf@innerleftmargin@length}%
+  \begin{pspicture}(0,0)(\mdf@templength,\mdf@subtitleabovelinewidth@length)
+     \psframe[style=mdfsubtitleaboverule]%
+              (0,0)(\mdf@templength,\mdf@subtitleabovelinewidth@length)%
+  \end{psicture}%
+ }%
+}
+\def\mdf@drawsubtitlebelowline{%
+ \rlap{%
+  \hspace*{-\mdf@innerleftmargin@length}%
+  \begin{pspicture}(0,0)(\mdf@templength,\mdf@subtitlebelowlinewidth@length)
+     \psframe[style=mdfsubtitlebelowrule]%
+              (0,0)(\mdf@templength,\mdf@subtitleabovelinewidth@length)%
+  \end{psicture}%
+ }%
+}
+\def\mdf@drawsubtitlebackground{%
+ \rlap{%
+  \hspace*{-\mdf@innerleftmargin@length}%
+  \begin{pspicture}(0,0)(0,0)
+     \psframe[style=mdfsubtitlebackground]%
+              (0,0)(\mdf@templength,-\mdfsubtitleheight)%
+  \end{psicture}%
+ }%
+}
+
 \newpsstyle{mdfsubtitleaboverule}{%
    linecolor=\mdf@subtitleabovelinecolor,
    fillcolor=\mdf@subtitleabovelinecolor,
    fillstyle=solid,dimen=outer,%
 }
+
 \newpsstyle{mdfsubtitlebelowrule}{%
    linecolor=\mdf@subtitlebelowlinecolor,
    fillcolor=\mdf@subtitlebelowlinecolor,
    fillstyle=solid,dimen=outer,%
 }
+
 \newpsstyle{mdfsubtitlebackground}{%
    linecolor=\mdf@subtitlebackgroundcolor,
    fillcolor=\mdf@subtitlebackgroundcolor,
    fillstyle=solid,linestyle=none,
-}
-\newrobustcmd\mdfsubtitle[2][]%
-{%
- \begingroup
-  \penalty-9995%set a breakpoint before the subtitle
-  \parindent\z@\relax%
-  \mdfsetup{#1}%only for subtitle options
-  \setbox\z@=\vbox{\mdf@frametitlealignment\mdf@subtitlefont{#2}\relax}%
-  \dimen@=\linewidth\relax%
-   \advance\dimen@ by \mdf@innerleftmargin@length\relax%
-   \advance\dimen@ by \mdf@innerrightmargin@length\relax%
-  \dimen@i=\mdf@subtitleinneraboveskip@length\relax%
-   \advance\dimen@i by \mdf@subtitleinnerbelowskip@length\relax%
-   \advance\dimen@i by \ht\z@\relax%
-   \advance\dimen@i by \dp\z@\relax%
-  \ifbool{mdf@subtitleaboveline}{}%
-         {\mdfsetup{subtitleabovelinewidth=\z@}}%
-  \ifbool{mdf@subtitlebelowline}{}%
-         {\mdfsetup{subtitlebelowlinewidth=\z@}}%
-  \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%
-  \vskip\mdf@subtitleaboveskip@length
-  \rlap%
-  {%
-   \hspace*{-\mdf@innerleftmargin@length}%
-   \begingroup%
-     \begin{pspicture}(0,0)(\dimen@,\mdf@subtitleabovelinewidth@length)
-      \ifbool{mdf@subtitleaboveline}%
-       {%
-       \psframe[style=mdfsubtitleaboverule]%
-              (0,0)(\dimen@,\mdf@subtitleabovelinewidth@length)%
-       }{}
-     \end{pspicture}
-   \endgroup%
-  }%
-  \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%
-  \vskip\mdf@subtitleinneraboveskip@length
-  \hspace*{-\mdf@innerleftmargin@length}%
-     \begin{pspicture}%
-        (0,0)%
-        (0,\ht\z@)
-       \psframe[style=mdfsubtitlebackground]%
-              (0,\dimexpr-\dp\z@-\mdf@subtitleinnerbelowskip@length\relax)%
-              (\dimen@,\dimen@i)
-     \end{pspicture}
-  \hspace*{+\mdf@innerleftmargin@length}%
-  \box\z@\relax%
-  \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%
-  \vskip\mdf@subtitleinnerbelowskip@length
-  \rlap%
-  {%
-   \hspace*{-\mdf@innerleftmargin@length}%
-   \begingroup%
-     \begin{pspicture}(0,0)(\dimen@,\mdf@subtitlebelowlinewidth@length)
-      \ifbool{mdf@subtitlebelowline}%
-       {%
-       \psframe[style=mdfsubtitlebelowrule]%
-              (0,0)(\dimen@,\mdf@subtitlebelowlinewidth@length)%
-       }{}%
-     \end{pspicture}
-   \endgroup%
-  }%
-  \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%
-  \vskip\mdf@subtitlebelowskip@length
-  \penalty 9995
- \endgroup
 }
 
 \newpsstyle{mdfsubsubtitleaboverule}{%
@@ -245,81 +210,17 @@
    fillcolor=\mdf@subtitleabovelinecolor,
    fillstyle=solid,dimen=outer,%
 }
+
 \newpsstyle{mdfsubsubtitlebelowrule}{%
    linecolor=\mdf@subtitlebelowlinecolor,
    fillcolor=\mdf@subtitlebelowlinecolor,
    fillstyle=solid,dimen=outer,%
 }
+
 \newpsstyle{mdfsubsubtitlebackground}{%
    linecolor=\mdf@subtitlebackgroundcolor,
    fillcolor=\mdf@subtitlebackgroundcolor,
    fillstyle=solid,linestyle=none,
-}
-\newrobustcmd\mdfsubsubtitle[2][]%
-{%
- \begingroup
-  \penalty-9995%set a breakpoint before the subsubtitle
-  \parindent\z@\relax%
-  \mdfsetup{#1}%only for subsubtitle options
-  \setbox\z@=\vbox{\mdf@frametitlealignment\mdf@subsubtitlefont{#2}\relax}%
-  \dimen@=\linewidth\relax%
-   \advance\dimen@ by \mdf@innerleftmargin@length\relax%
-   \advance\dimen@ by \mdf@innerrightmargin@length\relax%
-  \dimen@i=\mdf@subsubtitleinneraboveskip@length\relax%
-   \advance\dimen@i by \mdf@subsubtitleinnerbelowskip@length\relax%
-   \advance\dimen@i by \ht\z@\relax%
-   \advance\dimen@i by \dp\z@\relax%
-  \ifbool{mdf@subsubtitleaboveline}{}%
-         {\mdfsetup{subsubtitleabovelinewidth=\z@}}%
-  \ifbool{mdf@subsubtitlebelowline}{}%
-         {\mdfsetup{subsubtitlebelowlinewidth=\z@}}%
-  \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%
-  \vskip\mdf@subsubtitleaboveskip@length
-  \rlap%
-  {%
-   \hspace*{-\mdf@innerleftmargin@length}%
-   \begingroup%
-     \begin{pspicture}(0,0)(\dimen@,\mdf@subsubtitleabovelinewidth@length)
-      \ifbool{mdf@subsubtitleaboveline}%
-       {%
-       \psframe[style=mdfsubsubtitleaboverule]%
-              (0,0)(\dimen@,\mdf@subsubtitleabovelinewidth@length)%
-       }{}
-     \end{pspicture}
-   \endgroup%
-  }%
-  \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%
-  \vskip\mdf@subsubtitleinneraboveskip@length
-  \hspace*{-\mdf@innerleftmargin@length}%
-   \begin{pspicture}(0,-\dp\z@)(0,\dimen@i
-     \begin{pspicture}%
-        (0,0)%
-        (0,\ht\z@)
-       \psframe[style=mdfsubsubtitlebackground]%
-              (0,\dimexpr-\dp\z@-\mdf@subsubtitleinnerbelowskip@length\relax)%
-              (\dimen@,\dimen@i)
-     \end{pspicture}
-  \hspace*{+\mdf@innerleftmargin@length}%
-  \box\z@\relax%
-  \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%
-  \vskip\mdf@subsubtitleinnerbelowskip@length
-  \rlap%
-  {%
-   \hspace*{-\mdf@innerleftmargin@length}%
-   \begingroup%
-     \begin{pspicture}(0,0)(\dimen@,\mdf@subsubtitlebelowlinewidth@length)
-      \ifbool{mdf@subsubtitlebelowline}%
-       {%
-       \psframe[style=mdfsubsubtitlebelowrule]%
-              (0,0)(\dimen@,\mdf@subsubtitlebelowlinewidth@length)%
-       }{}%
-     \end{pspicture}
-   \endgroup%
-  }%
-  \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%
-  \vskip\mdf@subsubtitlebelowskip@length
-  \penalty 9995
- \endgroup
 }
 
 \def\mdf@putbox@single{%

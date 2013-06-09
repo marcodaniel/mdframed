@@ -48,122 +48,27 @@
     }%
 }%
 
-\newrobustcmd\mdfsubtitle[2][]%
-{%
- \begingroup
-  \penalty-9995%set a breakpoint before the subtitle
-  \parindent\z@\relax%
-  \mdfsetup{#1}%only for subtitle options
-  \setbox\z@=\vbox{\mdf@frametitlealignment\mdf@subtitlefont{#2}\relax}%
-  \dimen@=\linewidth\relax%
-   \advance\dimen@ by \mdf@innerleftmargin@length\relax%
-   \advance\dimen@ by \mdf@innerrightmargin@length\relax%
-  \dimen@i=\mdf@subtitleinneraboveskip@length\relax%
-   \advance\dimen@i by \mdf@subtitleinnerbelowskip@length\relax
-   \advance\dimen@i by \ht\z@\relax%
-   \advance\dimen@i by \dp\z@\relax%
-  \ifbool{mdf@subtitleaboveline}{}%
-         {\mdfsetup{subtitleabovelinewidth=\z@}}%
-  \ifbool{mdf@subtitlebelowline}{}%
-         {\mdfsetup{subtitlebelowlinewidth=\z@}}%
-  \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%
-  \vskip\mdf@subtitleaboveskip@length
-  \rlap%
-  {%
-    \hspace*{-\mdf@innerleftmargin@length}%
-    \begingroup%
-      \color{\mdf@subtitleabovelinecolor}%
-      \rule{\dimen@}{\mdf@subtitleabovelinewidth@length}%
-    \endgroup%
-  }%
-  \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%
-  \vskip\mdf@subtitleinneraboveskip@length
-  \leavevmode\rlap%
-  {%
-   \smash{%
-     \hspace*{-\mdf@innerleftmargin@length}%
-     \begingroup%
-       \color{\mdf@subtitlebackgroundcolor}%
-       \rule[\dimexpr-\dp\z@-\mdf@subtitleinnerbelowskip@length\relax]
-            {\dimen@}{\dimen@i}%
-     \endgroup%
-    }%
-  }%
-  \box\z@\relax%
-  \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%
-  \vskip\mdf@subtitleinnerbelowskip@length
-  \rlap%
-  {%
-   \hspace*{-\mdf@innerleftmargin@length}%
-   \begingroup%
-     \color{\mdf@subtitlebelowlinecolor}%
-     \rule{\dimen@}{\mdf@subtitlebelowlinewidth@length}%
-   \color@endgroup
-  }%
-  \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%
-  \vskip\mdf@subtitlebelowskip@length
-  \penalty 9995
- \endgroup
+\def\mdf@drawsubtitleaboveline{%
+ \rlap{%
+  \hspace*{-\mdf@innerleftmargin@length}%
+  \color{\mdf@subtitleabovelinecolor}%
+  \rule{\mdf@templength}{\mdf@subtitleabovelinewidth@length}%
+ }%
 }
-
-\newrobustcmd\mdfsubsubtitle[2][]%
-{%
- \begingroup
-  \penalty-9995%set a breakpoint before the subsubtitle
-  \parindent\z@\relax%
-  \mdfsetup{#1}%only for subsubtitle options
-  \setbox\z@=\vbox{\mdf@frametitlealignment\mdf@subsubtitlefont{#2}\relax}%
-  \dimen@=\linewidth\relax%
-   \advance\dimen@ by \mdf@innerleftmargin@length\relax%
-   \advance\dimen@ by \mdf@innerrightmargin@length\relax%
-  \dimen@i=\mdf@subsubtitleinneraboveskip@length\relax%
-   \advance\dimen@i by \mdf@subsubtitleinnerbelowskip@length\relax
-   \advance\dimen@i by \ht\z@\relax%
-   \advance\dimen@i by \dp\z@\relax%
-  \ifbool{mdf@subsubtitleaboveline}{}%
-         {\mdfsetup{subsubtitleabovelinewidth=\z@}}%
-  \ifbool{mdf@subsubtitlebelowline}{}%
-         {\mdfsetup{subsubtitlebelowlinewidth=\z@}}%
-  \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%
-  \vskip\mdf@subsubtitleaboveskip@length
-  \rlap%
-  {%
-   \hspace*{-\mdf@innerleftmargin@length}%
-   \begingroup%
-     \color{\mdf@subsubtitleabovelinecolor}%
-     \rule{\dimen@}{\mdf@subsubtitleabovelinewidth@length}%
-   \endgroup%
-  }%
-  \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%
-  \vskip\mdf@subsubtitleinneraboveskip@length
-  \leavevmode\rlap%
-  {%
-   \hspace*{-\mdf@innerleftmargin@length}%
-   \smash{%
-    \begingroup%
-      \color{\mdf@subsubtitlebackgroundcolor}%
-       \rule[\dimexpr-\dp\z@-\mdf@subtitleinnerbelowskip@length\relax]
-            {\dimen@}{\dimen@i}%
-    \endgroup%
-   }%
-  }%
-  \box\z@\relax%
-  \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%
-  \vskip\mdf@subsubtitleinnerbelowskip@length
-  \rlap%
-  {%
-   \hspace*{-\mdf@innerleftmargin@length}%
-   \begingroup%
-     \color{\mdf@subsubtitlebelowlinecolor}%
-     \rule{\dimen@}{\mdf@subsubtitlebelowlinewidth@length}%
-   \endgroup%
-  }%
-  \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%
-  \vskip\mdf@subsubtitlebelowskip@length
-  \penalty 9995
- \endgroup
+\def\mdf@drawsubtitlebelowline{%
+ \rlap{%
+  \hspace*{-\mdf@innerleftmargin@length}%
+  \color{\mdf@subtitlebelowlinecolor}%
+  \rule{\mdf@templength}{\mdf@subtitlebelowlinewidth@length}%
+ }%
 }
-
+\def\mdf@drawsubtitlebackground{%
+ \rlap{\smash{%
+  \hspace*{-\mdf@innerleftmargin@length}%
+  \color{\mdf@subtitlebackgroundcolor}%
+  \rule[-\mdfsubtitleheight]{\mdf@templength}{\mdfsubtitleheight}%
+ }}%
+}
 \def\mdf@frame@background@single{%
   \ifbool{mdf@shadow}%
    {%

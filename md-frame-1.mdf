@@ -643,66 +643,17 @@
    fill=\mdf@subtitleabovelinecolor,
   }%
 }
+
 \tikzset{mdfsubtitlebelowrule/.style={%
    draw=none,
    fill=\mdf@subtitlebelowlinecolor,
   }%
 }
+
 \tikzset{mdfsubtitlebackground/.style={%
    draw=\mdf@subtitlebackgroundcolor,
    fill=\mdf@subtitlebackgroundcolor,
   }%
-}
-\newrobustcmd\mdfsubtitle[2][]%
-{%
- \begingroup
-  \penalty-9995%set a breakpoint before the subtitle
-  \parindent\z@\relax%
-  \mdfsetup{#1}%only for subtitle options
-  \setbox\z@=\vbox{\mdf@frametitlealignment\mdf@subtitlefont{#2}\relax}%
-  \pgfmathsetlength{\dimen@}%
-                   {%
-                    \linewidth%
-                    +\mdf@innerleftmargin@length%
-                    +\mdf@innerrightmargin@length%
-                   }%
-  \ifbool{mdf@subtitleaboveline}{}%
-         {\mdfsetup{subtitleabovelinewidth=\z@}}%
-  \ifbool{mdf@subtitlebelowline}{}%
-         {\mdfsetup{subtitlebelowlinewidth=\z@}}%
-  \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%
-  \vskip\mdf@subtitleaboveskip@length
-  \rlap%
-  {%
-   \hspace*{-\mdf@innerleftmargin@length}%
-   \begingroup%
-     \tikz\draw[mdfsubtitleaboverule] (0,0)%
-                rectangle (\dimen@,\mdf@subtitleabovelinewidth@length);
-   \endgroup%
-  }%
-  \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%
-  \vskip\mdf@subtitleinneraboveskip@length
-  \leavevmode\hspace*{-\mdf@innerleftmargin@length}%
-  \tikz[overlay]%
-       \draw[mdfsubtitlebackground]
-            (0,-\mdf@subtitleinnerbelowskip@length-\dp\z@)
-            rectangle(\dimen@,\ht\z@+\mdf@subtitleinneraboveskip@length);%
-  \hspace*{+\mdf@innerleftmargin@length}%
-  \box\z@\relax%
-  \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%
-  \vskip\mdf@subtitleinnerbelowskip@length
-  \rlap%
-  {%
-   \hspace*{-\mdf@innerleftmargin@length}%
-   \begingroup%
-     \tikz\draw[mdfsubtitlebelowrule] (0,0)%
-                rectangle (\dimen@,\mdf@subtitlebelowlinewidth@length);
-   \endgroup%
-  }%
-  \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%
-  \vskip\mdf@subtitlebelowskip@length
-  \endgroup
- \@afterheading
 }
 
 \tikzset{mdfsubsubtitleaboverule/.style={%
@@ -710,67 +661,39 @@
    fill=\mdf@subsubtitleabovelinecolor,
   }%
 }
+
 \tikzset{mdfsubsubtitlebelowrule/.style={%
    draw=none,
    fill=\mdf@subsubtitlebelowlinecolor,
   }%
 }
+
 \tikzset{mdfsubsubtitlebackground/.style={%
-   draw=\mdf@subsubtitlebackgroundcolor,
+   draw=none,
    fill=\mdf@subsubtitlebackgroundcolor,
   }%
 }
-\newrobustcmd\mdfsubsubtitle[2][]%
-{%
- \begingroup
-  \penalty-9995%set a breakpoint before the subsubtitle
-  \parindent\z@\relax%
-  \mdfsetup{#1}%only for subsubtitle options
-  \setbox\z@=\vbox{\mdf@frametitlealignment\mdf@subsubtitlefont{#2}\relax}%
-  \pgfmathsetlength{\dimen@}%
-                   {%
-                    \linewidth%
-                    +\mdf@innerleftmargin@length%
-                    +\mdf@innerrightmargin@length%
-                   }%
-  \ifbool{mdf@subsubtitleaboveline}{}%
-         {\mdfsetup{subsubtitleabovelinewidth=\z@}}%
-  \ifbool{mdf@subsubtitlebelowline}{}%
-         {\mdfsetup{subsubtitlebelowlinewidth=\z@}}%
-  \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%
-  \vskip\mdf@subsubtitleaboveskip@length
-  \rlap%
-  {%
-   \hspace*{-\mdf@innerleftmargin@length}%
-   \begingroup%
-     \tikz\draw[mdfsubsubtitleaboverule] (0,0)%
-                rectangle (\dimen@,\mdf@subsubtitleabovelinewidth@length);
-   \endgroup%
-  }%
-  \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%
-  \vskip\mdf@subsubtitleinneraboveskip@length
-  \hspace*{-\mdf@innerleftmargin@length}%
-  \tikz[overlay]%
-       \draw[mdfsubtitlebackground]
-            (0,-\mdf@subsubtitleinnerbelowskip@length-\dp\z@)
-            rectangle(\dimen@,\ht\z@+\mdf@subsubtitleinneraboveskip@length);%
-  \hspace*{+\mdf@innerleftmargin@length}%
-  \box\z@\relax%
-  \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%
-  \vskip\mdf@subsubtitleinnerbelowskip@length
-  \rlap%
-  {%
-   \hspace*{-\mdf@innerleftmargin@length}%
-   \begingroup%
-     \tikz\draw[mdfsubsubtitlebelowrule] (0,0)%
-                rectangle (\dimen@,\mdf@subsubtitlebelowlinewidth@length);
-   \endgroup%
-  }%
-  \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%
-  \vskip\mdf@subsubtitlebelowskip@length
- \endgroup
-  \@afterheading
-}
 
+\def\mdf@drawsubtitleaboveline{%
+ \rlap{%
+  \hspace*{-\mdf@innerleftmargin@length}%
+  \tikz\draw[mdfsubsubtitleaboverule](0,0) rectangle
+     (\mdf@templength,\mdf@subtitleabovelinewidth@length);%
+ }%
+}
+\def\mdf@drawsubtitlebelowline{%
+ \rlap{%
+  \hspace*{-\mdf@innerleftmargin@length}%
+  \tikz\draw[mdfsubsubtitleaboverule](0,0) rectangle
+     (\mdf@templength,\mdf@subtitlebelowlinewidth@length);%
+ }%
+}
+\def\mdf@drawsubtitlebackground{%
+ \rlap{%
+ \hspace*{-\mdf@innerleftmargin@length}%
+ \tikz\draw[overlay,mdfsubtitlebackground](0,0) rectangle
+    (\mdf@templength,-\mdfsubtitleheight);%
+ }%
+}
 
  \endinput

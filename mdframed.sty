@@ -462,6 +462,8 @@
 \newlength\mdf@horizontalwidthofbox@length
 \newlength\mdf@verticalmarginwhole@length
 \newlength\mdf@horizontalspaceofbox
+\newlength\mdfsubtitleheight
+\newlength\mdfsubsubtitleheight
 
 \newbool{mdfsingleframe}\boolfalse{mdfsingleframe}
 \newbool{mdffirstframe}\boolfalse{mdffirstframe}
@@ -1299,6 +1301,85 @@
   \mdf@reserved@a%
 }
 
+\newrobustcmd\mdfsubtitle[2][]%
+{%
+ \begingroup
+  \penalty-9995%set a breakpoint before the subtitle
+  \parindent\z@\relax%
+  \parskip\z@\relax%
+  \mdfsetup{#1}%only for subtitle options
+  \par\addvspace{\mdf@subtitleaboveskip@length}%
+  \setbox\z@=\vbox{%
+      \mdf@frametitlealignment%
+      \mdf@subtitlefont{#2}%
+      \mdf@@ignorelastdescenders%
+      \relax}%
+  \setbox\z@=\vbox{\unvbox\z@}%
+  \setbox\z@=\vbox{%
+       \parskip\z@\relax%
+       \parindent\z@\relax%
+       \offinterlineskip\relax%
+       \vbox to \mdf@subtitleinneraboveskip@length{}%
+       \unvbox\z@\relax%
+       \vbox to \mdf@subtitleinnerbelowskip@length{}%
+    }%\z@ contains the subtitle+required length
+  \setlength{\mdfsubtitleheight}{\dimexpr\ht\z@+\dp\z@\relax}
+  \setbox\z@=\vbox to \mdfsubtitleheight {\unvbox\z@}%
+  % \dimen@ is now the complete width
+  \mdf@templength=\linewidth\relax%
+  \mdf@dolist{\mdf@advancelength@add{\mdf@templength}}%
+    {innerleftmargin,innerrightmargin}%
+  \offinterlineskip\relax%
+  \ifbool{mdf@subtitleaboveline}{\mdf@drawsubtitleaboveline\par}{}%
+  \mdf@drawsubtitlebackground%
+  \box\z@%
+  \ifbool{mdf@subtitlebelowline}{\mdf@drawsubtitlebelowline}{}%
+  \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%
+  \penalty 9995%
+  \addvspace{\mdf@subtitlebelowskip@length}%
+ \endgroup%
+ \@afterheading%
+}
+
+\newrobustcmd\mdfsubsubtitle[2][]%
+{%
+ \begingroup
+  \penalty-9995%set a breakpoint before the subtitle
+  \parindent\z@\relax%
+  \parskip\z@\relax%
+  \mdfsetup{#1}%only for subtitle options
+  \par\addvspace{\mdf@subsubtitleaboveskip@length}%
+  \setbox\z@=\vbox{%
+      \mdf@frametitlealignment%
+      \mdf@subsubtitlefont{#2}%
+      \mdf@@ignorelastdescenders%
+      \relax}%
+  \setbox\z@=\vbox{\unvbox\z@}%
+  \setbox\z@=\vbox{%
+       \parskip\z@\relax%
+       \parindent\z@\relax%
+       \offinterlineskip\relax%
+       \vbox to \mdf@subsubtitleinneraboveskip@length{}%
+       \unvbox\z@\relax%
+       \vbox to \mdf@subsubtitleinnerbelowskip@length{}%
+    }%\z@ contains the subtitle+required length
+  \setlength{\mdfsubsubtitleheight}{\dimexpr\ht\z@+\dp\z@\relax}
+  \setbox\z@=\vbox to \mdfsubsubtitleheight {\unvbox\z@}%
+  % \dimen@ is now the complete width
+  \mdf@templength=\linewidth\relax%
+  \mdf@dolist{\mdf@advancelength@add{\mdf@templength}}%
+    {innerleftmargin,innerrightmargin}%
+  \offinterlineskip\relax%
+  \ifbool{mdf@subsubtitleaboveline}{\mdf@drawsubtitleaboveline\par}{}%
+  \mdf@drawsubtitlebackground%
+  \box\z@%
+  \ifbool{mdf@subsubtitlebelowline}{\mdf@drawsubtitlebelowline}{}%
+  \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%
+  \penalty 9995%
+  \addvspace{\mdf@subsubtitlebelowskip@length}%
+ \endgroup%
+ \@afterheading%
+}
 %%%%    _____t_____
 %%%%   |           |
 %%%%   |           |
