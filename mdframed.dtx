@@ -1389,7 +1389,15 @@ Have fun!
 % \ExplOpt[\{\}]{afterlastframe} 
 % The option is executed only for the last frame of a splitted frame. 
 %
-%
+% \ExplOpt[\{\}]{startcode}
+% Every code given to this option is executed at the beginning of the 
+% environment.
+% \ExplOpt[\{\}]{startinnercode}
+% This option is executed at the beginning of the save box.
+% \ExplOpt[\{\}]{endinnercode}
+% This option is executed at the end of the save box.
+% \ExplOpt[\{\}]{endcode}
+% The code is executed at the end of the environment. 
 %
 % \section{Theorems}
 % In this section is described which commands can help you to define 
@@ -2560,7 +2568,11 @@ Have fun!
     {beforebreak=={}},
     {afterbreak=={}},
     {beforelastframe=={}},
-    {afterlastframe=={}},    
+    {afterlastframe=={}},  
+    {startcode=={}},
+    {startinnercode=={}},
+    {endinnercode=={}},
+    {endcode=={}},  
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% %
 % %%subtitle / subsubtitle added 29.05.12%% %
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% %
@@ -3334,6 +3346,7 @@ Have fun!
 \newenvironment{mdframed}[1][]{%
  \color@begingroup%
    \mdfsetup{userdefinedwidth=\linewidth,#1}%
+   \mdf@startcode%
    \mdf@preenvsetting%
    \ifdefempty{\mdf@firstframetitle}{}%
            {\let\mdf@frametitlesave\mdf@frametitle%
@@ -3343,6 +3356,7 @@ Have fun!
    \mdf@trivlist{\mdf@skipabove@length}%%
    \mdf@settings%
    \mdf@lrbox{\mdf@splitbox@one}%
+   \mdf@startinnercode%
   }%
   {%
    \mdf@@ignorelastdescenders%
@@ -3350,12 +3364,14 @@ Have fun!
    \ifmdf@footnoteinside%
       \def\mdf@reserveda{%
         \mdf@footnoteoutput%
+        \mdf@endinnercode%
         \endmdf@lrbox%
         \ifdefempty{\mdf@frametitle}{}%
             {\mdfframedtitleenv{\mdf@frametitle}\mdf@@frametitle@use}%
         \detected@mdf@put@frame}%
    \else%
       \def\mdf@reserveda{%
+        \mdf@endinnercode%
         \endmdf@lrbox%
         \ifdefempty{\mdf@frametitle}{}%
             {\mdfframedtitleenv{\mdf@frametitle}\mdf@@frametitle@use}%
@@ -3366,6 +3382,7 @@ Have fun!
    \mdf@reserveda%
   \aftergroup\endmdf@trivlist%
  \color@endgroup%
+ \mdf@endcode%
 }
 
 %    \end{macrocode}

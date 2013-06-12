@@ -266,6 +266,10 @@
     {afterbreak=={}},
     {beforelastframe=={}},
     {afterlastframe=={}},
+    {startcode=={}},
+    {startinnercode=={}},
+    {endinnercode=={}},
+    {endcode=={}},
     {subtitlefont==\normalfont\bfseries},%
     {subsubtitlefont==\normalfont},%
     {subtitlebackgroundcolor==white},%
@@ -832,6 +836,7 @@
 \newenvironment{mdframed}[1][]{%
  \color@begingroup%
    \mdfsetup{userdefinedwidth=\linewidth,#1}%
+   \mdf@startcode%
    \mdf@preenvsetting%
    \ifdefempty{\mdf@firstframetitle}{}%
            {\let\mdf@frametitlesave\mdf@frametitle%
@@ -841,6 +846,7 @@
    \mdf@trivlist{\mdf@skipabove@length}%%
    \mdf@settings%
    \mdf@lrbox{\mdf@splitbox@one}%
+   \mdf@startinnercode%
   }%
   {%
    \mdf@@ignorelastdescenders%
@@ -848,12 +854,14 @@
    \ifmdf@footnoteinside%
       \def\mdf@reserveda{%
         \mdf@footnoteoutput%
+        \mdf@endinnercode%
         \endmdf@lrbox%
         \ifdefempty{\mdf@frametitle}{}%
             {\mdfframedtitleenv{\mdf@frametitle}\mdf@@frametitle@use}%
         \detected@mdf@put@frame}%
    \else%
       \def\mdf@reserveda{%
+        \mdf@endinnercode%
         \endmdf@lrbox%
         \ifdefempty{\mdf@frametitle}{}%
             {\mdfframedtitleenv{\mdf@frametitle}\mdf@@frametitle@use}%
@@ -862,6 +870,7 @@
         }%
    \fi%
    \mdf@reserveda%
+   \mdf@endcode%
   \aftergroup\endmdf@trivlist%
  \color@endgroup%
 }
