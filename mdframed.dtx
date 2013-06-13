@@ -59,7 +59,7 @@ I recommend the following installation in your texmf-tree:
 - mdframed-example-pstricks.pdf
 - mdframed-example-texsx.tex  
 - mdframed-example-texsx.pdf
-- donald-duck.jpg
+- ctan-lion.png "CTAN lion drawing by Duane Bibby; thanks to www.ctan.org".
 
 
 /source/latex/mdframed/
@@ -2260,7 +2260,7 @@ Have fun!
 %    \begin{macrocode}
 \def\mdversion{1.9}
 \def\mdframedpackagename{mdframed}
-\def\mdfmaindate{2013/04/27}
+\def\mdfmaindate{2013/06/13}
 \def\mdfrevision{     189}% Done by github: git rev-list HEAD | wc -l
 %    \end{macrocode}
 % \end{macro}
@@ -7076,8 +7076,9 @@ All examples have the following settings:
 \begin{tltxmdfexample*}[morekeywords=width]
 \begin{mdframed}[userdefinedwidth=6cm,align=center,
                  linecolor=blue,linewidth=4pt]
-\IfFileExists{donald-duck.jpg}%
- {\includegraphics[width=\linewidth]{donald-duck}}%
+\textit{CTAN lion drawing by Duane Bibby; thanks to \url{www.ctan.org}}
+\IfFileExists{ctan-lion.png}%
+ {\includegraphics[width=\linewidth]{ctan-lion.png}}%
  {\rule{\linewidth}{4cm}}%
 \end{mdframed}
 \end{tltxmdfexample*}
@@ -7312,8 +7313,9 @@ All examples have the following settings:
 \begin{tltxmdfexample*}
 \begin{mdframed}[userdefinedwidth=6cm,align=center,
                  linecolor=blue,middlelinewidth=4pt,roundcorner=5pt]
-\IfFileExists{donald-duck.jpg}%
- {\includegraphics[width=\linewidth]{donald-duck}}%
+\textit{CTAN lion drawing by Duane Bibby; thanks to \url{www.ctan.org}}
+\IfFileExists{ctan-lion.png}%
+ {\includegraphics[width=\linewidth]{ctan-lion.png}}%
  {\rule{\linewidth}{4cm}}%
 \end{mdframed}
 \end{tltxmdfexample*}
