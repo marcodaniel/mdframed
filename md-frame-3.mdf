@@ -333,6 +333,7 @@
           \drawbrackgroundframetitle@single
         %output%
           \rput[bl](mdf@A){\box\mdf@splitbox@one}
+          \mdf@extra%
           \mdf@singleextra
        \end{pspicture}%
     }%
@@ -518,7 +519,8 @@
        \drawbrackgroundframetitle@first
       %output%
        \rput[bl](mdf@A){\box\mdf@splitbox@two}
-      \mdf@firstextra
+      \mdf@extra%
+      \mdf@firstextra%
      \end{pspicture}
     }%
    \mdf@makeboxalign@right%
@@ -726,7 +728,8 @@
        %\psdot(mdf@A)\uput[90](mdf@A){mdf at A}
        %\psdot(mdf@P)\uput[90](mdf@P){mdf at P}
        %\psdot(mdf@O)\uput[90](mdf@O){mdf at O}
-      \mdf@middleextra
+      \mdf@extra%
+      \mdf@middleextra%
      \end{pspicture}%
     }%
    \mdf@makeboxalign@right%
@@ -935,6 +938,7 @@
        \drawbrackgroundframetitle@second
       %output%
        \rput[bl](mdf@A){\box\mdf@splitbox@one}
+      \mdf@extra%
       \mdf@secondextra
      \end{pspicture}%
     }%

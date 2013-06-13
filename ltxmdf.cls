@@ -189,7 +189,10 @@
 \tl_gput_left:Nn \theCodelineNo { \color{gray} }
 \dim_set:Nn \MacroTopsep { 10pt }
 \tl_gput_right:Nn \MacroFont { \color{ltxmdfblue} }
-
+\NewDocumentCommand \MacroFontExpl {}
+ {
+  \MacroFont\color{ltxmdfblue}\bfseries
+ }
 
 %Anweisung zur Darstellung
 
@@ -223,7 +226,6 @@
   \newline{\small~This~works~only~with~\Opt{framemethod=#1}.}
  }
 
-
 \NewDocumentCommand \ExplOpt { o m }
  {
     \par
@@ -233,7 +235,7 @@
                    {
                      \skip_horizontal:n { -2em }
                      \@bsphack
-                      \MacroFont #2
+                      \MacroFontExpl #2
                       \SpecialOptIndex{#2}
                      \@esphack
                     }
@@ -256,7 +258,7 @@
                    {
                      \skip_horizontal:n { -2em }
                      \@bsphack
-                      \MacroFont #2
+                      \MacroFontExpl #2
                       \SpecialEnvIndex{#2}
                      \@esphack
                     }
@@ -279,7 +281,7 @@
                    {
                      \skip_horizontal:n { -2em }
                      \@bsphack
-                      \MacroFont\textbackslash #2
+                      \MacroFontExpl\textbackslash #2
                       \SpecialUsageIndex{#2}
                      \@esphack
                     }

@@ -1339,14 +1339,15 @@ Have fun!
 % \ExplOpt[\{\}]{settings} 
 % This option allows the user to commit some macros at the beginning of 
 % \Pack{mdframed}. The given material is executed before the savebox starts.
+%
+% \ExplOpt[\{\}]{extra}
+%      Add material to every drawn frame.
 % \ExplOpt[\{\}]{singleextra}
 %      With this key you can put extra material to the drawing environment of 
 %      \Pack{mdframed} only for a non splitted frame. 
-%      \limitation[TikZ and PSTricks]
 % \ExplOpt[\{\}]{firstextra}
 %      With this key you can put extra material to the drawing environment of 
 %      \Pack{mdframed} only for the first part of the splitted frame. 
-%      \limitation[TikZ and PSTricks]
 % \ExplOpt[\{\}]{middleextra}
 %      With this key you can put extra material to the drawing environment of 
 %      \Pack{mdframed} only for the middle part of the splitted frame. 
@@ -1354,7 +1355,6 @@ Have fun!
 % \ExplOpt[\{\}]{secondextra}
 %      With this key you can put extra material to the drawing environment of 
 %      \Pack{mdframed} only for the second part of the splitted frame. 
-%      \limitation[TikZ and PSTricks]
 %
 %
 % After you can add material to any part of the frame you can also detect which 
@@ -2559,20 +2559,21 @@ Have fun!
     {theoremcountersep=={.}},%
     {theoremtitlefont=={}},%
     {theoremspace=={\space}},%
-    {singleextra=={}},
-    {firstextra=={}},
-    {middleextra=={}},
-    {secondextra=={}},
-    {beforesingleframe=={}},
-    {aftersingleframe=={}},
-    {beforebreak=={}},
-    {afterbreak=={}},
-    {beforelastframe=={}},
-    {afterlastframe=={}},  
-    {startcode=={}},
-    {startinnercode=={}},
-    {endinnercode=={}},
-    {endcode=={}},  
+    {extra=={}},%
+    {singleextra=={}},%
+    {firstextra=={}},%
+    {middleextra=={}},%
+    {secondextra=={}},%
+    {beforesingleframe=={}},%
+    {aftersingleframe=={}},%
+    {beforebreak=={}},%
+    {afterbreak=={}},%
+    {beforelastframe=={}},%
+    {afterlastframe=={}},%
+    {startcode=={}},%
+    {startinnercode=={}},%
+    {endinnercode=={}},%
+    {endcode=={}},%  
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% %
 % %%subtitle / subsubtitle added 29.05.12%% %
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% %
@@ -4359,6 +4360,8 @@ Have fun!
           }{}%
         {\box\mdf@splitbox@one}%
        }%
+      \mdf@extra%
+      \mdf@singleextra 
       \mdf@makeboxalign@right%
      }%
   \fi%
@@ -4580,6 +4583,8 @@ Have fun!
           }{}%
          {\box\mdf@splitbox@two}%
         }%
+       \mdf@extra%
+       \mdf@firstextra%
        \mdf@makeboxalign@right%
      }%
  \fi%
@@ -4783,6 +4788,8 @@ Have fun!
           }{}%
         {\box\mdf@splitbox@one}%
        }%
+      \mdf@extra%
+      \mdf@secondextra%
       \mdf@makeboxalign@right%
      }%
   \fi%
@@ -4986,6 +4993,8 @@ Have fun!
            }{}%
          {\box\mdf@splitbox@two}%
         }%
+      \mdf@extra%
+      \mdf@middleextra%
       \mdf@makeboxalign@right%
      }%
   \fi%
@@ -5301,7 +5310,8 @@ Have fun!
       \node[mdfbox] (mdfframe) at(\mdf@Ax,\mdf@Ay){\box\mdf@splitbox@one};
       \end{scope}
       %HIER KOMMT EIN WEITERES MAKRO
-      \mdf@singleextra
+      \mdf@extra%
+      \mdf@singleextra%
       \mdfcreateextratikz
     \end{tikzpicture}%
     }%
@@ -5466,6 +5476,7 @@ Have fun!
       \node[mdfbox] (mdfframe) at(\mdf@Ax,\mdf@Ay){\box\mdf@splitbox@two};%
      \end{scope}
      %HIER KOMMT EIN WEITERES MAKRO
+     \mdf@extra%
      \mdf@firstextra%
      \mdfcreateextratikz%
     \end{tikzpicture}%
@@ -5610,7 +5621,8 @@ Have fun!
         \end{scope}
         \node[mdfbox] (mdfframe) at(\mdf@Ax,\mdf@Ay){\box\mdf@splitbox@two};%
       \end{scope}
-      \mdf@middleextra
+      \mdf@extra%
+      \mdf@middleextra%
       %HIER KOMMT EIN WEITERES MAKRO
       \mdfcreateextratikz
     \end{tikzpicture}%
@@ -5724,7 +5736,8 @@ Have fun!
         \end{scope}
         \node[mdfbox] (mdfframe) at (\mdf@Ax,\mdf@Ay){\box\mdf@splitbox@one};%
       \end{scope}
-      \mdf@secondextra
+      \mdf@extra%
+      \mdf@secondextra%
       %HIER KOMMT EIN WEITERES MAKRO
       \mdfcreateextratikz
     \end{tikzpicture}%
@@ -6219,6 +6232,7 @@ Have fun!
 %          \psdot(mdf@O)\uput[90](mdf@O){mdf at O}
 %
 %         \endpsclip
+          \mdf@extra%
           \mdf@singleextra
        \end{pspicture}%
     }%
@@ -6416,7 +6430,8 @@ Have fun!
 %       \psdot(mdf@P)\uput[90](mdf@P){mdf at P}
 %       \psdot(mdf@O)\uput[90](mdf@O){mdf at O}
 %     \endpsclip
-      \mdf@firstextra
+      \mdf@extra%
+      \mdf@firstextra%
      \end{pspicture}
     }%
    \mdf@makeboxalign@right%
@@ -6631,7 +6646,8 @@ Have fun!
        %\psdot(mdf@A)\uput[90](mdf@A){mdf at A}
        %\psdot(mdf@P)\uput[90](mdf@P){mdf at P}
        %\psdot(mdf@O)\uput[90](mdf@O){mdf at O}
-      \mdf@middleextra
+      \mdf@extra% 
+      \mdf@middleextra%
      \end{pspicture}%
     }%
    \mdf@makeboxalign@right%
@@ -6847,6 +6863,7 @@ Have fun!
        \drawbrackgroundframetitle@second
       %output%
        \rput[bl](mdf@A){\box\mdf@splitbox@one}
+      \mdf@extra% 
       \mdf@secondextra
 %       \psdot(mdf@A)\uput[90](mdf@A){mdf at A}
 %       \psdot(mdf@P)\uput[90](mdf@P){mdf at P}

@@ -227,7 +227,8 @@
       \node[mdfbox] (mdfframe) at(\mdf@Ax,\mdf@Ay){\box\mdf@splitbox@one};
       \end{scope}
       %HIER KOMMT EIN WEITERES MAKRO
-      \mdf@singleextra
+      \mdf@extra%
+      \mdf@singleextra%
       \mdfcreateextratikz
     \end{tikzpicture}%
     }%
@@ -384,6 +385,7 @@
       \node[mdfbox] (mdfframe) at(\mdf@Ax,\mdf@Ay){\box\mdf@splitbox@two};%
      \end{scope}
      %HIER KOMMT EIN WEITERES MAKRO
+     \mdf@extra%
      \mdf@firstextra%
      \mdfcreateextratikz%
     \end{tikzpicture}%
@@ -521,7 +523,8 @@
         \end{scope}
         \node[mdfbox] (mdfframe) at(\mdf@Ax,\mdf@Ay){\box\mdf@splitbox@two};%
       \end{scope}
-      \mdf@middleextra
+      \mdf@extra%
+      \mdf@middleextra%
       %HIER KOMMT EIN WEITERES MAKRO
       \mdfcreateextratikz
     \end{tikzpicture}%
@@ -628,7 +631,8 @@
         \end{scope}
         \node[mdfbox] (mdfframe) at (\mdf@Ax,\mdf@Ay){\box\mdf@splitbox@one};%
       \end{scope}
-      \mdf@secondextra
+      \mdf@extra%
+      \mdf@secondextra%
       %HIER KOMMT EIN WEITERES MAKRO
       \mdfcreateextratikz
     \end{tikzpicture}%

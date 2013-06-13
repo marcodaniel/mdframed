@@ -246,6 +246,8 @@
           }{}%
         {\box\mdf@splitbox@one}%
        }%
+      \mdf@extra%
+      \mdf@singleextra
       \mdf@makeboxalign@right%
      }%
   \fi%
@@ -457,6 +459,8 @@
           }{}%
          {\box\mdf@splitbox@two}%
         }%
+       \mdf@extra%
+       \mdf@firstextra%
        \mdf@makeboxalign@right%
      }%
  \fi%
@@ -651,6 +655,8 @@
           }{}%
         {\box\mdf@splitbox@one}%
        }%
+      \mdf@extra%
+      \mdf@secondextra%
       \mdf@makeboxalign@right%
      }%
   \fi%
@@ -846,6 +852,8 @@
            }{}%
          {\box\mdf@splitbox@two}%
         }%
+      \mdf@extra%
+      \mdf@middleextra%
       \mdf@makeboxalign@right%
      }%
   \fi%
