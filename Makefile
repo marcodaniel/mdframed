@@ -220,7 +220,7 @@ usectanify:
 	echo  "" ;\
 	echo -e "\t$(ERROR_COLOR)Start ctanify$(NO_COLOR)" ;\
 	ctanify $(PACKAGE).ins $(PACKAGE).pdf README.txt ltxmdf.cls \
-	        donald-duck.jpg=doc/latex/mdframed/ \
+	        ctan-lion.png=doc/latex/mdframed/ \
 	        $(EXAMPLED).tex=doc/latex/mdframed/ \
 	        $(EXAMPLED).pdf=doc/latex/mdframed/ \
 	        $(EXAMPLET).tex=doc/latex/mdframed/ \
