@@ -49,10 +49,10 @@
 %% ==================================================
 %% 
 
-\def\mdversion{1.9}
+\def\mdversion{1.9a}
 \def\mdframedpackagename{mdframed}
-\def\mdfmaindate{2013/06/13}
-\def\mdfrevision{     189}% Done by github: git rev-list HEAD | wc -l
+\def\mdfmaindate{2013/06/21}
+\def\mdfrevision{     208}% Done by github: git rev-list HEAD | wc -l
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{mdframed}%
      [\mdfmaindate\space \mdversion: \mdframedpackagename]
@@ -708,12 +708,15 @@
 
 \newrobustcmd\mdfframedtitleenv[1]{%
   \mdf@lrbox{\mdf@frametitlebox}%
-     \parindent\z@\parskip\z@%
+   \begingroup
+     %%\parindent\z@\parskip\z@%
+     \@afterheading
      \mdf@frametitlealignment%
      \leavevmode\color{\mdf@frametitlefontcolor}%
      \normalfont\mdf@frametitlefont{#1}%
      \mdf@@ignorelastdescenders%
      \par\unskip\ifvmode\nointerlineskip\hrule \@height\z@ \@width\hsize\fi%%
+   \endgroup
   \endmdf@lrbox\relax%
   \mdf@ignorevbadness%
   \setbox\mdf@frametitlebox=\vbox{\unvbox\mdf@frametitlebox}%
