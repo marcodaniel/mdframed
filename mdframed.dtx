@@ -2603,7 +2603,6 @@ Have fun!
     {frametitlebottomline==true},%
     {frametitlerightline==true},%
     {frametitlerule==false},%
-    {nobreak==false},%
     {footnoteinside==true},%
     {usetwoside==true},%
     {repeatframetitle==false},%Noch nicht richtig implementiert
@@ -2616,7 +2615,7 @@ Have fun!
     {subsubtitlebelowline==false},
     {draft==false},
     {suppressfirstparskip==true},
-}
+}    
 %%special boolflag hidealllines:
 \newbool{mdf@hidealllines}%
 \define@key{mdf}{hidealllines}[false]{%
@@ -2630,6 +2629,12 @@ Have fun!
  }%
 }
 \appto\mdf@definestyle@defaultoptions{hidealllines=false,}%
+%%special boolflag nobreak:
+% \newbool{mdf@nobreak}%
+% \boolfalse{mdf@nobreak}%
+\DeclareBoolOption[true]{nobreak}
+\boolfalse{mdf@nobreak}%
+\appto\mdf@definestyle@defaultoptions{nobreak=false,}
 %    \end{macrocode}
 % \end{macro}
 %

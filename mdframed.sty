@@ -291,7 +291,6 @@
     {frametitlebottomline==true},%
     {frametitlerightline==true},%
     {frametitlerule==false},%
-    {nobreak==false},%
     {footnoteinside==true},%
     {usetwoside==true},%
     {repeatframetitle==false},%Noch nicht richtig implementiert
@@ -318,6 +317,10 @@
  }%
 }
 \appto\mdf@definestyle@defaultoptions{hidealllines=false,}%
+%%special boolflag nobreak:
+\DeclareBoolOption[true]{nobreak}
+\boolfalse{mdf@nobreak}%
+\appto\mdf@definestyle@defaultoptions{nobreak=false,}
 \def\mdf@do@alignoption#1{%
    \mdf@alignoption@tripledo#1\@nil%
 }
