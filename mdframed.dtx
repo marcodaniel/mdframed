@@ -2297,6 +2297,7 @@ Have fun!
 \RequirePackage{xparse}
 \RequirePackage{etoolbox}[2011/01/03]
 \RequirePackage{zref-abspage}
+\RequirePackage{needspace}
 \RequirePackage{color}
 %    \end{macrocode}
 %
@@ -2503,6 +2504,7 @@ Have fun!
    {roundcorner==\z@},%
    {footenotedistance==\medskipamount},
    {userdefinedwidth==\linewidth},
+   {needspace==\z@},
    {frametitleaboveskip==5pt},
    {frametitlebelowskip==5pt},
    {frametitlerulewidth==.2pt},
@@ -2717,22 +2719,6 @@ Have fun!
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{mdf@needspace}
-% Defining the option needspace
-%    \begin{macrocode}
-\define@key{mdf}{needspace}[\z@]{%
-     \begingroup%
-        \setlength{\dimen@}{#1}%
-        \vskip\z@\@plus\dimen@%
-        \penalty -100\vskip\z@\@plus -\dimen@%
-        \vskip\dimen@%
-        \penalty 9999%
-        \vskip -\dimen@%
-        \vskip\z@skip % hide the previous |\vskip| from |\addvspace|
-      \endgroup%
-}
-%    \end{macrocode}
-% \end{macro}
 %
 %    \begin{macrocode}
 \DeclareDefaultOption{%
@@ -3309,6 +3295,7 @@ Have fun!
 % Collect all definitions at the beginning of \Env{mdframed}
 %    \begin{macrocode}
 \newrobustcmd*\mdf@preenvsetting{%
+   \needspace{\mdf@needspace@length}
    \mdf@twoside@checklength%
    \edef\mdf@par@local{%
       \parskip=\the\parskip\relax%
