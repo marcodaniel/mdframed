@@ -19,7 +19,7 @@
           }% anchor der Ausgabebox ist unten links
   \tikzset{mdfcorners/.style={rounded corners=\mdf@roundcorner@length}}%
   \tikzset{mdfbackground/.style={fill=\mdf@backgroundcolor,%
-                                 draw=\mdf@backgroundcolor%
+                                 draw=none,%
                                 }%
           }%
   \tikzset{mdfframetitlebackground/.style=%

@@ -1049,11 +1049,11 @@
        \mdf@dolist{\mdf@advancelength@sub{\dimen@}}%
          {innerlinewidth,middlelinewidth,outerlinewidth}%
       }{}%
-    \notbool{mdf@topline}%no top line
+    \ifbool{mdf@topline}{}%%no top line
        {%
            \mdf@dolist{\mdf@advancelength@add{\dimen@}}%
              {innerlinewidth,middlelinewidth,outerlinewidth}%
-       }{}%
+       }%
     \advance\dimen@.8\pageshrink%
     \ifdimless{\ht\mdf@splitbox@one+\dp\mdf@splitbox@one}{\dimen@}%
        {\mdf@PackageWarning{You got a bad break\MessageBreak

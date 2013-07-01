@@ -3617,11 +3617,11 @@ Have fun!
        \mdf@dolist{\mdf@advancelength@sub{\dimen@}}%
          {innerlinewidth,middlelinewidth,outerlinewidth}%
       }{}%
-    \notbool{mdf@topline}%no top line
+    \ifbool{mdf@topline}{}%%no top line
        {%
            \mdf@dolist{\mdf@advancelength@add{\dimen@}}%
              {innerlinewidth,middlelinewidth,outerlinewidth}%
-       }{}%
+       }%
     \advance\dimen@.8\pageshrink%
     \ifdimless{\ht\mdf@splitbox@one+\dp\mdf@splitbox@one}{\dimen@}%
        {\mdf@PackageWarning{You got a bad break\MessageBreak
@@ -5048,7 +5048,7 @@ Have fun!
           }% anchor der Ausgabebox ist unten links
   \tikzset{mdfcorners/.style={rounded corners=\mdf@roundcorner@length}}% 
   \tikzset{mdfbackground/.style={fill=\mdf@backgroundcolor,%
-                                 draw=\mdf@backgroundcolor%
+                                 draw=none,%
                                 }%
           }% 
   \tikzset{mdfframetitlebackground/.style=%
