@@ -655,7 +655,7 @@
 }
 
 \tikzset{mdfsubtitlebackground/.style={%
-   draw=\mdf@subtitlebackgroundcolor,
+   draw=none,
    fill=\mdf@subtitlebackgroundcolor,
   }%
 }
@@ -695,7 +695,7 @@
 \def\mdf@drawsubtitlebackground{%
  \rlap{%
  \hspace*{-\mdf@innerleftmargin@length}%
- \tikz\draw[overlay,mdfsubtitlebackground](0,0) rectangle
+ \tikz\path[overlay,mdfsubtitlebackground](0,0) rectangle
     (\mdf@templength,-\mdfsubtitleheight);%
  }%
 }
