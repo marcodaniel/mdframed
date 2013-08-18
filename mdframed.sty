@@ -49,10 +49,10 @@
 %% ==================================================
 %% 
 
-\def\mdversion{1.9c}
+\def\mdversion{1.9d}
 \def\mdframedpackagename{mdframed}
-\def\mdfmaindate{2013/07/15}
-\def\mdfrevision{     213}% Done by github: git rev-list HEAD | wc -l
+\def\mdfmaindate{2013/08/18}
+\def\mdfrevision{     215}% Done by github: git rev-list HEAD | wc -l
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{mdframed}%
      [\mdfmaindate\space \mdversion: \mdframedpackagename]
@@ -979,10 +979,13 @@
       \begingroup%
         \mdf@@setzref%
         \booltrue{mdfsingleframe}%
-        \mdf@beforesingleframe%
-        \mdf@putbox@single%
-        \mdf@aftersingleframe%
-      \endgroup%Output no break
+        \begingroup%
+          \mdf@beforesingleframe%
+          \mdf@putbox@single%
+          \mdf@aftersingleframe%
+        \endgroup%Output no break
+        \hrule \@height\z@ \@width\hsize%
+      \endgroup%
    \fi%
 }
 \def\mdf@put@frame{\relax%
@@ -1016,10 +1019,13 @@
           \begingroup%
             \mdf@@setzref%
             \booltrue{mdfsingleframe}%
-            \mdf@beforesingleframe%
-            \mdf@putbox@single%
-            \mdf@aftersingleframe%
-          \endgroup%Output no break
+            \begingroup%
+              \mdf@beforesingleframe%
+              \mdf@putbox@single%
+              \mdf@aftersingleframe%
+            \endgroup%Output no break
+            \hrule \@height\z@ \@width\hsize%
+          \endgroup%
           \let\mdf@reserved@a\relax%
          }%
          {%
