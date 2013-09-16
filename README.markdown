@@ -15,7 +15,7 @@ The revision history is printed in the documentation.
 
 ### Documenation // Examples
 
-Examples are uploaded at GutHub:
+Examples are uploaded at GitHub:
 [DOWNLOAD-PAGE](https://github.com/marcodaniel/mdframed/downloads)
 
 ### Installation -- 1
