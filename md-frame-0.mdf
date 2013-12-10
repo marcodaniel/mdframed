@@ -233,10 +233,13 @@
         \ifbool{mdf@leftline}%
           {%
            \hspace*{\mdftotallinewidth}%
+          }{}%
+        \mdf@frame@background@single%
+        \ifbool{mdf@leftline}%
+          {%
            \mdf@frame@leftline@single%
           }{}%
         \mdf@frame@topline@single%
-        \mdf@frame@background@single%
         \mdf@frame@bottomline@single%
         \ifdefempty{\mdf@frametitle}{}{\mdf@frame@frametitlebackground@single}%
         \hspace*{\mdf@innerleftmargin@length}%

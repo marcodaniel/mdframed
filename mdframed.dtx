@@ -3426,7 +3426,7 @@ Have fun!
  \fi%
 }
 \newrobustcmd*\mdf@@setzref{%
- \iftoggle{md:checktwoside}{\mdf@zref@label\if@mdf@pageodd}{}%
+  \iftoggle{md:checktwoside}{\mdf@zref@label\if@mdf@pageodd}{}%
 }
 %    \end{macrocode}
 % \end{macro}
@@ -4353,10 +4353,16 @@ Have fun!
         \ifbool{mdf@leftline}%
           {%
            \hspace*{\mdftotallinewidth}%
+%           \mdf@frame@leftline@single%
+          }{}%
+        \mdf@frame@background@single%        
+        \ifbool{mdf@leftline}%
+          {%
+%           \hspace*{\mdftotallinewidth}%
            \mdf@frame@leftline@single%
           }{}%
         \mdf@frame@topline@single%
-        \mdf@frame@background@single%
+%        \mdf@frame@background@single%
         \mdf@frame@bottomline@single%
         \ifdefempty{\mdf@frametitle}{}{\mdf@frame@frametitlebackground@single}%
         \hspace*{\mdf@innerleftmargin@length}%
