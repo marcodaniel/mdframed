@@ -149,23 +149,23 @@
     \parindent\c_zero_dim
     \centering
      \color{ltxmdfblue}\Large\bfseries\sffamily
-        \prop_get:Nn \l_ltxmdf_maketitleinformation_prop { title }
+        \prop_item:Nn \l_ltxmdf_maketitleinformation_prop { title }
      \par
      \skip_vertical:n {.5\baselineskip}
      \normalfont\large\normalcolor
-        \prop_get:Nn \l_ltxmdf_maketitleinformation_prop { subtitle }
+        \prop_item:Nn \l_ltxmdf_maketitleinformation_prop { subtitle }
      \par\kern.5\baselineskip\null\quad
-        \prop_get:Nn \l_ltxmdf_maketitleinformation_prop { author }
+        \prop_item:Nn \l_ltxmdf_maketitleinformation_prop { author }
      \hfill
-        \prop_get:Nn \l_ltxmdf_maketitleinformation_prop { version }
+        \prop_item:Nn \l_ltxmdf_maketitleinformation_prop { version }
      \hfill
-        \prop_get:Nn \l_ltxmdf_maketitleinformation_prop { date }
+        \prop_item:Nn \l_ltxmdf_maketitleinformation_prop { date }
      \hfill\quad\null
    \group_end:
      \par
      \skip_vertical:n {.5\baselineskip}
   \begin{abstract}
-    \prop_get:Nn \l_ltxmdf_maketitleinformation_prop { introduction }
+    \prop_item:Nn \l_ltxmdf_maketitleinformation_prop { introduction }
   \end{abstract}
      \par
      \skip_vertical:n {.2\baselineskip}
