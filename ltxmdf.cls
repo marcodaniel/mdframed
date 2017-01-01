@@ -43,7 +43,7 @@
 \RequirePackage{etoolbox}
 \RequirePackage[left=2.5cm,right=2.5cm,top=3cm,bottom=3cm]{geometry}
 
-\pdftex_if_engine:TF
+\sys_if_engine_pdftex:TF
  {
   \RequirePackage{selinput}
   \SelectInputMappings{
